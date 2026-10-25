@@ -95,7 +95,7 @@ def test_all_twelve_families_are_deterministic_diverse_exact_and_nondegenerate(m
         variants = [MODULE.generate(family, seed, mode) for seed in range(192)]
         assert variants == [MODULE.generate(family, seed, mode) for seed in range(192)]
         assert len({variant.variant_id for variant in variants}) == 192
-        assert len({variant.parameters for variant in variants}) >= 12
+        assert len({variant.parameters for variant in variants}) == 192
         for variant in variants:
             assert Fraction(variant.answer) == _recompute(variant)
             assert Fraction(dict(variant.parameters)["coefficient"]) != 0
@@ -207,7 +207,7 @@ def test_guided_diagnosis_requires_answer_and_strategy_evidence() -> None:
 
 def test_ambiguous_and_unparseable_probe_evidence_fails_closed() -> None:
     ambiguous = None
-    for seed in range(4_096):
+    for seed in range(MODULE.PRIMARY_SEED_COUNT):
         candidate = MODULE.generate(MODULE.FAMILIES[3], seed, "guided")
         for _, answer in candidate.misconception_answers:
             probe = MODULE.guided_probe(candidate, answer)
@@ -285,7 +285,7 @@ def test_diagnostic_path_is_unhinted_and_retains_verified_answer() -> None:
 
 
 def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.start_learning_path(guided)
     assert state.stages == MODULE.TEACHING_STAGES
     assert MODULE.stage_payload(guided, state)["stage"] == "OBSERVE"
@@ -356,7 +356,7 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
 
 def test_independent_and_mastery_have_only_unhinted_practice_and_verify() -> None:
     for mode in ("independent", "mastery"):
-        variant = MODULE.generate(MODULE.FAMILIES[9], 223, mode)
+        variant = MODULE.generate(MODULE.FAMILIES[9], 123, mode)
         state = MODULE.start_learning_path(variant)
         assert state.stages == ("PRACTICE", "VERIFY")
         first = MODULE.stage_payload(variant, state)
@@ -381,6 +381,15 @@ def test_transfer_changes_structure_and_is_independent_unhinted() -> None:
                 MODULE.generate_transfer(MODULE.generate(family, 127, blocked_mode))
 
 
+def test_transfer_seed_band_is_normalized_and_nonrepeating() -> None:
+    for family in MODULE.FAMILIES:
+        transfers = [
+            MODULE.generate_transfer(MODULE.generate(family, seed, "guided"))
+            for seed in range(MODULE.PRIMARY_SEED_COUNT)
+        ]
+        assert len({variant.parameters for variant in transfers}) == len(transfers)
+
+
 def test_generation_has_no_persistence_or_application_imports() -> None:
     source = (PACKAGE / "generator.py").read_text()
     forbidden = (
@@ -400,6 +409,14 @@ def test_generation_has_no_persistence_or_application_imports() -> None:
     [
         ("UNKNOWN", 1, "guided", ValueError),
         (MODULE.FAMILIES[0], -1, "guided", ValueError),
+        (MODULE.FAMILIES[0], MODULE.PRIMARY_SEED_COUNT, "guided", ValueError),
+        (MODULE.FAMILIES[0], MODULE.TRANSFER_SEED_OFFSET - 1, "guided", ValueError),
+        (
+            MODULE.FAMILIES[0],
+            MODULE.TRANSFER_SEED_OFFSET + MODULE.PRIMARY_SEED_COUNT,
+            "guided",
+            ValueError,
+        ),
         (MODULE.FAMILIES[0], True, "guided", TypeError),
         (MODULE.FAMILIES[0], 1, "production", ValueError),
     ],
@@ -413,7 +430,7 @@ def test_invalid_generation_fails_closed(
 
 
 def test_fake_transfer_id_and_wrong_independent_answer_are_rejected() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
@@ -442,7 +459,7 @@ def test_fake_transfer_id_and_wrong_independent_answer_are_rejected() -> None:
 
 
 def test_equal_fabricated_verification_does_not_pass() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
@@ -458,7 +475,7 @@ def test_equal_fabricated_verification_does_not_pass() -> None:
 
 
 def test_fake_inverse_operation_and_wrong_result_are_rejected() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
@@ -485,8 +502,35 @@ def test_fake_inverse_operation_and_wrong_result_are_rejected() -> None:
     assert MODULE.advance_learning_path(guided, state, base).stage == "EXPLAIN"
 
 
+@pytest.mark.parametrize("family", [MODULE.FAMILIES[7], MODULE.FAMILIES[9]])
+def test_equivalent_reciprocal_multiplication_is_accepted(family: str) -> None:
+    guided = MODULE.generate(family, 0, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=1,
+    )
+    state = MODULE.advance_learning_path(
+        guided, state, {"operation_choice": "MULTIPLY"}
+    )
+    assert state.stage == "MANIPULATE"
+    coefficient = Fraction(dict(guided.parameters)["coefficient"])
+    state = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "left_operation": "MULTIPLY",
+            "right_operation": "MULTIPLY",
+            "operation_value": str(1 / coefficient),
+            "resulting_x": guided.answer,
+        },
+    )
+    assert state.stage == "EXPLAIN"
+
+
 def test_invalid_practice_answer_is_rejected() -> None:
-    v = MODULE.generate(MODULE.FAMILIES[9], 223, "independent")
+    v = MODULE.generate(MODULE.FAMILIES[9], 123, "independent")
     state = MODULE.start_learning_path(v)
     with pytest.raises(ValueError, match="does not solve"):
         MODULE.advance_learning_path(v, state, {"exact_answer": "999"})
@@ -498,7 +542,7 @@ def test_invalid_practice_answer_is_rejected() -> None:
 
 
 def test_guided_practice_error_is_retained_as_diagnosis_evidence() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
@@ -544,7 +588,7 @@ def test_guided_practice_error_is_retained_as_diagnosis_evidence() -> None:
 
 
 def test_wrong_prediction_is_recorded_and_gets_socratic_retry() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.start_learning_path(guided)
     state = MODULE.advance_learning_path(
         guided, state, {"observation": "The two expressions are equal."}
@@ -574,7 +618,7 @@ def test_wrong_prediction_is_recorded_and_gets_socratic_retry() -> None:
 
 
 def test_irrelevant_explanation_cannot_complete_explain_stage() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
@@ -606,7 +650,7 @@ def test_irrelevant_explanation_cannot_complete_explain_stage() -> None:
 
 
 def test_arbitrary_diagnosis_strings_remain_neutral_and_do_not_advance() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     _, wrong_answer = guided.misconception_answers[0]
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
@@ -632,7 +676,7 @@ def test_arbitrary_diagnosis_strings_remain_neutral_and_do_not_advance() -> None
 
 
 def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
-    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    guided = MODULE.generate(MODULE.FAMILIES[0], 111, "guided")
     code, wrong_answer = guided.misconception_answers[0]
     state = MODULE.LearningState(
         variant_id=guided.variant_id,

@@ -11,6 +11,7 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass, replace
 from fractions import Fraction
+from functools import lru_cache
 from types import MappingProxyType
 from typing import Final
 
@@ -31,6 +32,8 @@ TEACHING_STAGES: Final = (
 
 ADD_SKILL: Final = "M8.ALG.INVERSE.ADD"
 MULT_SKILL: Final = "M8.ALG.INVERSE.MULT"
+PRIMARY_SEED_COUNT: Final = 192
+TRANSFER_SEED_OFFSET: Final = 1_000_003
 
 FAMILIES: Final = (
     "MATH.EQ.INVERSE.ADD.BALANCE",
@@ -266,8 +269,14 @@ def _validate(family: str, seed: int, mode: str) -> None:
         raise ValueError(f"Unsupported family: {family}")
     if isinstance(seed, bool) or not isinstance(seed, int):
         raise TypeError("seed must be an integer")
-    if seed < 0:
-        raise ValueError("seed must be nonnegative")
+    in_primary_band = 0 <= seed < PRIMARY_SEED_COUNT
+    in_transfer_band = (
+        TRANSFER_SEED_OFFSET
+        <= seed
+        < TRANSFER_SEED_OFFSET + PRIMARY_SEED_COUNT
+    )
+    if not (in_primary_band or in_transfer_band):
+        raise ValueError("seed must be in a reviewed nonrepeating seed band")
     if mode not in MODES:
         raise ValueError(f"Unsupported mode: {mode}")
 
@@ -536,22 +545,30 @@ def _nonempty(response: dict[str, object], field: str) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _required_inverse(variant: Variant) -> tuple[str, Fraction, Fraction]:
+def _equivalent_inverse_operations(
+    variant: Variant,
+) -> tuple[tuple[str, Fraction, Fraction], ...]:
+    """Return every exact one-step operation/value pair that isolates x."""
+
     p = dict(variant.parameters)
     coefficient = Fraction(p["coefficient"])
     offset = Fraction(p["offset"])
     rhs = Fraction(p["rhs"])
     if coefficient == 1 and offset != 0:
         operation = "SUBTRACT" if offset > 0 else "ADD"
-        return operation, abs(offset), rhs - offset
+        return ((operation, abs(offset), rhs - offset),)
     if coefficient != 1 and offset == 0:
-        return "DIVIDE", coefficient, rhs / coefficient
+        solution = rhs / coefficient
+        return (
+            ("DIVIDE", coefficient, solution),
+            ("MULTIPLY", 1 / coefficient, solution),
+        )
     raise ValueError("unsupported one-step inverse structure")
 
 
 def _prediction_prompt(variant: Variant) -> str:
-    operation, _, _ = _required_inverse(variant)
-    if operation in {"ADD", "SUBTRACT"}:
+    operations = {operation for operation, _, _ in _equivalent_inverse_operations(variant)}
+    if operations <= {"ADD", "SUBTRACT"}:
         return (
             "What operation undoes the signed offset on x, and why must it "
             "be applied to both complete sides?"
@@ -600,8 +617,11 @@ def advance_learning_path(
         if choice not in {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE"}:
             raise ValueError("a supported operation prediction is required")
         prediction_choice = str(choice)
-        required_operation, _, _ = _required_inverse(variant)
-        if choice != required_operation:
+        allowed_operations = {
+            operation
+            for operation, _, _ in _equivalent_inverse_operations(variant)
+        }
+        if choice not in allowed_operations:
             return replace(
                 state,
                 prediction_choice=prediction_choice,
@@ -620,9 +640,13 @@ def advance_learning_path(
             resulting_x = Fraction(str(response["resulting_x"]))
         except (KeyError, ValueError, ZeroDivisionError):
             raise ValueError("exact inverse value and resulting x are required") from None
-        required_operation, required_value, expected_x = _required_inverse(variant)
-        if (left != required_operation or value != required_value
-                or resulting_x != expected_x):
+        equivalent_operations = _equivalent_inverse_operations(variant)
+        if not any(
+            left == operation
+            and value == required_value
+            and resulting_x == expected_x
+            for operation, required_value, expected_x in equivalent_operations
+        ):
             raise ValueError("transformation must isolate x with exact inverse arithmetic")
     if stage == "EXPLAIN":
         if not _valid_equality_explanation(response):
@@ -816,15 +840,90 @@ def _variant(
     )
 
 
+@lru_cache(maxsize=None)
+def _candidate_pool(family: str) -> tuple[tuple[Fraction, ...], ...]:
+    """Enumerate normalized parameter tuples before deterministic shuffling."""
+
+    xs = tuple(Fraction(n) for n in range(-12, 13) if n)
+    if family == FAMILIES[0]:
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(-11, 12) if offset}
+    elif family == FAMILIES[1]:
+        pool = {(x, Fraction(amount)) for x in xs for amount in range(2, 13)}
+    elif family == FAMILIES[2]:
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(-10, 11) if offset}
+    elif family == FAMILIES[3]:
+        solutions = {
+            Fraction(n, denominator)
+            for n in range(-15, 16)
+            if n
+            for denominator in (2, 3, 4)
+        }
+        offsets = {
+            Fraction(n, denominator)
+            for n in range(-9, 10)
+            if n
+            for denominator in (2, 3, 4, 5, 6)
+        }
+        pool = {(solution, offset) for solution in solutions for offset in offsets}
+    elif family == FAMILIES[4]:
+        pool = {(x, Fraction(change)) for x in xs for change in range(-9, 10) if change}
+    elif family == FAMILIES[5]:
+        pool = {(x, Fraction(offset)) for x in xs for offset in range(2, 12)}
+    elif family == FAMILIES[6]:
+        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 13)}
+    elif family == FAMILIES[7]:
+        pool = {(x, Fraction(divisor)) for x in xs for divisor in range(2, 11)}
+    elif family == FAMILIES[8]:
+        pool = {(x, Fraction(magnitude)) for x in xs for magnitude in range(2, 11)}
+    elif family == FAMILIES[9]:
+        coefficients = {
+            Fraction(numerator, denominator)
+            for numerator in range(2, 9)
+            for denominator in range(2, 10)
+            if numerator != denominator
+        }
+        pool = {(solution, coefficient) for solution in xs for coefficient in coefficients}
+    elif family == FAMILIES[10]:
+        per_group_values = {
+            Fraction(numerator, denominator)
+            for numerator in range(1, 13)
+            for denominator in (1, 2, 4)
+        }
+        pool = {
+            (per_group, Fraction(groups))
+            for per_group in per_group_values
+            for groups in range(2, 13)
+        }
+    else:
+        pool = {(x, Fraction(coefficient)) for x in xs for coefficient in range(2, 12)}
+    ordered = tuple(sorted(pool))
+    if len(ordered) < PRIMARY_SEED_COUNT:
+        raise AssertionError("family needs at least one normalized task per reviewed seed")
+    return ordered
+
+
+def _seed_band(seed: int) -> tuple[str, int]:
+    if seed < PRIMARY_SEED_COUNT:
+        return "PRIMARY", seed
+    return "TRANSFER", seed - TRANSFER_SEED_OFFSET
+
+
+@lru_cache(maxsize=None)
+def _seeded_candidate(family: str, mode: str, seed: int) -> tuple[Fraction, ...]:
+    band, slot = _seed_band(seed)
+    candidates = list(_candidate_pool(family))
+    random.Random(f"{NAMESPACE}:{family}:{mode}:{band}").shuffle(candidates)
+    return candidates[slot]
+
+
 def generate(family: str, seed: int, mode: str) -> Variant:
     """Generate one deterministic original task for a declared structure."""
 
     _validate(family, seed, mode)
-    rng = random.Random(f"{NAMESPACE}:{family}:{mode}:{seed}")
-    x = Fraction(rng.choice([n for n in range(-12, 13) if n not in (0,)]))
+    candidate = _seeded_candidate(family, mode, seed)
 
     if family == FAMILIES[0]:
-        offset = Fraction(rng.choice([n for n in range(-11, 12) if n not in (0,)]))
+        x, offset = candidate
         rhs = x + offset
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -840,7 +939,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[1]:
-        amount = Fraction(rng.randint(2, 12))
+        x, amount = candidate
         rhs = x - amount
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -856,7 +955,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[2]:
-        offset = Fraction(rng.choice([n for n in range(-10, 11) if n not in (0,)]))
+        x, offset = candidate
         rhs = x + offset
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -872,9 +971,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[3]:
-        denominator = rng.choice((2, 3, 4, 5, 6))
-        offset = Fraction(rng.choice([n for n in range(-9, 10) if n]), denominator)
-        solution = Fraction(rng.choice([n for n in range(-15, 16) if n]), rng.choice((2, 3, 4)))
+        solution, offset = candidate
         rhs = solution + offset
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -890,7 +987,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[4]:
-        change = Fraction(rng.choice([n for n in range(-9, 10) if n]))
+        x, change = candidate
         final = x + change
         direction = "rose" if change > 0 else "fell"
         return _variant(
@@ -907,7 +1004,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[5]:
-        offset = Fraction(rng.randint(2, 11))
+        x, offset = candidate
         rhs = x + offset
         claimed = rhs + offset
         return _variant(
@@ -924,7 +1021,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[6]:
-        coefficient = Fraction(rng.randint(2, 12))
+        x, coefficient = candidate
         rhs = coefficient * x
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -940,7 +1037,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[7]:
-        divisor = Fraction(rng.randint(2, 10))
+        x, divisor = candidate
         rhs = x / divisor
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -956,7 +1053,8 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[8]:
-        coefficient = Fraction(-rng.randint(2, 10))
+        x, magnitude = candidate
+        coefficient = -magnitude
         rhs = coefficient * x
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -972,12 +1070,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[9]:
-        numerator = rng.randint(2, 8)
-        denominator = rng.randint(2, 9)
-        while numerator == denominator:
-            denominator = rng.randint(2, 9)
-        coefficient = Fraction(numerator, denominator)
-        solution = Fraction(rng.choice([n for n in range(-12, 13) if n]))
+        solution, coefficient = candidate
         rhs = coefficient * solution
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -993,8 +1086,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
         )
 
     if family == FAMILIES[10]:
-        groups = Fraction(rng.randint(2, 12))
-        per_group = Fraction(rng.choice([n for n in range(1, 13)]), rng.choice((1, 1, 2, 4)))
+        per_group, groups = candidate
         total = groups * per_group
         return _variant(
             family=family, seed=seed, mode=mode,
@@ -1009,7 +1101,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
             ),
         )
 
-    coefficient = Fraction(rng.randint(2, 11))
+    x, coefficient = candidate
     rhs = coefficient * x
     claimed = rhs - coefficient
     return _variant(
@@ -1154,11 +1246,17 @@ def source_seed(variant: Variant) -> int:
     return int(variant.variant_id.rsplit(":", 1)[-1])
 
 
-def generate_transfer(source: Variant, *, seed_offset: int = 1_000_003) -> Variant:
+def generate_transfer(
+    source: Variant, *, seed_offset: int = TRANSFER_SEED_OFFSET
+) -> Variant:
     """Generate a different-structure, unhinted independent transfer item."""
 
     if source.mode not in {"diagnostic", "guided"}:
         raise ValueError("transfer source must be diagnostic or guided")
+    if source_seed(source) >= PRIMARY_SEED_COUNT:
+        raise ValueError("transfer source must come from the primary reviewed seed band")
+    if seed_offset != TRANSFER_SEED_OFFSET:
+        raise ValueError("transfer seed offset is fixed by the reviewed contract")
     return generate(
         TRANSFER_PARTNER[source.family], source_seed(source) + seed_offset, "independent"
     )

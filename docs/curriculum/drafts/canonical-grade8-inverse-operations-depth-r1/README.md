@@ -13,6 +13,13 @@ prerequisite, difficulty rationale, exact oracle, equivalence/domain boundary,
 misconception signatures, targeted representation move, and concrete → visual
 → symbolic contract.
 
+The reviewed generator accepts primary seeds `0..191` and a separate transfer
+band `1000003..1000194`. Within each family and mode, every seed in a band maps
+to a distinct normalized equation; out-of-band seeds fail closed. The two
+bands are deterministic permutations of a normalized candidate pool rather
+than independent random draws, so a different variant ID cannot disguise an
+identical equation inside the reviewed bank.
+
 Guided practice retains the learner's first parseable exact response, whether
 correct or incorrect. Diagnose uses that authentic practice response with a
 learner-visible labelled strategy choice and exact substitution values; it does
@@ -29,7 +36,8 @@ The guided path is an enforced pure state machine: Observe → Predict →
 Manipulate → Explain → Practice → Diagnose → Transfer → Verify. The actual
 prediction is retained; an incorrect inverse choice stays in Predict with a
 task-specific Socratic retry before manipulation is revealed. Manipulation
-requires the exact inverse on both complete sides. Explain requires a correct
+requires an exact inverse on both complete sides and accepts mathematically
+equivalent divide-by-coefficient or multiply-by-reciprocal encodings. Explain requires a correct
 public equality-preservation choice plus a learner explanation naming both
 sides. Diagnose is bound to the retained practice response plus public
 strategy/substitution probes: arbitrary evidence cannot advance, and a uniquely

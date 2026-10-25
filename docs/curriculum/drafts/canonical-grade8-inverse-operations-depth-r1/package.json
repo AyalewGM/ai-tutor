@@ -63,6 +63,7 @@
       "prediction_locked_before_manipulation": true,
       "prediction_evidence": "actual choice persisted; incorrect choice remains in PREDICT with a task-specific Socratic retry",
       "same_operation_on_both_sides_required": true,
+      "equivalent_inverse_transformations": "accept exact divide-by-coefficient or multiply-by-reciprocal encodings when both isolate x",
       "explanation_evidence_required": "correct public reasoning choice plus a learner explanation naming both sides and equality preservation",
       "support_fading": "guided practice only; the learner's first parseable exact practice response is retained whether correct or incorrect",
       "diagnosis_binding": "the retained authentic practice response, labelled strategy choice, and exact substitution evidence drive fail-closed classification; DIAGNOSE does not request a replacement answer",
@@ -72,6 +73,12 @@
       "verification": "reconstructs both original equation sides from the retained exact answer"
     },
     "independent_and_mastery": "SEPARATE_UNHINTED_ITEMS",
+    "deterministic_seed_contract": {
+      "primary_seed_band": "0..191",
+      "transfer_seed_band": "1000003..1000194",
+      "normalized_equation_uniqueness": "192_OF_192_PER_FAMILY_AND_MODE_IN_EACH_REVIEWED_BAND",
+      "out_of_band": "REJECTED"
+    },
     "exact_arithmetic": "fractions.Fraction",
     "answer_equivalence": "any exact integer or fraction equal to the oracle",
     "decimal_approximation_required": false
