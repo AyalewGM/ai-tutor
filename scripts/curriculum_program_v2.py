@@ -11,6 +11,7 @@ import hashlib
 import json
 import re
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 
 _STATES = {"QUEUED", "IN_PROGRESS", "REVIEW_REQUIRED", "CHANGES_REQUIRED", "PROTOTYPE_REVIEW_RECORDED", "BLOCKED_RETRY_EXHAUSTED"}
@@ -84,6 +85,28 @@ def connect(path: str | Path) -> sqlite3.Connection:
             db.execute(f"ALTER TABLE work_items ADD COLUMN {name} TEXT NOT NULL DEFAULT ''")
     db.commit()
     return db
+
+
+@contextmanager
+def _atomic(db: sqlite3.Connection):
+    """Own an IMMEDIATE transaction, or nest via savepoint inside a caller's."""
+    if db.in_transaction:
+        db.execute("SAVEPOINT planner_atomic")
+        try:
+            yield
+        except BaseException:
+            db.execute("ROLLBACK TO SAVEPOINT planner_atomic")
+            db.execute("RELEASE SAVEPOINT planner_atomic")
+            raise
+        db.execute("RELEASE SAVEPOINT planner_atomic")
+        return
+    db.execute("BEGIN IMMEDIATE")
+    try:
+        yield
+    except BaseException:
+        db.rollback()
+        raise
+    db.commit()
 
 
 def _identity(*parts: str) -> str:
@@ -202,8 +225,7 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
         raise ValueError("auditable evidence URL required")
     if type(expected_version) is not int or expected_version < 0:
         raise ValueError("invalid expected version")
-    db.execute("BEGIN IMMEDIATE")
-    try:
+    with _atomic(db):
         row = db.execute("SELECT status,version FROM work_items WHERE id=?", (item_id,)).fetchone()
         if row is None:
             raise ValueError("unknown unit")
@@ -217,10 +239,6 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
             raise ValueError("invalid or stale state transition")
         db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
                       VALUES(?,?,?,?,?)""", (item_id, old, status, actor, evidence_ref))
-        db.commit()
-    except BaseException:
-        db.rollback()
-        raise
     return {"id": item_id, "from": old, "to": status, "version": version + 1,
             "content_runtime_activated": False, "independent_approval": False,
             "canonical_skill_id": None}
@@ -241,8 +259,7 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
             or type(ttl_seconds) is not int or not 30 <= ttl_seconds <= 3600
             or type(max_attempts) is not int or not 1 <= max_attempts <= 20):
         raise ValueError("invalid lease request")
-    db.execute("BEGIN IMMEDIATE")
-    try:
+    with _atomic(db):
         exhausted = db.execute("""SELECT w.id FROM work_items w
             JOIN worker_leases l ON l.work_id=w.id
             WHERE w.program_id=? AND w.status='QUEUED'
@@ -265,7 +282,6 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
           ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1
         """, (program_id, now_epoch, max_attempts)).fetchone()
         if row is None:
-            db.commit()
             return None
         work_id, old_token, attempts = row
         token = (old_token or 0) + 1
@@ -276,14 +292,10 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
             owner=excluded.owner, fencing_token=excluded.fencing_token,
             expires_at=excluded.expires_at, attempt_count=excluded.attempt_count
         """, (work_id, owner, token, now_epoch + ttl_seconds, (attempts or 0) + 1))
-        db.commit()
         return {"work_id": work_id, "owner": owner, "fencing_token": token,
                 "expires_at": now_epoch + ttl_seconds, "attempt": (attempts or 0) + 1,
                 "worker_invoked": False, "execution_authorized": False,
                 "source_review_authenticated": False, "canonical_skill_id": None}
-    except BaseException:
-        db.rollback()
-        raise
 
 
 def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
@@ -296,8 +308,7 @@ def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
             or not isinstance(evidence_ref, str)
             or not evidence_ref.startswith("https://")):
         raise ValueError("invalid completion evidence")
-    db.execute("BEGIN IMMEDIATE")
-    try:
+    with _atomic(db):
         lease = db.execute("""SELECT owner,fencing_token,expires_at
             FROM worker_leases WHERE work_id=?""", (work_id,)).fetchone()
         current = db.execute("SELECT status,version FROM work_items WHERE id=?",
@@ -312,16 +323,27 @@ def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
             VALUES(?,?,?,?,?)""", (work_id, "QUEUED", "REVIEW_REQUIRED",
                                    owner, evidence_ref))
         db.execute("DELETE FROM worker_leases WHERE work_id=?", (work_id,))
-        db.commit()
         return {"work_id": work_id, "status": "REVIEW_REQUIRED",
                 "review_accepted": False, "release_authority": "NONE",
                 "canonical_skill_id": None}
-    except BaseException:
-        db.rollback()
-        raise
 
-def operator_status(db: sqlite3.Connection, program_id: str) -> dict:
+def operator_status(db: sqlite3.Connection, program_id: str,
+                    now_epoch: int | None = None, max_attempts: int = 3) -> dict:
     """Offline operator report; no authorization implied."""
+    import time
+
+    if now_epoch is None:
+        now_epoch = int(time.time())
+    if type(now_epoch) is not int or now_epoch < 0:
+        raise ValueError("invalid current time")
+    if type(max_attempts) is not int or not 1 <= max_attempts <= 20:
+        raise ValueError("invalid retry limit")
+    exhausted = db.execute("""SELECT w.id,w.grade,w.course_code,w.expectation_code
+        FROM work_items w JOIN worker_leases l ON l.work_id=w.id
+        WHERE w.program_id=? AND w.status='QUEUED'
+          AND l.expires_at <= ? AND l.attempt_count >= ?
+        ORDER BY w.grade,w.course_code,w.expectation_code""",
+        (program_id, now_epoch, max_attempts)).fetchall()
     rows = db.execute("""SELECT status,COUNT(*) FROM work_items
         WHERE program_id=? GROUP BY status""", (program_id,)).fetchall()
     blocked = db.execute("""SELECT id,grade,course_code,expectation_code
@@ -330,6 +352,9 @@ def operator_status(db: sqlite3.Connection, program_id: str) -> dict:
     return {"counts": dict(rows), "blocked_work_units": [
         dict(zip(("work_id","grade","course_code","expectation_code"), row))
         for row in blocked],
+        "retry_exhausted_awaiting_block": [
+        dict(zip(("work_id","grade","course_code","expectation_code"), row))
+        for row in exhausted],
         "source_review_authenticated": False, "independent_approval": False,
         "execution_authorized": False, "canonical_skill_mapping_authorized": False}
 

@@ -239,3 +239,29 @@ def test_next_task_omits_retry_exhausted_work(tmp_path):
         assert claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
         assert next_task(db, program["program_id"], 130, max_attempts=1) is None
         assert claim_next(db, program["program_id"], "w", 130, max_attempts=1) is None
+
+
+def test_transition_nests_inside_caller_transaction(tmp_path):
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(tmp_path / "nested.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        task_id = next_task(db, program["program_id"])["id"]
+        db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
+                      VALUES(?,?,?,?,?)""", (task_id, "QUEUED", "QUEUED", "operator", evidence))
+        assert db.in_transaction
+        transition(db, task_id, "IN_PROGRESS", "operator", evidence, 0)
+        assert db.in_transaction
+        db.rollback()
+        assert db.execute("SELECT status FROM work_items WHERE id=?", (task_id,)).fetchone()[0] == "QUEUED"
+
+
+def test_operator_status_surfaces_expired_retry_exhausted_work(tmp_path):
+    with connect(tmp_path / "status.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        lease = claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
+        status = operator_status(db, program["program_id"], now_epoch=130, max_attempts=1)
+        assert [u["work_id"] for u in status["retry_exhausted_awaiting_block"]] == [lease["work_id"]]
+        assert operator_status(db, program["program_id"], now_epoch=129,
+                               max_attempts=1)["retry_exhausted_awaiting_block"] == []
