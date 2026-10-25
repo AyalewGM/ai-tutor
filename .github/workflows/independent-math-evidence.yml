@@ -34,7 +34,7 @@ jobs:
         run: |
           set -euo pipefail
           gh api "repos/${{ github.repository }}/pulls/$PR" > pr.json
-          jq -e '.state == "open" and .draft == true' pr.json
+          jq -e '.state == "open" and .head.repo.full_name == "\${{ github.repository }}"' pr.json
           echo "sha=$(jq -er '.head.sha' pr.json)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         with:
@@ -53,6 +53,7 @@ jobs:
         run: |
           mkdir -p evidence
           test "$(git rev-parse HEAD)" = "$SHA" || exit 1
+          sha256sum "$TEST" > evidence/test-source.sha256
           python -m pytest "$TEST" -q --junitxml=evidence/results.xml > evidence/pytest.log 2>&1
       - name: Save exact revision and verification boundary
         if: always() && steps.pin.outcome == 'success'
@@ -68,6 +69,7 @@ jobs:
           Path("evidence/manifest.json").write_text(json.dumps({
             "issue": 446, "pr": int(os.environ["PR"]), "exact_sha": os.environ["SHA"],
             "test_result": os.environ["RESULT"], "independent_math_review": "PENDING",
+            "evidence_scope": "PR-authored tests with independently recomputed oracles; separate reviewer required",
             "no_merge": True, "no_activation": True, "no_learner_history_access": True
           }, indent=2) + "\n")
           PY
