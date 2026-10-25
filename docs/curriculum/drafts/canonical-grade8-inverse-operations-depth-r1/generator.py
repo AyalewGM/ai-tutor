@@ -420,6 +420,7 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "instruction": "Complete a fresh different-family item without hints.",
             "response_fields": [
                 "independent_variant_id",
+                "independent_answer",
                 "independent_family",
                 "independent_mode",
                 "support_used",
@@ -507,6 +508,16 @@ def advance_learning_path(
             or response.get("support_used") is not False
         ):
             raise ValueError("fresh different-family unhinted independent transfer is required")
+        expected_transfer = generate_transfer(variant)
+        if (response["independent_variant_id"] != expected_transfer.variant_id
+                or response["independent_family"] != expected_transfer.family):
+            raise ValueError("transfer identifier must match the generated task")
+        try:
+            transfer_answer = Fraction(str(response["independent_answer"]))
+        except (KeyError, ValueError, ZeroDivisionError):
+            raise ValueError("exact independent transfer answer is required") from None
+        if transfer_answer != Fraction(expected_transfer.answer):
+            raise ValueError("independent transfer did not solve the fresh task")
     if stage == "VERIFY":
         try:
             left = Fraction(str(response["substitution_left"]))
