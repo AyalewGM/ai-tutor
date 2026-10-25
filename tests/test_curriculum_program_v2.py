@@ -1,0 +1,267 @@
+"""V2 program planner tests (offline, no model/network, no learner DB)."""
+import pytest
+
+from scripts.curriculum_program_v2 import (
+    claim_next,
+    complete_claim,
+    connect,
+    import_manifest,
+    next_task,
+    operator_status,
+    parse_goal,
+    register_goal,
+    transition,
+)
+
+
+def sample_manifest():
+    return {
+        "verification_state": "CLAIMED_SOURCE_REVIEWED_UNAUTHENTICATED",
+        "reviewer_identity": "Independent Standards Review",
+        "review_evidence_url": "https://github.com/AyalewGM/ai-tutor/issues/278",
+        "expectations": [
+            {"grade": 9, "course_code": "MTH1W", "expectation_code": "C1.5",
+             "source_version": "2021",
+             "official_source_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1"}
+        ],
+    }
+
+
+def test_full_ontario_goal_is_program_not_fake_12_course_list(tmp_path):
+    with connect(tmp_path / "v2.db") as db:
+        goal = register_goal(db, "I want full Ontario mathematics curriculum, grades 1-12")
+        assert goal["goal"]["grades"] == list(range(1, 13))
+        assert goal["state"] == "AWAITING_OFFICIAL_SOURCE_INVENTORY"
+        assert goal["work_items"] == 0
+        assert next_task(db, goal["program_id"]) is None
+
+
+def test_source_review_and_durable_idempotent_import(tmp_path):
+    path = tmp_path / "v2.db"
+    with connect(path) as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        with pytest.raises(PermissionError):
+            import_manifest(db, program["program_id"],
+                            {**sample_manifest(), "verification_state": "UNVERIFIED"})
+        first = import_manifest(db, program["program_id"], sample_manifest())
+        second = import_manifest(db, program["program_id"], sample_manifest())
+        assert first["total"] == second["total"] == 1
+    with connect(path) as db:
+        task = next_task(db, program["program_id"])
+        assert task["expectation_code"] == "C1.5"
+        assert task["grade"] == 9
+
+
+def test_review_cannot_skip_implementation_or_self_release(tmp_path):
+    with connect(tmp_path / "v2.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        task_id = next_task(db, program["program_id"])["id"]
+        evidence = "https://github.com/AyalewGM/ai-tutor/pull/484"
+        with pytest.raises(ValueError):
+            transition(db, task_id, "PROTOTYPE_REVIEW_RECORDED", "author", evidence, 0)
+        first = transition(db, task_id, "IN_PROGRESS", "content-owner", evidence, 0)
+        assert first["content_runtime_activated"] is False
+        with pytest.raises(ValueError):
+            transition(db, task_id, "REVIEW_REQUIRED", "content-owner", evidence, 0)
+        transition(db, task_id, "REVIEW_REQUIRED", "content-owner", evidence, 1)
+        approved = transition(db, task_id, "PROTOTYPE_REVIEW_RECORDED", "reviewer", evidence, 2)
+        assert approved["content_runtime_activated"] is False
+        assert approved["independent_approval"] is False
+        assert approved["canonical_skill_id"] is None
+        with pytest.raises(ValueError):
+            transition(db, task_id, "IN_PROGRESS", "author", evidence, 3)
+        count = db.execute("SELECT COUNT(*) FROM audit_events").fetchone()[0]
+        assert count == 3
+
+
+@pytest.mark.parametrize("text", [
+    "Ontario math grades 0-12",
+    "Ontario math grades 12-1",
+    "Maryland mathematics grades 1-12",
+    "Ontario mathematics grades 1-20",
+])
+def test_unrecognized_or_impossible_scope_fails_closed(text):
+    with pytest.raises(ValueError):
+        parse_goal(text)
+
+
+def test_no_extraneous_grades_or_dishonest_source_state(tmp_path):
+    with connect(tmp_path / "v2.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-9")
+        manifest = sample_manifest()
+        manifest["expectations"][0]["grade"] = 10
+        with pytest.raises(ValueError):
+            import_manifest(db, program["program_id"], manifest)
+
+
+
+def test_lease_claim_retry_fencing_and_review_only_completion(tmp_path):
+    path = tmp_path / "leases.db"
+    with connect(path) as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        pid = program["program_id"]
+    with connect(path) as a, connect(path) as b:
+        first = claim_next(a, pid, "worker-A", now_epoch=1000, ttl_seconds=60)
+        assert first["fencing_token"] == 1
+        assert claim_next(b, pid, "worker-B", now_epoch=1001) is None
+        second = claim_next(b, pid, "worker-B", now_epoch=1060)
+        assert second["fencing_token"] == 2
+        assert second["attempt"] == 2
+        with pytest.raises(ValueError):
+            complete_claim(a, first["work_id"], "worker-A", 1, 1061,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+        result = complete_claim(
+            b, second["work_id"], "worker-B", 2, 1061,
+            evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485",
+        )
+        assert result["status"] == "REVIEW_REQUIRED"
+        assert result["review_accepted"] is False
+        assert claim_next(a, pid, "worker-C", now_epoch=1062) is None
+
+
+def test_lease_attempt_budget_exhaustion(tmp_path):
+    with connect(tmp_path / "budget.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, p["program_id"], sample_manifest())
+        claim_next(db, p["program_id"], "a", 100, ttl_seconds=30,
+                         max_attempts=2)
+        two = claim_next(db, p["program_id"], "b", 131, ttl_seconds=30,
+                         max_attempts=2)
+        assert two["fencing_token"] == 2
+        assert claim_next(db, p["program_id"], "c", 162, max_attempts=2) is None
+        report = operator_status(db, p["program_id"])
+        assert report["counts"]["BLOCKED_RETRY_EXHAUSTED"] == 1
+        assert len(report["blocked_work_units"]) == 1
+        assert db.execute("SELECT COUNT(*) FROM audit_events WHERE new_status='BLOCKED_RETRY_EXHAUSTED'").fetchone()[0] == 1
+        assert claim_next(db, p["program_id"], "d", 200, max_attempts=2) is None
+
+
+def test_stale_lease_can_never_approve_or_release(tmp_path):
+    with connect(tmp_path / "stale.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, p["program_id"], sample_manifest())
+        lease = claim_next(db, p["program_id"], "worker", 1000, ttl_seconds=30)
+        with pytest.raises(ValueError):
+            complete_claim(db, lease["work_id"], "worker", 1, 1030,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+        with pytest.raises(ValueError):
+            complete_claim(db, lease["work_id"], "hijacker", 1, 1001,
+                           evidence_ref="https://github.com/AyalewGM/ai-tutor/pull/485")
+
+def test_conflicting_provenance_rejected_atomically(tmp_path):
+    with connect(tmp_path / "provenance.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        first = sample_manifest()
+        import_manifest(db, p["program_id"], first)
+        for conflict in (
+            {"expectations": [{**first["expectations"][0], "official_source_url": "https://example.org/conflict"}]},
+            {"reviewer_identity": "other-reviewer"},
+            {"review_evidence_url": "https://example.org/other-evidence"},
+        ):
+            with pytest.raises(ValueError, match="conflicting source provenance"):
+                import_manifest(db, p["program_id"], {**first, **conflict})
+        assert db.execute("SELECT COUNT(*) FROM work_items").fetchone()[0] == 1
+
+
+def test_untrusted_source_and_review_never_confer_authority(tmp_path):
+    with connect(tmp_path / "auth.db") as db:
+        p = register_goal(db, "Ontario mathematics Grades 9-12")
+        manifest = sample_manifest()
+        with pytest.raises(PermissionError):
+            import_manifest(db, p["program_id"],
+                            {**manifest, "verification_state": "SOURCE_REVIEWED"})
+        imported = import_manifest(db, p["program_id"], manifest)
+        assert imported["source_review_authenticated"] is False
+        task = next_task(db, p["program_id"])
+        assert task["id"].startswith("unit-")
+        assert "canonical_skill_id" not in task
+        result = transition(db, task["id"], "IN_PROGRESS", "author",
+                            "https://example.org/draft", 0)
+        assert result["canonical_skill_id"] is None
+        transition(db, task["id"], "REVIEW_REQUIRED", "author",
+                   "https://example.org/draft", 1)
+        review = transition(db, task["id"], "PROTOTYPE_REVIEW_RECORDED",
+                            "self-claimed-reviewer", "https://example.org/draft", 2)
+        assert review["independent_approval"] is False
+        assert review["content_runtime_activated"] is False
+        assert operator_status(db, p["program_id"])["independent_approval"] is False
+        with pytest.raises(ValueError):
+            transition(db, task["id"], "APPROVED", "self",
+                       "https://example.org/draft", 3)
+
+
+
+def test_next_task_does_not_offer_actively_leased_work(tmp_path):
+    with connect(tmp_path / "preview.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        assert next_task(db, program["program_id"], now_epoch=1000) is not None
+        lease = claim_next(db, program["program_id"], "worker-1", 1000, ttl_seconds=60)
+        assert lease is not None
+        assert next_task(db, program["program_id"], now_epoch=1001) is None
+        assert next_task(db, program["program_id"], now_epoch=1060) is not None
+
+
+def test_stale_version_transition_rejected_across_connections(tmp_path):
+    path = tmp_path / "race.db"
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(path) as first, connect(path) as second:
+        program = register_goal(first, "Ontario mathematics Grades 9-12")
+        import_manifest(first, program["program_id"], sample_manifest())
+        task_id = next_task(first, program["program_id"])["id"]
+        transition(first, task_id, "IN_PROGRESS", "operator-a", evidence, 0)
+        with pytest.raises(ValueError):
+            transition(second, task_id, "IN_PROGRESS", "operator-b", evidence, 0)
+        events = first.execute("SELECT COUNT(*) FROM audit_events WHERE work_id=?",
+                               (task_id,)).fetchone()[0]
+        assert events == 1
+
+
+def test_resumed_program_reports_inventory_and_execution_progress(tmp_path):
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(tmp_path / "resume.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        assert import_manifest(db, program["program_id"], sample_manifest())["execution"] == "NOT_STARTED"
+        again = register_goal(db, "Ontario mathematics Grades 9-12")
+        assert again["state"] == "SOURCE_INVENTORY_IMPORTED"
+        assert again["work_items"] == 1
+        task_id = next_task(db, program["program_id"])["id"]
+        transition(db, task_id, "IN_PROGRESS", "operator", evidence, 0)
+        assert import_manifest(db, program["program_id"], sample_manifest())["execution"] == "STARTED"
+
+
+def test_next_task_omits_retry_exhausted_work(tmp_path):
+    with connect(tmp_path / "exhausted.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        assert claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
+        assert next_task(db, program["program_id"], 130, max_attempts=1) is None
+        assert claim_next(db, program["program_id"], "w", 130, max_attempts=1) is None
+
+
+def test_transition_nests_inside_caller_transaction(tmp_path):
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(tmp_path / "nested.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        task_id = next_task(db, program["program_id"])["id"]
+        db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
+                      VALUES(?,?,?,?,?)""", (task_id, "QUEUED", "QUEUED", "operator", evidence))
+        assert db.in_transaction
+        transition(db, task_id, "IN_PROGRESS", "operator", evidence, 0)
+        assert db.in_transaction
+        db.rollback()
+        assert db.execute("SELECT status FROM work_items WHERE id=?", (task_id,)).fetchone()[0] == "QUEUED"
+
+
+def test_operator_status_surfaces_expired_retry_exhausted_work(tmp_path):
+    with connect(tmp_path / "status.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        lease = claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
+        status = operator_status(db, program["program_id"], now_epoch=130, max_attempts=1)
+        assert [u["work_id"] for u in status["retry_exhausted_awaiting_block"]] == [lease["work_id"]]
+        assert operator_status(db, program["program_id"], now_epoch=129,
+                               max_attempts=1)["retry_exhausted_awaiting_block"] == []
