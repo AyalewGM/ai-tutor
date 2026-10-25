@@ -11,7 +11,7 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass, replace
 from fractions import Fraction
-from functools import lru_cache
+from functools import cache
 from types import MappingProxyType
 from typing import Final
 
@@ -840,7 +840,7 @@ def _variant(
     )
 
 
-@lru_cache(maxsize=None)
+@cache
 def _candidate_pool(family: str) -> tuple[tuple[Fraction, ...], ...]:
     """Enumerate normalized parameter tuples before deterministic shuffling."""
 
@@ -908,7 +908,7 @@ def _seed_band(seed: int) -> tuple[str, int]:
     return "TRANSFER", seed - TRANSFER_SEED_OFFSET
 
 
-@lru_cache(maxsize=None)
+@cache
 def _seeded_candidate(family: str, mode: str, seed: int) -> tuple[Fraction, ...]:
     band, slot = _seed_band(seed)
     candidates = list(_candidate_pool(family))
