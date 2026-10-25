@@ -41,10 +41,50 @@
       "title": "Grade 8 MCCRS Mathematics Companion Guide",
       "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
       "page": "printed page 24",
+      "access_date": "2026-10-25",
+      "standard_id": "8.AT.B.3a",
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE"
+      ],
+      "coverage_boundary": "Only solution-class recognition, comparison, and justification evidence in the three listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "Learner construction of examples having one, infinitely many, or no solution",
+        "Complete justification by successively rewriting examples to x = a, a = a, or a = b for different rational constants",
+        "Any other 8.AT.B.3a qualifier not explicitly implemented by the three listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no MSDE example or protected expression is copied."
+    },
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
+      "page": "printed page 24",
       "standard_id": "8.AT.B.3b",
       "access_date": "2026-10-25",
-      "mapping_status": "PROVISIONAL_PARTIAL_NON_EXHAUSTIVE",
-      "adaptation_rationale": "Scope and teaching aims only; all Mihur tasks, contexts, wording, and representations are original. No assessment item is copied."
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no MSDE example or protected expression is copied.",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "NESTED_GROUPS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only solving, distribution, combining-like-terms, modeling, and error-analysis evidence in the nine listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The distinct 8.AT.B.3a solution-class requirement, which is recorded separately",
+        "Any 8.AT.B.3b qualifier not explicitly implemented by the nine listed families"
+      ]
     },
     {
       "publisher": "Montgomery County Public Schools",
