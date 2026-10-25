@@ -202,3 +202,40 @@ def test_next_task_does_not_offer_actively_leased_work(tmp_path):
         assert lease is not None
         assert next_task(db, program["program_id"], now_epoch=1001) is None
         assert next_task(db, program["program_id"], now_epoch=1060) is not None
+
+
+def test_stale_version_transition_rejected_across_connections(tmp_path):
+    path = tmp_path / "race.db"
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(path) as first, connect(path) as second:
+        program = register_goal(first, "Ontario mathematics Grades 9-12")
+        import_manifest(first, program["program_id"], sample_manifest())
+        task_id = next_task(first, program["program_id"])["id"]
+        transition(first, task_id, "IN_PROGRESS", "operator-a", evidence, 0)
+        with pytest.raises(ValueError):
+            transition(second, task_id, "IN_PROGRESS", "operator-b", evidence, 0)
+        events = first.execute("SELECT COUNT(*) FROM audit_events WHERE work_id=?",
+                               (task_id,)).fetchone()[0]
+        assert events == 1
+
+
+def test_resumed_program_reports_inventory_and_execution_progress(tmp_path):
+    evidence = "https://github.com/AyalewGM/ai-tutor/issues/278"
+    with connect(tmp_path / "resume.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        assert import_manifest(db, program["program_id"], sample_manifest())["execution"] == "NOT_STARTED"
+        again = register_goal(db, "Ontario mathematics Grades 9-12")
+        assert again["state"] == "SOURCE_INVENTORY_IMPORTED"
+        assert again["work_items"] == 1
+        task_id = next_task(db, program["program_id"])["id"]
+        transition(db, task_id, "IN_PROGRESS", "operator", evidence, 0)
+        assert import_manifest(db, program["program_id"], sample_manifest())["execution"] == "STARTED"
+
+
+def test_next_task_omits_retry_exhausted_work(tmp_path):
+    with connect(tmp_path / "exhausted.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        assert claim_next(db, program["program_id"], "w", 100, ttl_seconds=30, max_attempts=1)
+        assert next_task(db, program["program_id"], 130, max_attempts=1) is None
+        assert claim_next(db, program["program_id"], "w", 130, max_attempts=1) is None

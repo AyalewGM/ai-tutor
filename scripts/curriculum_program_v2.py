@@ -96,14 +96,24 @@ def register_goal(db: sqlite3.Connection, text: str) -> dict:
     db.execute("INSERT OR IGNORE INTO programs(id,goal_json) VALUES(?,?)",
                (program_id, json.dumps(goal, sort_keys=True)))
     db.commit()
+    work_items = count_items(db, program_id)
     return {"program_id": program_id, "goal": goal,
-            "state": "AWAITING_OFFICIAL_SOURCE_INVENTORY",
-            "work_items": count_items(db, program_id)}
+            "state": ("SOURCE_INVENTORY_IMPORTED" if work_items
+                      else "AWAITING_OFFICIAL_SOURCE_INVENTORY"),
+            "work_items": work_items}
 
 
 def count_items(db: sqlite3.Connection, program_id: str) -> int:
     return db.execute("SELECT COUNT(*) FROM work_items WHERE program_id=?",
                       (program_id,)).fetchone()[0]
+
+
+def _execution_state(db: sqlite3.Connection, program_id: str) -> str:
+    started = db.execute("""SELECT 1 FROM work_items w
+        LEFT JOIN worker_leases l ON l.work_id=w.id
+        WHERE w.program_id=? AND (w.status!='QUEUED' OR l.work_id IS NOT NULL)
+        LIMIT 1""", (program_id,)).fetchone()
+    return "STARTED" if started else "NOT_STARTED"
 
 
 def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> dict:
@@ -155,13 +165,14 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
             VALUES(?,?,?,?,?,?,?,?,?)""",
             [(*row, reviewer, evidence) for row in validated])
     return {"program_id": program_id, "submitted": len(validated),
-            "total": count_items(db, program_id), "execution": "NOT_STARTED",
+            "total": count_items(db, program_id),
+            "execution": _execution_state(db, program_id),
             "approval_authority": "NONE", "source_review_authenticated": False,
             "runtime_activation_authorized": False}
 
 
 def next_task(db: sqlite3.Connection, program_id: str,
-              now_epoch: int | None = None) -> dict | None:
+              now_epoch: int | None = None, max_attempts: int = 3) -> dict | None:
     """Peek at claimable unleased work; claiming still requires claim_next."""
     import time
 
@@ -169,13 +180,15 @@ def next_task(db: sqlite3.Connection, program_id: str,
         now_epoch = int(time.time())
     if type(now_epoch) is not int or now_epoch < 0:
         raise ValueError("invalid current time")
+    if type(max_attempts) is not int or not 1 <= max_attempts <= 20:
+        raise ValueError("invalid retry limit")
     row = db.execute("""SELECT w.id,w.grade,w.course_code,w.expectation_code,
         w.source_version FROM work_items w
       LEFT JOIN worker_leases l ON l.work_id=w.id
       WHERE w.program_id=? AND w.status='QUEUED'
-      AND (l.work_id IS NULL OR l.expires_at <= ?)
+      AND (l.work_id IS NULL OR (l.expires_at <= ? AND l.attempt_count < ?))
       ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1""",
-                     (program_id, now_epoch)).fetchone()
+                     (program_id, now_epoch, max_attempts)).fetchone()
     if row is None:
         return None
     return dict(zip(["id", "grade", "course_code", "expectation_code", "source_version"], row))
@@ -189,17 +202,25 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
         raise ValueError("auditable evidence URL required")
     if type(expected_version) is not int or expected_version < 0:
         raise ValueError("invalid expected version")
-    with db:
+    db.execute("BEGIN IMMEDIATE")
+    try:
         row = db.execute("SELECT status,version FROM work_items WHERE id=?", (item_id,)).fetchone()
         if row is None:
             raise ValueError("unknown unit")
         old, version = row
         if version != expected_version or status not in _ALLOWED[old]:
             raise ValueError("invalid or stale state transition")
-        db.execute("UPDATE work_items SET status=?,version=version+1 WHERE id=?",
-                   (status, item_id))
+        updated = db.execute("""UPDATE work_items SET status=?,version=version+1
+            WHERE id=? AND version=? AND status=?""",
+            (status, item_id, expected_version, old)).rowcount
+        if updated != 1:
+            raise ValueError("invalid or stale state transition")
         db.execute("""INSERT INTO audit_events(work_id,old_status,new_status,actor,evidence_ref)
                       VALUES(?,?,?,?,?)""", (item_id, old, status, actor, evidence_ref))
+        db.commit()
+    except BaseException:
+        db.rollback()
+        raise
     return {"id": item_id, "from": old, "to": status, "version": version + 1,
             "content_runtime_activated": False, "independent_approval": False,
             "canonical_skill_id": None}
