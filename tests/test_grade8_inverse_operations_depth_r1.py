@@ -56,13 +56,20 @@ def test_package_is_draft_reuse_only_and_history_neutral() -> None:
 def test_current_versioned_provenance_and_license_rationale_are_explicit() -> None:
     manifest = json.loads((PACKAGE / "package.json").read_text())
     sources = manifest["source_provenance"]
-    assert len(sources) == 3
+    assert len(sources) == 4
     assert sources[0]["standard_id"] == "8.AT.B.3"
     assert sources[0]["version_date"] == "Version 1, February 2026; standards adopted July 2025"
     assert sources[0]["page"] == 24
+    assert sources[1]["standard_id"] == "CURRENT_LOCAL_CURRICULUM_QUALIFIER_ONLY"
+    assert "Amplify Desmos Math" in sources[1]["use"]
+    assert (
+        sources[2]["standard_id"]
+        == "LEGACY_OPEN_RESOURCE_STRUCTURE_REFERENCE_ONLY_NOT_CURRENT_ALIGNMENT"
+    )
+    assert "not current local sequence or alignment evidence" in sources[2]["use"]
     assert all(source["access_date"] == "2026-10-25" for source in sources)
     assert all(source["license_adaptation"] for source in sources)
-    assert "PREREQUISITE" in sources[2]["standard_id"]
+    assert "PREREQUISITE" in sources[3]["standard_id"]
 
 
 @pytest.mark.parametrize("mode", sorted(MODULE.MODES))
