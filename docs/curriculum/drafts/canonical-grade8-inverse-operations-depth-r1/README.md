@@ -13,13 +13,17 @@ prerequisite, difficulty rationale, exact oracle, equivalence/domain boundary,
 misconception signatures, targeted representation move, and concrete → visual
 → symbolic contract.
 
-Guided diagnosis requires an observed exact answer, a learner-visible labelled
-strategy choice, and exact substitution values. A single wrong answer never
-earns a misconception label. The public probe contract—not a reviewer-only
-token—drives classification. Ambiguous, inconsistent, or unparseable evidence
-fails closed to neutral questions. After agreeing evidence, guided repair adds
-two Socratic questions, a representation move, and an explanation of why the
-observed strategy breaks equality without revealing the correct answer.
+Guided practice retains the learner's first parseable exact response, whether
+correct or incorrect. Diagnose uses that authentic practice response with a
+learner-visible labelled strategy choice and exact substitution values; it does
+not ask the learner to invent a replacement wrong answer. A single wrong answer
+never earns a misconception label. The public probe contract—not a
+reviewer-only token—drives classification. Ambiguous, inconsistent, or
+unparseable evidence fails closed to neutral questions. After agreeing
+evidence, guided repair adds two Socratic questions, a representation move, and
+an explanation of why the observed strategy breaks equality without revealing
+the correct answer. The corrected repair-exit answer is then retained for final
+verification.
 
 The guided path is an enforced pure state machine: Observe → Predict →
 Manipulate → Explain → Practice → Diagnose → Transfer → Verify. The actual
@@ -27,10 +31,12 @@ prediction is retained; an incorrect inverse choice stays in Predict with a
 task-specific Socratic retry before manipulation is revealed. Manipulation
 requires the exact inverse on both complete sides. Explain requires a correct
 public equality-preservation choice plus a learner explanation naming both
-sides. Diagnose is bound to the public answer/strategy/substitution probes:
-arbitrary evidence cannot advance, and a uniquely matched misconception
-remains in Diagnose until the learner completes its answer-free targeted repair
-and exactly resolves the original equation. Transfer must identify a fresh
+sides. Diagnose is bound to the retained practice response plus public
+strategy/substitution probes: arbitrary evidence cannot advance, and a uniquely
+matched misconception remains in Diagnose until the learner completes its
+answer-free targeted repair and exactly resolves the original equation. A
+correct practice response receives no remediation and only requires readiness
+confirmation before transfer. Transfer must identify a fresh
 different-family `independent` item with no support, and verification
 reconstructs both original equation sides from the practiced exact answer.
 Diagnostic, independent, and mastery modes cannot obtain guided repair.
