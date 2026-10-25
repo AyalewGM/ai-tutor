@@ -15,11 +15,11 @@ FAMILIES = ("DATA_TYPE", "GRAPH_CHOICE", "CENTER_CHOICE", "CONSTRUCT_SET",
 SOCRATIC = {
     "DATA_TYPE": "Are the values categories, measured quantities or separate permitted steps?",
     "GRAPH_CHOICE": "What must the display show: categories, intervals, proportions or quartiles?",
-    "CENTER_CHOICE": "Which center is least affected by the unusually large observation?",
+    "CENTER_CHOICE": "Which center is least affected by the unusually extreme observation?",
     "CONSTRUCT_SET": "Does the sum divided by five equal the requested mean?",
     "QUARTILES": "Where are the medians of the two halves, not their endpoints?",
     "ORDINARY_BOX": "Where does the left whisker of an ordinary plot end?",
-    "MODIFIED_BOX": "What is the largest observed value inside the upper fence?",
+    "MODIFIED_BOX": "Which observed value is the most extreme one still inside the fence on the outlier's side?",
     "COMPARE_BOXES": "Compare Q3 minus Q1 for each group, not the full ranges.",
 }
 DATA_TYPE_CATEGORIES = (
@@ -120,6 +120,7 @@ def generate(family, seed, mode, *, transfer=False):
                   "Classify the variable: CATEGORICAL, DISCRETE or CONTINUOUS.")
         answer = {"classification": result}
         error = {"classification": wrong}
+        structure = kind
     elif family == "GRAPH_CHOICE":
         result = rng.choice(("BAR", "HISTOGRAM", "BOXPLOT", "CIRCLE"))
         if result in ("BAR", "CIRCLE"):
@@ -151,22 +152,52 @@ def generate(family, seed, mode, *, transfer=False):
         prompt = f"{purpose} Choose BAR, HISTOGRAM, BOXPLOT or CIRCLE."
         answer = {"graph": result}
         error = {"graph": wrong}
+        structure = result
     elif family == "CENTER_CHOICE":
-        start = rng.randint(8, 24)
-        values = [start + 2 * i for i in range(5)] + [start + rng.randint(58, 81)]
+        side, repeat = rng.choice(("HIGH", "LOW")), rng.choice((False, True))
+        start = rng.randint(8, 24) if side == "HIGH" else rng.randint(70, 90)
+        values = [start + 2 * i for i in range(5)]
+        if repeat:
+            values[3] = values[2]
+        values.append(start + rng.randint(58, 81) if side == "HIGH" else start - rng.randint(55, 65))
+        structure = f"{side}_EXTREME_{'REPEATED_VALUE' if repeat else 'NO_REPEAT'}"
         rng.shuffle(values)
-        prompt = f"Service times in minutes: {values}. Find mean, median, mode, range and resistant typical center."
+        prompt = (f"Service times in minutes: {values}. Find mean, median, mode (NONE if no value repeats), "
+                  "range and resistant typical center.")
         answer = {"mean": str(Fraction(sum(values), 6)), "median": str(median(values)),
-                  "mode": "NONE", "range": str(max(values) - min(values)), "center": "MEDIAN"}
+                  "mode": str(start + 4) if repeat else "NONE",
+                  "range": str(max(values) - min(values)), "center": "MEDIAN"}
         error = dict(answer, center="MEAN")
     elif family == "CONSTRUCT_SET":
-        m, d = rng.randint(12, 29), rng.randint(2, 8)
-        prompt = f"Construct ANY five nonnegative integers with mean {m}, median {m}, unique mode {m} and range {2*d}."
-        answer = {"values": [m-d, m, m, m, m+d]}
-        error = {"values": [m-d, m, m, m, m+d+1]}
+        m = rng.randint(16, 29)
+        structure = rng.choice(("MEAN_EQUALS_MEDIAN", "MEAN_ABOVE_MEDIAN", "MEAN_BELOW_MEDIAN"))
+        if structure == "MEAN_EQUALS_MEDIAN":
+            d = rng.randint(2, 8)
+            values, mean = [m - d, m, m, m, m + d], m
+        else:
+            t = rng.randint(1, 3)
+            k2 = rng.randint((5 * t + 1) // 2 + 1, 5 * t)
+            values, mean = [m - 1, m, m, m + 5 * t + 1 - k2, m + k2], m + t
+            if structure == "MEAN_BELOW_MEDIAN":
+                values, mean = [2 * m - v for v in reversed(values)], m - t
+        spread = max(values) - min(values)
+        constraints = {"mean": str(mean), "median": str(m), "mode": str(m), "range": str(spread)}
+        prompt = (f"Construct ANY five nonnegative integers with mean {mean}, median {m}, "
+                  f"unique mode {m} and range {spread}.")
+        answer = {"values": values}
+        error = {"values": values[:-1] + [values[-1] + 1]}
     elif family in ("QUARTILES", "ORDINARY_BOX"):
-        values = sorted(rng.sample(range(4, 67), rng.choice((9, 10, 11, 12))))
-        e = box(values)
+        layout = rng.choice(("LIST", "FREQUENCY_TABLE"))
+        n = rng.choice((9, 10, 11, 12))
+        while True:
+            values = sorted(rng.sample(range(4, 67), n) if layout == "LIST" else rng.choices(range(4, 30), k=n))
+            e = box(values)
+            if (e["q1"] != e["minimum"] and e["q3"] != e["maximum"]
+                    and (layout == "LIST" or max(Counter(values).values()) >= 2)):
+                break
+        structure = f"{layout}_{'ODD' if n % 2 else 'EVEN'}_N"
+        data = str(values) if layout == "LIST" else "frequency table (value: count) " + ", ".join(
+            f"{v}: {c}" for v, c in sorted(Counter(values).items()))
         keys = ("q1", "median", "q3", "iqr") if family == "QUARTILES" else (
             "minimum", "q1", "median", "q3", "maximum", "left_whisker", "right_whisker")
         answer = {k: e[k] for k in keys}
@@ -175,17 +206,21 @@ def generate(family, seed, mode, *, transfer=False):
             error.update(q1=e["minimum"], q3=e["maximum"])
         else:
             error["left_whisker"] = e["q1"]
-        prompt = (f"Data: {values}. Give {'quartiles and IQR' if family == 'QUARTILES' else 'ORDINARY min-to-max box-plot landmarks'}. "
+        prompt = (f"Data: {data}. Give {'quartiles and IQR' if family == 'QUARTILES' else 'ORDINARY min-to-max box-plot landmarks'}. "
                   "Use median-of-halves, excluding the overall median for odd n.")
     elif family == "MODIFIED_BOX":
-        start = rng.randint(8, 28)
-        values = [start + v for v in rng.sample(range(17), 10)] + [start + rng.randint(72, 90)]
+        side = rng.choice(("HIGH", "LOW"))
+        start = rng.randint(8, 28) if side == "HIGH" else rng.randint(80, 100)
+        values = [start + v for v in rng.sample(range(17), 10)]
+        values.append(start + rng.randint(72, 90) if side == "HIGH" else start - rng.randint(72, 79))
         rng.shuffle(values)
+        structure = f"{side}_OUTLIER"
         e = box(values, True)
         keys = ("q1", "median", "q3", "iqr", "lower_fence", "upper_fence",
                 "left_whisker", "right_whisker", "outliers")
         answer = {k: e[k] for k in keys}
-        error = dict(answer, right_whisker=e["maximum"])
+        error = (dict(answer, right_whisker=e["maximum"]) if side == "HIGH"
+                 else dict(answer, left_whisker=e["minimum"]))
         prompt = (f"Data: {values}. Give quartiles, IQR, 1.5×IQR fences, "
                   "non-outlier whiskers and outlier dots for a MODIFIED box plot. "
                   "Use median-of-halves, excluding the overall median for odd n.")
@@ -201,7 +236,14 @@ def generate(family, seed, mode, *, transfer=False):
                   "iqr_a": str(ai), "iqr_b": str(bi),
                   "wider": "A" if ai > bi else "B"}
         error = dict(answer, wider="B" if ai > bi else "A")
-        prompt = (f"Group A: {a}; Group B: {b}. Compare medians and IQRs. Which has wider middle 50%? "
+        structure = rng.choice(("RAW_BOTH", "RAW_AND_SUMMARY"))
+        if structure == "RAW_BOTH":
+            groups = f"Group A: {a}; Group B: {b}."
+        else:
+            eb = box(b)
+            groups = (f"Group A raw data: {a}; Group B five-number summary: min {eb['minimum']}, "
+                      f"Q1 {eb['q1']}, median {eb['median']}, Q3 {eb['q3']}, max {eb['maximum']}.")
+        prompt = (f"{groups} Compare medians and IQRs. Which has wider middle 50%? "
                   "Use median-of-halves, excluding the overall median for odd n.")
     public = {
         "status": STATUS, "runtime_activation": False, "mastery_credit": False,
@@ -216,7 +258,10 @@ def generate(family, seed, mode, *, transfer=False):
                           "reduced_motion": "Static state and announcements",
                           "non_colour": "Labels and patterns"},
     }
-    return {"public": public, "private": {"answer": answer, "wrong_signature": error},
+    private = {"answer": answer, "wrong_signature": error, "structure": structure}
+    if family == "CONSTRUCT_SET":
+        private["constraints"] = constraints
+    return {"public": public, "private": private,
             "seed": seed, "family": family, "mode": mode}
 
 
@@ -231,13 +276,12 @@ def review_equivalent(item, response):
         values = response["values"]
         if not isinstance(values, list) or len(values) != 5 or any(type(v) is not int or v < 0 for v in values):
             return False
-        original = expected["values"]
-        m, d = original[2], original[-1] - original[2]
+        c = item["private"]["constraints"]
         counts = Counter(values)
         top = max(counts.values())
-        return (Fraction(sum(values), 5) == m and median(values) == m
-                and [k for k, n in counts.items() if n == top] == [m]
-                and top >= 2 and max(values) - min(values) == 2*d)
+        return (Fraction(sum(values), 5) == exact(c["mean"]) and median(values) == exact(c["median"])
+                and [k for k, n in counts.items() if n == top] == [int(c["mode"])]
+                and top >= 2 and max(values) - min(values) == int(c["range"]))
     for key, target in expected.items():
         value = response[key]
         if isinstance(target, list):
@@ -284,6 +328,8 @@ def independent_transfer(source, seed):
     for offset in range(64):
         candidate = generate(source["family"], seed + 1_000_003 + offset,
                              "independent", transfer=True)
-        if candidate["public"]["prompt"] != source["public"]["prompt"] and candidate["private"] != source["private"]:
+        if (candidate["public"]["prompt"] != source["public"]["prompt"]
+                and candidate["private"] != source["private"]
+                and candidate["private"]["structure"] != source["private"]["structure"]):
             return candidate
     raise ValueError("fresh transfer unavailable")

@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
+from collections import Counter
 from fractions import Fraction
 from pathlib import Path
 
@@ -31,6 +32,7 @@ def test_deterministic_exact_and_answer_isolation(family, mode):
         assert public["mastery_credit"] is False
         assert public["support_prompts"] == []
         assert "answer" not in public and "wrong_signature" not in json.dumps(public)
+        assert "structure" not in public and "constraints" not in public
         if mode == "guided":
             assert M.guided_response(item, item["private"]["answer"])["classification"] == "CORRECT_NO_REPAIR"
             wrong = item["private"]["wrong_signature"]
@@ -66,9 +68,16 @@ def test_modified_fences_whiskers_and_outliers():
         assert "MODIFIED" in data
         answer = item["private"]["answer"]
         assert len(answer["outliers"]) == 1
-        assert M.exact(answer["right_whisker"]) < answer["outliers"][0]
-        assert M.exact(answer["upper_fence"]) < answer["outliers"][0]
-        assert M.exact(answer["upper_fence"]) == M.exact(answer["q3"]) + Fraction(3, 2) * M.exact(answer["iqr"])
+        outlier = answer["outliers"][0]
+        q1, q3, iqr = (M.exact(answer[k]) for k in ("q1", "q3", "iqr"))
+        assert M.exact(answer["upper_fence"]) == q3 + Fraction(3, 2) * iqr
+        assert M.exact(answer["lower_fence"]) == q1 - Fraction(3, 2) * iqr
+        if item["private"]["structure"] == "HIGH_OUTLIER":
+            assert M.exact(answer["right_whisker"]) < outlier
+            assert M.exact(answer["upper_fence"]) < outlier
+        else:
+            assert M.exact(answer["left_whisker"]) > outlier
+            assert M.exact(answer["lower_fence"]) > outlier
 
 
 def test_inverse_dataset_accepts_unordered_valid_alternatives():
@@ -79,6 +88,10 @@ def test_inverse_dataset_accepts_unordered_valid_alternatives():
         invalid = list(original)
         invalid[-1] += 1
         assert not M.review_equivalent(item, {"values": invalid})
+        m = original[2]
+        symmetric = [m - 1, m, m, m, m + 1]
+        if item["private"]["structure"] != "MEAN_EQUALS_MEDIAN":
+            assert not M.review_equivalent(item, {"values": symmetric})
         assert not M.review_equivalent(item, {"values": [True] + original[1:]})
         assert not M.review_equivalent(item, {"values": original + [0]})
 
@@ -147,3 +160,72 @@ def test_classification_families_vary_beyond_fixed_case_tables(family):
         answers = {next(iter(item["private"]["answer"].values())) for item in items}
         assert answers == ({"CATEGORICAL", "DISCRETE", "CONTINUOUS"} if family == "DATA_TYPE"
                            else {"BAR", "HISTOGRAM", "BOXPLOT", "CIRCLE"})
+
+
+TASK_STRUCTURES = {
+    "DATA_TYPE": {"CATEGORICAL", "CATEGORICAL_CODED", "COUNT", "STEPPED", "MEASURED"},
+    "GRAPH_CHOICE": {"BAR", "HISTOGRAM", "BOXPLOT", "CIRCLE"},
+    "CENTER_CHOICE": {f"{side}_EXTREME_{rep}" for side in ("HIGH", "LOW")
+                      for rep in ("REPEATED_VALUE", "NO_REPEAT")},
+    "CONSTRUCT_SET": {"MEAN_EQUALS_MEDIAN", "MEAN_ABOVE_MEDIAN", "MEAN_BELOW_MEDIAN"},
+    "QUARTILES": {f"{layout}_{parity}_N" for layout in ("LIST", "FREQUENCY_TABLE") for parity in ("ODD", "EVEN")},
+    "ORDINARY_BOX": {f"{layout}_{parity}_N" for layout in ("LIST", "FREQUENCY_TABLE") for parity in ("ODD", "EVEN")},
+    "MODIFIED_BOX": {"HIGH_OUTLIER", "LOW_OUTLIER"},
+    "COMPARE_BOXES": {"RAW_BOTH", "RAW_AND_SUMMARY"},
+}
+
+
+@pytest.mark.parametrize("family", M.FAMILIES)
+def test_task_structure_fingerprints_and_transfer_changes_structure(family):
+    for mode in M.MODES:
+        seen = {M.generate(family, seed, mode)["private"]["structure"] for seed in range(200)}
+        assert seen == TASK_STRUCTURES[family]
+    for seed in range(80):
+        for source_mode in ("guided", "diagnostic"):
+            source = M.generate(family, seed, source_mode)
+            exit_item = M.independent_transfer(source, seed)
+            assert exit_item["private"]["structure"] != source["private"]["structure"]
+
+
+def test_center_choice_mode_and_extreme_side_are_exact():
+    for seed in range(200):
+        item = M.generate("CENTER_CHOICE", seed, "independent")
+        values = [int(v) for v in item["public"]["prompt"].split("[")[1].split("]")[0].split(",")]
+        answer = item["private"]["answer"]
+        counts = Counter(values)
+        top = max(counts.values())
+        assert answer["mode"] == (str(max(counts, key=counts.get)) if top >= 2 else "NONE")
+        mean, med = M.exact(answer["mean"]), M.exact(answer["median"])
+        assert (mean > med) == item["private"]["structure"].startswith("HIGH")
+
+
+@pytest.mark.parametrize("family", ["QUARTILES", "ORDINARY_BOX"])
+def test_frequency_table_layout_reproduces_oracle(family):
+    checked = 0
+    for seed in range(200):
+        item = M.generate(family, seed, "independent")
+        if not item["private"]["structure"].startswith("FREQUENCY_TABLE"):
+            continue
+        table = item["public"]["prompt"].split("(value: count) ")[1].split(". Give")[0]
+        values = []
+        for pair in table.split(", "):
+            value, count = pair.split(": ")
+            values += [int(value)] * int(count)
+        assert any(int(pair.split(": ")[1]) >= 2 for pair in table.split(", "))
+        expected = M.box(values)
+        assert all(item["private"]["answer"][k] == expected[k] for k in item["private"]["answer"])
+        checked += 1
+    assert checked >= 50
+
+
+def test_compare_summary_layout_matches_group_b_oracle():
+    for seed in range(200):
+        item = M.generate("COMPARE_BOXES", seed, "independent")
+        if item["private"]["structure"] != "RAW_AND_SUMMARY":
+            continue
+        answer = item["private"]["answer"]
+        prompt = item["public"]["prompt"]
+        assert f"median {answer['median_b']}" in prompt
+        q1 = M.exact(prompt.split("Q1 ")[1].split(",")[0])
+        q3 = M.exact(prompt.split("Q3 ")[1].split(",")[0])
+        assert q3 - q1 == M.exact(answer["iqr_b"])
