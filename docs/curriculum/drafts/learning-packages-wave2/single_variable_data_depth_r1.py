@@ -22,6 +22,25 @@ SOCRATIC = {
     "MODIFIED_BOX": "What is the largest observed value inside the upper fence?",
     "COMPARE_BOXES": "Compare Q3 minus Q1 for each group, not the full ranges.",
 }
+DATA_TYPE_CATEGORIES = (
+    ("favourite lunch option", ("soup", "salad", "wrap", "pasta", "rice bowl")),
+    ("preferred route to school", ("north path", "river trail", "main road", "bus loop")),
+    ("primary phone brand", ("brand A", "brand B", "brand C", "brand D", "brand E")),
+    ("club joined", ("chess", "robotics", "drama", "choir", "debate")),
+    ("eye colour", ("brown", "blue", "green", "hazel", "grey")),
+    ("transport mode", ("walk", "bike", "bus", "car", "train")),
+)
+DATA_TYPE_CODES = ("jersey number", "locker number", "postal zone code", "bus route number")
+DATA_TYPE_COUNTS = ("number of bicycle repairs this month", "number of siblings",
+                    "number of books borrowed this term", "number of goals scored per game",
+                    "number of messages received today")
+DATA_TYPE_STEPPED = ("shoe size", "ticket price in dollars", "parking fee in dollars",
+                     "quiz score with partial credit")
+DATA_TYPE_MEASURED = (("commute distance", "km"), ("plant height", "cm"),
+                      ("reaction time", "s"), ("backpack mass", "kg"),
+                      ("water temperature", "°C"))
+DATA_TYPE_GROUPS = ("Class A", "Class B", "the morning shift", "the evening shift",
+                    "Team North", "Team South")
 NUMBER = re.compile(r"[+-]?(?:[0-9]+(?:[.][0-9]+)?|[0-9]+/[1-9][0-9]*)$")
 
 
@@ -72,25 +91,64 @@ def generate(family, seed, mode, *, transfer=False):
         raise ValueError("invalid draft request")
     rng = random.Random(f"mihur:svd-r1:{family}:{mode}:{seed}:{transfer}")
     if family == "DATA_TYPE":
-        cases = [
-            ("distance measured at arbitrary precision", "CONTINUOUS", "DISCRETE"),
-            ("price allowed only in 0.25-unit steps", "DISCRETE", "CONTINUOUS"),
-            ("preferred route name", "CATEGORICAL", "CONTINUOUS"),
-            ("number of bicycle repairs", "DISCRETE", "CONTINUOUS"),
-        ]
-        context, result, wrong = rng.choice(cases)
-        prompt = f"Classify {context}: CATEGORICAL, DISCRETE or CONTINUOUS."
+        kind = rng.choice(("CATEGORICAL", "CATEGORICAL_CODED", "COUNT", "STEPPED", "MEASURED"))
+        n = rng.randint(5, 7)
+        if kind == "CATEGORICAL":
+            variable, labels = rng.choice(DATA_TYPE_CATEGORIES)
+            observations = [rng.choice(labels) for _ in range(n)]
+            result, wrong = "CATEGORICAL", "DISCRETE"
+        elif kind == "CATEGORICAL_CODED":
+            variable = rng.choice(DATA_TYPE_CODES)
+            observations = [str(v) for v in rng.sample(range(10, 100), n)]
+            result, wrong = "CATEGORICAL", "DISCRETE"
+        elif kind == "COUNT":
+            variable = rng.choice(DATA_TYPE_COUNTS)
+            observations = [str(rng.randint(0, 30)) for _ in range(n)]
+            result, wrong = "DISCRETE", "CONTINUOUS"
+        elif kind == "STEPPED":
+            variable = rng.choice(DATA_TYPE_STEPPED)
+            step = rng.choice((Fraction(1, 4), Fraction(1, 2), Fraction(1, 5)))
+            observations = [f"{float(step * rng.randint(4, 60)):g}" for _ in range(n)]
+            variable = f"{variable}, which can only take values in steps of {float(step):g}"
+            result, wrong = "DISCRETE", "CONTINUOUS"
+        else:
+            variable, unit = rng.choice(DATA_TYPE_MEASURED)
+            observations = [f"{rng.randint(100, 999) / 10:.1f} {unit}" for _ in range(n)]
+            variable = f"{variable}, recorded to the nearest 0.1 {unit}"
+            result, wrong = "CONTINUOUS", "DISCRETE"
+        prompt = (f"A survey records {variable}. Sample: {', '.join(observations)}. "
+                  "Classify the variable: CATEGORICAL, DISCRETE or CONTINUOUS.")
         answer = {"classification": result}
         error = {"classification": wrong}
     elif family == "GRAPH_CHOICE":
-        cases = [
-            ("counts across named categories", "BAR", "HISTOGRAM"),
-            ("numerical measurements grouped in adjacent intervals", "HISTOGRAM", "BAR"),
-            ("median and IQR for two groups", "BOXPLOT", "BAR"),
-            ("mutually exclusive categories partitioning one whole", "CIRCLE", "HISTOGRAM"),
-        ]
-        purpose, result, wrong = rng.choice(cases)
-        prompt = f"Choose BAR, HISTOGRAM, BOXPLOT or CIRCLE to display {purpose}."
+        result = rng.choice(("BAR", "HISTOGRAM", "BOXPLOT", "CIRCLE"))
+        if result in ("BAR", "CIRCLE"):
+            variable, labels = rng.choice(DATA_TYPE_CATEGORIES)
+            chosen = rng.sample(labels, rng.randint(3, min(5, len(labels))))
+            counts = {label: rng.randint(2, 40) for label in chosen}
+            table = ", ".join(f"{k}: {v}" for k, v in counts.items())
+            if result == "BAR":
+                purpose = f"Counts of {variable} ({table}). Goal: compare the counts across categories."
+                wrong = "HISTOGRAM"
+            else:
+                purpose = (f"Counts of {variable} ({table}, total {sum(counts.values())}). "
+                           "Goal: show each category's share of the whole.")
+                wrong = "HISTOGRAM"
+        else:
+            variable, unit = rng.choice(DATA_TYPE_MEASURED)
+            if result == "HISTOGRAM":
+                width = rng.choice((5, 10, 20))
+                values = [rng.randint(10, 99) for _ in range(rng.randint(18, 30))]
+                purpose = (f"{len(values)} values of {variable} in {unit}, from {min(values)} to {max(values)}. "
+                           f"Goal: show the shape of the distribution in intervals of width {width}.")
+                wrong = "BAR"
+            else:
+                a, b = rng.sample(DATA_TYPE_GROUPS, 2)
+                purpose = (f"{variable} in {unit} measured for {rng.randint(12, 40)} cases in {a} "
+                           f"and {rng.randint(12, 40)} in {b}. "
+                           "Goal: compare the medians and middle-50% spreads of the two groups.")
+                wrong = "BAR"
+        prompt = f"{purpose} Choose BAR, HISTOGRAM, BOXPLOT or CIRCLE."
         answer = {"graph": result}
         error = {"graph": wrong}
     elif family == "CENTER_CHOICE":

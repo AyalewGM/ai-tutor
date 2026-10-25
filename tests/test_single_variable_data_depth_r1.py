@@ -137,3 +137,13 @@ def test_box_prompts_state_quartile_convention_and_transfer_requests_only_scored
     for family in M.FAMILIES:
         item = M.independent_transfer(M.generate(family, 0, "guided"), 0)
         assert "Explain" not in item["public"]["prompt"]
+
+
+@pytest.mark.parametrize("family", ["DATA_TYPE", "GRAPH_CHOICE"])
+def test_classification_families_vary_beyond_fixed_case_tables(family):
+    for mode in M.MODES:
+        items = [M.generate(family, seed, mode) for seed in range(80)]
+        assert len({item["public"]["prompt"] for item in items}) >= 70
+        answers = {next(iter(item["private"]["answer"].values())) for item in items}
+        assert answers == ({"CATEGORICAL", "DISCRETE", "CONTINUOUS"} if family == "DATA_TYPE"
+                           else {"BAR", "HISTOGRAM", "BOXPLOT", "CIRCLE"})
