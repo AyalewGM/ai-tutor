@@ -67,7 +67,7 @@ It never marks independent reviewer acceptance or activates content.
 
 These functions are **proof-of-mechanism**, not unattended worker execution.
 They have no model runtime, no source acquisition, no parallel PostgreSQL
-worker transaction semantics and no durable task scheduler process. Expired retry-exhausted work transitions to audited `BLOCKED_RETRY_EXHAUSTED`. The `status` CLI exposes affected units for manual intervention.
+worker transaction semantics and no durable task scheduler process. Expired retry-exhausted work transitions to audited `BLOCKED_RETRY_EXHAUSTED`. The `status` CLI exposes affected units for manual intervention, judged against the retry budget stored on each lease when it was claimed. A failed commit rolls back the planner write rather than leaving it pending on the connection.
 
 Source-review approval in this prototype is metadata provided to the import
 function, not independently authenticated authorization. Production worker

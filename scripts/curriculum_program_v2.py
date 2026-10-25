@@ -67,7 +67,8 @@ def connect(path: str | Path) -> sqlite3.Connection:
           owner TEXT NOT NULL,
           fencing_token INTEGER NOT NULL,
           expires_at INTEGER NOT NULL,
-          attempt_count INTEGER NOT NULL DEFAULT 0
+          attempt_count INTEGER NOT NULL DEFAULT 0,
+          max_attempts INTEGER NOT NULL DEFAULT 3
         );
         CREATE TABLE IF NOT EXISTS audit_events (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,8 +84,19 @@ def connect(path: str | Path) -> sqlite3.Connection:
     for name in ("source_review_claimant", "source_review_evidence_url"):
         if name not in columns:
             db.execute(f"ALTER TABLE work_items ADD COLUMN {name} TEXT NOT NULL DEFAULT ''")
+    lease_columns = {row[1] for row in db.execute("PRAGMA table_info(worker_leases)")}
+    if "max_attempts" not in lease_columns:
+        db.execute("ALTER TABLE worker_leases ADD COLUMN max_attempts INTEGER NOT NULL DEFAULT 3")
     db.commit()
     return db
+
+
+def _retry_limit(max_attempts: int | None) -> int | None:
+    """None means each lease's own stored retry budget."""
+    if max_attempts is not None and (type(max_attempts) is not int
+                                     or not 1 <= max_attempts <= 20):
+        raise ValueError("invalid retry limit")
+    return max_attempts
 
 
 @contextmanager
@@ -94,19 +106,19 @@ def _atomic(db: sqlite3.Connection):
         db.execute("SAVEPOINT planner_atomic")
         try:
             yield
+            db.execute("RELEASE SAVEPOINT planner_atomic")
         except BaseException:
             db.execute("ROLLBACK TO SAVEPOINT planner_atomic")
             db.execute("RELEASE SAVEPOINT planner_atomic")
             raise
-        db.execute("RELEASE SAVEPOINT planner_atomic")
         return
     db.execute("BEGIN IMMEDIATE")
     try:
         yield
+        db.commit()
     except BaseException:
         db.rollback()
         raise
-    db.commit()
 
 
 def _identity(*parts: str) -> str:
@@ -195,7 +207,8 @@ def import_manifest(db: sqlite3.Connection, program_id: str, manifest: dict) -> 
 
 
 def next_task(db: sqlite3.Connection, program_id: str,
-              now_epoch: int | None = None, max_attempts: int = 3) -> dict | None:
+              now_epoch: int | None = None,
+              max_attempts: int | None = None) -> dict | None:
     """Peek at claimable unleased work; claiming still requires claim_next."""
     import time
 
@@ -203,13 +216,13 @@ def next_task(db: sqlite3.Connection, program_id: str,
         now_epoch = int(time.time())
     if type(now_epoch) is not int or now_epoch < 0:
         raise ValueError("invalid current time")
-    if type(max_attempts) is not int or not 1 <= max_attempts <= 20:
-        raise ValueError("invalid retry limit")
+    max_attempts = _retry_limit(max_attempts)
     row = db.execute("""SELECT w.id,w.grade,w.course_code,w.expectation_code,
         w.source_version FROM work_items w
       LEFT JOIN worker_leases l ON l.work_id=w.id
       WHERE w.program_id=? AND w.status='QUEUED'
-      AND (l.work_id IS NULL OR (l.expires_at <= ? AND l.attempt_count < ?))
+      AND (l.work_id IS NULL OR (l.expires_at <= ?
+           AND l.attempt_count < COALESCE(?, l.max_attempts)))
       ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1""",
                      (program_id, now_epoch, max_attempts)).fetchone()
     if row is None:
@@ -286,12 +299,15 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
         work_id, old_token, attempts = row
         token = (old_token or 0) + 1
         db.execute("""
-          INSERT INTO worker_leases(work_id,owner,fencing_token,expires_at,attempt_count)
-          VALUES(?,?,?,?,?)
+          INSERT INTO worker_leases(work_id,owner,fencing_token,expires_at,attempt_count,
+                                    max_attempts)
+          VALUES(?,?,?,?,?,?)
           ON CONFLICT(work_id) DO UPDATE SET
             owner=excluded.owner, fencing_token=excluded.fencing_token,
-            expires_at=excluded.expires_at, attempt_count=excluded.attempt_count
-        """, (work_id, owner, token, now_epoch + ttl_seconds, (attempts or 0) + 1))
+            expires_at=excluded.expires_at, attempt_count=excluded.attempt_count,
+            max_attempts=excluded.max_attempts
+        """, (work_id, owner, token, now_epoch + ttl_seconds, (attempts or 0) + 1,
+              max_attempts))
         return {"work_id": work_id, "owner": owner, "fencing_token": token,
                 "expires_at": now_epoch + ttl_seconds, "attempt": (attempts or 0) + 1,
                 "worker_invoked": False, "execution_authorized": False,
@@ -328,7 +344,8 @@ def complete_claim(db: sqlite3.Connection, work_id: str, owner: str,
                 "canonical_skill_id": None}
 
 def operator_status(db: sqlite3.Connection, program_id: str,
-                    now_epoch: int | None = None, max_attempts: int = 3) -> dict:
+                    now_epoch: int | None = None,
+                    max_attempts: int | None = None) -> dict:
     """Offline operator report; no authorization implied."""
     import time
 
@@ -336,12 +353,11 @@ def operator_status(db: sqlite3.Connection, program_id: str,
         now_epoch = int(time.time())
     if type(now_epoch) is not int or now_epoch < 0:
         raise ValueError("invalid current time")
-    if type(max_attempts) is not int or not 1 <= max_attempts <= 20:
-        raise ValueError("invalid retry limit")
+    max_attempts = _retry_limit(max_attempts)
     exhausted = db.execute("""SELECT w.id,w.grade,w.course_code,w.expectation_code
         FROM work_items w JOIN worker_leases l ON l.work_id=w.id
         WHERE w.program_id=? AND w.status='QUEUED'
-          AND l.expires_at <= ? AND l.attempt_count >= ?
+          AND l.expires_at <= ? AND l.attempt_count >= COALESCE(?, l.max_attempts)
         ORDER BY w.grade,w.course_code,w.expectation_code""",
         (program_id, now_epoch, max_attempts)).fetchall()
     rows = db.execute("""SELECT status,COUNT(*) FROM work_items
