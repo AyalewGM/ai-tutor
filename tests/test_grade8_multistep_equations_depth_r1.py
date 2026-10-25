@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from fractions import Fraction
 from pathlib import Path
@@ -8,6 +9,10 @@ from pathlib import Path
 MODULE_PATH = (
     Path(__file__).parents[1]
     / "docs/curriculum/drafts/canonical-grade8-multistep-equations-depth-r1/generator.py"
+)
+PACKAGE_PATH = (
+    Path(__file__).parents[1]
+    / "docs/curriculum/drafts/canonical-grade8-multistep-equations-depth-r1/package.json"
 )
 SPEC = importlib.util.spec_from_file_location("grade8_multistep_depth_r1", MODULE_PATH)
 assert SPEC and SPEC.loader
@@ -308,3 +313,31 @@ def test_correct_guided_practice_bypasses_repair_but_not_unhinted_transfer():
     assert transfer_payload["mode"] == "independent"
     assert "first_step_choices" not in transfer_payload
     assert "representation_sequence" not in transfer_payload
+
+def test_maryland_lettered_subparts_are_separate_partial_provisional_relations():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    maryland = {
+        row["standard_id"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "Maryland State Department of Education"
+    }
+    assert set(maryland) == {"8.AT.B.3a", "8.AT.B.3b"}
+    for row in maryland.values():
+        assert row["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
+        assert row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+
+    assert set(maryland["8.AT.B.3a"]["family_codes"]) == {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    assert set(maryland["8.AT.B.3b"]["family_codes"]) == set(generator.FAMILIES) - {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    excluded_3a = " ".join(maryland["8.AT.B.3a"]["excluded_from_coverage_credit"])
+    assert "construction of examples" in excluded_3a
+    assert "x = a, a = a, or a = b" in excluded_3a
+    assert package["runtime_activation"] is False
+
