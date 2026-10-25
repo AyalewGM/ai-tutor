@@ -41,6 +41,12 @@ def test_dc_grade8_function_conditions_are_preserved() -> None:
     ):
         assert term in linear_model
 
+    interpretation = rows["8.F.B.4"]["requirements"]["interpretation"].lower()
+    assert "rate of change" in interpretation
+    assert "initial value" in interpretation
+    assert "modeled situation" in interpretation
+    assert "graph or table of values" in interpretation
+
     graph_features = " ".join(rows["8.F.B.5"]["requirements"].values()).lower()
     for term in (
         "increasing",
