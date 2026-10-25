@@ -1,0 +1,84 @@
+{
+  "schema": "MIHUR_DRAFT_GRADE8_MULTISTEP_EQUATIONS_R1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_skill_code": "MATH.EE.EQUATION.MULTISTEP",
+  "canonical_identity_status": "REUSE_CANDIDATE_FROM_ACCEPTED_CROSSWALK__NOT_ACTIVATED",
+  "family_count": 12,
+  "modes": ["diagnostic", "guided", "independent", "mastery"],
+  "quality_contract": {
+    "build_once_map_many": true,
+    "coefficient_swaps_are_not_families": true,
+    "exact_fraction_oracles": true,
+    "multi_probe_guided_diagnosis": true,
+    "independent_transfer_changes_family": true,
+    "guided_success_counts_as_mastery": false,
+    "learner_history_changes": false
+  },
+  "source_provenance": [
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
+      "page": "printed page 24",
+      "standard_id": "8.AT.B.3b",
+      "access_date": "2026-10-25",
+      "mapping_status": "PROVISIONAL_PARTIAL_NON_EXHAUSTIVE",
+      "adaptation_rationale": "Scope and teaching aims only; all Mihur tasks, contexts, wording, and representations are original. No assessment item is copied."
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+      "title": "Mathematics Middle School",
+      "version_date": "Current district listing; page has no effective school-year date",
+      "page": "Math 8 listing",
+      "standard_id": "NOT_A_STANDARDS_AUTHORITY",
+      "access_date": "2026-10-25",
+      "mapping_status": "TOPIC_SEQUENCE_RESEARCH_ONLY",
+      "adaptation_rationale": "Confirms the current listed Grade 8 curriculum only; no vendor content is copied or closely adapted."
+    },
+    {
+      "publisher": "Montgomery County Public Schools / Open Up Resources",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math8/",
+      "title": "Math 8 support — Unit 4 Linear Equations and Linear Systems",
+      "version_date": "Undated support page; underlying IM/Open Up material 2017–2019",
+      "page": "Unit 4",
+      "standard_id": "HISTORICAL_RESEARCH_ONLY",
+      "access_date": "2026-10-25",
+      "mapping_status": "NOT_CURRENT_ALIGNMENT_EVIDENCE",
+      "adaptation_rationale": "Only the abstract balance/equality progression is researched; no task, diagram, wording, video, or answer key is reproduced."
+    },
+    {
+      "publisher": "CCSSO/NGA",
+      "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "title": "Common Core State Standards for Mathematics",
+      "version_date": "2010 standard; accessible publication hosted 2023",
+      "page": "printed page 55",
+      "standard_id": "8.EE.C.7a-b",
+      "access_date": "2026-10-25",
+      "mapping_status": "DC_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Identifier and scope reference only; no standard example or protected assessment expression is copied."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
+      "title": "2023 Mathematics SOL Instructional Resources",
+      "version_date": "2023 SOL resources; accessed 2026-10-25",
+      "page": "Grade 8 instructional resources",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Demand categories only; every task and representation is original and no 2016 MIP is used as current alignment proof."
+    }
+  ],
+  "gates": {
+    "independent_math": "PENDING",
+    "independent_pedagogy": "PENDING",
+    "standards_source_fidelity": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_mve": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_release": "PENDING"
+  }
+}
