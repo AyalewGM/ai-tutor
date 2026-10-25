@@ -330,12 +330,7 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
     state = MODULE.advance_learning_path(
         guided,
         state,
-        {
-            "exact_answer": guided.answer,
-            "strategy_choice": "OTHER_OR_UNSURE",
-            "substitution_left": dict(guided.parameters)["rhs"],
-            "substitution_right": dict(guided.parameters)["rhs"],
-        },
+        {"confirm_ready_for_transfer": True},
     )
     transfer = MODULE.generate_transfer(guided)
     state = MODULE.advance_learning_path(
@@ -502,6 +497,52 @@ def test_invalid_practice_answer_is_rejected() -> None:
     ).stage == "COMPLETE"
 
 
+def test_guided_practice_error_is_retained_as_diagnosis_evidence() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=4,
+        prediction_locked=True,
+    )
+    code, wrong_answer = guided.misconception_answers[0]
+    state = MODULE.advance_learning_path(
+        guided, state, {"exact_answer": wrong_answer}
+    )
+    assert state.stage == "DIAGNOSE"
+    assert state.practiced_answer == wrong_answer
+    payload = MODULE.stage_payload(guided, state)
+    assert "exact_answer" not in payload["response_fields"]
+
+    observed = Fraction(wrong_answer)
+    p = dict(guided.parameters)
+    left = Fraction(p["coefficient"]) * observed + Fraction(p["offset"])
+    repair = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "strategy_choice": MODULE._STRATEGY_OPTION[code][0],
+            "substitution_left": str(left),
+            "substitution_right": p["rhs"],
+        },
+    )
+    assert repair.stage == "DIAGNOSE"
+    assert repair.diagnosis_classification == code
+    assert repair.practiced_answer == wrong_answer
+
+    exited = MODULE.advance_learning_path(
+        guided,
+        repair,
+        {
+            "repair_reflection_choice": "APPLY_INVERSE_TO_BOTH_SIDES",
+            "repair_exit_answer": guided.answer,
+        },
+    )
+    assert exited.stage == "TRANSFER"
+    assert exited.practiced_answer == guided.answer
+
+
 def test_wrong_prediction_is_recorded_and_gets_socratic_retry() -> None:
     guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
     state = MODULE.start_learning_path(guided)
@@ -566,19 +607,19 @@ def test_irrelevant_explanation_cannot_complete_explain_stage() -> None:
 
 def test_arbitrary_diagnosis_strings_remain_neutral_and_do_not_advance() -> None:
     guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    _, wrong_answer = guided.misconception_answers[0]
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
         stages=MODULE.TEACHING_STAGES,
         position=5,
         prediction_locked=True,
-        practiced_answer=guided.answer,
+        practiced_answer=wrong_answer,
     )
     retry = MODULE.advance_learning_path(
         guided,
         state,
         {
-            "exact_answer": "wrong",
             "strategy_choice": "nonsense",
             "substitution_left": "left",
             "substitution_right": "right",
@@ -592,15 +633,15 @@ def test_arbitrary_diagnosis_strings_remain_neutral_and_do_not_advance() -> None
 
 def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
     guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    code, wrong_answer = guided.misconception_answers[0]
     state = MODULE.LearningState(
         variant_id=guided.variant_id,
         mode="guided",
         stages=MODULE.TEACHING_STAGES,
         position=5,
         prediction_locked=True,
-        practiced_answer=guided.answer,
+        practiced_answer=wrong_answer,
     )
-    code, wrong_answer = guided.misconception_answers[0]
     observed = Fraction(wrong_answer)
     p = dict(guided.parameters)
     left = Fraction(p["coefficient"]) * observed + Fraction(p["offset"])
@@ -609,7 +650,6 @@ def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
         guided,
         state,
         {
-            "exact_answer": wrong_answer,
             "strategy_choice": MODULE._STRATEGY_OPTION[code][0],
             "substitution_left": str(left),
             "substitution_right": str(right),
@@ -639,5 +679,6 @@ def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
     )
     assert exited.stage == "TRANSFER"
     assert exited.repair_completed is True
+    assert exited.practiced_answer == guided.answer
 
 
