@@ -1,4 +1,4 @@
-"""Independent source-coefficient SymPy oracle and author-side safety regression."""
+"""Author-side exact-oracle, diagnostic-contract and transfer regressions."""
 from __future__ import annotations
 
 import json
@@ -12,38 +12,110 @@ from scripts.author_ontario_linear_depth import (
     FAMILIES,
     MODES,
     SKILLS,
+    STRUCTURES,
     create_candidate,
     create_pack,
+    create_unhinted_transfer,
     learner_projection,
 )
 
 
 def _coefficients_from_prompt(data: dict) -> dict[str, str]:
     """Independently parse actual student text to catch prompt/oracle divergence."""
-    family, prompt = data["candidate_family"], data["prompt"]
+    family = data["candidate_family"]
+    structure = data["structure_id"]
+    prompt = data["prompt"]
     if family == "TWO_STEP_SIGNED_RATIONAL":
-        m = re.fullmatch(r"Solve (-?\d+)x ([+-]\d+) = (-?\d+)\.", prompt)
-        assert m is not None
-        a, b, d = map(int, m.groups())
-        result = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
+        if structure == "VARIABLE_TERM_FIRST":
+            m = re.fullmatch(r"Solve (-?\d+)x ([+-]\d+) = (-?\d+)\.", prompt)
+            assert m is not None
+            a, b, d = map(int, m.groups())
+            result = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
+        elif structure == "CONSTANT_TERM_FIRST":
+            m = re.fullmatch(r"Solve (-?\d+) ([+-]\d+)x = (-?\d+)\.", prompt)
+            assert m is not None
+            b, a, d = map(int, m.groups())
+            result = (Fraction(a), Fraction(b), Fraction(0), Fraction(d))
+        else:
+            m = re.fullmatch(r"Solve (-?\d+) = (-?\d+)x ([+-]\d+)\.", prompt)
+            assert m is not None
+            d, a, b = map(int, m.groups())
+            result = (Fraction(0), Fraction(d), Fraction(a), Fraction(b))
     elif family == "TWO_STEP_FRACTIONAL_COEFFICIENT":
-        m = re.fullmatch(r"Solve \((-?\d+)/(\d+)\)x ([+-]\d+) = (-?\d+)\.", prompt)
-        assert m is not None
-        a, den, b, d = map(int, m.groups())
-        result = (Fraction(a, den), Fraction(b), Fraction(0), Fraction(d))
+        if structure == "VARIABLE_TERM_FIRST":
+            m = re.fullmatch(
+                r"Solve \((-?\d+)/(\d+)\)x ([+-]\d+) = (-?\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            a, den, b, d = map(int, m.groups())
+            result = (Fraction(a, den), Fraction(b), Fraction(0), Fraction(d))
+        elif structure == "CONSTANT_TERM_FIRST":
+            m = re.fullmatch(
+                r"Solve (-?\d+) ([+-]) \((\d+)/(\d+)\)x = (-?\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            b, sign, numerator, den, d = m.groups()
+            a = int(numerator) if sign == "+" else -int(numerator)
+            result = (Fraction(a, int(den)), Fraction(int(b)), Fraction(0), Fraction(int(d)))
+        else:
+            m = re.fullmatch(
+                r"Solve (-?\d+) = \((-?\d+)/(\d+)\)x ([+-]\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            d, a, den, b = map(int, m.groups())
+            result = (Fraction(0), Fraction(d), Fraction(a, den), Fraction(b))
     elif family == "MULTISTEP_NEGATIVE_DISTRIBUTION":
-        m = re.fullmatch(r"Solve -(\d+)\(x - \((-?\d+)\)\) \+ \((-?\d+)\) = (-?\d+)\.", prompt)
-        assert m is not None
-        k, b, c, d = map(int, m.groups())
-        result = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(d))
+        if structure == "VARIABLE_TERM_FIRST":
+            m = re.fullmatch(
+                r"Solve -(\d+)\(x - \((-?\d+)\)\) \+ \((-?\d+)\) = (-?\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            k, b, c, d = map(int, m.groups())
+            result = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(d))
+        elif structure == "CONSTANT_TERM_FIRST":
+            m = re.fullmatch(
+                r"Solve \((-?\d+)\) - (\d+)\(x - \((-?\d+)\)\) = (-?\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            c, k, b, d = map(int, m.groups())
+            result = (Fraction(-k), Fraction(k * b + c), Fraction(0), Fraction(d))
+        else:
+            m = re.fullmatch(
+                r"Solve (-?\d+) = -(\d+)\(x - \((-?\d+)\)\) \+ \((-?\d+)\)\.",
+                prompt,
+            )
+            assert m is not None
+            d, k, b, c = map(int, m.groups())
+            result = (Fraction(0), Fraction(d), Fraction(-k), Fraction(k * b + c))
     else:
         assert family == "MULTISTEP_VARIABLES_BOTH_SIDES"
-        m = re.fullmatch(r"Solve (-?\d+)x ([+-]\d+) = (-?\d+)x ([+-]\d+)\.", prompt)
-        assert m is not None
-        a, b, c, d = map(int, m.groups())
-        result = (Fraction(a), Fraction(b), Fraction(c), Fraction(d))
-    return dict(zip(("lhs_x", "lhs_constant", "rhs_x", "rhs_constant"),
-                    (str(value) for value in result)))
+        if structure == "CONSTANT_TERM_FIRST":
+            m = re.fullmatch(
+                r"Solve (-?\d+) ([+-]\d+)x = (-?\d+) ([+-]\d+)x\.",
+                prompt,
+            )
+            assert m is not None
+            b, a, d, c = map(int, m.groups())
+            result = (Fraction(a), Fraction(b), Fraction(c), Fraction(d))
+        else:
+            m = re.fullmatch(
+                r"Solve (-?\d+)x ([+-]\d+) = (-?\d+)x ([+-]\d+)\.",
+                prompt,
+            )
+            assert m is not None
+            a, b, c, d = map(int, m.groups())
+            result = (Fraction(a), Fraction(b), Fraction(c), Fraction(d))
+    return dict(
+        zip(
+            ("lhs_x", "lhs_constant", "rhs_x", "rhs_constant"),
+            (str(value) for value in result),
+        )
+    )
 
 
 def _independent_solution(data: dict) -> Fraction:
@@ -59,7 +131,7 @@ def _independent_solution(data: dict) -> Fraction:
 
 @pytest.mark.parametrize("family", FAMILIES)
 @pytest.mark.parametrize("mode", MODES)
-def test_exact_noninteger_oracle_for_60_seeds(family, mode):
+def test_exact_noninteger_oracle_and_multi_probe_contract_for_60_seeds(family, mode):
     for seed in range(60):
         q = create_candidate(family, seed=seed, mode=mode)
         correct = Fraction(q["canonical_answer"].split("=", 1)[1])
@@ -69,23 +141,72 @@ def test_exact_noninteger_oracle_for_60_seeds(family, mode):
         assert _independent_solution(q) == correct
         assert wrong != correct
         assert q["canonical_skill_hint"] == SKILLS[family]
-        assert "answer" not in learner_projection(q)
-        assert "hint" not in json.dumps(learner_projection(q)).casefold()
-        assert "misconception" not in json.dumps(learner_projection(q)).casefold()
+        contract = q["diagnostic_contract_for_author_review"]
+        assert contract["classification_policy"] == "DO_NOT_CLASSIFY_FROM_ONE_RESPONSE"
+        assert contract["minimum_corroborating_signals"] == 2
+        assert len(contract["signals"]) >= 2
+        responses = [
+            Fraction(signal["candidate_response"].split("=", 1)[1])
+            for signal in contract["signals"]
+        ]
+        assert len(responses) == len(set(responses))
+        assert correct not in responses
+        for signal in contract["signals"]:
+            assert signal["confirmation_probe_for_author_review"]
+            assert signal["confirmation_oracle_for_author_review"]
+            assert len(signal["socratic_repair_for_author_review"]) == 2
+        projection = json.dumps(learner_projection(q)).casefold()
+        assert "answer" not in projection
+        assert "hint" not in projection
+        assert "misconception" not in projection
         assert q == create_candidate(family, seed=seed, mode=mode)
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+def test_all_presentation_structures_are_seed_reachable(family):
+    observed = {
+        create_candidate(family, seed=seed, mode="GUIDED")["structure_id"]
+        for seed in range(120)
+    }
+    assert observed == set(STRUCTURES[family])
+
+
+@pytest.mark.parametrize("family", FAMILIES)
+@pytest.mark.parametrize("target_mode", ("INDEPENDENT", "MASTERY"))
+def test_unhinted_transfer_changes_structure_task_and_answer(family, target_mode):
+    source = create_candidate(family, seed=11, mode="GUIDED")
+    transfer = create_unhinted_transfer(source, target_mode=target_mode)
+    assert transfer["target_family"] == family
+    assert transfer["target_mode"] == target_mode
+    assert transfer["source_structure_id"] != transfer["target_structure_id"]
+    assert transfer["structure_changed"] is True
+    assert transfer["task_fingerprint_changed"] is True
+    assert transfer["answer_changed"] is True
+    assert transfer["hints_allowed"] is False
+    assert transfer["hinted_success_counts_as_independent"] is False
+    assert transfer["runtime_credit_authorized"] is False
+    learner = json.dumps(transfer["learner_task"]).casefold()
+    assert "answer" not in learner
+    assert "hint" not in learner
+    assert "misconception" not in learner
 
 
 def test_mode_pools_and_pack_are_distinct_and_fail_closed():
     pack = create_pack(count_per_family_mode=25)
+    assert pack["schema"] == "MIHUR_DRAFT_RATIONAL_EQUATION_CANDIDATES_V2"
     assert len(pack["candidates"]) == 25 * len(FAMILIES) * len(MODES)
     assert pack["runtime_registered"] is False
     assert pack["runtime_activation"] is False
     assert pack["math_review"] == "PENDING_INDEPENDENT"
+    assert pack["diagnosis_requires_multiple_probes"] is True
+    assert pack["hinted_success_counts_as_independent"] is False
+    assert pack["transfer_requires_changed_structure"] is True
     assert len({q["variant_id"] for q in pack["candidates"]}) == len(pack["candidates"])
     for family in FAMILIES:
         group = [q for q in pack["candidates"] if q["candidate_family"] == family]
         assert len({q["task_fingerprint"] for q in group}) == len(group)
         assert {q["mode"] for q in group} == set(MODES)
+        assert {q["structure_id"] for q in group} == set(STRUCTURES[family])
     assert pack == create_pack(count_per_family_mode=25)
 
 
@@ -98,3 +219,6 @@ def test_invalid_requests_cannot_bypass_scope():
         create_pack(count_per_family_mode=0)
     with pytest.raises(ValueError):
         create_pack(count_per_family_mode=101)
+    source = create_candidate(FAMILIES[0], seed=1, mode="GUIDED")
+    with pytest.raises(ValueError):
+        create_unhinted_transfer(source, target_mode="GUIDED")
