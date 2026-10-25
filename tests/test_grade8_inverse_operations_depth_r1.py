@@ -273,7 +273,12 @@ def test_guided_learning_path_locks_prediction_and_enforces_every_stage() -> Non
     state = MODULE.advance_learning_path(
         guided,
         state,
-        {"equality_justification": "The same operation changes equal values equally."},
+        {
+            "reasoning_choice": "SAME_OPERATION_BOTH_SIDES",
+            "equality_justification": (
+                "The same operation on both complete sides keeps the values equal."
+            ),
+        },
     )
     state = MODULE.advance_learning_path(
         guided, state, {"exact_answer": guided.answer}
@@ -451,3 +456,143 @@ def test_invalid_practice_answer_is_rejected() -> None:
     assert MODULE.advance_learning_path(
         v, state, {"substitution_left": p["rhs"], "substitution_right": p["rhs"]}
     ).stage == "COMPLETE"
+
+
+def test_wrong_prediction_is_recorded_and_gets_socratic_retry() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.start_learning_path(guided)
+    state = MODULE.advance_learning_path(
+        guided, state, {"observation": "The two expressions are equal."}
+    )
+    p = dict(guided.parameters)
+    correct = "SUBTRACT" if Fraction(p["offset"]) > 0 else "ADD"
+    wrong = next(
+        choice
+        for choice in ("ADD", "SUBTRACT", "MULTIPLY", "DIVIDE")
+        if choice != correct
+    )
+    retry = MODULE.advance_learning_path(
+        guided, state, {"operation_choice": wrong}
+    )
+    assert retry.stage == "PREDICT"
+    assert retry.prediction_choice == wrong
+    assert retry.prediction_locked is False
+    payload = MODULE.stage_payload(guided, retry)
+    assert payload["recorded_prediction"] == wrong
+    assert "both complete sides" in payload["socratic_feedback"]
+    corrected = MODULE.advance_learning_path(
+        guided, retry, {"operation_choice": correct}
+    )
+    assert corrected.stage == "MANIPULATE"
+    assert corrected.prediction_choice == correct
+    assert corrected.prediction_locked is True
+
+
+def test_irrelevant_explanation_cannot_complete_explain_stage() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=3,
+        prediction_locked=True,
+    )
+    with pytest.raises(ValueError, match="both complete sides"):
+        MODULE.advance_learning_path(
+            guided,
+            state,
+            {
+                "reasoning_choice": "MOVE_TERM_CHANGE_SIGN",
+                "equality_justification": "I moved it because that is the rule.",
+            },
+        )
+    advanced = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "reasoning_choice": "SAME_OPERATION_BOTH_SIDES",
+            "equality_justification": (
+                "Applying the same operation to both sides preserves equality."
+            ),
+        },
+    )
+    assert advanced.stage == "PRACTICE"
+    assert "both sides" in advanced.explanation_evidence
+
+
+def test_arbitrary_diagnosis_strings_remain_neutral_and_do_not_advance() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=5,
+        prediction_locked=True,
+        practiced_answer=guided.answer,
+    )
+    retry = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "exact_answer": "wrong",
+            "strategy_choice": "nonsense",
+            "substitution_left": "left",
+            "substitution_right": "right",
+        },
+    )
+    assert retry.stage == "DIAGNOSE"
+    assert retry.diagnosis_classification == "NEUTRAL_RETRY"
+    assert retry.diagnosis_feedback
+    assert MODULE.stage_payload(guided, retry)["neutral_retry"]
+
+
+def test_matched_diagnosis_requires_targeted_repair_exit() -> None:
+    guided = MODULE.generate(MODULE.FAMILIES[0], 211, "guided")
+    state = MODULE.LearningState(
+        variant_id=guided.variant_id,
+        mode="guided",
+        stages=MODULE.TEACHING_STAGES,
+        position=5,
+        prediction_locked=True,
+        practiced_answer=guided.answer,
+    )
+    code, wrong_answer = guided.misconception_answers[0]
+    observed = Fraction(wrong_answer)
+    p = dict(guided.parameters)
+    left = Fraction(p["coefficient"]) * observed + Fraction(p["offset"])
+    right = Fraction(p["rhs"])
+    repair = MODULE.advance_learning_path(
+        guided,
+        state,
+        {
+            "exact_answer": wrong_answer,
+            "strategy_choice": MODULE._STRATEGY_OPTION[code][0],
+            "substitution_left": str(left),
+            "substitution_right": str(right),
+        },
+    )
+    assert repair.stage == "DIAGNOSE"
+    assert repair.diagnosis_classification == code
+    repair_payload = MODULE.stage_payload(guided, repair)
+    assert repair_payload["phase"] == "TARGETED_REPAIR_EXIT"
+    assert repair_payload["guided_support"]
+    with pytest.raises(ValueError, match="repair exit"):
+        MODULE.advance_learning_path(
+            guided,
+            repair,
+            {
+                "repair_reflection_choice": "APPLY_INVERSE_TO_BOTH_SIDES",
+                "repair_exit_answer": wrong_answer,
+            },
+        )
+    exited = MODULE.advance_learning_path(
+        guided,
+        repair,
+        {
+            "repair_reflection_choice": "APPLY_INVERSE_TO_BOTH_SIDES",
+            "repair_exit_answer": guided.answer,
+        },
+    )
+    assert exited.stage == "TRANSFER"
+    assert exited.repair_completed is True
+
