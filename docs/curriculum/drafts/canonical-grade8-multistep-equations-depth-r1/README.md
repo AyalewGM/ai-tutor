@@ -32,6 +32,13 @@ The package is not imported by `app`, registered, seeded, routed, scored, or
 rendered. It changes no learner, Attempt, DiagnosticAttempt, MasteryEvent, or
 variant-history record and cannot award mastery.
 
+The first-invalid-step critique has a two-part answer contract:
+the step identifier must match exactly (case-insensitive), while the `x=value`
+component accepts mathematically equivalent exact rational forms, including
+unreduced fractions. Missing or extra delimiters, wrong step codes, invalid
+fractions, and non-equivalent values fail closed. Guided misconception-signature
+comparison follows the same equivalence rule without revealing the oracle.
+
 Context families use separate mathematical domain guards rather than the
 unrestricted rational targets used by symbolic families. Rectangle variants
 require strictly positive length, width, and perimeter. Competing-plan variants

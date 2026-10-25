@@ -170,6 +170,24 @@ def _parse_exact(response: str | None) -> Fraction | None:
         return None
 
 
+def _parse_error_code_and_rational(response: str | None) -> tuple[str, Fraction] | None:
+    """Validate the step identifier separately from the exact rational x-value."""
+    if not isinstance(response, str):
+        return None
+    parts = response.strip().split("|")
+    if len(parts) != 2:
+        return None
+    step_code, solution_text = parts
+    step_code = step_code.strip().upper()
+    solution_text = solution_text.strip()
+    if not step_code or not solution_text.lower().startswith("x="):
+        return None
+    rational = _parse_exact(solution_text)
+    if rational is None:
+        return None
+    return step_code, rational
+
+
 def _normalize_coefficients(values: tuple[Fraction, ...]) -> tuple[int, ...]:
     denominators = [v.denominator for v in values]
     scale = math.lcm(*denominators)
@@ -320,6 +338,12 @@ class Variant:
     def response_is_correct(self, response: str) -> bool:
         if self.answer_kind == "EXACT_RATIONAL":
             return _parse_exact(response) == _parse_exact(self.canonical_answer)
+        if self.answer_kind == "ERROR_CODE_AND_EXACT_RATIONAL":
+            parsed = _parse_error_code_and_rational(response)
+            return (
+                parsed is not None
+                and parsed == _parse_error_code_and_rational(self.canonical_answer)
+            )
         return response.strip().upper() == self.canonical_answer.upper()
 
     def guided_repair(self, response: str, reasoning_choice: str | None) -> dict[str, Any]:
@@ -349,6 +373,9 @@ def _responses_equal(left: str, right: str, answer_kind: str) -> bool:
     if answer_kind == "EXACT_RATIONAL":
         parsed_left, parsed_right = _parse_exact(left), _parse_exact(right)
         return parsed_left is not None and parsed_left == parsed_right
+    if answer_kind == "ERROR_CODE_AND_EXACT_RATIONAL":
+        parsed_left = _parse_error_code_and_rational(left)
+        return parsed_left is not None and parsed_left == _parse_error_code_and_rational(right)
     return left.strip().upper() == right.strip().upper()
 
 

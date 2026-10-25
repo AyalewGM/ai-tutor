@@ -81,6 +81,57 @@ def test_error_analysis_and_solution_class_compare_oracles():
         assert compare.oracle["solution_classes"] == ["ONE", "ALL_REAL", "NO_SOLUTION"]
 
 
+def test_first_invalid_step_accepts_equivalent_fractions_in_every_mode():
+    # Independent Math counterexample: seed 1 is 3(x+4)+3=14, x=-1/3.
+    reproduced = generator.create_variant(
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=1, mode="diagnostic"
+    )
+    assert reproduced.canonical_answer == "STEP_1|x=-1/3"
+    assert reproduced.response_is_correct("STEP_1|x=-2/6")
+    for mode in generator.MODES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(
+                "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=seed, mode=mode
+            )
+            step, solution = variant.canonical_answer.split("|", 1)
+            exact = Fraction(solution.removeprefix("x="))
+            scaled = f"{2 * exact.numerator}/{2 * exact.denominator}"
+            assert variant.response_is_correct(f" {step.lower()} | X = {scaled} ")
+            assert variant.response_is_correct(variant.canonical_answer)
+            for wrong in (
+                f"STEP_2|x={scaled}",
+                f"NO_ERROR|x={scaled}",
+                f"{step}|x={_fraction(solution) + 1}",
+                f"{step}|x=1/0",
+                f"{step}|x=not-a-number",
+                f"{step}|x=",
+                f"{step}|{scaled}",
+                f"{step}|x={scaled}|extra",
+                f"|x={scaled}",
+            ):
+                assert not variant.response_is_correct(wrong), (mode, seed, wrong)
+
+
+def test_first_invalid_step_guided_probe_normalizes_composite_wrong_answers():
+    for seed in generator.PRIMARY_SEEDS:
+        variant = generator.create_variant(
+            "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=seed, mode="guided"
+        )
+        for signal in variant.misconception_signals:
+            step, solution = signal["candidate_response"].split("|", 1)
+            exact = Fraction(solution.removeprefix("x="))
+            scaled = f"{3 * exact.numerator}/{3 * exact.denominator}"
+            observed = f"{step.lower()}|x={scaled}"
+            matched = variant.guided_repair(observed, signal["reasoning_choice"])
+            assert matched["status"] == "TARGETED_REPAIR"
+            assert matched["misconception_code"] == signal["code"]
+            mismatched = variant.guided_repair(observed, "OTHER")
+            assert mismatched["status"] == "NEUTRAL_RETRY"
+            assert variant.guided_repair(f"{step}|x=1/0", signal["reasoning_choice"])[
+                "status"
+            ] == "NEUTRAL_RETRY"
+
+
 def test_guided_diagnosis_requires_matching_answer_and_reasoning_probe():
     routes = 0
     for family in generator.FAMILIES:
