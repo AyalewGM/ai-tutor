@@ -58,8 +58,15 @@ def test_current_versioned_provenance_and_license_rationale_are_explicit() -> No
     sources = manifest["source_provenance"]
     assert len(sources) == 4
     assert sources[0]["standard_id"] == "8.AT.B.3b"
-    assert (\n        sources[0]["version_date"]\n        == "Version 1, February 2026; standards adopted July 29, 2025"\n    )
-    assert sources[0]["page"] == 24\n    assert sources[0]["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"\n    assert len(sources[0]["excluded_from_coverage_credit"]) == 2\n    assert manifest["scope"]["maryland_mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"\n    assert manifest["scope"]["maryland_full_standard_coverage"] is False
+    assert (
+        sources[0]["version_date"]
+        == "Version 1, February 2026; standards adopted July 29, 2025"
+    )
+    assert sources[0]["page"] == 24
+    assert sources[0]["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+    assert len(sources[0]["excluded_from_coverage_credit"]) == 2
+    assert manifest["scope"]["maryland_mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
+    assert manifest["scope"]["maryland_full_standard_coverage"] is False
     assert sources[1]["standard_id"] == "CURRENT_LOCAL_CURRICULUM_QUALIFIER_ONLY"
     assert "Amplify Desmos Math" in sources[1]["use"]
     assert (
