@@ -55,7 +55,18 @@
       "independent",
       "mastery"
     ],
-    "guided_classification": "TWO_PROBE_REQUIRED_FAIL_CLOSED",
+    "guided_classification": "ANSWER_PLUS_LEARNER_STRATEGY_AND_SUBSTITUTION_REQUIRED_FAIL_CLOSED",
+    "learner_strategy_probe": "PUBLIC_LABELLED_CHOICES_NOT_INTERNAL_TOKENS",
+    "misconception_explanations": "GUIDED_ONLY_AFTER_AGREEING_EVIDENCE",
+    "stage_enforcement": {
+      "implementation": "pure LearningState state machine",
+      "prediction_locked_before_manipulation": true,
+      "same_operation_on_both_sides_required": true,
+      "explanation_evidence_required": true,
+      "support_fading": "guided practice only",
+      "transfer": "different family, independent mode, no support",
+      "verification": "two exact equal substitution values"
+    },
     "independent_and_mastery": "SEPARATE_UNHINTED_ITEMS",
     "exact_arithmetic": "fractions.Fraction",
     "answer_equivalence": "any exact integer or fraction equal to the oracle",
@@ -144,3 +155,4 @@
   },
   "copyright": "Original Mihur-authored tasks and support. Public access was not treated as permission to copy source expression."
 }
+
