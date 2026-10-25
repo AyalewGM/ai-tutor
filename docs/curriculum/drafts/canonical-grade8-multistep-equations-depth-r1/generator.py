@@ -180,9 +180,14 @@ def _parse_error_code_and_rational(response: str | None) -> tuple[str, Fraction]
     step_code, solution_text = parts
     step_code = step_code.strip().upper()
     solution_text = solution_text.strip()
-    if not step_code or not solution_text.lower().startswith("x="):
+    solution_parts = solution_text.split("=")
+    if (
+        not step_code
+        or len(solution_parts) != 2
+        or solution_parts[0].strip().lower() != "x"
+    ):
         return None
-    rational = _parse_exact(solution_text)
+    rational = _parse_exact(solution_parts[1])
     if rational is None:
         return None
     return step_code, rational
