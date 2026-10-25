@@ -32,6 +32,12 @@ The package is not imported by `app`, registered, seeded, routed, scored, or
 rendered. It changes no learner, Attempt, DiagnosticAttempt, MasteryEvent, or
 variant-history record and cannot award mastery.
 
+Context families use separate mathematical domain guards rather than the
+unrestricted rational targets used by symbolic families. Rectangle variants
+require strictly positive length, width, and perimeter. Competing-plan variants
+require a nonnegative integer use count and nonnegative fixed charges. The same
+guards apply when either family is selected for independent transfer.
+
 
 ## Enforced learner-flow and mode boundary
 

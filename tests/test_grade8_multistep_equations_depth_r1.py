@@ -163,6 +163,49 @@ def test_unhinted_transfer_changes_family_structure_task_and_answer():
             assert transfer.public_payload()["mastery_credit"] is False
 
 
+def test_contextual_domains_hold_for_every_mode_seed_and_transfer():
+    contextual_variants = 0
+    for mode in generator.MODES:
+        for seed in generator.PRIMARY_SEEDS:
+            perimeter = generator.create_variant("PERIMETER_MODEL", seed=seed, mode=mode)
+            perimeter_domain = perimeter.oracle["context_domain"]
+            assert perimeter_domain["kind"] == "RECTANGLE_DIMENSIONS"
+            assert Fraction(perimeter_domain["length"]) > 0
+            assert Fraction(perimeter_domain["width"]) > 0
+            assert Fraction(perimeter_domain["perimeter"]) > 0
+            assert perimeter_domain["strictly_positive"] is True
+
+            plans = generator.create_variant("COMPETING_PLANS_MODEL", seed=seed, mode=mode)
+            plan_domain = plans.oracle["context_domain"]
+            uses = Fraction(plan_domain["use_count"])
+            assert plan_domain["kind"] == "DISCRETE_USE_COUNT"
+            assert uses >= 0 and uses.denominator == 1
+            assert Fraction(plan_domain["plan_a_fixed"]) >= 0
+            assert Fraction(plan_domain["plan_b_fixed"]) >= 0
+            assert plan_domain["nonnegative_integers"] is True
+            contextual_variants += 2
+    assert contextual_variants == 128
+
+    checked_transfers = 0
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            source = generator.create_variant(family, seed=seed, mode="guided")
+            transfer = generator.create_unhinted_transfer(source)
+            if transfer.family_code == "PERIMETER_MODEL":
+                domain = transfer.oracle["context_domain"]
+                assert Fraction(domain["length"]) > 0
+                assert Fraction(domain["width"]) > 0
+                assert Fraction(domain["perimeter"]) > 0
+            elif transfer.family_code == "COMPETING_PLANS_MODEL":
+                domain = transfer.oracle["context_domain"]
+                uses = Fraction(domain["use_count"])
+                assert uses >= 0 and uses.denominator == 1
+                assert Fraction(domain["plan_a_fixed"]) >= 0
+                assert Fraction(domain["plan_b_fixed"]) >= 0
+            checked_transfers += 1
+    assert checked_transfers == 192
+
+
 def test_pack_is_bounded_runtime_disabled_and_idempotent():
     first = generator.create_pack(seeds_per_family_mode=8)
     second = generator.create_pack(seeds_per_family_mode=8)

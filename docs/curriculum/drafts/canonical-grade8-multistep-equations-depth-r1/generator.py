@@ -363,6 +363,7 @@ def _base_parameters(index: int) -> tuple[Fraction, int, int, int]:
 def _build_equation_family(family: str, index: int) -> tuple[Any, ...]:
     x, k, p, q = _base_parameters(index)
     tag = index + 3
+    context_domain: dict[str, Any] | None = None
     if family == "DISTRIBUTE_POSITIVE_ONE_SIDE":
         shift = q + tag
         coefficients = (Fraction(k), Fraction(k * p + shift), Fraction(0), Fraction(k) * x + k * p + shift)
@@ -417,19 +418,41 @@ def _build_equation_family(family: str, index: int) -> tuple[Any, ...]:
         prompt = f"Classify the solution set and justify it: {_equation(coefficients)}."
         first = "Compare the simplified variable coefficient and constant on both sides."
     elif family == "PERIMETER_MODEL":
+        # Geometry contexts cannot reuse the unrestricted rational target.
+        x = Fraction(index + 6)
         offset = tag + 2
         width_offset = 1 + (index * 2) % 5
-        perimeter = 2 * (x + offset) + 2 * (x - width_offset)
+        length = x + offset
+        width = x - width_offset
+        perimeter = 2 * length + 2 * width
+        assert length > 0 and width > 0 and perimeter > 0
         coefficients = (Fraction(4), Fraction(2 * offset - 2 * width_offset), Fraction(0), perimeter)
         prompt = f"A rectangle has length x + {offset} cm and width x - {width_offset} cm. Its perimeter is {_fmt(perimeter)} cm. Write the perimeter equation, solve for x, and verify both dimensions are positive."
+        context_domain = {
+            "kind": "RECTANGLE_DIMENSIONS",
+            "length": _fmt(length),
+            "width": _fmt(width),
+            "perimeter": _fmt(perimeter),
+            "strictly_positive": True,
+        }
         first = "Represent the perimeter as two lengths plus two widths before simplifying."
     elif family == "COMPETING_PLANS_MODEL":
+        # A number of uses is a nonnegative integer, not an unrestricted rational.
+        x = Fraction(index + 1)
         r1 = 2 + index % 4
         r2 = r1 + k
-        f1 = tag + 30
-        f2 = Fraction(f1) - (r2 - r1) * x
+        f2 = Fraction(tag + 30)
+        f1 = f2 + (r2 - r1) * x
+        assert x.denominator == 1 and x >= 0 and f1 >= 0 and f2 >= 0
         coefficients = (Fraction(r1), Fraction(f1), Fraction(r2), Fraction(f2))
         prompt = f"Plan A costs ${f1} plus ${r1} per use. Plan B costs ${_fmt(f2)} plus ${r2} per use. After how many uses do the totals match?"
+        context_domain = {
+            "kind": "DISCRETE_USE_COUNT",
+            "use_count": _fmt(x),
+            "plan_a_fixed": _fmt(f1),
+            "plan_b_fixed": _fmt(f2),
+            "nonnegative_integers": True,
+        }
         first = "Set the two complete fixed-plus-rate expressions equal."
     else:
         raise KeyError(family)
@@ -441,6 +464,8 @@ def _build_equation_family(family: str, index: int) -> tuple[Any, ...]:
         "substitution_left": None,
         "substitution_right": None,
     }
+    if context_domain is not None:
+        oracle["context_domain"] = context_domain
     if solution_class == "UNIQUE":
         value = _parse_exact(answer)
         assert value is not None
