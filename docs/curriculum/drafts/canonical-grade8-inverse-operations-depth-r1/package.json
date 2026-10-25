@@ -64,9 +64,9 @@
       "prediction_evidence": "actual choice persisted; incorrect choice remains in PREDICT with a task-specific Socratic retry",
       "same_operation_on_both_sides_required": true,
       "explanation_evidence_required": "correct public reasoning choice plus a learner explanation naming both sides and equality preservation",
-      "support_fading": "guided practice only",
-      "diagnosis_binding": "public exact answer, labelled strategy choice, and exact substitution evidence drive fail-closed classification",
-      "targeted_repair_exit": "a uniquely matched misconception remains in DIAGNOSE until an answer-free repair is acknowledged and the original equation is solved exactly",
+      "support_fading": "guided practice only; the learner's first parseable exact practice response is retained whether correct or incorrect",
+      "diagnosis_binding": "the retained authentic practice response, labelled strategy choice, and exact substitution evidence drive fail-closed classification; DIAGNOSE does not request a replacement answer",
+      "targeted_repair_exit": "a uniquely matched misconception remains in DIAGNOSE until an answer-free repair is acknowledged and the original equation is solved exactly; the corrected repair-exit answer replaces the retained wrong response for final verification",
       "diagnostic_isolation": "diagnostic mode accepts only an exact unhinted answer, exposes no guided strategy or repair fields, and retains the accepted answer for final verification",
       "transfer": "different family, independent mode, no support",
       "verification": "reconstructs both original equation sides from the retained exact answer"
