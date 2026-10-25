@@ -129,7 +129,8 @@ def generate(family, seed, mode, *, transfer=False):
         answer = {k: e[k] for k in keys}
         error = dict(answer, right_whisker=e["maximum"])
         prompt = (f"Data: {values}. Give quartiles, IQR, 1.5×IQR fences, "
-                  "non-outlier whiskers and outlier dots for a MODIFIED box plot.")
+                  "non-outlier whiskers and outlier dots for a MODIFIED box plot. "
+                  "Use median-of-halves, excluding the overall median for odd n.")
     else:
         center = rng.randint(30, 55)
         sa, sb = rng.sample((1, 2, 3, 4), 2)
@@ -142,9 +143,8 @@ def generate(family, seed, mode, *, transfer=False):
                   "iqr_a": str(ai), "iqr_b": str(bi),
                   "wider": "A" if ai > bi else "B"}
         error = dict(answer, wider="B" if ai > bi else "A")
-        prompt = f"Group A: {a}; Group B: {b}. Compare medians and IQRs. Which has wider middle 50%?"
-    if transfer:
-        prompt += " Explain your reasoning using a different representation."
+        prompt = (f"Group A: {a}; Group B: {b}. Compare medians and IQRs. Which has wider middle 50%? "
+                  "Use median-of-halves, excluding the overall median for odd n.")
     public = {
         "status": STATUS, "runtime_activation": False, "mastery_credit": False,
         "family": family, "mode": mode, "prompt": prompt,

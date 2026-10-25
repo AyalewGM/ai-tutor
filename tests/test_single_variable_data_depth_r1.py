@@ -123,3 +123,17 @@ def test_invalid_requests_fail_closed_and_scope_cards_are_draft():
     assert {c["family"] for c in scope["scope_cards"]} == set(M.FAMILIES)
     assert all(c["status"] == "DRAFT_UNVERIFIED" for c in scope["scope_cards"])
     assert all(scope["policy"].values())
+
+
+def test_socratic_prompts_cover_every_family():
+    assert set(M.SOCRATIC) == set(M.FAMILIES)
+
+
+def test_box_prompts_state_quartile_convention_and_transfer_requests_only_scored_fields():
+    for family in ("QUARTILES", "ORDINARY_BOX", "MODIFIED_BOX", "COMPARE_BOXES"):
+        for seed in range(20):
+            prompt = M.generate(family, seed, "independent")["public"]["prompt"]
+            assert "excluding the overall median for odd n" in prompt
+    for family in M.FAMILIES:
+        item = M.independent_transfer(M.generate(family, 0, "guided"), 0)
+        assert "Explain" not in item["public"]["prompt"]
