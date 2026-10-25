@@ -146,6 +146,7 @@ function GuidedDistributiveActivity({
         <p className="text-sm">This guided reflection is ungraded and is not saved as mastery evidence.</p>
       </div>}
       {predictionLocked && stepIndex >= 2 && (
+      <>
       <form onSubmit={check} className="space-y-2">
         <fieldset className="space-y-2">
           <legend className="font-medium">Try the expanded expression</legend>
@@ -166,6 +167,7 @@ function GuidedDistributiveActivity({
         </button>
       </form>
       <p id={`${id}-feedback`} role="status" aria-live="polite" aria-atomic="true">{feedback}</p>
+      </>
       )}
       {predictionLocked && checkedCorrect && <p role="status">
         Guided work checked. For an unseen independent task, leave this lesson and use an existing
