@@ -428,6 +428,14 @@ def stage_payload(variant: Variant, state: LearningState) -> dict[str, object]:
             "support": "FADING_GUIDED" if variant.mode == "guided" else "NONE_UNHINTED",
         }
     if stage == "DIAGNOSE":
+        if variant.mode != "guided":
+            return {
+                "stage": stage,
+                "instruction": "Solve the diagnostic item exactly without guided support.",
+                "response_fields": ["exact_answer"],
+                "support": "NONE_UNHINTED",
+                "guided_repair_available": False,
+            }
         if (
             state.diagnosis_classification is not None
             and state.diagnosis_classification.startswith("EQ_")
@@ -622,6 +630,9 @@ def advance_learning_path(
                 raise ValueError(
                     "diagnostic evidence cannot unlock guided repair or transfer"
                 )
+            practiced_answer = _fmt(observed)
+            diagnosis_classification = "CORRECT_NO_REMEDIATION"
+            diagnosis_feedback = ()
         elif (
             diagnosis_classification is not None
             and diagnosis_classification.startswith("EQ_")
@@ -1131,4 +1142,5 @@ def generate_transfer(source: Variant, *, seed_offset: int = 1_000_003) -> Varia
     return generate(
         TRANSFER_PARTNER[source.family], source_seed(source) + seed_offset, "independent"
     )
+
 
