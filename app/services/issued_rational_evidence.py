@@ -10,6 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
+from app.hint_models import HintEvent
 from app.models import Attempt, Problem, TutorState, TutorTurn
 from app.services.fraction_assessment_registry import AssessmentMode
 
@@ -44,6 +45,14 @@ def verify_fresh_issuance(
     ).where(
         DiagnosticSession.student_id == student_id,
         DiagnosticAttempt.problem_id == problem.id,
+    ).limit(1)) is not None:
+        return False
+    # HintEvent is authoritative assistance evidence even when no TutorTurn
+    # was written for the hint. A previously assisted item cannot be fresh
+    # independent work in a new session either.
+    if db.scalar(select(HintEvent.id).where(
+        HintEvent.student_id == student_id,
+        HintEvent.problem_id == problem.id,
     ).limit(1)) is not None:
         return False
     turns = db.scalars(select(TutorTurn).where(
