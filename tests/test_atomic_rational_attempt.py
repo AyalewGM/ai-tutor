@@ -3,7 +3,6 @@ import uuid
 from unittest.mock import Mock
 
 import app.services.atomic_rational_attempt as recorder
-
 from app.services.atomic_rational_attempt import record_rational_attempt
 from app.services.family_activation_adapter import DENIED
 from app.services.fraction_assessment_registry import AssessmentMode
