@@ -85,7 +85,7 @@ def test_positive_negative_mode_assistance_and_identity():
     args = {
         "registry":reg, "family_id":"SYNTHETIC.EQUATION.FRACTION",
         "canonical_skill_code":"MATH.EE.EQUATION.TWO",
-        "content_sha":_SHA, "canonical_answer":""x":-3/4", "variable":"x",
+        "content_sha":_SHA, "canonical_answer":"x=-3/4", "variable":"x",
     }
     positive = score_registered_rational(
         **args, submitted_answer="X=6/-8", mode=AssessmentMode.INDEPENDENT
@@ -119,8 +119,8 @@ def test_repeat_scoring_is_pure_no_attempt_or_mastery_state():
     kwargs = {
         "registry":registry, "family_id":"SYNTHETIC.EQUATION.FRACTION",
         "canonical_skill_code":"MATH.EE.EQUATION.TWO", "content_sha":_SHA,
-        "mode":AssessmentMode.INDEPENDENT, "canonical_answer":""x":-3/4",
-        "submitted_answer":""x":-6/8", "variable":"x",
+        "mode":AssessmentMode.INDEPENDENT, "canonical_answer":"x=-3/4",
+        "submitted_answer":"x=-6/8", "variable":"x",
     }
     initial = score_registered_rational(**kwargs)
     assert all(score_registered_rational(**kwargs) == initial for _ in range(15))
