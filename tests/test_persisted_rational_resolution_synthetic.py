@@ -16,6 +16,8 @@ from app.services.question_package_release import PackageReleaseEvidence
 _SHA = "a" * 40
 _FAMILY = "SYNTHETIC.ONTARIO.RATIONAL"
 _SKILL = "MATH.EE.EQUATION.TWO"
+_MAPPING = "c" * 40
+_STANDARDS = "d" * 40
 
 
 def _release():
@@ -39,24 +41,35 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
     )
     problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4", answer_kind="VARIABLE_VALUE")
     skill = SimpleNamespace(id=skill_id, code="MTH1W.C.ALG.EQ2", curriculum_id=curriculum_id)
-    mapping = SimpleNamespace(canonical_skill_id=uuid4())
+    mapping = SimpleNamespace(
+        canonical_skill_id=uuid4(),
+        provenance_json={
+            "source_mapping_revision": _MAPPING, "standards_manifest_sha": _STANDARDS,
+            "disposition": "ACCEPTED", "coverage_credit": True,
+        },
+    )
     canonical = SimpleNamespace(id=mapping.canonical_skill_id, code=_SKILL)
+    curriculum = SimpleNamespace(id=curriculum_id, code="MTH1W", country_code="CA", region_code="ON")
     metadata = SimpleNamespace(
         problem_id=problem_id, curriculum_id=curriculum_id,
         diagnostic_eligible=False, guided_eligible=False,
         independent_eligible=eligible, mastery_eligible=False,
         provenance_json=provenance if provenance is not None else {
             "family_id": _FAMILY, "content_sha": _SHA,
+            "source_mapping_revision": _MAPPING, "standards_manifest_sha": _STANDARDS,
         },
     )
     db = Mock()
-    db.scalar.side_effect = [session if owner else None, problem, skill, metadata, mapping, canonical]
+    db.scalar.side_effect = [session if owner else None, problem, skill, metadata, mapping, canonical, curriculum]
     record = FamilyRegistration(
         family=ReviewedFamily(
             _FAMILY, _SKILL, _SHA, frozenset({AssessmentMode.INDEPENDENT}),
             AnswerKind.VARIABLE_VALUE,
         ),
-        evidence=_release(), scorer_revision="b" * 40, source_mapping_revision="c" * 40,
+        evidence=_release(), scorer_revision="b" * 40, source_mapping_revision=_MAPPING,
+        answer_variable="x", standards_manifest_sha=_STANDARDS,
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        mapping_disposition="ACCEPTED", coverage_credit=True,
     )
     provider = Mock()
     provider.approved_records.return_value = (record,)
@@ -69,9 +82,10 @@ def test_server_stored_provenance_and_mode_permit_pure_scoring():
         db, context=context, submission="X=6/-8",
         approval_source=provider, service_principal="release-service",
     )
-    assert result.eligible and result.correct and result.independent_evidence_eligible
+    assert result.eligible and result.correct
+    assert not result.independent_evidence_eligible
     provider.approved_records.assert_called_once_with(service_principal="release-service")
-    assert db.scalar.call_count == 6
+    assert db.scalar.call_count == 7
     assert not hasattr(result, "canonical_answer")
 
 
