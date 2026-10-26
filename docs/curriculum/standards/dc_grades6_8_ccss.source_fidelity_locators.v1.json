@@ -2133,7 +2133,7 @@
       "source_publication": "Common Core State Standards for Mathematics",
       "adopting_authority": "DC OSSE / DC State Board of Education",
       "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
-      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "official_adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
       "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
@@ -2146,11 +2146,11 @@
       "author_scope_review": {
         "editorial_mathematical_scope": "Explain a proof of the Pythagorean Theorem and its converse.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; OSSE meeting notice and official ESEA records establish DC State Board approval on July 21, 2010.",
         "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
       },
-      "adoption_date": "2010-07-28",
+      "adoption_date": "2010-07-21",
       "source_printed_page": 56,
       "access_date": "2026-10-26",
       "bounded_mathematical_scope_evidence": {
@@ -2180,9 +2180,15 @@
         "union_inheritance_forbidden": true,
         "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       },
-      "adoption_date_evidence": "Contemporaneous OSSE release published 2010-07-29 states that the Board adopted the standards 'yesterday evening', supporting 2010-07-28.",
-      "adoption_date_conflict_note": "Later OSSE ESEA planning documents report 2010-07-21. This discrepancy is disclosed for independent source-fidelity adjudication; no mapping or coverage depends on resolving it.",
-      "adoption_date_status": "CONTEMPORANEOUS_RELEASE_BASIS_PENDING_INDEPENDENT_ADJUDICATION"
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.B.7",
@@ -2192,7 +2198,7 @@
       "source_publication": "Common Core State Standards for Mathematics",
       "adopting_authority": "DC OSSE / DC State Board of Education",
       "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
-      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "official_adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
       "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
@@ -2205,11 +2211,11 @@
       "author_scope_review": {
         "editorial_mathematical_scope": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; OSSE meeting notice and official ESEA records establish DC State Board approval on July 21, 2010.",
         "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
       },
-      "adoption_date": "2010-07-28",
+      "adoption_date": "2010-07-21",
       "source_printed_page": 56,
       "access_date": "2026-10-26",
       "bounded_mathematical_scope_evidence": {
@@ -2240,9 +2246,15 @@
         "union_inheritance_forbidden": true,
         "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       },
-      "adoption_date_evidence": "Contemporaneous OSSE release published 2010-07-29 states that the Board adopted the standards 'yesterday evening', supporting 2010-07-28.",
-      "adoption_date_conflict_note": "Later OSSE ESEA planning documents report 2010-07-21. This discrepancy is disclosed for independent source-fidelity adjudication; no mapping or coverage depends on resolving it.",
-      "adoption_date_status": "CONTEMPORANEOUS_RELEASE_BASIS_PENDING_INDEPENDENT_ADJUDICATION"
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.B.8",
@@ -2252,7 +2264,7 @@
       "source_publication": "Common Core State Standards for Mathematics",
       "adopting_authority": "DC OSSE / DC State Board of Education",
       "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
-      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "official_adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
       "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
@@ -2265,11 +2277,11 @@
       "author_scope_review": {
         "editorial_mathematical_scope": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; OSSE meeting notice and official ESEA records establish DC State Board approval on July 21, 2010.",
         "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
       },
-      "adoption_date": "2010-07-28",
+      "adoption_date": "2010-07-21",
       "source_printed_page": 56,
       "access_date": "2026-10-26",
       "bounded_mathematical_scope_evidence": {
@@ -2298,9 +2310,15 @@
         "union_inheritance_forbidden": true,
         "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       },
-      "adoption_date_evidence": "Contemporaneous OSSE release published 2010-07-29 states that the Board adopted the standards 'yesterday evening', supporting 2010-07-28.",
-      "adoption_date_conflict_note": "Later OSSE ESEA planning documents report 2010-07-21. This discrepancy is disclosed for independent source-fidelity adjudication; no mapping or coverage depends on resolving it.",
-      "adoption_date_status": "CONTEMPORANEOUS_RELEASE_BASIS_PENDING_INDEPENDENT_ADJUDICATION"
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.C.9",
@@ -2489,12 +2507,18 @@
     "source_version": "2010",
     "source_printed_page": 56,
     "adopting_authority": "DC OSSE / DC State Board of Education",
-    "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
-    "adoption_date": "2010-07-28",
+    "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+    "adoption_date": "2010-07-21",
     "access_date": "2026-10-26",
     "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced.",
-    "adoption_date_evidence": "Contemporaneous OSSE release published 2010-07-29 states that the Board adopted the standards 'yesterday evening', supporting 2010-07-28.",
-    "adoption_date_conflict_note": "Later OSSE ESEA planning documents report 2010-07-21. This discrepancy is disclosed for independent source-fidelity adjudication; no mapping or coverage depends on resolving it.",
-    "adoption_date_status": "CONTEMPORANEOUS_RELEASE_BASIS_PENDING_INDEPENDENT_ADJUDICATION"
+    "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+    "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+    "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+    "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+    "adoption_record_urls": [
+      "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+      "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+    ],
+    "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
   }
 }
