@@ -29,7 +29,7 @@ def fixture():
         },
     )
     db = Mock()
-    db.scalar.side_effect = [None, None]
+    db.scalar.side_effect = [None, None, None]
     db.scalars.return_value.all.return_value = [turn]
     return db, student_id, session_id, problem, turn
 
@@ -44,11 +44,11 @@ def check(db, student, session, problem, mode=AssessmentMode.INDEPENDENT):
 def test_single_fresh_issued_item_matches():
     db, student, session, problem, _ = fixture()
     assert check(db, student, session, problem)
-    assert db.scalar.call_count == 2
+    assert db.scalar.call_count == 3
 
 
 def test_cross_session_attempt_or_diagnostic_replay_denied():
-    for previous in ([uuid4()], [None, uuid4()]):
+    for previous in ([uuid4()], [None, uuid4()], [None, None, uuid4()]):
         db, student, session, problem, _ = fixture()
         db.scalar.side_effect = previous
         assert not check(db, student, session, problem)
