@@ -22,8 +22,13 @@ solution-class comparison families carry only bounded `8.AT.B.3a` recognition,
 comparison, and justification evidence; learner construction of examples and
 complete rewriting to the publisher-specified forms are excluded from coverage
 credit. The other nine families carry the bounded `8.AT.B.3b` solving,
-distribution, like-term, modeling, and error-analysis relation. DC `8.EE.C.7a-b`
-and Virginia `8.PFA.4` remain provisional research locators only. The MCPS
+distribution, like-term, modeling, and error-analysis relation. DC `8.EE.C.7a` and `8.EE.C.7b` are likewise separate, disjoint
+`PARTIAL_NON_EXHAUSTIVE` / `DC_PROVISIONAL_NOT_ACCEPTED` relations, sourced to
+the controlling 2010 CCSS publication on printed page 54 and DC's July 28,
+2010 State Board adoption. The same three/nine family boundary applies;
+learner construction of examples and complete successive transformation to
+`x = a`, `a = a`, or `a = b` are expressly excluded from `8.EE.C.7a` coverage
+credit. Virginia `8.PFA.4` remains a provisional research locator only. The MCPS
 support page is legacy/open-resource structure research, not proof of current
 local sequence. No full-standard coverage, source task, diagram, wording, or
 answer key is claimed or copied.
