@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 
 from app.content_models import ProblemContentMetadata
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
-from app.models import Problem, Skill, TutorSession, TutorState
+from app.models import Curriculum, Problem, Skill, TutorSession, TutorState
 from app.services.family_activation_adapter import (
     DENIED,
     SCHEMA_VERSION,
@@ -114,7 +114,24 @@ def score_persisted_rational(
     canonical = db.scalar(select(CanonicalSkill).where(
         CanonicalSkill.id == mapping.canonical_skill_id,
     ))
-    if canonical is None:
+    curriculum = db.scalar(select(Curriculum).where(
+        Curriculum.id == session.curriculum_id,
+    ))
+    if (
+        canonical is None or curriculum is None
+        or not curriculum.country_code or not curriculum.region_code
+    ):
+        return DENIED
+    mapping_evidence = mapping.provenance_json
+    if (
+        not isinstance(mapping_evidence, dict)
+        or set(mapping_evidence) != {
+            "source_mapping_revision", "standards_manifest_sha",
+            "disposition", "coverage_credit",
+        }
+        or mapping_evidence.get("disposition") != "ACCEPTED"
+        or mapping_evidence.get("coverage_credit") is not True
+    ):
         return DENIED
     eligible_fields = {
         AssessmentMode.DIAGNOSTIC: metadata.diagnostic_eligible,
@@ -126,11 +143,19 @@ def score_persisted_rational(
         return DENIED
     # Provenance must originate in persisted application-owned metadata.
     provenance = metadata.provenance_json
-    if not isinstance(provenance, dict) or set(provenance) != {"family_id", "content_sha"}:
+    if not isinstance(provenance, dict) or set(provenance) != {
+        "family_id", "content_sha", "source_mapping_revision", "standards_manifest_sha",
+    }:
         return DENIED
     family = provenance.get("family_id")
     revision = provenance.get("content_sha")
-    if not isinstance(family, str) or not isinstance(revision, str):
+    if (
+        not isinstance(family, str) or not isinstance(revision, str)
+        or not isinstance(provenance["source_mapping_revision"], str)
+        or not isinstance(provenance["standards_manifest_sha"], str)
+        or provenance["source_mapping_revision"] != mapping_evidence["source_mapping_revision"]
+        or provenance["standards_manifest_sha"] != mapping_evidence["standards_manifest_sha"]
+    ):
         return DENIED
     try:
         entries = approval_source.approved_records(service_principal=service_principal)
@@ -151,6 +176,10 @@ def score_persisted_rational(
     return score_registered_rational(
         registry, family_id=family, canonical_skill_code=canonical.code,
         content_sha=revision, mode=context.mode,
+        source_mapping_revision=provenance["source_mapping_revision"],
+        standards_manifest_sha=provenance["standards_manifest_sha"],
+        jurisdiction_code=f"{curriculum.country_code}.{curriculum.region_code}",
+        curriculum_code=curriculum.code,
         canonical_answer=problem.canonical_answer,
         submitted_answer=submission, variable=variable, assisted=context.assisted,
     )
