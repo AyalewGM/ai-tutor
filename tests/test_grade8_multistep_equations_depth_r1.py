@@ -527,3 +527,59 @@ def test_dc_lettered_subparts_are_separate_partial_provisional_relations():
     assert "x = a, a = a, or a = b" in excluded_7a
     assert package["runtime_activation"] is False
 
+def test_virginia_lettered_clauses_are_source_bounded_and_fail_closed():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    virginia = {
+        row["knowledge_skill_clause"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "Virginia Department of Education"
+    }
+    assert set(virginia) == set("abcdefg")
+    for clause, row in virginia.items():
+        assert row["standard_id"] == "8.PFA.4"
+        assert row["clause_locator"] == f"8.PFA.4({clause})"
+        assert row["mapping_status"] == "VIRGINIA_PROVISIONAL_NOT_ACCEPTED"
+        assert row["page"] == "printed page 64"
+        assert row["url"].startswith(
+            "https://www.doe.virginia.gov/home/showpublisheddocument/"
+        )
+        assert row["version_date"].startswith(
+            "Virginia Board of Education approved August 31, 2023"
+        )
+
+    assert {
+        clause
+        for clause, row in virginia.items()
+        if row["coverage_relation"] == "NO_COVERAGE_CLAIM"
+    } == {"a", "c", "d", "f"}
+    assert {
+        clause
+        for clause, row in virginia.items()
+        if row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+    } == {"b", "e", "g"}
+
+    solver_families = {
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP",
+    }
+    assert set(virginia["b"]["family_codes"]) == solver_families
+    assert set(virginia["e"]["family_codes"]) == {
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+    }
+    assert set(virginia["g"]["family_codes"]) == solver_families
+    for clause in ("a", "c", "d", "f"):
+        assert virginia[clause]["family_codes"] == []
+
+    excluded_b = " ".join(virginia["b"]["excluded_from_coverage_credit"])
+    assert "NESTED_GROUPS" in excluded_b
+    assert "up-to-four-step" in excluded_b
+    assert "SOLUTION_CLASS_COMPARE" in excluded_b
+    assert package["runtime_activation"] is False
+
