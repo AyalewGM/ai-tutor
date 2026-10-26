@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.diagnostic_models import DiagnosticAttempt, DiagnosticSession
-from app.models import Attempt, Problem, TutorTurn
+from app.models import Attempt, Problem, TutorState, TutorTurn
 from app.services.fraction_assessment_registry import AssessmentMode
 
 ISSUANCE_VERSION = "MIHUR_ASSESSMENT_ISSUANCE_V1"
@@ -63,7 +63,10 @@ def verify_fresh_issuance(
     return (
         issued.role == "SYSTEM"
         and issued.pedagogical_action == "ISSUE_ASSESSMENT"
-        and issued.state is not None
+        and issued.state == (
+            TutorState.INDEPENDENT_PRACTICE if mode == AssessmentMode.INDEPENDENT
+            else TutorState.MASTERY_CHECK
+        )
         and isinstance(issued.metadata_json, dict)
         and issued.metadata_json == expected
     )
