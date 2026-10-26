@@ -37,7 +37,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         status="ACTIVE", current_state=state,
         primary_skill_id=skill_id, active_skill_id=skill_id, curriculum_id=curriculum_id,
     )
-    problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4")
+    problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4", answer_kind="VARIABLE_VALUE")
     skill = SimpleNamespace(id=skill_id, code="MTH1W.C.ALG.EQ2", curriculum_id=curriculum_id)
     mapping = SimpleNamespace(canonical_skill_id=uuid4())
     canonical = SimpleNamespace(id=mapping.canonical_skill_id, code=_SKILL)
