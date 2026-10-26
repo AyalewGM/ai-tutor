@@ -37,10 +37,12 @@ symbolic representation sequence, and an unseen partner-family transfer.
 
 ## Determinism, modes, and evidence isolation
 
-The 32 primary seeds are generated independently for diagnostic, guided,
-independent, and mastery modes. Mode and seed are part of the deterministic
-parameter slice, yielding 1,536 distinct primary mathematical fingerprints.
-Transfer uses a separate fixed seed band and changes both family and structure.
+The 32 primary seeds use disjoint mathematical parameter slices for diagnostic,
+guided, independent, and mastery modes. Mathematical fingerprints exclude mode,
+support, variant ID, and other delivery metadata; the 1,536 primary tasks remain
+distinct under that presentation-invariant signature. Pairwise cross-mode
+nonintersection is checked for every family. Transfer uses a separate fixed seed
+band and changes both family and structure.
 
 Only guided variants expose the eight-stage learning sequence and
 representation support. A targeted repair requires two corroborating probes:
@@ -49,8 +51,9 @@ receives a neutral retry; the worked answer is not revealed and guided success
 does not earn mastery credit. Diagnostic, independent, mastery, and transfer
 payloads are unhinted.
 
-Answers are normalized as exact signed integers or fractions. Family-specific
-contracts additionally enforce greatest-factor form, all-input equivalence,
+Answers are normalized as exact signed integers or fractions. Boolean decision
+fields remain type-distinct from numeric 1 and 0. Family-specific contracts
+additionally enforce greatest-factor form, all-input equivalence,
 required exact counterexamples, the first invalid step, and complete missing
 terms. The accessibility contract requires keyboard operation, ordered screen-
 reader math, non-colour cues, reduced-motion equivalence, exact-input support,
