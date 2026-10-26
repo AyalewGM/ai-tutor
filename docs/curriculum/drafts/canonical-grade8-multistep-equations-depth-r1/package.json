@@ -171,14 +171,169 @@
     },
     {
       "publisher": "Virginia Department of Education",
-      "url": "https://www.doe.virginia.gov/teaching-learning-assessment/k-12-standards-instruction/mathematics/2023-sol-instructional-resources",
-      "title": "2023 Mathematics SOL Instructional Resources",
-      "version_date": "2023 SOL resources; accessed 2026-10-25",
-      "page": "Grade 8 instructional resources",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
       "standard_id": "8.PFA.4",
       "access_date": "2026-10-25",
       "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
-      "adaptation_rationale": "Demand categories only; every task and representation is original and no 2016 MIP is used as current alignment proof."
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "a",
+      "clause_locator": "8.PFA.4(a)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: declarative representation metadata and generic side-selection tokens do not establish learner use of concrete materials or pictorial representations.",
+      "excluded_from_coverage_credit": [
+        "All twelve families until executable concrete/pictorial representation evidence is independently reviewed"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "b",
+      "clause_locator": "8.PFA.4(b)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only rational-coefficient solving, distribution, combining-like-terms, variables-on-both-sides, bounded contextual solving, and corrected-error evidence in the eight listed families. No claim is made beyond the source's up-to-four-step boundary.",
+      "excluded_from_coverage_credit": [
+        "NESTED_GROUPS until its transformations are independently shown to remain within the source's up-to-four-step boundary",
+        "IDENTITY_ALL_REAL, CONTRADICTION_NO_SOLUTION, and SOLUTION_CLASS_COMPARE because Grade 8 clause (b) does not state a solution-class demand",
+        "Any other 8.PFA.4(b) qualifier not explicitly demonstrated by the listed families"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "c",
+      "clause_locator": "8.PFA.4(c)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: current context families present an equation/problem to solve and do not require the learner to write the multistep equation from a verbal situation.",
+      "excluded_from_coverage_credit": [
+        "All twelve families"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "d",
+      "clause_locator": "8.PFA.4(d)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: no family requires the learner to create a verbal context from a supplied multistep equation.",
+      "excluded_from_coverage_credit": [
+        "All twelve families"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "e",
+      "clause_locator": "8.PFA.4(e)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL"
+      ],
+      "coverage_boundary": "Only solving original perimeter and competing-plan contexts in the two listed families; no full contextual-problem coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The ten non-context families",
+        "Any contextual form not explicitly implemented by the two listed original families"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "f",
+      "clause_locator": "8.PFA.4(f)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: exact x-value responses alone do not demonstrate learner interpretation of an algebraic solution in its context.",
+      "excluded_from_coverage_credit": [
+        "All twelve families until an explicit context-and-units interpretation response is implemented and independently reviewed"
+      ]
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "g",
+      "clause_locator": "8.PFA.4(g)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only the explicit final original-equation substitution/reconstruction check in the eight listed within-boundary families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "NESTED_GROUPS until its transformations are independently shown to remain within the source's up-to-four-step boundary",
+        "IDENTITY_ALL_REAL, CONTRADICTION_NO_SOLUTION, and SOLUTION_CLASS_COMPARE because they do not confirm a unique algebraic solution by substitution",
+        "Any confirmation method not explicitly implemented by the listed families"
+      ]
     }
   ],
   "gates": {
