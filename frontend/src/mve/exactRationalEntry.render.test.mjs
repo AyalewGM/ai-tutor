@@ -61,7 +61,7 @@ test("a disabled answer field also disables on-screen keys", () => {
   const html = render("VARIABLE_VALUE", { disabled: true });
   assert.match(html, /<input[^>]+disabled=""/);
   assert.match(html, /<button[^>]+disabled=""/);
-  assert.match(html, /maxlength="64"/);
+  assert.match(html, /maxlength="64"/i);
 });
 
 test("Workspace routes only exact rational kinds through new field and preserves server submit", async () => {
