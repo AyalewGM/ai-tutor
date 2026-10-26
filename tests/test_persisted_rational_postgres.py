@@ -80,7 +80,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
         try:
             with Session(bind=connection) as db:
                 curriculum = Curriculum(
-                    code=f"SYNTHETIC-RATIONAL-{uuid.uuid4().hex[:10]}",
+                    code=f"SYNTHETIC_RATIONAL_{uuid.uuid4().hex[:10].upper()}",
                     name="Synthetic rational resolution curriculum", version="v1",
                     country_code="CA", region_code="ON",
                 )
