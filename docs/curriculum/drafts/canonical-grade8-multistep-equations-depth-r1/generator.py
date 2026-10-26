@@ -288,6 +288,119 @@ def _class_signals(solution_class: str) -> tuple[dict[str, Any], ...]:
     )
 
 
+MISCONCEPTION_REPAIRS: Final = {
+    "SIGN_REVERSAL": {
+        "questions": (
+            "Which inverse operation did you apply to both complete sides?",
+            "Does a term change sign by moving, or because the same value was added to or subtracted from both sides?",
+        ),
+        "explanation": (
+            "A term does not change sign by crossing the equals sign. Name the inverse operation, "
+            "apply it to both complete sides, and then simplify."
+        ),
+    },
+    "INVERSE_OPERATION": {
+        "questions": (
+            "What operation is acting on the variable now?",
+            "Which inverse operation undoes it, and where must that inverse operation be applied?",
+        ),
+        "explanation": (
+            "Undo the current operation with its inverse on both complete sides. Repeating the "
+            "same operation changes the equation instead of isolating the variable."
+        ),
+    },
+    "RECIPROCAL_CONFUSION": {
+        "questions": (
+            "If a coefficient multiplies x, what operation undoes that multiplication?",
+            "When you substitute your candidate, do both complete sides have the same value?",
+        ),
+        "explanation": (
+            "Undo a nonzero coefficient by dividing both complete sides by that coefficient. "
+            "Taking the reciprocal of the final value is a different operation."
+        ),
+    },
+    "FORCED_SINGLE_SOLUTION": {
+        "questions": (
+            "After like terms cancel, what coefficient remains on x?",
+            "Can a zero x coefficient be divided to force one value, or must the remaining constants be compared?",
+        ),
+        "explanation": (
+            "When the variable coefficient becomes zero, do not divide by zero. Compare the "
+            "remaining constants to decide whether every value works or no value works."
+        ),
+    },
+    "IDENTITY_CALLED_CONTRADICTION": {
+        "questions": (
+            "After the variable terms cancel, are the remaining constants equal or unequal?",
+            "If the same true statement remains for every x, how many solutions does the original equation have?",
+        ),
+        "explanation": (
+            "Equal constants after the variable terms cancel form an identity. The simplified "
+            "statement is true for every value, rather than a contradiction."
+        ),
+    },
+    "CONTRADICTION_CALLED_IDENTITY": {
+        "questions": (
+            "After the variable terms cancel, are the remaining constants equal or unequal?",
+            "Can any value of x make two different constants equal?",
+        ),
+        "explanation": (
+            "Unequal constants after the variable terms cancel form a contradiction. No value "
+            "of the variable can repair that false statement."
+        ),
+    },
+    "DISTRIBUTED_TO_ONE_TERM": {
+        "questions": (
+            "Which terms are inside the parentheses and must each receive the outside factor?",
+            "What is the expanded left side before any inverse operation is used?",
+        ),
+        "explanation": (
+            "Distribution multiplies every term in the group by the outside factor. Compare the "
+            "first changed line term by term before continuing to solve."
+        ),
+    },
+    "ERROR_STEP_MISLOCATED": {
+        "questions": (
+            "Which is the first line that differs from the original equation?",
+            "At that earliest changed line, which term no longer has an equivalent value?",
+        ),
+        "explanation": (
+            "Error analysis begins with the first changed line. Check that line term by term; a "
+            "later consequence cannot be the first invalid step."
+        ),
+    },
+    "IDENTITY_CONTRADICTION_SWAPPED": {
+        "questions": (
+            "For each equation where x cancels, what constant statement remains?",
+            "Which remaining statement is always true, and which is impossible?",
+        ),
+        "explanation": (
+            "Classify the equations separately after cancellation. Equal constants identify an "
+            "identity; unequal constants identify a contradiction."
+        ),
+    },
+    "FORCED_THREE_SINGLE_SOLUTIONS": {
+        "questions": (
+            "Which simplified equations still have a nonzero x coefficient?",
+            "For each zero x coefficient, what do the remaining constants imply instead of a single value?",
+        ),
+        "explanation": (
+            "Only an equation with a nonzero remaining variable coefficient can be divided to "
+            "produce one solution. Zero coefficients require a constant comparison."
+        ),
+    },
+}
+
+
+def _repair_content(misconception_code: str) -> dict[str, Any]:
+    content = MISCONCEPTION_REPAIRS.get(misconception_code)
+    if content is None:
+        raise ValueError(f"missing reviewed repair for {misconception_code}")
+    return {
+        "questions": list(content["questions"]),
+        "explanation": content["explanation"],
+    }
+
 @dataclass(frozen=True)
 class Variant:
     family_code: str
@@ -364,11 +477,12 @@ class Variant:
         signal = matching[0]
         if reasoning_choice != signal["reasoning_choice"]:
             return {"status": "NEUTRAL_RETRY", "reason": "EVIDENCE_NOT_CORROBORATED"}
+        repair_content = _repair_content(signal["code"])
         return {
             "status": "TARGETED_REPAIR",
             "misconception_code": signal["code"],
-            "questions": list(self.socratic_questions),
-            "explanation": self.guided_explanation,
+            "questions": repair_content["questions"],
+            "explanation": repair_content["explanation"],
             "worked_answer_revealed": False,
             "mastery_credit": False,
         }
@@ -716,10 +830,11 @@ def learning_stage_payload(state: LearningState) -> dict[str, Any]:
             ]
             payload["prompt"] = "Choose the reasoning that best matches the work you actually did."
         else:
+            repair_content = _repair_content(state.diagnosis_route)
             payload["repair"] = {
                 "misconception_code": state.diagnosis_route,
-                "questions": list(variant.socratic_questions),
-                "explanation": variant.guided_explanation,
+                "questions": repair_content["questions"],
+                "explanation": repair_content["explanation"],
                 "worked_answer_revealed": False,
                 "corrected_response_required": True,
             }
@@ -793,18 +908,14 @@ def advance_guided_learning(state: LearningState, evidence: dict[str, Any]) -> L
         repair = variant.guided_repair(state.practice_response or "", reasoning)
         if repair["status"] != "TARGETED_REPAIR":
             return _retry(state, "DIAGNOSIS_NOT_CORROBORATED")
-        corrected = evidence.get("corrected_response")
-        if isinstance(corrected, str) and variant.response_is_correct(corrected):
-            transfer = create_unhinted_transfer(variant)
-            return _advance(
-                state,
-                "TRANSFER",
-                transfer_variant=transfer,
-                diagnosis_route=repair["misconception_code"],
-            )
+        feedback_code = (
+            "TARGETED_REPAIR_MUST_BE_VIEWED_BEFORE_CORRECTION"
+            if "corrected_response" in evidence
+            else "TARGETED_REPAIR_REQUIRED"
+        )
         return _retry(
             state,
-            "TARGETED_REPAIR_REQUIRED",
+            feedback_code,
             diagnosis_route=repair["misconception_code"],
         )
     if state.stage == "TRANSFER":
