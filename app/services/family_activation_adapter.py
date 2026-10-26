@@ -39,6 +39,7 @@ class FamilyRegistration:
     standards_manifest_sha: str = ""
     jurisdiction_code: str = ""
     curriculum_code: str = ""
+    local_skill_code: str = ""
     mapping_disposition: str = ""
     coverage_credit: bool = False
 
@@ -84,6 +85,8 @@ def compile_registration(
             or not isinstance(entry.curriculum_code, str)
             or _NAME.fullmatch(entry.jurisdiction_code) is None
             or _NAME.fullmatch(entry.curriculum_code) is None
+            or not isinstance(entry.local_skill_code, str)
+            or _NAME.fullmatch(entry.local_skill_code) is None
             or family.answer_kind not in {AnswerKind.RATIONAL, AnswerKind.VARIABLE_VALUE}
             or not isinstance(family.modes, frozenset)
             or not family.modes
@@ -118,6 +121,7 @@ def score_registered_rational(
     standards_manifest_sha: str = "",
     jurisdiction_code: str = "",
     curriculum_code: str = "",
+    local_skill_code: str = "",
     assisted: bool = False,
 ) -> RegistrationDecision:
     """Check a *signed* reviewed response schema; never award mastery evidence."""
@@ -140,6 +144,7 @@ def score_registered_rational(
         or standards_manifest_sha != entry.standards_manifest_sha
         or jurisdiction_code != entry.jurisdiction_code
         or curriculum_code != entry.curriculum_code
+        or local_skill_code != entry.local_skill_code
         or entry.mapping_disposition != "ACCEPTED"
         or entry.coverage_credit is not True
     ):
