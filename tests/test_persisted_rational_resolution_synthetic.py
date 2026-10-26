@@ -7,6 +7,7 @@ from app.answer_contracts import AnswerKind
 from app.models import TutorState
 from app.services.family_activation_adapter import DENIED, FamilyRegistration
 from app.services.fraction_assessment_registry import AssessmentMode, ReviewedFamily
+from app.services.issued_rational_evidence import ISSUANCE_VERSION
 from app.services.persisted_rational_resolution import (
     TrustedAssessmentContext,
     score_persisted_rational,
@@ -39,7 +40,8 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         status="ACTIVE", current_state=state,
         primary_skill_id=skill_id, active_skill_id=skill_id, curriculum_id=curriculum_id,
     )
-    problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4", answer_kind="VARIABLE_VALUE")
+    problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4", answer_kind="VARIABLE_VALUE",
+                              solution={"variant_id": "v1", "task_fingerprint": "fresh-fp"})
     skill = SimpleNamespace(id=skill_id, code="MTH1W.C.ALG.EQ2", curriculum_id=curriculum_id)
     mapping = SimpleNamespace(
         canonical_skill_id=uuid4(),
@@ -60,7 +62,17 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         },
     )
     db = Mock()
-    db.scalar.side_effect = [session if owner else None, problem, skill, metadata, mapping, canonical, curriculum]
+    db.scalar.side_effect = [session if owner else None, problem, None, None, skill, metadata, mapping, canonical, curriculum]
+    db.scalars.return_value.all.return_value = [SimpleNamespace(
+        role="SYSTEM", pedagogical_action="ISSUE_ASSESSMENT",
+        state=TutorState.INDEPENDENT_PRACTICE,
+        metadata_json={
+            "issuance_contract": ISSUANCE_VERSION,
+            "student_id": str(student_id), "problem_id": str(problem_id),
+            "variant_id": "v1", "task_fingerprint": "fresh-fp",
+            "mode": "independent",
+        },
+    )]
     record = FamilyRegistration(
         family=ReviewedFamily(
             _FAMILY, _SKILL, _SHA, frozenset({AssessmentMode.INDEPENDENT}),
@@ -85,7 +97,7 @@ def test_server_stored_provenance_and_mode_permit_pure_scoring():
     assert result.eligible and result.correct
     assert not result.independent_evidence_eligible
     provider.approved_records.assert_called_once_with(service_principal="release-service")
-    assert db.scalar.call_count == 7
+    assert db.scalar.call_count == 9
     assert not hasattr(result, "canonical_answer")
 
 
@@ -121,3 +133,26 @@ def test_provenance_from_persisted_metadata_must_be_complete():
             approval_source=provider, service_principal="release-service",
         )
         assert result == DENIED
+
+
+
+def test_missing_issued_turn_fails_closed():
+    db, context, provider = _fixture()
+    db.scalars.return_value.all.return_value = []
+    assert score_persisted_rational(
+        db, context=context, submission="x=-3/4",
+        approval_source=provider, service_principal="release-service",
+    ) == DENIED
+    provider.approved_records.assert_not_called()
+
+
+def test_issued_task_fingerprint_or_mode_tamper_fails_closed():
+    for field, replacement in (("task_fingerprint", "old-task"), ("mode", "guided")):
+        db, context, provider = _fixture()
+        turn = db.scalars.return_value.all.return_value[0]
+        turn.metadata_json[field] = replacement
+        assert score_persisted_rational(
+            db, context=context, submission="x=-3/4",
+            approval_source=provider, service_principal="release-service",
+        ) == DENIED
+        provider.approved_records.assert_not_called()
