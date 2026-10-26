@@ -17,11 +17,11 @@ from app.content_models import ProblemContentMetadata
 from app.models import Problem, Skill, TutorSession, TutorState
 from app.services.family_activation_adapter import (
     DENIED,
+    SCHEMA_VERSION,
     FamilyRegistration,
     RegistrationDecision,
     compile_registration,
     score_registered_rational,
-    SCHEMA_VERSION,
 )
 from app.services.fraction_assessment_registry import AssessmentMode
 
