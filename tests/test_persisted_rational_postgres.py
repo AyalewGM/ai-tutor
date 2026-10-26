@@ -22,9 +22,11 @@ from app.models import (
     Student,
     TutorSession,
     TutorState,
+    TutorTurn,
 )
 from app.services.family_activation_adapter import DENIED, FamilyRegistration
 from app.services.fraction_assessment_registry import AssessmentMode, ReviewedFamily
+from app.services.issued_rational_evidence import ISSUANCE_VERSION
 from app.services.persisted_rational_resolution import (
     TrustedAssessmentContext,
     score_persisted_rational,
@@ -112,6 +114,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                     primary_skill_id=skill.id, problem_type="SYNTHETIC_RATIONAL",
                     difficulty=3, prompt="Solve a synthetic equation",
                     canonical_answer="x=-3/4", answer_kind="VARIABLE_VALUE",
+                    solution={"variant_id": "synthetic-v1", "task_fingerprint": "synthetic-fp"},
                 )
                 db.add(problem)
                 db.flush()
@@ -143,6 +146,19 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                     db.flush()
                     students.append(student)
                     sessions.append(sess)
+                    db.add(TutorTurn(
+                        session_id=sess.id, problem_id=problem.id, role="SYSTEM",
+                        message="Synthetic server issuance",
+                        state=TutorState.INDEPENDENT_PRACTICE,
+                        pedagogical_action="ISSUE_ASSESSMENT",
+                        metadata_json={
+                            "issuance_contract": ISSUANCE_VERSION,
+                            "student_id": str(student.id), "problem_id": str(problem.id),
+                            "variant_id": "synthetic-v1",
+                            "task_fingerprint": "synthetic-fp",
+                            "mode": "independent",
+                        },
+                    ))
                 db.flush()
 
                 def history_counts():
