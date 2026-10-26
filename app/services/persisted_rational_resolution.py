@@ -7,13 +7,13 @@ from submitted answer payloads. Approvals must come from an independent service.
 from __future__ import annotations
 
 import uuid
-from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Protocol
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.content_models import ProblemContentMetadata
 from app.models import Problem, Skill, TutorSession, TutorState
 from app.services.family_activation_adapter import (
     DENIED,
@@ -56,8 +56,6 @@ def score_persisted_rational(
     submission: str,
     approval_source: AuthenticatedApprovalSource | None = None,
     service_principal: str | None = None,
-    # Trusted server-provided immutable problem provenance, not a request field.
-    stored_provenance: Mapping[str, str] | None = None,
 ) -> RegistrationDecision:
     """Fail closed until authenticated source, stored provenance and ownership exist.
 
@@ -76,7 +74,6 @@ def score_persisted_rational(
         or approval_source is None
         or not isinstance(service_principal, str)
         or not service_principal.strip()
-        or not isinstance(stored_provenance, Mapping)
     ):
         return DENIED
     session = db.scalar(
@@ -96,11 +93,25 @@ def score_persisted_rational(
     ):
         return DENIED
     skill = db.scalar(select(Skill).where(Skill.id == problem.primary_skill_id))
-    if skill is None or len(stored_provenance) != 2:
+    metadata = db.scalar(select(ProblemContentMetadata).where(
+        ProblemContentMetadata.problem_id == problem.id,
+    ))
+    if skill is None or metadata is None or metadata.curriculum_id != session.curriculum_id:
         return DENIED
-    # Independently persisted family identity + exact source revision.
-    family = stored_provenance.get("family_id")
-    revision = stored_provenance.get("content_sha")
+    eligible_fields = {
+        AssessmentMode.DIAGNOSTIC: metadata.diagnostic_eligible,
+        AssessmentMode.GUIDED: metadata.guided_eligible,
+        AssessmentMode.INDEPENDENT: metadata.independent_eligible,
+        AssessmentMode.MASTERY: metadata.mastery_eligible,
+    }
+    if eligible_fields.get(context.mode) is not True:
+        return DENIED
+    # Provenance must originate in persisted application-owned metadata.
+    provenance = metadata.provenance_json
+    if not isinstance(provenance, dict) or set(provenance) != {"family_id", "content_sha"}:
+        return DENIED
+    family = provenance.get("family_id")
+    revision = provenance.get("content_sha")
     if not isinstance(family, str) or not isinstance(revision, str):
         return DENIED
     try:
