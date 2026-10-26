@@ -12,10 +12,22 @@ from sqlalchemy.orm import Session
 
 from app.answer_contracts import AnswerKind
 from app.content_models import ProblemContentMetadata
-from app.models import Attempt, Curriculum, MasteryEvent, Problem, Skill, Student, TutorSession, TutorState
+from app.models import (
+    Attempt,
+    Curriculum,
+    MasteryEvent,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+    TutorState,
+)
 from app.services.family_activation_adapter import DENIED, FamilyRegistration
 from app.services.fraction_assessment_registry import AssessmentMode, ReviewedFamily
-from app.services.persisted_rational_resolution import TrustedAssessmentContext, score_persisted_rational
+from app.services.persisted_rational_resolution import (
+    TrustedAssessmentContext,
+    score_persisted_rational,
+)
 from app.services.question_package_release import PackageReleaseEvidence
 
 _SHA = "a" * 40
