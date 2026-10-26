@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from app.answer_contracts import AnswerKind
 from app.content_models import ProblemContentMetadata
+from app.hint_models import HintEvent
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.models import (
     Attempt,
@@ -179,6 +180,18 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 b = score_persisted_rational(db, context=first, submission="x=-9/12", **args)
                 assert a.eligible and a.correct and not a.independent_evidence_eligible
                 assert b == a
+                # Persisted hints are stronger evidence than caller assisted=False.
+                # They must deny a later independent score even with a valid
+                # issuance marker and an otherwise eligible reviewed family.
+                db.add(HintEvent(
+                    session_id=sessions[0].id, student_id=students[0].id,
+                    skill_id=skill.id, problem_id=problem.id,
+                    level=1, trigger="synthetic-hint",
+                ))
+                db.flush()
+                assert score_persisted_rational(
+                    db, context=first, submission="x=-3/4", **args,
+                ) == DENIED
                 cross_student = TrustedAssessmentContext(
                     students[1].id, sessions[0].id, problem.id, AssessmentMode.INDEPENDENT,
                 )
