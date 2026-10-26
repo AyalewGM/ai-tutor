@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from app.answer_contracts import AnswerKind
 from app.content_models import ProblemContentMetadata
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.models import (
     Attempt,
     Curriculum,
@@ -79,8 +80,22 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 )
                 db.add(curriculum)
                 db.flush()
-                skill = Skill(curriculum_id=curriculum.id, code=_SKILL, name="Synthetic rational")
+                skill = Skill(curriculum_id=curriculum.id, code="MTH1W.C.ALG.EQ2", name="Synthetic rational")
                 db.add(skill)
+                db.flush()
+                canonical = db.scalar(
+                    select(CanonicalSkill).where(CanonicalSkill.code == _SKILL)
+                )
+                if canonical is None:
+                    canonical = CanonicalSkill(
+                        code=_SKILL, name="Synthetic canonical equation skill",
+                    )
+                    db.add(canonical)
+                    db.flush()
+                db.add(CurriculumSkillMapping(
+                    skill_id=skill.id, canonical_skill_id=canonical.id,
+                    mapping_type="EQUIVALENT",
+                ))
                 db.flush()
                 problem = Problem(
                     primary_skill_id=skill.id, problem_type="SYNTHETIC_RATIONAL",
