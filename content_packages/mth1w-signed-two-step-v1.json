@@ -2,7 +2,7 @@
   "schema": "MIHUR_CONTENT_PACKAGE_V1",
   "package_id": "mth1w-signed-two-step-v1",
   "family_id": "TWO_STEP_SIGNED_RATIONAL",
-  "content_revision": "4b2c878d94c5992a1ce657ff4541f3554ab01e14",
+  "content_revision": "ddcebf22dff79247bd9b108fd4c650a4fac1c4c3",
   "generator_sha256": "544f02a9235b2fbd17cc5497ceefbe2bf10fe7498cfd3a3174c14f1881fef5a1",
   "canonical_skill": "MATH.EE.EQUATION.TWO",
   "curriculum": "MTH1W",

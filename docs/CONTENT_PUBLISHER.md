@@ -2,7 +2,7 @@
 
 Parent: #462. Scope: one signed two-step rational equation family from merged
 #489, mapped to existing `MATH.EE.EQUATION.TWO` / `MTH1W.C.ALG.EQ2`.
-The initial manifest is **pending**. Nothing in this PR grants student release.
+The manifest pins the squash-merged source commit `ddcebf22dff79247bd9b108fd4c650a4fac1c4c3`; its generator bytes match the independently reviewed #489 head `4b2c878d94c5992a1ce657ff4541f3554ab01e14`. This avoids requiring an unmerged branch head to be a main ancestor. The initial manifest is **pending**. Nothing in this PR grants student release.
 Merged #472 data and #495 inverse operations remain inactive follow-on adapters;
 #494/#496 provide the reused exact-rational scorer and trust-boundary contracts.
 
