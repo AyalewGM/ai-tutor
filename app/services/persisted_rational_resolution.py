@@ -14,6 +14,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.content_models import ProblemContentMetadata
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.models import Problem, Skill, TutorSession, TutorState
 from app.services.family_activation_adapter import (
     DENIED,
@@ -96,7 +97,23 @@ def score_persisted_rational(
     metadata = db.scalar(select(ProblemContentMetadata).where(
         ProblemContentMetadata.problem_id == problem.id,
     ))
-    if skill is None or metadata is None or metadata.curriculum_id != session.curriculum_id:
+    if (
+        skill is None
+        or metadata is None
+        or skill.curriculum_id != session.curriculum_id
+        or metadata.curriculum_id != session.curriculum_id
+    ):
+        return DENIED
+    mapping = db.scalar(select(CurriculumSkillMapping).where(
+        CurriculumSkillMapping.skill_id == skill.id,
+        CurriculumSkillMapping.mapping_type == "EQUIVALENT",
+    ))
+    if mapping is None:
+        return DENIED
+    canonical = db.scalar(select(CanonicalSkill).where(
+        CanonicalSkill.id == mapping.canonical_skill_id,
+    ))
+    if canonical is None:
         return DENIED
     eligible_fields = {
         AssessmentMode.DIAGNOSTIC: metadata.diagnostic_eligible,
@@ -120,7 +137,7 @@ def score_persisted_rational(
     except (ValueError, TypeError, PermissionError):
         return DENIED
     return score_registered_rational(
-        registry, family_id=family, canonical_skill_code=skill.code,
+        registry, family_id=family, canonical_skill_code=canonical.code,
         content_sha=revision, mode=context.mode,
         canonical_answer=problem.canonical_answer,
         submitted_answer=submission, assisted=context.assisted,
