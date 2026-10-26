@@ -62,7 +62,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         },
     )
     db = Mock()
-    db.scalar.side_effect = [session if owner else None, problem, None, None, skill, metadata, mapping, None, canonical, curriculum]
+    db.scalar.side_effect = [session if owner else None, problem, None, None, None, skill, metadata, mapping, None, canonical, curriculum]
     db.scalars.return_value.all.return_value = [SimpleNamespace(
         role="SYSTEM", pedagogical_action="ISSUE_ASSESSMENT",
         state=TutorState.INDEPENDENT_PRACTICE,
@@ -97,7 +97,7 @@ def test_server_stored_provenance_and_mode_permit_pure_scoring():
     assert result.eligible and result.correct
     assert not result.independent_evidence_eligible
     provider.approved_records.assert_called_once_with(service_principal="release-service")
-    assert db.scalar.call_count == 10
+    assert db.scalar.call_count == 11
     assert not hasattr(result, "canonical_answer")
 
 
@@ -163,7 +163,7 @@ def test_multiple_equivalent_mappings_deny_before_scoring():
     # Session, Problem, two historical replay probes, Skill, Metadata,
     # first mapping, then an independently persisted competing mapping.
     values = list(db.scalar.side_effect)
-    values[7] = uuid4()
+    values[8] = uuid4()
     db.scalar.side_effect = values
     assert score_persisted_rational(
         db, context=context, submission="x=-3/4",
