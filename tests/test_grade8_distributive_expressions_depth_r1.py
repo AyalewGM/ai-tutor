@@ -50,6 +50,40 @@ def test_manifest_preserves_draft_identity_source_and_history_boundaries():
         "8.EE.C.7b",
         "8.PFA.4",
     }
+    standards = {
+        item["standard_id"]: item
+        for item in manifest["source_provenance"]
+        if item["standard_id"] in {"8.AT.B.3b", "8.EE.C.7b", "8.PFA.4"}
+    }
+    assert all(item["family_codes"] == [] for item in standards.values())
+    assert all(
+        item["canonical_correspondence"]
+        == "PREREQUISITE_ONLY_NO_FAMILY_MAPPING"
+        for item in standards.values()
+    )
+    assert standards["8.AT.B.3b"]["mapping_status"] == (
+        "MAPPING_INACTIVE_NOT_PROPOSED"
+    )
+    dc = standards["8.EE.C.7b"]
+    assert dc["jurisdiction"] == "District of Columbia"
+    assert dc["adoption_date"] == "2010-07-28"
+    assert dc["adoption_url"].startswith("https://osse.dc.gov/")
+    assert dc["mapping_status"] == "DC_MAPPING_INACTIVE_NOT_PROPOSED"
+    virginia = standards["8.PFA.4"]
+    assert virginia["clause_locator"] == "8.PFA.4(b)"
+    assert virginia["source_authentication_status"] == (
+        "PENDING_INDEPENDENT_RETRIEVAL"
+    )
+    assert virginia["mapping_status"] == (
+        "VIRGINIA_MAPPING_INACTIVE_NOT_PROPOSED"
+    )
+    assert "HTTP 403" in virginia["source_authentication_note"]
+    mcps = next(
+        item
+        for item in manifest["source_provenance"]
+        if item["standard_id"] == "CURRENT_LOCAL_CURRICULUM_QUALIFIER_ONLY"
+    )
+    assert mcps["current_core_curriculum"] == "Amplify Desmos Math"
     for source in manifest["source_provenance"]:
         assert all(
             source[field]
