@@ -59,7 +59,9 @@ Observe → Predict → Manipulate → Explain → Practice → Diagnose → Tra
 - Prediction and manipulation must use the reviewed equality-preserving operation and explicitly apply it to both complete sides.
 - Explanation uses learner-visible conceptual choices; sign-moving and one-side-only claims fail closed.
 - A genuine wrong practice response plus a corroborating reasoning choice is required before misconception-specific repair appears.
-- Repair never reveals the worked answer and must end with an exact corrected response.
+- Every misconception code has its own answer-free Socratic questions and explanation; diagnosis labels do not route to shared generic guidance.
+- Repair is a separately observable DIAGNOSE state. A corrected answer submitted with the initial diagnosis cannot skip that state.
+- Repair never reveals the worked answer and must end with an exact corrected response on a later action.
 - Transfer is a generated different-family independent variant; both its server-generated ID and exact response must match.
 - Final verification re-solves the original task and, for exact-rational families, reconstructs both substitution values.
 - Diagnostic, independent, and mastery payloads expose no guided choices, representations, misconception routes, or repair.
