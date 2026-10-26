@@ -24,6 +24,7 @@ def select_next_problem(
     student_id: uuid.UUID | None = None,
     session_id: uuid.UUID | None = None,
     offer_extension: bool = False,
+    allow_published: bool = True,
 ) -> Problem | None:
     """Pick the next problem for a skill.
 
@@ -53,6 +54,8 @@ def select_next_problem(
         )
         .where(Problem.primary_skill_id == skill_id)
     )
+    if not allow_published:
+        stmt = stmt.where(Problem.source_type != "PUBLISHED")
     if offer_extension:
         # Optional stretch tier only: hardest first, no gating semantics.
         stmt = stmt.where(ProblemContentMetadata.extension_eligible.is_(True))

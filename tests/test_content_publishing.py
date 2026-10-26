@@ -19,7 +19,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.api import _problem_out
 from app.core.database import Base, get_db
-from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
 from app.main import app
 from app.models import (
     Attempt,
@@ -156,6 +156,13 @@ def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
     rows = db.scalars(select(Problem)).all()
     ids = {p.id for p in rows}
     assert len({p.solution["task_fingerprint"] for p in rows}) == 12
+    skill = db.scalar(select(Skill))
+    assert select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+        current_difficulty=3, state=TutorState.DIAGNOSE, allow_published=False) is None
+    family = db.scalar(select(ProblemFamily))
+    family.active = False
+    assert not publisher.permitted(db, rows[0], rows[0].solution["mode"])
+    family.active = True
     assert publisher.publish(db, manifest) == report
     assert {p.id for p in db.scalars(select(Problem))} == ids
     problem = rows[0]

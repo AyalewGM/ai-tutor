@@ -191,7 +191,8 @@ def publish(db, manifest):
         db.add(ProblemFamily(code=FAMILY, name="Signed exact-rational two-step equations",
                              canonical_skill_id=canonical_skill.id, generator_key=GENERATOR,
                              active=True))
-    elif family.canonical_skill_id != canonical_skill.id or family.generator_key != GENERATOR:
+    elif (not family.active or family.canonical_skill_id != canonical_skill.id
+          or family.generator_key != GENERATOR):
         raise PublicationBlocked("Canonical family registration conflict")
     for mode, item in candidates(manifest):
         values = expected_problem(manifest, mode, item, skill.id)
@@ -222,7 +223,11 @@ def permitted(db, problem, mode):
     try:
         manifest = problem.solution["manifest"]
         validate(manifest)
-        skill, _ = resolve_skill(db, manifest)
+        skill, canonical_skill = resolve_skill(db, manifest)
+        family = db.scalar(select(ProblemFamily).where(ProblemFamily.code == FAMILY))
+        if (family is None or not family.active or family.canonical_skill_id != canonical_skill.id
+            or family.generator_key != GENERATOR):
+            return False
         if mode not in manifest["modes"] or problem.solution["mode"] != mode:
             return False
         meta = db.scalar(select(ProblemContentMetadata).where(

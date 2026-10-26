@@ -143,6 +143,7 @@ def create_session(
     progress = _student_skill(db, student.id, skill.id)
     problem = select_next_problem(
         db,
+        allow_published=False,
         skill_id=skill.id,
         current_problem_id=None,
         current_difficulty=progress.current_difficulty,
@@ -393,6 +394,7 @@ def respond(
 
     next_problem = select_next_problem(
         db,
+        allow_published=False,
         skill_id=session.primary_skill_id,
         current_problem_id=problem.id,
         current_difficulty=progress.current_difficulty,
@@ -492,6 +494,7 @@ def request_extension_problem(
     progress = _student_skill(db, session.student_id, session.primary_skill_id)
     problem = select_next_problem(
         db,
+        allow_published=False,
         skill_id=session.primary_skill_id,
         current_problem_id=None,
         current_difficulty=progress.current_difficulty,
