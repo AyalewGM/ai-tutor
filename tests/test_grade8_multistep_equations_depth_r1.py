@@ -435,3 +435,35 @@ def test_maryland_lettered_subparts_are_separate_partial_provisional_relations()
     assert "x = a, a = a, or a = b" in excluded_3a
     assert package["runtime_activation"] is False
 
+def test_dc_lettered_subparts_are_separate_partial_provisional_relations():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    dc = {
+        row["standard_id"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "CCSSO/NGA"
+    }
+    assert set(dc) == {"8.EE.C.7a", "8.EE.C.7b"}
+    for row in dc.values():
+        assert row["mapping_status"] == "DC_PROVISIONAL_NOT_ACCEPTED"
+        assert row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+        assert row["page"] == "printed page 54"
+        assert row["version_date"].startswith("2010 publication")
+        assert row["adoption_date"] == "2010-07-28"
+        assert row["adoption_url"].startswith("https://osse.dc.gov/")
+
+    class_families = {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    assert set(dc["8.EE.C.7a"]["family_codes"]) == class_families
+    assert set(dc["8.EE.C.7b"]["family_codes"]) == set(generator.FAMILIES) - class_families
+    assert set(dc["8.EE.C.7a"]["family_codes"]).isdisjoint(
+        dc["8.EE.C.7b"]["family_codes"]
+    )
+    excluded_7a = " ".join(dc["8.EE.C.7a"]["excluded_from_coverage_credit"])
+    assert "construction of examples" in excluded_7a
+    assert "successive transformation" in excluded_7a
+    assert "x = a, a = a, or a = b" in excluded_7a
+    assert package["runtime_activation"] is False
+
