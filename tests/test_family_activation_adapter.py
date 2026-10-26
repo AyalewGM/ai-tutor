@@ -182,3 +182,28 @@ def test_invalid_mapping_evidence_and_contract_are_denied():
         }
         values.update(override)
         assert score_registered_rational(**values) == DENIED
+
+
+def test_bare_rational_family_cannot_accept_equation_form():
+    original = registration()
+    bare = replace(
+        original,
+        family=replace(original.family, answer_kind=AnswerKind.RATIONAL),
+        answer_variable=None,
+    )
+    registry = compile_registration(SCHEMA_VERSION, (bare,))
+    values = {
+        "registry": registry, "family_id": bare.family.family_id,
+        "canonical_skill_code": bare.family.canonical_skill_code,
+        "content_sha": _SHA, "mode": AssessmentMode.INDEPENDENT,
+        "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "canonical_answer": "-3/4", "variable": None,
+    }
+    valid = score_registered_rational(**values, submitted_answer="6/-8")
+    assert valid.eligible and valid.correct and not valid.independent_evidence_eligible
+    wrong_shape = score_registered_rational(**values, submitted_answer="x=6/-8")
+    assert wrong_shape.eligible and not wrong_shape.correct
+    assert score_registered_rational(
+        **{**values, "variable": "x"}, submitted_answer="x=6/-8"
+    ) == DENIED
