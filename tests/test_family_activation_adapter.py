@@ -110,6 +110,7 @@ def test_positive_negative_mode_assistance_and_identity():
     for change in (
         {"family_id": "DRAFT.489"},
         {"canonical_skill_code": "MATH.WRONG"},
+        {"local_skill_code": "MTH1W.C.DIFFERENT_STANDARD"},
         {"content_sha": "d" * 40},
         {"mode": AssessmentMode.MASTERY},
         {"assisted": "false"},
