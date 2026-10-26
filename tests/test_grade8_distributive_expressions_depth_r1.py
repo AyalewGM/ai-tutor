@@ -8,7 +8,6 @@ import sys
 from fractions import Fraction
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "docs/curriculum/drafts/canonical-grade8-distributive-expressions-depth-r1"
 
