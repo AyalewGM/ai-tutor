@@ -34,6 +34,18 @@ def _variants():
     ]
 
 
+def _mathematical_signature(variant):
+    return (
+        variant.family_code,
+        variant.structure_code,
+        variant.prompt,
+        variant.response_kind,
+        variant.response_fields,
+        variant.oracle_response,
+        variant.affine_oracle,
+    )
+
+
 def test_manifest_preserves_draft_identity_source_and_history_boundaries():
     manifest = json.loads((PACKAGE / "package.json").read_text())
     assert manifest["status"] == "DRAFT_UNVERIFIED"
@@ -106,7 +118,19 @@ def test_all_primary_variants_are_deterministic_complete_and_nonrepeating():
     assert first == second
     assert len({variant.variant_id for variant in first}) == 1_536
     assert len({variant.task_fingerprint for variant in first}) == 1_536
+    assert len({_mathematical_signature(variant) for variant in first}) == 1_536
     assert {variant.family_code for variant in first} == set(g.FAMILIES)
+    for family in g.FAMILIES:
+        by_mode = {
+            mode: {
+                _mathematical_signature(g.generate(family, seed, mode))
+                for seed in g.PRIMARY_SEEDS
+            }
+            for mode in g.MODES
+        }
+        for position, left_mode in enumerate(g.MODES):
+            for right_mode in g.MODES[position + 1 :]:
+                assert by_mode[left_mode].isdisjoint(by_mode[right_mode])
     for variant in first:
         assert variant.prerequisites
         assert variant.difficulty_rationale
@@ -136,6 +160,34 @@ def test_exact_oracles_accept_equivalent_fractions_and_reject_near_misses():
             near_miss[first_numeric] += Fraction(1, 1_000)
             assert not variant.response_is_correct(near_miss)
         assert not variant.response_is_correct({})
+
+
+def test_boolean_decision_domain_rejects_numeric_and_string_substitutes():
+    for mode in g.MODES:
+        for seed in g.PRIMARY_SEEDS:
+            variant = g.generate(g.FAMILIES[7], seed, mode)
+            correct = dict(variant.oracle_response)
+            assert type(correct["equivalent"]) is bool
+            assert variant.response_is_correct(correct)
+
+            for replacement in (
+                int(correct["equivalent"]),
+                Fraction(int(correct["equivalent"]), 1),
+                str(correct["equivalent"]),
+                str(correct["equivalent"]).lower(),
+            ):
+                invalid = dict(correct)
+                invalid["equivalent"] = replacement
+                assert not variant.response_is_correct(invalid)
+
+            missing = dict(correct)
+            del missing["equivalent"]
+            assert not variant.response_is_correct(missing)
+            assert not variant.response_is_correct({**correct, "extra": False})
+
+            numeric_boolean = dict(correct)
+            numeric_boolean["x_coefficient"] = True
+            assert not variant.response_is_correct(numeric_boolean)
 
 
 def test_special_family_oracles_and_domain_boundaries_hold_for_every_seed():
