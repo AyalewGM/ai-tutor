@@ -1,11 +1,8 @@
-"""Versioned, fail-closed family registration adapter; no content is activated here.
+"""Versioned fail-closed scoring registration. No runtime activation or mastery grant.
 
-A validated registration is a *candidate* for authorized runtime integration,
-not permission to seed a database or grant learner-facing mode metadata.
-Caller-supplied review evidence is not authenticated. Production wiring must
-resolve independently authenticated approvals, student/session and problem IDs.
+Only separately signed release declarations may become trusted approved-family
+records. This pure adapter cannot issue independent evidence or modify history.
 """
-
 from __future__ import annotations
 
 import re
@@ -26,17 +23,24 @@ from app.services.question_package_release import (
 
 _SHA = re.compile(r"[0-9a-f]{40}\Z")
 _NAME = re.compile(r"[A-Z][A-Z0-9_.]{2,127}\Z")
+_VARIABLE = re.compile(r"[A-Za-z]\Z")
 SCHEMA_VERSION = "mihur.family-registration.v1"
 
 
 @dataclass(frozen=True)
 class FamilyRegistration:
-    """One immutable, explicitly scoped reviewed family declaration."""
+    """Signed content, scorer, schema and jurisdiction-scoped standards contract."""
 
     family: ReviewedFamily
     evidence: PackageReleaseEvidence
     scorer_revision: str
     source_mapping_revision: str
+    answer_variable: str | None = None
+    standards_manifest_sha: str = ""
+    jurisdiction_code: str = ""
+    curriculum_code: str = ""
+    mapping_disposition: str = ""
+    coverage_credit: bool = False
 
 
 @dataclass(frozen=True)
@@ -51,39 +55,57 @@ DENIED = RegistrationDecision(False, False, False)
 
 def compile_registration(
     schema_version: str, registrations: tuple[FamilyRegistration, ...]
-) -> Mapping[str, ReviewedFamily]:
-    """Validate exact release evidence; never mutate the global mode registry.
-
-    The returned mapping is for isolated synthetic evaluation and later
-    authenticated release assembly, not a runtime permission grant by itself.
-    """
+) -> Mapping[str, FamilyRegistration]:
+    """Preserve all signed evidence; never populate the production registry."""
     if schema_version != SCHEMA_VERSION or not isinstance(registrations, tuple):
         raise ValueError("unsupported registration schema")
-    result: dict[str, ReviewedFamily] = {}
-    for registration in registrations:
-        if not isinstance(registration, FamilyRegistration):
+    result: dict[str, FamilyRegistration] = {}
+    for entry in registrations:
+        if not isinstance(entry, FamilyRegistration):
             raise TypeError("invalid family registration")
-        family = registration.family
+        family = entry.family
         if (
-            not _NAME.fullmatch(family.family_id)
-            or not _NAME.fullmatch(family.canonical_skill_code)
-            or not _SHA.fullmatch(family.content_sha)
-            or not _SHA.fullmatch(registration.scorer_revision)
-            or not _SHA.fullmatch(registration.source_mapping_revision)
+            not isinstance(family, ReviewedFamily)
+            or not isinstance(family.family_id, str)
+            or not isinstance(family.canonical_skill_code, str)
+            or not isinstance(family.content_sha, str)
+            or _NAME.fullmatch(family.family_id) is None
+            or _NAME.fullmatch(family.canonical_skill_code) is None
+            or _SHA.fullmatch(family.content_sha) is None
+            or not isinstance(entry.scorer_revision, str)
+            or _SHA.fullmatch(entry.scorer_revision) is None
+            or not isinstance(entry.source_mapping_revision, str)
+            or _SHA.fullmatch(entry.source_mapping_revision) is None
+            or not isinstance(entry.standards_manifest_sha, str)
+            or _SHA.fullmatch(entry.standards_manifest_sha) is None
+            or entry.mapping_disposition != "ACCEPTED"
+            or entry.coverage_credit is not True
+            or not isinstance(entry.jurisdiction_code, str)
+            or not isinstance(entry.curriculum_code, str)
+            or _NAME.fullmatch(entry.jurisdiction_code) is None
+            or _NAME.fullmatch(entry.curriculum_code) is None
             or family.answer_kind not in {AnswerKind.RATIONAL, AnswerKind.VARIABLE_VALUE}
+            or not isinstance(family.modes, frozenset)
             or not family.modes
             or not all(isinstance(mode, AssessmentMode) for mode in family.modes)
-            or family.content_sha != registration.evidence.package_sha
-            or not release_preflight_passes(registration.evidence)
+            or family.content_sha != entry.evidence.package_sha
+            or not release_preflight_passes(entry.evidence)
             or family.family_id in result
         ):
             raise ValueError("unapproved, ambiguous or duplicate family registration")
-        result[family.family_id] = family
+        if family.answer_kind is AnswerKind.VARIABLE_VALUE:
+            if not isinstance(entry.answer_variable, str) or _VARIABLE.fullmatch(
+                entry.answer_variable
+            ) is None:
+                raise ValueError("variable-value family must bind reviewed variable")
+        elif entry.answer_variable is not None:
+            raise ValueError("bare-rational family may not declare variable")
+        result[family.family_id] = entry
     return MappingProxyType(result)
 
 
 def score_registered_rational(
-    registry: Mapping[str, ReviewedFamily],
+    registry: Mapping[str, FamilyRegistration],
     *,
     family_id: str,
     canonical_skill_code: str,
@@ -92,13 +114,13 @@ def score_registered_rational(
     canonical_answer: str,
     submitted_answer: str,
     variable: str | None = None,
+    source_mapping_revision: str = "",
+    standards_manifest_sha: str = "",
+    jurisdiction_code: str = "",
+    curriculum_code: str = "",
     assisted: bool = False,
 ) -> RegistrationDecision:
-    """Pure server-side adapter; caller MUST resolve private oracle and identity.
-
-    Never call with family, skill, revision or oracle taken from client input.
-    A correct decision cannot itself write or approve a mastery event.
-    """
+    """Check a *signed* reviewed response schema; never award mastery evidence."""
     if (
         type(assisted) is not bool
         or not isinstance(mode, AssessmentMode)
@@ -109,21 +131,32 @@ def score_registered_rational(
         return DENIED
     entry = registry.get(family_id)
     if (
-        not isinstance(entry, ReviewedFamily)
-        or entry.family_id != family_id
-        or entry.canonical_skill_code != canonical_skill_code
-        or entry.content_sha != content_sha
-        or mode not in entry.modes
-        or entry.answer_kind not in {AnswerKind.RATIONAL, AnswerKind.VARIABLE_VALUE}
+        not isinstance(entry, FamilyRegistration)
+        or entry.family.family_id != family_id
+        or entry.family.canonical_skill_code != canonical_skill_code
+        or entry.family.content_sha != content_sha
+        or mode not in entry.family.modes
+        or source_mapping_revision != entry.source_mapping_revision
+        or standards_manifest_sha != entry.standards_manifest_sha
+        or jurisdiction_code != entry.jurisdiction_code
+        or curriculum_code != entry.curriculum_code
+        or entry.mapping_disposition != "ACCEPTED"
+        or entry.coverage_credit is not True
     ):
         return DENIED
+    if entry.family.answer_kind is AnswerKind.RATIONAL:
+        if variable is not None or entry.answer_variable is not None:
+            return DENIED
+    elif entry.family.answer_kind is AnswerKind.VARIABLE_VALUE:
+        if (
+            not isinstance(variable, str)
+            or not isinstance(entry.answer_variable, str)
+            or variable.casefold() != entry.answer_variable.casefold()
+        ):
+            return DENIED
+    else:
+        return DENIED
     correct = score_fraction(submitted_answer, canonical_answer, variable=variable)
-    return RegistrationDecision(
-        eligible=True,
-        correct=correct,
-        independent_evidence_eligible=(
-            correct and not assisted and mode in {
-                AssessmentMode.INDEPENDENT, AssessmentMode.MASTERY
-            }
-        ),
-    )
+    # A correct, unassisted reply cannot prove a fresh, server-issued attempt.
+    # Independent mastery requires a separate issuance/journey evidence gate.
+    return RegistrationDecision(eligible=True, correct=correct, independent_evidence_eligible=False)
