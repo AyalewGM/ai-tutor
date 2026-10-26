@@ -50,7 +50,7 @@ ADOPTION_URL = (
     "https://osse.dc.gov/release/dc-state-board-education-holds-"
     "regularly-scheduled-public-meeting-10"
 )
-SOURCE_BLOB = "317f2d01a3a8f0084cf1b3228d2fb9376cdd5f4e"
+SOURCE_BLOB = "83ecec541f60dc5301b8470c17989b451d60fb76"
 
 
 def _read(path: Path) -> dict:
@@ -191,7 +191,8 @@ def test_dc_geometry_cluster_uses_official_pages_and_no_coverage_claim() -> None
     assert correction["adoption_date"] == "2010-07-21"
     assert correction["access_date"] == "2026-10-26"
     assert correction["mapping_evidence_status"] == (
-        "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS"
+        "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; "
+        "EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
     )
 
     for expectation_id in GEOMETRY_CLUSTER_IDS:
@@ -263,7 +264,8 @@ def test_dc_geometry_cluster_locator_and_triage_stay_fail_closed() -> None:
 
         assert triage["source_blob_sha"] == SOURCE_BLOB
         assert triage["source_url"] == OFFICIAL_PDF
-        assert triage["coverage_classification"] == "NO_COVERAGE_CLAIM"
+        assert triage["coverage_classification"] == "UNKNOWN"
+        assert triage["reuse_relation"]["status"] == "NO_COVERAGE_CLAIM"
         assert triage["missing_core_verified"] is False
         assert triage["verified_depth"] is False
         assert relation["candidate"] is None
