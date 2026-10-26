@@ -401,6 +401,233 @@ def _repair_content(misconception_code: str) -> dict[str, Any]:
         "explanation": content["explanation"],
     }
 
+
+TASK_STAGE_ACTIONS: Final = {
+    "DISTRIBUTE_POSITIVE_ONE_SIDE": {
+        "action": ("DISTRIBUTE_EVERY_TERM", "Distribute the outside factor to every term in the group."),
+        "distractor": ("DISTRIBUTE_TO_X_ONLY", "Multiply only the variable term by the outside factor."),
+        "reason": ("EVERY_TERM_RECEIVES_FACTOR", "Each term inside the parentheses receives the same outside factor."),
+        "reason_distractor": ("CONSTANT_STAYS_UNCHANGED", "The constant inside the group is unchanged."),
+    },
+    "DISTRIBUTE_NEGATIVE_ONE_SIDE": {
+        "action": ("DISTRIBUTE_SIGNED_FACTOR", "Distribute the negative factor, including its sign, to every term."),
+        "distractor": ("DROP_OUTSIDE_SIGN", "Distribute the magnitude but ignore the outside negative sign."),
+        "reason": ("SIGN_APPLIES_TO_EVERY_TERM", "The negative factor changes both products in the group."),
+        "reason_distractor": ("SIGN_APPLIES_TO_X_ONLY", "The negative sign affects only the variable term."),
+    },
+    "COMBINE_LIKE_TERMS": {
+        "action": ("COMBINE_ALL_X_TERMS", "Combine the variable terms before using inverse operations."),
+        "distractor": ("COMBINE_X_WITH_CONSTANT", "Combine a variable term with the constant."),
+        "reason": ("ADD_VARIABLE_COEFFICIENTS", "Like variable terms combine by adding their coefficients."),
+        "reason_distractor": ("ADD_UNLIKE_TERMS", "A variable term and a constant combine into one coefficient."),
+    },
+    "VARIABLES_BOTH_SIDES": {
+        "action": ("REMOVE_RIGHT_VARIABLE_TERM", "Subtract the right-side variable term from both complete sides."),
+        "distractor": ("REMOVE_FROM_LEFT_ONLY", "Subtract the right-side variable term only from the left side."),
+        "reason": ("SAME_VARIABLE_TERM_BOTH_SIDES", "Subtracting the same variable term from both sides preserves equality."),
+        "reason_distractor": ("MOVE_VARIABLE_AND_CHANGE_SIGN", "The variable term moves and changes sign without an operation."),
+    },
+    "FRACTIONAL_COEFFICIENTS": {
+        "action": ("CLEAR_DENOMINATORS", "Multiply both complete sides by the least common denominator."),
+        "distractor": ("ROUND_FRACTIONS", "Round the fractional coefficients to nearby decimals."),
+        "reason": ("SCALE_BOTH_COMPLETE_SIDES", "The same nonzero scale factor multiplies every term on both sides."),
+        "reason_distractor": ("SCALE_VARIABLE_TERM_ONLY", "Only the variable term needs the common scale factor."),
+    },
+    "NESTED_GROUPS": {
+        "action": ("EXPAND_BOTH_GROUPS", "Distribute through both groups before combining like terms."),
+        "distractor": ("EXPAND_FIRST_GROUP_ONLY", "Expand the first group and leave the second unchanged."),
+        "reason": ("TRACK_EACH_GROUP_SIGN", "Every term in each group keeps the sign of its outside factor."),
+        "reason_distractor": ("IGNORE_SECOND_GROUP_SIGN", "The second outside sign does not affect its group."),
+    },
+    "IDENTITY_ALL_REAL": {
+        "action": ("CANCEL_MATCHING_VARIABLE_TERMS", "Subtract the matching variable term from both sides."),
+        "distractor": ("DIVIDE_BY_ZERO_X_COEFFICIENT", "Divide by the remaining zero variable coefficient."),
+        "reason": ("EQUAL_CONSTANTS_FORM_IDENTITY", "After x cancels, equal constants make a statement true for every x."),
+        "reason_distractor": ("EQUAL_CONSTANTS_FORM_CONTRADICTION", "Equal constants after cancellation mean no solution."),
+    },
+    "CONTRADICTION_NO_SOLUTION": {
+        "action": ("CANCEL_MATCHING_VARIABLE_TERMS", "Subtract the matching variable term from both sides."),
+        "distractor": ("DIVIDE_BY_ZERO_X_COEFFICIENT", "Divide by the remaining zero variable coefficient."),
+        "reason": ("UNEQUAL_CONSTANTS_FORM_CONTRADICTION", "After x cancels, unequal constants cannot be made equal by any x."),
+        "reason_distractor": ("UNEQUAL_CONSTANTS_FORM_IDENTITY", "Unequal constants after cancellation are true for every x."),
+    },
+    "PERIMETER_MODEL": {
+        "action": ("BUILD_PERIMETER_EQUATION", "Represent two lengths plus two widths as one equation."),
+        "distractor": ("ADD_ONE_LENGTH_ONE_WIDTH", "Represent the perimeter with one length and one width."),
+        "reason": ("TWO_LENGTHS_TWO_WIDTHS", "A rectangle's perimeter counts both lengths and both widths."),
+        "reason_distractor": ("AREA_FORMULA_EXPLAINS_PERIMETER", "Multiplying length by width gives the perimeter equation."),
+    },
+    "COMPETING_PLANS_MODEL": {
+        "action": ("SET_PLAN_TOTALS_EQUAL", "Set the two fixed-plus-rate total-cost expressions equal."),
+        "distractor": ("EQUATE_RATES_ONLY", "Set only the two per-use rates equal."),
+        "reason": ("COMPARE_COMPLETE_COSTS", "A break-even point compares each plan's complete fixed-plus-rate cost."),
+        "reason_distractor": ("IGNORE_FIXED_CHARGES", "Only the per-use rates determine where totals match."),
+    },
+    "ERROR_ANALYSIS_FIRST_INVALID_STEP": {
+        "action": ("REPAIR_FIRST_CHANGED_LINE", "Rewrite the first changed line with complete distribution."),
+        "distractor": ("CHECK_LATER_STEP_FIRST", "Skip the first changed line and inspect a later result."),
+        "reason": ("COMPARE_TERMS_AT_FIRST_CHANGE", "The first invalid step is found by comparing every term at the earliest change."),
+        "reason_distractor": ("LATER_ERROR_IS_FIRST_ERROR", "A later consequence identifies the first invalid step."),
+    },
+    "SOLUTION_CLASS_COMPARE": {
+        "action": ("COMPARE_THREE_INVARIANTS", "Simplify each equation and compare its remaining coefficient and constants."),
+        "distractor": ("FORCE_THREE_SINGLE_VALUES", "Divide each equation to force one numerical value."),
+        "reason": ("CLASSIFY_FROM_REMAINDER", "Nonzero x coefficient, equal constants, and unequal constants produce the three different classes."),
+        "reason_distractor": ("CLASSIFY_FROM_APPEARANCE", "The original visual form alone determines each solution class."),
+    },
+}
+
+
+def _field_specs(
+    numeric: dict[str, Fraction], choices: dict[str, str]
+) -> list[dict[str, str]]:
+    return [
+        {"name": name, "input": "EXACT_RATIONAL"}
+        for name in numeric
+    ] + [
+        {"name": name, "input": "CHOICE_ID"}
+        for name in choices
+    ]
+
+
+def _task_stage_contract(variant: Variant) -> dict[str, Any]:
+    """Build private, task-bound MANIPULATE and EXPLAIN evidence."""
+
+    family = variant.family_code
+    action = TASK_STAGE_ACTIONS[family]
+    if family == "SOLUTION_CLASS_COMPARE":
+        equations = [
+            tuple(Fraction(value) for value in row)
+            for row in variant.oracle["equations"]
+        ]
+        one, all_real, no_solution = equations
+        manipulation_numeric = {
+            "a_remaining_x_coefficient": one[0] - one[2],
+            "b_constant_difference": all_real[1] - all_real[3],
+            "c_constant_difference": no_solution[1] - no_solution[3],
+        }
+        manipulation_choices = {
+            "a_invariant": "NONZERO_X_COEFFICIENT",
+            "b_invariant": "ZERO_X_EQUAL_CONSTANTS",
+            "c_invariant": "ZERO_X_UNEQUAL_CONSTANTS",
+        }
+        explanation_numeric = dict(manipulation_numeric)
+        explanation_choices = {
+            "a_class": "ONE",
+            "b_class": "ALL_REAL",
+            "c_class": "NO_SOLUTION",
+        }
+    else:
+        a, b, c, d = (
+            Fraction(value) for value in variant.oracle["coefficients"]
+        )
+        if family == "VARIABLES_BOTH_SIDES":
+            next_coefficients = (a - c, b, Fraction(0), d)
+            explanation_numeric = {
+                "removed_x_coefficient": c,
+                "remaining_x_coefficient": a - c,
+            }
+            explanation_choices = {
+                "equivalence_scope": "BOTH_COMPLETE_SIDES"
+            }
+        elif family == "FRACTIONAL_COEFFICIENTS":
+            scale = math.lcm(
+                a.denominator, b.denominator, c.denominator, d.denominator
+            )
+            next_coefficients = tuple(
+                value * scale for value in (a, b, c, d)
+            )
+            explanation_numeric = {
+                "scale_factor": Fraction(scale),
+                "scaled_left_x_coefficient": next_coefficients[0],
+            }
+            explanation_choices = {
+                "equivalence_scope": "EVERY_TERM_BOTH_SIDES"
+            }
+        elif family in {"IDENTITY_ALL_REAL", "CONTRADICTION_NO_SOLUTION"}:
+            next_coefficients = (Fraction(0), b, Fraction(0), d)
+            explanation_numeric = {"remaining_x_coefficient": Fraction(0)}
+            explanation_choices = {
+                "constant_relation": "EQUAL" if b == d else "UNEQUAL"
+            }
+        else:
+            next_coefficients = (a, b, c, d)
+            if family in {
+                "DISTRIBUTE_POSITIVE_ONE_SIDE",
+                "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+                "NESTED_GROUPS",
+                "ERROR_ANALYSIS_FIRST_INVALID_STEP",
+            }:
+                explanation_numeric = {
+                    "resulting_left_x_coefficient": a,
+                    "resulting_left_constant": b,
+                }
+                explanation_choices = {
+                    "term_scope": (
+                        "FIRST_CHANGED_LINE"
+                        if family == "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+                        else "EVERY_TERM_IN_EACH_GROUP"
+                    )
+                }
+            elif family == "COMBINE_LIKE_TERMS":
+                explanation_numeric = {"combined_x_coefficient": a}
+                explanation_choices = {"term_type": "LIKE_VARIABLE_TERMS"}
+            elif family == "PERIMETER_MODEL":
+                explanation_numeric = {
+                    "modeled_x_coefficient": a,
+                    "modeled_constant": b,
+                }
+                explanation_choices = {"model_structure": "TWO_LENGTHS_TWO_WIDTHS"}
+            elif family == "COMPETING_PLANS_MODEL":
+                explanation_numeric = {
+                    "rate_difference": c - a,
+                    "fixed_difference": b - d,
+                }
+                explanation_choices = {"model_structure": "FIXED_PLUS_RATE_TOTALS"}
+            else:
+                raise KeyError(family)
+        manipulation_numeric = {
+            "left_x_coefficient": next_coefficients[0],
+            "left_constant": next_coefficients[1],
+            "right_x_coefficient": next_coefficients[2],
+            "right_constant": next_coefficients[3],
+        }
+        manipulation_choices = {}
+
+    return {
+        "action_id": action["action"][0],
+        "action_label": action["action"][1],
+        "action_distractor_id": action["distractor"][0],
+        "action_distractor_label": action["distractor"][1],
+        "manipulation_numeric": manipulation_numeric,
+        "manipulation_choices": manipulation_choices,
+        "reason_id": action["reason"][0],
+        "reason_label": action["reason"][1],
+        "reason_distractor_id": action["reason_distractor"][0],
+        "reason_distractor_label": action["reason_distractor"][1],
+        "explanation_numeric": explanation_numeric,
+        "explanation_choices": explanation_choices,
+    }
+
+
+def _evidence_matches(
+    submitted: Any,
+    numeric: dict[str, Fraction],
+    choices: dict[str, str],
+) -> bool:
+    if not isinstance(submitted, dict):
+        return False
+    if set(submitted) != set(numeric) | set(choices):
+        return False
+    for field, expected in numeric.items():
+        if _parse_exact(submitted.get(field)) != expected:
+            return False
+    for field, expected in choices.items():
+        value = submitted.get(field)
+        if not isinstance(value, str) or value.strip().upper() != expected:
+            return False
+    return True
+
 @dataclass(frozen=True)
 class Variant:
     family_code: str
@@ -793,26 +1020,46 @@ def learning_stage_payload(state: LearningState) -> dict[str, Any]:
             {"id": item["id"], "label": item["label"]} for item in variant.first_step_choices
         ]
     elif state.stage == "MANIPULATE":
+        contract = _task_stage_contract(variant)
         payload["prompt"] = variant.prompt
-        payload["operation_choices"] = [
-            {"id": item["id"], "label": item["label"]} for item in variant.first_step_choices
+        payload["action_choices"] = [
+            {
+                "id": contract["action_id"],
+                "label": contract["action_label"],
+            },
+            {
+                "id": contract["action_distractor_id"],
+                "label": contract["action_distractor_label"],
+            },
         ]
-        payload["required_side_labels"] = ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"]
+        payload["next_step_fields"] = _field_specs(
+            contract["manipulation_numeric"],
+            contract["manipulation_choices"],
+        )
+        payload["next_step_instruction"] = (
+            "Enter the exact coefficients or invariant choices for the equivalent next step; "
+            "use zero for a missing variable or constant term."
+        )
     elif state.stage == "EXPLAIN":
-        payload["claim_choices"] = [
+        contract = _task_stage_contract(variant)
+        payload["reasoning_choices"] = [
             {
-                "id": "SAME_OPERATION_BOTH_COMPLETE_SIDES",
-                "label": "The same operation applies to both complete sides, so equality is preserved.",
+                "id": contract["reason_id"],
+                "label": contract["reason_label"],
             },
             {
-                "id": "MOVE_AND_CHANGE_SIGN",
-                "label": "A term can move across the equals sign and change sign by itself.",
-            },
-            {
-                "id": "CHANGE_ONLY_X_SIDE",
-                "label": "Only the side containing x needs to change.",
+                "id": contract["reason_distractor_id"],
+                "label": contract["reason_distractor_label"],
             },
         ]
+        payload["explanation_fields"] = _field_specs(
+            contract["explanation_numeric"],
+            contract["explanation_choices"],
+        )
+        payload["explanation_instruction"] = (
+            "Support the reason with the exact task-specific coefficient, term correspondence, "
+            "model structure, or solution-class invariant requested below."
+        )
     elif state.stage == "PRACTICE":
         payload.update({"prompt": variant.prompt, "answer_kind": variant.answer_kind})
     elif state.stage == "DIAGNOSE":
@@ -874,18 +1121,26 @@ def advance_guided_learning(state: LearningState, evidence: dict[str, Any]) -> L
             return _retry(state, "PREDICTION_NOT_EQUALITY_PRESERVING")
         return _advance(state, "MANIPULATE")
     if state.stage == "MANIPULATE":
-        sides = evidence.get("applied_to")
-        if (
-            evidence.get("operation_choice") != _correct_first_step_id(variant)
-            or not isinstance(sides, list)
-            or set(sides) != {"LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"}
-            or len(sides) != 2
+        contract = _task_stage_contract(variant)
+        if evidence.get("action_choice") != contract["action_id"]:
+            return _retry(state, "TASK_BOUND_ACTION_REQUIRED")
+        if not _evidence_matches(
+            evidence.get("next_step"),
+            contract["manipulation_numeric"],
+            contract["manipulation_choices"],
         ):
-            return _retry(state, "BOTH_COMPLETE_SIDES_REQUIRED")
+            return _retry(state, "EQUIVALENT_NEXT_STEP_REQUIRED")
         return _advance(state, "EXPLAIN")
     if state.stage == "EXPLAIN":
-        if evidence.get("claim_choice") != "SAME_OPERATION_BOTH_COMPLETE_SIDES":
-            return _retry(state, "EQUALITY_EXPLANATION_REQUIRED")
+        contract = _task_stage_contract(variant)
+        if evidence.get("reasoning_choice") != contract["reason_id"]:
+            return _retry(state, "TASK_SPECIFIC_REASON_REQUIRED")
+        if not _evidence_matches(
+            evidence.get("explanation_evidence"),
+            contract["explanation_numeric"],
+            contract["explanation_choices"],
+        ):
+            return _retry(state, "TASK_SPECIFIC_EXPLANATION_EVIDENCE_REQUIRED")
         return _advance(state, "PRACTICE")
     if state.stage == "PRACTICE":
         response = evidence.get("answer")
