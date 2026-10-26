@@ -49,18 +49,26 @@ def verify_fresh_issuance(
     turns = db.scalars(select(TutorTurn).where(
         TutorTurn.session_id == session_id, TutorTurn.problem_id == problem.id,
     )).all()
-    # Ordinary learner turns are not issuance events. However, any recorded
-    # hint/repair on this task must block fresh independent admission.
-    assisted_actions = {
-        "HINT", "SHOW_HINT", "REPAIR", "GUIDED_REPAIR",
-        "SHOW_SOLUTION", "REVEAL_ANSWER", "SCAFFOLD",
-    }
-    if any(turn.pedagogical_action in assisted_actions for turn in turns):
-        return False
+    # Fail closed on any unrecognized interaction: unknown assistant actions
+    # must not silently become unassisted evidence. A plain learner input is
+    # allowed, but is not itself proof of issuance or mastery.
     issuance = [
         turn for turn in turns
         if turn.role == "SYSTEM" and turn.pedagogical_action == "ISSUE_ASSESSMENT"
     ]
+    if any(
+        turn not in issuance
+        and not (
+            turn.role == "STUDENT"
+            and turn.pedagogical_action == "ANSWER_INPUT"
+            and turn.state == (
+                TutorState.INDEPENDENT_PRACTICE
+                if mode == AssessmentMode.INDEPENDENT else TutorState.MASTERY_CHECK
+            )
+        )
+        for turn in turns
+    ):
+        return False
     if len(issuance) != 1:
         return False
     issued = issuance[0]
