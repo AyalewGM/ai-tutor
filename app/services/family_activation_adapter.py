@@ -62,7 +62,7 @@ def compile_registration(
     result: dict[str, ReviewedFamily] = {}
     for registration in registrations:
         if not isinstance(registration, FamilyRegistration):
-            raise ValueError("invalid family registration")
+            raise TypeError("invalid family registration")
         family = registration.family
         if (
             not _NAME.fullmatch(family.family_id)
