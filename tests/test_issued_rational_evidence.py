@@ -87,7 +87,7 @@ def test_non_assisted_learner_turn_does_not_hide_issuance():
 
 
 def test_assistance_turn_blocks_independent_scoring():
-    for action in ("HINT", "GUIDED_REPAIR", "SHOW_SOLUTION", "SCAFFOLD"):
+    for action in ("HINT", "GUIDED_REPAIR", "SHOW_SOLUTION", "SCAFFOLD", "UNRECOGNIZED_SUPPORT"):
         db, student, session, problem, issued = fixture()
         assistance = SimpleNamespace(
             role="ASSISTANT", pedagogical_action=action,
