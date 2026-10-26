@@ -2626,8 +2626,8 @@
       "domain": "SP",
       "cluster": "A",
       "domain_title": "Statistics and Probability",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/3/",
-      "scope_summary": "Use the equation of a linear model to solve problems in the context of bivariate measurement data, interpreting slope and intercept.",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "scope_summary": "Use an equation of a linear model to solve problems in the context of bivariate measurement data, interpreting both the slope and intercept.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
@@ -2640,13 +2640,41 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "Current learner-task evidence for M8.SP.STAT establishes only evaluation of a supplied linear model for prediction; it does not establish the bivariate measurement-data context or contextual interpretation of both slope and intercept.",
+        "Architecture / Curriculum Identity must review the canonical relation before any mapping is accepted; Curriculum Content may act only after an independently confirmed mathematical-content gap."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source example, dataset, diagram, protected wording, task, or answer key is copied or adapted.",
+      "mapping_evidence_boundary": {
+        "candidate": "M8.SP.STAT",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Evaluate a supplied linear-model equation for a prediction."
+        ],
+        "excluded_required_scope": [
+          "A bivariate measurement-data context with named quantities and units.",
+          "Contextual interpretation of slope.",
+          "Contextual interpretation of intercept."
+        ],
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.SP.A.4",
