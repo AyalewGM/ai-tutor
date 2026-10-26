@@ -183,6 +183,22 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                     db, context=assisted, submission="x=-3/4", **args,
                 )
                 assert decision.eligible and decision.correct and not decision.independent_evidence_eligible
+                # Missing release principal must deny, even for otherwise eligible item.
+                assert score_persisted_rational(
+                    db, context=first, submission="x=-3/4",
+                    approval_source=source, service_principal="unrecognized-service",
+                ) == DENIED
+                # A new learner's own session must be valid but may not grant
+                # mastery from scoring alone; do not touch existing attempts.
+                second = TrustedAssessmentContext(
+                    students[1].id, sessions[1].id, problem.id,
+                    AssessmentMode.INDEPENDENT,
+                )
+                second_result = score_persisted_rational(
+                    db, context=second, submission="x=-3/4", **args,
+                )
+                assert second_result.eligible and second_result.correct
+                assert not second_result.independent_evidence_eligible
                 assert history_counts() == before
                 assert not db.dirty
         finally:
