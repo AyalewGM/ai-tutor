@@ -4,7 +4,7 @@
   "status": "AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED",
   "as_of": "2026-10-12",
   "authority": "DC OSSE adoption; NGA/CCSSO CCSS Mathematics 2010 text",
-  "source_text_host_note": "Thecorestandards.org explicitly calls itself an unofficial resource. Links are audit locators, not proof of independent standards approval.",
+  "source_text_host_note": "The official CCSSO/NGA PDF is the controlling text locator for corrected rows. Remaining thecorestandards.org row locators are an unofficial republication and stay pending bounded correction.",
   "records": [
     {
       "expectation_id": "6.RP.A.1",
@@ -2130,25 +2130,55 @@
       "grade": 8,
       "domain": "G",
       "cluster": "B",
-      "source_publication": "CCSS Mathematics 2010",
-      "adopting_authority": "DC OSSE",
-      "original_publisher": "NGA Center for Best Practices and CCSSO",
-      "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_section": "Grade 8 / G / B",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_publication": "Common Core State Standards for Mathematics",
+      "adopting_authority": "DC OSSE / DC State Board of Education",
+      "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
+      "source_locator_type": "OFFICIAL_CCSSO_NGA_PDF_PRINTED_PAGE",
+      "source_license": "CCSS ©2010 NGA/CCSSO; scope locator only, with no source task, example, diagram, protected expression, or answer key reproduced.",
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Explain a proof of the Pythagorean Theorem and its converse.",
-      "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
+      "completeness_evidence": "OFFICIAL_PDF_PARENT_SCOPE_LOCATED_PENDING_INDEPENDENT_ACCEPTANCE",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
         "editorial_mathematical_scope": "Explain a proof of the Pythagorean Theorem and its converse.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
+      },
+      "adoption_date": "2010-07-28",
+      "source_printed_page": 56,
+      "access_date": "2026-10-26",
+      "bounded_mathematical_scope_evidence": {
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_printed_page": 56,
+        "unlettered_standard": true,
+        "required_conditions": [
+          "explain a proof of the Pythagorean Theorem",
+          "explain a proof of the converse of the Pythagorean Theorem"
+        ],
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      },
+      "provisional_reuse_boundary": {
+        "candidate": "M8.G.PYTH",
+        "status": "NO_COVERAGE_CLAIM",
+        "evidenced_capability": "converse classification only",
+        "excluded_required_scope": [
+          "learner explanation of a proof of the Pythagorean Theorem",
+          "learner explanation of a proof of its converse"
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       }
     },
     {
@@ -2156,25 +2186,56 @@
       "grade": 8,
       "domain": "G",
       "cluster": "B",
-      "source_publication": "CCSS Mathematics 2010",
-      "adopting_authority": "DC OSSE",
-      "original_publisher": "NGA Center for Best Practices and CCSSO",
-      "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_section": "Grade 8 / G / B",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_publication": "Common Core State Standards for Mathematics",
+      "adopting_authority": "DC OSSE / DC State Board of Education",
+      "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
+      "source_locator_type": "OFFICIAL_CCSSO_NGA_PDF_PRINTED_PAGE",
+      "source_license": "CCSS ©2010 NGA/CCSSO; scope locator only, with no source task, example, diagram, protected expression, or answer key reproduced.",
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
-      "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
+      "completeness_evidence": "OFFICIAL_PDF_PARENT_SCOPE_LOCATED_PENDING_INDEPENDENT_ACCEPTANCE",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
         "editorial_mathematical_scope": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
+      },
+      "adoption_date": "2010-07-28",
+      "source_printed_page": 56,
+      "access_date": "2026-10-26",
+      "bounded_mathematical_scope_evidence": {
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_printed_page": 56,
+        "unlettered_standard": true,
+        "required_conditions": [
+          "determine unknown side lengths in right triangles",
+          "include mathematical and real-world problems",
+          "include both two-dimensional and three-dimensional applications"
+        ],
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      },
+      "provisional_reuse_boundary": {
+        "candidate": "M8.G.PYTH",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "evidenced_capability": "two-dimensional mathematical side-length calculation only",
+        "excluded_required_scope": [
+          "three-dimensional right-triangle application",
+          "real-world problem family"
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       }
     },
     {
@@ -2182,25 +2243,54 @@
       "grade": 8,
       "domain": "G",
       "cluster": "B",
-      "source_publication": "CCSS Mathematics 2010",
-      "adopting_authority": "DC OSSE",
-      "original_publisher": "NGA Center for Best Practices and CCSSO",
-      "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_section": "Grade 8 / G / B",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_publication": "Common Core State Standards for Mathematics",
+      "adopting_authority": "DC OSSE / DC State Board of Education",
+      "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "official_adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section": "Grade 8 Geometry / 8.G.B / printed page 56",
+      "source_locator_type": "OFFICIAL_CCSSO_NGA_PDF_PRINTED_PAGE",
+      "source_license": "CCSS ©2010 NGA/CCSSO; scope locator only, with no source task, example, diagram, protected expression, or answer key reproduced.",
       "lettered_subpart_ids": [],
       "scope_summary_editorial": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
-      "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
+      "completeness_evidence": "OFFICIAL_PDF_PARENT_SCOPE_LOCATED_PENDING_INDEPENDENT_ACCEPTANCE",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
         "editorial_mathematical_scope": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 56; DC State Board adopted July 28, 2010.",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
+      },
+      "adoption_date": "2010-07-28",
+      "source_printed_page": 56,
+      "access_date": "2026-10-26",
+      "bounded_mathematical_scope_evidence": {
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_printed_page": 56,
+        "unlettered_standard": true,
+        "required_conditions": [
+          "use the Pythagorean Theorem to determine distance between two points in a coordinate system"
+        ],
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      },
+      "provisional_reuse_boundary": {
+        "candidate": "M8.G.PYTH",
+        "status": "PROVISIONAL_NOT_ACCEPTED",
+        "evidenced_capability": "coordinate-distance reuse candidate",
+        "excluded_required_scope": [
+          "complete canonical correspondence not independently established",
+          "independent mathematical, assessment, and depth acceptance not established"
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "evidence_source": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4"
       }
     },
     {
@@ -2378,5 +2468,21 @@
     }
   ],
   "grade7_8_scope_note": "52 Grade 7–8 rows carry editorial mathematical scope for independent source-to-row review. Nine lettered-parent standards have author-indexed subpart topic prompts (27 subparts); none are accepted. Confirm each parent and subpart from original CCSS publication/OSSE adoption authority, not only unofficial site links.",
-  "scope_summary_policy": "NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_MATHEMATICAL_SCOPE_EVIDENCE"
+  "scope_summary_policy": "NON_EXHAUSTIVE_DISCOVERY_ONLY_NOT_FULL_MATHEMATICAL_SCOPE_EVIDENCE",
+  "pythagorean_slice_source": {
+    "expectation_ids": [
+      "8.G.B.6",
+      "8.G.B.7",
+      "8.G.B.8"
+    ],
+    "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+    "source_publication": "Common Core State Standards for Mathematics",
+    "source_version": "2010",
+    "source_printed_page": 56,
+    "adopting_authority": "DC OSSE / DC State Board of Education",
+    "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+    "adoption_date": "2010-07-28",
+    "access_date": "2026-10-26",
+    "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced."
+  }
 }
