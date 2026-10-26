@@ -28,7 +28,16 @@ the controlling 2010 CCSS publication on printed page 54 and DC's July 28,
 2010 State Board adoption. The same three/nine family boundary applies;
 learner construction of examples and complete successive transformation to
 `x = a`, `a = a`, or `a = b` are expressly excluded from `8.EE.C.7a` coverage
-credit. Virginia `8.PFA.4` remains a provisional research locator only. The MCPS
+credit. Virginia `8.PFA.4(a–g)` is sourced to the Board-approved 2023 Grade 8
+standards on printed page 64 and remains `VIRGINIA_PROVISIONAL_NOT_ACCEPTED`.
+Clauses (b), (e), and (g) have bounded `PARTIAL_NON_EXHAUSTIVE` family evidence;
+clauses (a), (c), (d), and (f) explicitly receive `NO_COVERAGE_CLAIM`. Declarative
+representation metadata is not credited as concrete/pictorial learner work; solving
+a provided context is not credited as writing an equation or creating a context;
+and an exact x-value alone is not credited as contextual interpretation. The three
+solution-class families are outside this Grade 8 Virginia clause, while
+`NESTED_GROUPS` is withheld pending independent proof that its transformations stay
+within Virginia's up-to-four-step boundary. The MCPS
 support page is legacy/open-resource structure research, not proof of current
 local sequence. No full-standard coverage, source task, diagram, wording, or
 answer key is claimed or copied.
