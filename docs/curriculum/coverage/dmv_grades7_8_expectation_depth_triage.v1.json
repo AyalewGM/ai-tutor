@@ -4193,7 +4193,6 @@
       "next_action": "Keep no-coverage; Curriculum may propose original proof/explanation families only after identity review",
       "reuse_relation": {
         "candidate": "M8.G.PYTH",
-        "relation_status": "NO_COVERAGE_CLAIM",
         "evidenced_scope": [
           "converse classification"
         ],
@@ -4205,7 +4204,8 @@
         "coverage_credit": false,
         "mapping_activation": false,
         "canonical_correspondence": "NOT_ESTABLISHED",
-        "union_inheritance_forbidden": true
+        "union_inheritance_forbidden": true,
+        "status": "NO_COVERAGE_CLAIM"
       }
     },
     {
@@ -4240,7 +4240,6 @@
       "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
       "reuse_relation": {
         "candidate": "M8.G.PYTH",
-        "relation_status": "PARTIAL_NON_EXHAUSTIVE",
         "evidenced_scope": [
           "two-dimensional mathematical unknown-side calculation"
         ],
@@ -4252,7 +4251,8 @@
         "coverage_credit": false,
         "mapping_activation": false,
         "canonical_correspondence": "NOT_ESTABLISHED",
-        "union_inheritance_forbidden": true
+        "union_inheritance_forbidden": true,
+        "status": "PARTIAL_NON_EXHAUSTIVE"
       }
     },
     {
@@ -4287,7 +4287,6 @@
       "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
       "reuse_relation": {
         "candidate": "M8.G.PYTH",
-        "relation_status": "PROVISIONAL_NOT_ACCEPTED",
         "evidenced_scope": [
           "coordinate-distance reuse candidate"
         ],
@@ -4300,7 +4299,8 @@
         "coverage_credit": false,
         "mapping_activation": false,
         "canonical_correspondence": "NOT_ESTABLISHED",
-        "union_inheritance_forbidden": true
+        "union_inheritance_forbidden": true,
+        "status": "PROVISIONAL_NOT_ACCEPTED"
       }
     },
     {
