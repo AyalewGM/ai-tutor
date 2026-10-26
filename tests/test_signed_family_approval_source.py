@@ -36,6 +36,9 @@ def _approved():
             answer_kind=AnswerKind.VARIABLE_VALUE,
         ),
         evidence=evidence, scorer_revision="b" * 40, source_mapping_revision="c" * 40,
+        answer_variable="x", standards_manifest_sha="d" * 40,
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
 
@@ -78,6 +81,10 @@ def test_tampered_modes_family_and_evidence_are_rejected():
         replace(
             original.registrations[0],
             family=replace(family, canonical_skill_code="MATH.WRONG"),
+        ),
+        replace(
+            original.registrations[0],
+            source_mapping_revision="f" * 40,
         ),
         replace(
             original.registrations[0],
