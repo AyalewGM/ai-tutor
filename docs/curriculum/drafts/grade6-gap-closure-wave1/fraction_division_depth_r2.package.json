@@ -32,9 +32,7 @@
         "local_skill": "M6.NS.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": [
-          "WORD_PROBLEM"
-        ],
+        "stored_families": ["WORD_PROBLEM"],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
@@ -43,9 +41,7 @@
         "local_skill": "DC6.NS.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": [
-          "WORD_PROBLEM"
-        ],
+        "stored_families": ["WORD_PROBLEM"],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
@@ -54,9 +50,7 @@
         "local_skill": "VA6.CE.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": [
-          "WORD_PROBLEM"
-        ],
+        "stored_families": ["WORD_PROBLEM"],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
