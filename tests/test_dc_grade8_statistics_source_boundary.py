@@ -145,3 +145,18 @@ def test_dc_8_sp_a_3_top_level_source_manifest_matches_rows() -> None:
     assert pins == {dc_manifest["blob_sha"]}
     assert "8.SP.A.3" in dc_manifest["scope_note"]
     assert "statistics" in dc_manifest["scope_note"].lower()
+
+
+def test_dc_8_sp_a_3_candidate_search_state_is_explicit_and_unaccepted() -> None:
+    expectation = _row(EXPECTATIONS, "expectations")
+
+    assert expectation["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
+    assert expectation["classification"]["standards_mapped"] == "NO"
+    assert expectation["repository_existing_crosswalks"] == []
+    assert expectation["repository_candidate_crosswalks"] == [
+        "M8.SP.STAT",
+        "MATH.DATA.LINEFIT.SLOPE",
+    ]
+    assert "no accepted crosswalk" in expectation[
+        "repository_existing_crosswalks_semantics"
+    ].lower()

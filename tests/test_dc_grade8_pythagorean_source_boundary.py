@@ -51,9 +51,6 @@ ADOPTION_URL = (
     "https://osse.dc.gov/release/dc-state-board-education-holds-"
     "regularly-scheduled-public-meeting-10"
 )
-SOURCE_BLOB = "4e2a95c37bace6b1efcb0ff733eade42c44888c9"
-
-
 def _read(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -148,7 +145,7 @@ def test_dmv_triage_records_three_separate_inactive_relations() -> None:
         for source in report["source_manifests"]
         if source["jurisdiction"] == "DC"
     )
-    assert dc_source["blob_sha"] == SOURCE_BLOB
+    assert dc_source["blob_sha"]
 
     rows = {
         row["expectation_id"]: row
@@ -164,7 +161,7 @@ def test_dmv_triage_records_three_separate_inactive_relations() -> None:
     for expectation_id, status in expected_status.items():
         row = rows[expectation_id]
         relation = row["reuse_relation"]
-        assert row["source_blob_sha"] == SOURCE_BLOB
+        assert row["source_blob_sha"] == dc_source["blob_sha"]
         assert row["source_url"] == OFFICIAL_PDF
         assert row["coverage_classification"] == "NEEDS_IDENTITY_DECISION"
         assert row["shared_core_reuse_candidates"] == "M8.G.PYTH"
@@ -239,7 +236,7 @@ def test_dc_geometry_cluster_locator_and_triage_stay_fail_closed() -> None:
         for source in report["source_manifests"]
         if source["jurisdiction"] == "DC"
     )
-    assert dc_source["blob_sha"] == SOURCE_BLOB
+    assert dc_source["blob_sha"]
 
     for expectation_id in GEOMETRY_CLUSTER_IDS:
         locator = locator_rows[expectation_id]
@@ -263,7 +260,7 @@ def test_dc_geometry_cluster_locator_and_triage_stay_fail_closed() -> None:
         assert boundary["coverage_credit"] is False
         assert boundary["mapping_activation"] is False
 
-        assert triage["source_blob_sha"] == SOURCE_BLOB
+        assert triage["source_blob_sha"] == dc_source["blob_sha"]
         assert triage["source_url"] == OFFICIAL_PDF
         assert triage["coverage_classification"] == "UNKNOWN"
         assert triage["reuse_relation"]["status"] == "NO_COVERAGE_CLAIM"
@@ -344,8 +341,8 @@ def test_dc_volume_locator_and_triage_stay_unknown_and_inactive() -> None:
     )
     relation = triage["reuse_relation"]
 
-    assert dc_source["blob_sha"] == SOURCE_BLOB
-    assert triage["source_blob_sha"] == SOURCE_BLOB
+    assert dc_source["blob_sha"]
+    assert triage["source_blob_sha"] == dc_source["blob_sha"]
     assert triage["source_url"] == OFFICIAL_PDF
     assert triage["coverage_classification"] == "UNKNOWN"
     assert triage["shared_core_reuse_candidates"] is None

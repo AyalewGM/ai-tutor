@@ -31,7 +31,7 @@
     "inventory_as_of": "2026-10-12",
     "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
     "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
-    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.G.A.1-5_8.G.B.6-8_AND_8.G.C.9; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
+    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
     "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur.",
     "adoption_date": "2010-07-21",
     "pythagorean_slice_correction": {
@@ -117,19 +117,34 @@
       ],
       "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
       "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
+    },
+    "statistics_linear_model_slice_correction": {
+      "expectation_ids": [
+        "8.SP.A.3"
+      ],
+      "mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "candidate_relations": [
+        "M8.SP.STAT",
+        "MATH.DATA.LINEFIT.SLOPE"
+      ],
+      "candidate_semantics": "Located repository evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 56,
+      "source_version": "2010",
+      "access_date": "2026-10-26"
     }
   },
   "reconciliation": {
     "official_expectation_count": 81,
-    "repository_existing_expectation_rows": 28,
-    "unmapped_expectations": 53,
+    "repository_existing_expectation_rows": 29,
+    "unmapped_expectations": 52,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
-      "8": 0
+      "8": 1
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate; several are broad domain-level composites (e.g., DC7.SP.PROBABILITY spans all eight 7.SP expectations). Grade 8 has no repository seed rows at all."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.SP.A.3 has two located but unaccepted candidates recorded separately; no Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -2629,7 +2644,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Use an equation of a linear model to solve problems in the context of bivariate measurement data, interpreting both the slope and intercept.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2718,8 +2733,14 @@
             "assessment_ready": false,
             "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
           }
-        ]
-      }
+        ],
+        "mapping_status_semantics": "Repository candidates are located but neither relation is accepted as a standards mapping."
+      },
+      "repository_existing_crosswalks_semantics": "Accepted or legacy seed crosswalks only; empty means no accepted crosswalk, while repository_candidate_crosswalks records located but unaccepted candidates.",
+      "repository_candidate_crosswalks": [
+        "M8.SP.STAT",
+        "MATH.DATA.LINEFIT.SLOPE"
+      ]
     },
     {
       "expectation_id": "8.SP.A.4",
