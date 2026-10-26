@@ -4,7 +4,7 @@
   "status": "AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED",
   "as_of": "2026-10-12",
   "authority": "DC OSSE adoption; NGA/CCSSO CCSS Mathematics 2010 text",
-  "source_text_host_note": "The official CCSSO/NGA PDF is the controlling text locator for corrected 8.G.A.1–5 and 8.G.B.6–8 rows. Remaining thecorestandards.org row locators are an unofficial republication and stay pending bounded correction.",
+  "source_text_host_note": "The official CCSSO/NGA PDF is the controlling text locator for corrected 8.G.A.1–5, 8.G.B.6–8, and 8.G.C.9 rows. Remaining thecorestandards.org row locators are an unofficial republication and stay pending bounded correction.",
   "records": [
     {
       "expectation_id": "6.RP.A.1",
@@ -2465,21 +2465,55 @@
       "adopting_authority": "DC OSSE",
       "original_publisher": "NGA Center for Best Practices and CCSSO",
       "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/G/C/9/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "source_section": "Grade 8 / G / C",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_locator_type": "OFFICIAL_PDF_PRINTED_PAGE",
+      "source_license": "CCSS 2010 © NGA/CCSSO; scope locator only, no task/example/diagram adaptation",
       "lettered_subpart_ids": [],
-      "scope_summary_editorial": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
+      "scope_summary_editorial": "Know the formulas for the volumes of cones, cylinders, and spheres and use them to solve real-world and mathematical problems.",
       "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
-        "editorial_mathematical_scope": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
+        "editorial_mathematical_scope": "Know the formulas for the volumes of cones, cylinders, and spheres and use them to solve real-world and mathematical problems.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official 2010 NGA/CCSSO publication and DC OSSE adoption authority; no unofficial republication controls this row",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "official_text_reproduced": false
+      },
+      "source_version": "2010",
+      "source_printed_page": 56,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "bounded_mathematical_scope_evidence": {
+        "evidence_type": "AUTHOR_EDITORIAL_SCOPE_LOCATOR_FROM_OFFICIAL_2010_CCSS",
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_publication": "NGA/CCSSO Common Core State Standards for Mathematics",
+        "source_version": "2010",
+        "source_printed_page": 56,
+        "required_conditions": [
+          "Know the formulas for the volumes of cones, cylinders, and spheres",
+          "Use those formulas to solve real-world problems",
+          "Use those formulas to solve mathematical problems"
+        ],
+        "unlettered_standard": true,
+        "short_summary_is_exhaustive": false,
+        "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
+        "canonical_equivalence": "NOT_ESTABLISHED",
+        "downstream_full_coverage_allowed": false
+      },
+      "no_coverage_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "candidate": null,
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "reason": "Absence of a repository-specific mapping is not evidence that the mathematical content is absent; full repository identity and generator evidence must be reviewed first."
       }
     },
     {
@@ -2681,5 +2715,23 @@
     "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
     "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
     "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS"
+  },
+  "volume_slice_source": {
+    "expectation_ids": [
+      "8.G.C.9"
+    ],
+    "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+    "source_publication": "Common Core State Standards for Mathematics",
+    "source_version": "2010",
+    "source_printed_page": 56,
+    "adopting_authority": "DC OSSE / DC State Board of Education",
+    "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+    "adoption_date": "2010-07-21",
+    "access_date": "2026-10-26",
+    "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced.",
+    "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+    "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+    "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+    "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
   }
 }
