@@ -84,7 +84,7 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         if row["expectation_id"] in {"8.NS.A.2", "8.SP.A.3"}:
             assert row["repository_existing_crosswalks"] == []
             expected_candidates = {
-                "8.NS.A.2": ["M8.NS.RAD"],
+                "8.NS.A.2": ["M8.NS.RAD", "MATH.NS.IRRATIONAL.APPROX"],
                 "8.SP.A.3": ["M8.SP.STAT", "MATH.DATA.LINEFIT.SLOPE"],
             }
             assert row["repository_candidate_crosswalks"] == expected_candidates[row["expectation_id"]]

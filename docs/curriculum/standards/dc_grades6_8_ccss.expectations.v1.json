@@ -139,9 +139,10 @@
       ],
       "mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "candidate_relations": [
-        "M8.NS.RAD"
+        "M8.NS.RAD",
+        "MATH.NS.IRRATIONAL.APPROX"
       ],
-      "candidate_semantics": "Located topical repository evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
+      "candidate_semantics": "Two separate repository candidates have located topical evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
       "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
       "document_title": "Common Core State Standards for Mathematics",
       "version_date": "2010",
@@ -170,7 +171,7 @@
       "8": 2
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.2 and 8.SP.A.3 have located but unaccepted candidates recorded separately; no Grade 8 standards mapping is accepted."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.2 has two separate located but unaccepted candidates; 8.SP.A.3 also has two separate located but unaccepted candidates. No Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -1826,8 +1827,8 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "M8.NS.RAD evidences integer bounding and one approximate square-root number-line location, but not the complete rational-approximation, expression-estimation, or explained successive-refinement scope.",
-        "Architecture / Curriculum Identity must decide candidate correspondence before any mapping is accepted; Curriculum Content may address only residual work confirmed by independent review."
+        "M8.NS.RAD evidences integer bounding and one approximate square-root number-line location; MATH.NS.IRRATIONAL.APPROX separately evidences nearest-tenth approximation, neighboring-tenths reasoning, and a truncation misconception probe. Neither candidate establishes the complete rational-approximation, expression-estimation, or explained successive-refinement scope.",
+        "Architecture / Curriculum Identity must decide both candidate correspondences separately before any mapping is accepted; Curriculum Content may address only residual work confirmed by independent review."
       ],
       "official_subpart_identifiers": [],
       "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
@@ -1861,11 +1862,60 @@
         "canonical_correspondence": "NOT_ESTABLISHED",
         "union_inheritance_forbidden": true,
         "next_owner": "Architecture / Curriculum Identity for candidate correspondence; Curriculum Content only after an independently confirmed content gap",
-        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+        "candidate_inventory": [
+          {
+            "candidate": "M8.NS.RAD",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Bound a square root between consecutive integers.",
+              "Locate one supplied square root approximately on a number line."
+            ],
+            "excluded_required_scope": [
+              "Compare sizes of irrational numbers through rational approximations.",
+              "Estimate the value of expressions involving irrational numbers.",
+              "Generate and explain successively better rational or decimal approximations."
+            ],
+            "missing_mathematical_content_inferred": false,
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap",
+            "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+          },
+          {
+            "candidate": "MATH.NS.IRRATIONAL.APPROX",
+            "canonical_parent": "MATH.NS.IRRATIONAL",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Generate a nearest-tenth decimal approximation for an irrational square root.",
+              "Compare squares of neighboring tenths to justify rounding.",
+              "Probe the truncation-versus-rounding misconception."
+            ],
+            "excluded_required_scope": [
+              "Compare sizes of multiple irrational numbers through rational approximations.",
+              "Locate irrational numbers approximately on a number line.",
+              "Estimate the value of expressions involving irrational numbers.",
+              "Generate and explain multi-step successive refinements beyond one-tenth precision."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false,
+            "evidence_source": "MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+          }
+        ],
+        "mapping_status_semantics": "Two separate repository candidates are located; neither relation is accepted as a standards mapping, and their scopes cannot be unioned."
       },
       "repository_existing_crosswalks_semantics": "Accepted or legacy seed crosswalks only; empty means no accepted crosswalk, while repository_candidate_crosswalks records located but unaccepted candidates.",
       "repository_candidate_crosswalks": [
-        "M8.NS.RAD"
+        "M8.NS.RAD",
+        "MATH.NS.IRRATIONAL.APPROX"
       ]
     },
     {

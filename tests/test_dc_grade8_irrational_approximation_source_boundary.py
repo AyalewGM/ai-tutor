@@ -78,7 +78,10 @@ def test_dc_8_ns_a_2_partial_reuse_is_fail_closed() -> None:
     assert expectation["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     assert expectation["classification"]["standards_mapped"] == "NO"
     assert expectation["repository_existing_crosswalks"] == []
-    assert expectation["repository_candidate_crosswalks"] == ["M8.NS.RAD"]
+    assert expectation["repository_candidate_crosswalks"] == [
+        "M8.NS.RAD",
+        "MATH.NS.IRRATIONAL.APPROX",
+    ]
     assert triage["coverage_classification"] == "NEEDS_IDENTITY_DECISION"
     assert triage["missing_core_verified"] is False
     assert triage["verified_depth"] is False
@@ -121,3 +124,45 @@ def test_dc_8_ns_a_2_manifest_pin_and_pr_provenance_are_total() -> None:
         row for row in dc_rows if row["expectation_id"] == "8.NS.A.2"
     )["source_url"] == OFFICIAL_PDF
     assert "8.NS.A.2" in manifest["scope_note"]
+
+
+def test_dc_8_ns_a_2_records_both_candidates_without_union_credit() -> None:
+    expectation = _row(EXPECTATIONS, "expectations")
+    locator = _row(LOCATORS, "records")
+    triage = _row(TRIAGE, "rows")
+
+    expected = {"M8.NS.RAD", "MATH.NS.IRRATIONAL.APPROX"}
+    expectation_candidates = {
+        relation["candidate"]
+        for relation in expectation["mapping_evidence_boundary"]["candidate_inventory"]
+    }
+    locator_candidates = {
+        relation["candidate"] for relation in locator["canonical_candidate_inventory"]
+    }
+    triage_candidates = {relation["candidate"] for relation in triage["reuse_relations"]}
+
+    assert expectation_candidates == locator_candidates == triage_candidates == expected
+    assert triage["canonical_family_candidates"] == ["MATH.NS.IRRATIONAL.APPROX"]
+
+    approximation = next(
+        relation
+        for relation in locator["canonical_candidate_inventory"]
+        if relation["candidate"] == "MATH.NS.IRRATIONAL.APPROX"
+    )
+    assert approximation["canonical_parent"] == "MATH.NS.IRRATIONAL"
+    assert any("nearest-tenth" in item for item in approximation["included_scope"])
+    assert any("neighboring tenths" in item for item in approximation["included_scope"])
+    assert any("truncation" in item for item in approximation["included_scope"])
+    assert any("number line" in item for item in approximation["excluded_required_scope"])
+    assert any("expressions" in item for item in approximation["excluded_required_scope"])
+    assert any("multi-step" in item for item in approximation["excluded_required_scope"])
+    assert approximation["validated_practice"] is False
+    assert approximation["assessment_ready"] is False
+
+    for relation in locator["canonical_candidate_inventory"]:
+        assert relation["status"] == "PARTIAL_NON_EXHAUSTIVE"
+        assert relation["acceptance_status"] == "PROVISIONAL_NOT_ACCEPTED"
+        assert relation["coverage_credit"] is False
+        assert relation["mapping_activation"] is False
+        assert relation["canonical_correspondence"] == "NOT_ESTABLISHED"
+        assert relation["union_inheritance_forbidden"] is True

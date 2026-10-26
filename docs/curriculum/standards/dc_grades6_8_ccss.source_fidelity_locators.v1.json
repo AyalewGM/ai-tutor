@@ -1534,7 +1534,52 @@
         "canonical_correspondence": "NOT_ESTABLISHED",
         "union_inheritance_forbidden": true,
         "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
-      }
+      },
+      "canonical_candidate_inventory": [
+        {
+          "candidate": "M8.NS.RAD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "evidenced_scope": [
+            "Bound a square root between consecutive integers.",
+            "Locate one supplied square root approximately on a number line."
+          ],
+          "excluded_required_scope": [
+            "Compare sizes of irrational numbers through rational approximations.",
+            "Estimate the value of expressions involving irrational numbers.",
+            "Generate and explain successively better rational or decimal approximations."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.APPROX",
+          "canonical_parent": "MATH.NS.IRRATIONAL",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Generate a nearest-tenth decimal approximation for an irrational square root.",
+            "Compare squares of neighboring tenths to justify rounding.",
+            "Probe the truncation-versus-rounding misconception."
+          ],
+          "excluded_required_scope": [
+            "Compare sizes of multiple irrational numbers through rational approximations.",
+            "Locate irrational numbers approximately on a number line.",
+            "Estimate the value of expressions involving irrational numbers.",
+            "Generate and explain multi-step successive refinements beyond one-tenth precision."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        }
+      ]
     },
     {
       "expectation_id": "8.EE.A.1",
