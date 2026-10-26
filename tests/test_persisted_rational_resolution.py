@@ -22,7 +22,7 @@ def test_never_accesses_database_without_authenticated_approval_source():
     db.scalar.assert_not_called()
 
 
-def test_denies_untrusted_or_malformed_provenance_before_database_lookup():
+def test_denies_without_release_authority_before_database_lookup():
     db = Mock()
     ctx = _context()
     assert score_persisted_rational(
@@ -43,6 +43,5 @@ def test_rejects_client_style_assistance_and_mode_values():
         assert score_persisted_rational(
             db, context=altered, submission="x=3/4",
             approval_source=Mock(), service_principal="trusted-service",
-            stored_provenance={"family_id": "SYNTHETIC", "content_sha": "a" * 40},
         ) == DENIED
     db.scalar.assert_not_called()
