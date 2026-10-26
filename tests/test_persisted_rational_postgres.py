@@ -24,14 +24,14 @@ _SKILL = "MATH.EE.EQUATION.TWO"
 
 
 def _source():
-    flags = dict(
-        package_sha=_SHA, math_accepted_sha=_SHA, pedagogy_accepted_sha=_SHA,
-        backend_scoring_sha=_SHA, frontend_integration_sha=_SHA,
-        muse_qa_sha=_SHA, engineering_authorized_sha=_SHA,
-        canonical_mapping_approved=True, exact_scorer_verified=True,
-        response_schema_verified=True, history_preservation_verified=True,
-        runtime_activation_approved=True,
-    )
+    flags = {
+        "package_sha": _SHA, "math_accepted_sha": _SHA, "pedagogy_accepted_sha": _SHA,
+        "backend_scoring_sha": _SHA, "frontend_integration_sha": _SHA,
+        "muse_qa_sha": _SHA, "engineering_authorized_sha": _SHA,
+        "canonical_mapping_approved": True, "exact_scorer_verified": True,
+        "response_schema_verified": True, "history_preservation_verified": True,
+        "runtime_activation_approved": True,
+    }
     row = FamilyRegistration(
         family=ReviewedFamily(
             _FAMILY, _SKILL, _SHA, frozenset({AssessmentMode.INDEPENDENT}),
