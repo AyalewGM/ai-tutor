@@ -44,6 +44,12 @@ def canonical_release_payload(
             "answer_kind": entry.family.answer_kind.value,
             "scorer_revision": entry.scorer_revision,
             "source_mapping_revision": entry.source_mapping_revision,
+            "answer_variable": entry.answer_variable,
+            "standards_manifest_sha": entry.standards_manifest_sha,
+            "jurisdiction_code": entry.jurisdiction_code,
+            "curriculum_code": entry.curriculum_code,
+            "mapping_disposition": entry.mapping_disposition,
+            "coverage_credit": entry.coverage_credit,
             "review_evidence": asdict(entry.evidence),
         })
     return json.dumps(
