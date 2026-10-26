@@ -60,11 +60,16 @@ and predictable focus.
 
 `package.json` records publisher, URL, document title, version/date, page,
 standard identifier, access date, and adaptation rationale. Maryland
-`8.AT.B.3b`, DC/CCSS `8.EE.C.7b`, and Virginia `8.PFA.4` are cited only as
-current prerequisite or boundary evidence; this expression-only draft makes no
-claim to cover those full equation standards. The current MCPS listing is a
-local-context qualifier, while the undated legacy Math 8 support page is
-explicitly not treated as current alignment evidence. All tasks, contexts,
+`8.AT.B.3b`, DC/CCSS `8.EE.C.7b`, and Virginia `8.PFA.4(b)` are cited
+only as prerequisite or boundary evidence. Every jurisdiction row has an empty
+family mapping and explicitly claims no standard coverage or canonical
+correspondence. The DC row records the July 28, 2010 State Board adoption. The
+Virginia row remains source-authentication-pending because the controlling VDOE
+binary and later first-party clause reproductions returned HTTP 403 to the
+independent reviewer; no Virginia clause credit is inferred. The current MCPS
+listing identifies Amplify Desmos Math as the Grades 6–8 and Algebra 1 core
+curriculum, while the undated legacy Math 8 support page is explicitly not
+treated as current alignment evidence. All tasks, contexts,
 representation descriptions, distractors, and repairs are original; no public
 worksheet or protected expression is copied.
 
