@@ -224,7 +224,7 @@ def _affine_text(x_coefficient: Fraction, constant: Fraction) -> str:
 
 def _fraction(value: Any) -> Fraction:
     if isinstance(value, bool):
-        raise ValueError("boolean is not an exact number")
+        raise TypeError("boolean is not an exact number")
     return Fraction(str(value).strip())
 
 
