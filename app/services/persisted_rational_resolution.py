@@ -117,6 +117,15 @@ def score_persisted_rational(
     ))
     if mapping is None:
         return DENIED
+    # Never pick an arbitrary canonical identity when two EQUIVALENT
+    # mappings exist for the same local skill.
+    competing_mapping = db.scalar(select(CurriculumSkillMapping.id).where(
+        CurriculumSkillMapping.skill_id == skill.id,
+        CurriculumSkillMapping.mapping_type == "EQUIVALENT",
+        CurriculumSkillMapping.id != mapping.id,
+    ).limit(1))
+    if competing_mapping is not None:
+        return DENIED
     canonical = db.scalar(select(CanonicalSkill).where(
         CanonicalSkill.id == mapping.canonical_skill_id,
     ))
