@@ -33,8 +33,8 @@ OFFICIAL_PDF = (
     "ADA-Compliant-Math-Standards.pdf"
 )
 ADOPTION_URL = (
-    "https://osse.dc.gov/release/state-board-education-votes-adopt-"
-    "common-core-standards-english-language-arts-and"
+    "https://osse.dc.gov/release/dc-state-board-education-holds-"
+    "regularly-scheduled-public-meeting-10"
 )
 SOURCE_BLOB = "149b03e24695a4e32efb34e1cc673dfd38ce9d00"
 
@@ -55,6 +55,10 @@ def test_dc_pythagorean_rows_use_official_versioned_source() -> None:
     assert correction["adoption_url"] == ADOPTION_URL
     assert correction["adoption_date"] == "2010-07-21"
     assert correction["access_date"] == "2026-10-26"
+    assert "JULY_29_RELEASE_DISCREPANCY_RETAINED" in (
+        correction["adoption_date_status"]
+    )
+    assert "2010-07-28" in correction["adoption_date_conflict_note"]
 
     for expectation_id in IDS:
         row = rows[expectation_id]
@@ -65,6 +69,7 @@ def test_dc_pythagorean_rows_use_official_versioned_source() -> None:
         assert row["adoption_url"] == ADOPTION_URL
         assert row["adoption_date"] == "2010-07-21"
         assert row["access_date"] == "2026-10-26"
+        assert "2010-07-28" in row["adoption_date_conflict_note"]
         assert row["source_fidelity_status"] == (
             "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE"
         )
