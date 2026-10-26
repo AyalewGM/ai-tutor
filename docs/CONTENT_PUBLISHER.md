@@ -6,6 +6,24 @@ The manifest pins the squash-merged source commit `ddcebf22dff79247bd9b108fd4c65
 Merged #472 data and #495 inverse operations remain inactive follow-on adapters;
 #494/#496 provide the reused exact-rational scorer and trust-boundary contracts.
 
+## Standards boundary bound into the release
+
+The signed manifest preserves the exact independent #489 Standards decision rather
+than treating a generic `standards` signature as full Ontario coverage. It binds
+the official Ontario source record, `MTH1W.C1.5` printed pages 118–119,
+`PARTIAL_NON_EXHAUSTIVE / PROVISIONAL_NOT_ACCEPTED`, the excluded context-
+creation, interpretation and learner-verification evidence, and `MTH1W.C1.4
+NOT_MAPPED`. Both `coverage_credit` and `production_taxonomy_activation` are
+false. Validation rejects any missing or widened field, and the identical block is
+stored with each published Problem's package manifest and metadata provenance.
+
+A Standards signature attests this bounded source/mapping disposition only. It
+does not convert provisional correspondence into accepted coverage. Any later
+coverage claim, production taxonomy change, or source revision requires a new
+manifest, fresh independent Standards review and new signatures. Staging policy
+and release authority remain Architecture/Engineering responsibilities.
+
+
 ## One command after release setup
 
 From the verified deployed checkout on the dedicated staging VPS:

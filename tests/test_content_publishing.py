@@ -18,6 +18,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
 from app.api import _problem_out
+from app.content_models import ProblemContentMetadata
 from app.core.database import Base, get_db
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
 from app.main import app
@@ -128,7 +129,10 @@ def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):
     pending = json.loads(MANIFEST.read_text())
     with pytest.raises(publisher.PublicationBlocked, match="pending"):
         publisher.validate(pending)
-    for field, value in [("seed_count", 5), ("local_skill", "OTHER"), ("content_revision", "a" * 40)]:
+    for field, value in [
+        ("seed_count", 5), ("local_skill", "OTHER"), ("content_revision", "a" * 40),
+        ("standards_provenance", {}),
+    ]:
         forged = copy.deepcopy(manifest)
         forged[field] = value
         with pytest.raises(publisher.PublicationBlocked):
@@ -154,6 +158,11 @@ def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
     assert report["stored"] == report["authorized"] == 12
     assert report["learner_selectable"] == {"diagnostic": 4, "guided": 4, "independent": 4}
     rows = db.scalars(select(Problem)).all()
+    provenance = db.scalars(select(ProblemContentMetadata)).all()
+    assert all(meta.provenance_json["standards"] == publisher.STANDARDS_PROVENANCE
+               for meta in provenance)
+    assert all(row.solution["manifest"]["standards_provenance"]
+               == publisher.STANDARDS_PROVENANCE for row in rows)
     ids = {p.id for p in rows}
     assert len({p.solution["task_fingerprint"] for p in rows}) == 12
     skill = db.scalar(select(Skill))

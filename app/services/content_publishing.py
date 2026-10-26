@@ -27,6 +27,46 @@ SCORER = "EXACT_VARIABLE_RATIONAL_V1"
 FAMILY = "TWO_STEP_SIGNED_RATIONAL"
 GENERATOR = "scripts/author_ontario_linear_depth.py"
 ROLES = frozenset({"math", "pedagogy", "standards", "security", "qa", "release"})
+STANDARDS_PROVENANCE = {
+    "authority": "Ontario Ministry of Education",
+    "document_title": "The Ontario Curriculum: Mathematics, Grade 9, De-streamed (MTH1W), 2021",
+    "document_version": "Course issued 2021-06-09; teacher supports completed 2022-05-03; PDF copyright 2022",
+    "official_course_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+    "official_pdf_url": "https://assets-us-01.kc-usercontent.com/fbd574c4-da36-0066-a0c5-849ffb2de96e/73cd68ae-6f54-46e4-85c6-73103f44875e/The%20Ontario%20Curriculum%20-%20Mathematics%20Grade%209%20De-streamed%20Course%202021_with%20Teacher%20Supports_v2.pdf",
+    "access_date": "2026-10-25",
+    "standard_id": "MTH1W.C1.5",
+    "printed_pages": [
+        118,
+        119
+    ],
+    "disposition": "PARTIAL_NON_EXHAUSTIVE",
+    "acceptance": "PROVISIONAL_NOT_ACCEPTED",
+    "coverage_credit": False,
+    "production_taxonomy_activation": False,
+    "inclusions": [
+        "signed two-step linear equations",
+        "exact rational solutions"
+    ],
+    "exclusions": [
+        "learner creation of equations from varied contexts",
+        "contextual interpretation of solutions",
+        "learner-performed solution verification",
+        "MTH1W.C1.4 simplification coverage"
+    ],
+    "not_mapped": [
+        {
+            "standard_id": "MTH1W.C1.4",
+            "disposition": "NOT_MAPPED"
+        }
+    ],
+    "adaptation_rationale": "Official wording was consulted only to verify the expectation identifier and mathematical boundary; all package tasks and wording are original.",
+    "source_review": {
+        "url": "https://github.com/AyalewGM/ai-tutor/pull/489#issuecomment-6401201029",
+        "reviewed_head": "b632d15febb623d90092527d9197dba7d726d7dc",
+        "candidate_document_blob": "28bbe00dd7a5aa6bee780e01edf0d90ff92d4111",
+        "generator_blob": "2b31031e20a114d1d37d2b9af465993243b2a836"
+    }
+}
 MODE_COLUMNS = {
     "guided": "guided_eligible", "independent": "independent_eligible",
     "diagnostic": "diagnostic_eligible", "mastery": "mastery_eligible",
@@ -63,7 +103,7 @@ def validate(manifest, *, require_approvals=True):
         "schema", "package_id", "family_id", "content_revision", "generator_sha256",
         "canonical_skill", "curriculum", "curriculum_version", "local_skill", "modes",
         "scorer", "activation", "seed_count", "author_principals", "review_evidence",
-        "runtime_sha256",
+        "runtime_sha256", "standards_provenance",
     }
     if not isinstance(manifest, dict) or set(manifest) != required:
         raise PublicationBlocked("Manifest fields do not match V1 schema")
@@ -73,6 +113,7 @@ def validate(manifest, *, require_approvals=True):
         or manifest["curriculum"] != "MTH1W" or manifest["curriculum_version"] != "2021"
         or manifest["local_skill"] != "MTH1W.C.ALG.EQ2" or manifest["scorer"] != SCORER
         or manifest["package_id"] != "mth1w-signed-two-step-v1"
+        or manifest["standards_provenance"] != STANDARDS_PROVENANCE
         or manifest["activation"] not in {"pending", "staging"}
         or not isinstance(manifest["modes"], list) or not manifest["modes"]
         or not all(isinstance(m, str) for m in manifest["modes"])
@@ -211,7 +252,11 @@ def publish(db, manifest):
             objective="Approved signed exact-rational equation practice", evaluation_type=SCORER,
             extension_eligible=False, llm_solution_required=False,
             **{column: key == mode for key, column in MODE_COLUMNS.items()},
-            provenance_json={"publisher": SCHEMA, "package_digest": values["solution"]["package_digest"]},
+            provenance_json={
+                "publisher": SCHEMA,
+                "package_digest": values["solution"]["package_digest"],
+                "standards": manifest["standards_provenance"],
+            },
         ))
     db.flush()
     return report(db, manifest)
