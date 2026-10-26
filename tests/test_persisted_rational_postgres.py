@@ -34,9 +34,11 @@ from app.services.question_package_release import PackageReleaseEvidence
 _SHA = "a" * 40
 _FAMILY = "SYNTHETIC.ON.RATIONAL"
 _SKILL = "MATH.EE.EQUATION.TWO"
+_MAPPING = "c" * 40
+_STANDARDS = "d" * 40
 
 
-def _source():
+def _source(curriculum_code):
     flags = {
         "package_sha": _SHA, "math_accepted_sha": _SHA, "pedagogy_accepted_sha": _SHA,
         "backend_scoring_sha": _SHA, "frontend_integration_sha": _SHA,
@@ -52,7 +54,10 @@ def _source():
         ),
         evidence=PackageReleaseEvidence(**flags),
         scorer_revision="b" * 40,
-        source_mapping_revision="c" * 40,
+        source_mapping_revision=_MAPPING,
+        answer_variable="x", standards_manifest_sha=_STANDARDS,
+        jurisdiction_code="CA.ON", curriculum_code=curriculum_code,
+        mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
     class SyntheticApproval:
@@ -77,6 +82,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 curriculum = Curriculum(
                     code=f"SYNTHETIC-RATIONAL-{uuid.uuid4().hex[:10]}",
                     name="Synthetic rational resolution curriculum", version="v1",
+                    country_code="CA", region_code="ON",
                 )
                 db.add(curriculum)
                 db.flush()
@@ -95,6 +101,11 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 db.add(CurriculumSkillMapping(
                     skill_id=skill.id, canonical_skill_id=canonical.id,
                     mapping_type="EQUIVALENT",
+                    provenance_json={
+                        "source_mapping_revision": _MAPPING,
+                        "standards_manifest_sha": _STANDARDS,
+                        "disposition": "ACCEPTED", "coverage_credit": True,
+                    },
                 ))
                 db.flush()
                 problem = Problem(
@@ -108,7 +119,11 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                     problem_id=problem.id, curriculum_id=curriculum.id,
                     objective="synthetic", evaluation_type="EXACT",
                     independent_eligible=True,
-                    provenance_json={"family_id": _FAMILY, "content_sha": _SHA},
+                    provenance_json={
+                        "family_id": _FAMILY, "content_sha": _SHA,
+                        "source_mapping_revision": _MAPPING,
+                        "standards_manifest_sha": _STANDARDS,
+                    },
                 ))
                 students = []
                 sessions = []
@@ -136,7 +151,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                     ))
 
                 before = history_counts()
-                source = _source()
+                source = _source(curriculum.code)
                 first = TrustedAssessmentContext(
                     students[0].id, sessions[0].id, problem.id, AssessmentMode.INDEPENDENT,
                 )
@@ -146,7 +161,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 }
                 a = score_persisted_rational(db, context=first, submission="X=6/-8", **args)
                 b = score_persisted_rational(db, context=first, submission="x=-9/12", **args)
-                assert a.eligible and a.correct and a.independent_evidence_eligible
+                assert a.eligible and a.correct and not a.independent_evidence_eligible
                 assert b == a
                 cross_student = TrustedAssessmentContext(
                     students[1].id, sessions[0].id, problem.id, AssessmentMode.INDEPENDENT,
