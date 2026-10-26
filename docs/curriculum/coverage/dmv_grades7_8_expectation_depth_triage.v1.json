@@ -3,7 +3,7 @@
   "status": "DRAFT_REUSE_TRIAGE_NOT_VERIFIED",
   "control_issue": 377,
   "scope": "Maryland Virginia DC Grades 7-8 parent expectation inventory; official subparts retained for downstream review",
-  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. All source-fidelity independent reviews pending. No runtime coverage/credit.",
+  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.G.B.6–8 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
   "count": 132,
   "summary": {
     "MD G7": {
@@ -55,9 +55,10 @@
     {
       "jurisdiction": "DC",
       "pr": 373,
-      "ref": "refs/pull/373/head",
+      "ref": "standards/dc-grade8-pythagorean-boundary-20261026",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6"
+      "blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
+      "scope_note": "8.G.B.6–8 corrected to official CCSSO/NGA 2010 PDF, printed page 56; all mappings remain provisional and inactive."
     }
   ],
   "rows": [
@@ -2736,7 +2737,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2774,7 +2775,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2807,7 +2808,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2846,7 +2847,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2884,7 +2885,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2917,7 +2918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2950,7 +2951,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2981,7 +2982,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3012,7 +3013,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3048,7 +3049,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3081,7 +3082,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3112,7 +3113,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3143,7 +3144,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3174,7 +3175,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3205,7 +3206,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3236,7 +3237,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3267,7 +3268,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3300,7 +3301,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3333,7 +3334,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3366,7 +3367,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3399,7 +3400,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3432,7 +3433,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3468,7 +3469,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3505,7 +3506,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3538,7 +3539,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3569,7 +3570,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3600,7 +3601,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3631,7 +3632,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3662,7 +3663,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3693,7 +3694,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3724,7 +3725,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3755,7 +3756,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3789,7 +3790,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3824,7 +3825,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3855,7 +3856,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3886,7 +3887,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3917,7 +3918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3948,7 +3949,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3979,7 +3980,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4014,7 +4015,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4045,7 +4046,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4076,7 +4077,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4107,7 +4108,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4138,7 +4139,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4165,16 +4166,16 @@
       "grade": 8,
       "expectation_id": "8.G.B.6",
       "scope_summary": "Explain a proof of the Pythagorean Theorem and its converse.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Merged PR #167 does not provide the proof/explanation demand required by 8.G.B.6.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4189,23 +4190,39 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Keep no-coverage; Curriculum may propose original proof/explanation families only after identity review",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "relation_status": "NO_COVERAGE_CLAIM",
+        "evidenced_scope": [
+          "converse classification"
+        ],
+        "excluded_required_scope": [
+          "learner explanation of a proof of the Pythagorean Theorem",
+          "learner explanation of a proof of its converse"
+        ],
+        "reason": "Merged PR #167 does not provide the proof/explanation demand required by 8.G.B.6.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.B.7",
       "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Merged PR #167 demonstrates only a bounded two-dimensional mathematical side-length slice.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4220,23 +4237,39 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "relation_status": "PARTIAL_NON_EXHAUSTIVE",
+        "evidenced_scope": [
+          "two-dimensional mathematical unknown-side calculation"
+        ],
+        "excluded_required_scope": [
+          "three-dimensional right-triangle application",
+          "real-world problem family"
+        ],
+        "reason": "Merged PR #167 demonstrates only a bounded two-dimensional mathematical side-length slice.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.B.8",
       "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Coordinate-distance reuse is plausible but has not passed the required identity, mathematics, assessment, and depth gates.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4251,7 +4284,24 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "relation_status": "PROVISIONAL_NOT_ACCEPTED",
+        "evidenced_scope": [
+          "coordinate-distance reuse candidate"
+        ],
+        "excluded_required_scope": [
+          "complete atomic identity equivalence not established",
+          "independent mathematical review not established",
+          "assessment and depth acceptance not established"
+        ],
+        "reason": "Coordinate-distance reuse is plausible but has not passed the required identity, mathematics, assessment, and depth gates.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
@@ -4262,7 +4312,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4293,7 +4343,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4324,7 +4374,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4355,7 +4405,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4386,7 +4436,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_blob_sha": "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
