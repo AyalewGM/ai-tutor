@@ -49,9 +49,21 @@ def verify_fresh_issuance(
     turns = db.scalars(select(TutorTurn).where(
         TutorTurn.session_id == session_id, TutorTurn.problem_id == problem.id,
     )).all()
-    if len(turns) != 1:
+    # Ordinary learner turns are not issuance events. However, any recorded
+    # hint/repair on this task must block fresh independent admission.
+    assisted_actions = {
+        "HINT", "SHOW_HINT", "REPAIR", "GUIDED_REPAIR",
+        "SHOW_SOLUTION", "REVEAL_ANSWER", "SCAFFOLD",
+    }
+    if any(turn.pedagogical_action in assisted_actions for turn in turns):
         return False
-    issued = turns[0]
+    issuance = [
+        turn for turn in turns
+        if turn.role == "SYSTEM" and turn.pedagogical_action == "ISSUE_ASSESSMENT"
+    ]
+    if len(issuance) != 1:
+        return False
+    issued = issuance[0]
     expected = {
         "issuance_contract": ISSUANCE_VERSION,
         "student_id": str(student_id),
