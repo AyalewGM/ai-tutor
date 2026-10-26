@@ -304,6 +304,25 @@ def test_invalid_inputs_fail_closed():
             raise AssertionError(f"count should fail closed: {bad_count!r}")
 
 
+def _task_bound_stage_evidence(variant):
+    contract = generator._task_stage_contract(variant)
+    next_step = {
+        **{
+            name: str(value)
+            for name, value in contract["manipulation_numeric"].items()
+        },
+        **contract["manipulation_choices"],
+    }
+    explanation = {
+        **{
+            name: str(value)
+            for name, value in contract["explanation_numeric"].items()
+        },
+        **contract["explanation_choices"],
+    }
+    return contract, next_step, explanation
+
+
 def _advance_to_practice(variant):
     state = generator.start_guided_learning(variant)
     assert state.stage == "OBSERVE"
@@ -321,31 +340,139 @@ def _advance_to_practice(variant):
         state, {"first_step_id": "PRESERVE_EQUALITY"}
     )
     assert state.stage == "MANIPULATE"
-    one_side = generator.advance_guided_learning(
+    contract, next_step, explanation = _task_bound_stage_evidence(variant)
+    generic_only = generator.advance_guided_learning(
         state,
         {
-            "operation_choice": "PRESERVE_EQUALITY",
-            "applied_to": ["LEFT_COMPLETE_SIDE"],
+            "action_choice": contract["action_id"],
         },
     )
-    assert one_side.stage == "MANIPULATE"
+    assert generic_only.stage == "MANIPULATE"
+    assert generic_only.feedback_code == "EQUIVALENT_NEXT_STEP_REQUIRED"
+    incomplete_step = dict(next_step)
+    incomplete_step.pop(next(iter(incomplete_step)))
+    incomplete = generator.advance_guided_learning(
+        state,
+        {
+            "action_choice": contract["action_id"],
+            "next_step": incomplete_step,
+        },
+    )
+    assert incomplete.stage == "MANIPULATE"
     state = generator.advance_guided_learning(
         state,
         {
-            "operation_choice": "PRESERVE_EQUALITY",
-            "applied_to": ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"],
+            "action_choice": contract["action_id"],
+            "next_step": next_step,
         },
     )
     assert state.stage == "EXPLAIN"
     unsupported = generator.advance_guided_learning(
-        state, {"claim_choice": "MOVE_AND_CHANGE_SIGN"}
+        state,
+        {
+            "reasoning_choice": contract["reason_distractor_id"],
+            "explanation_evidence": explanation,
+        },
     )
     assert unsupported.stage == "EXPLAIN"
+    unsupported_evidence = generator.advance_guided_learning(
+        state, {"reasoning_choice": contract["reason_id"]}
+    )
+    assert unsupported_evidence.stage == "EXPLAIN"
+    assert (
+        unsupported_evidence.feedback_code
+        == "TASK_SPECIFIC_EXPLANATION_EVIDENCE_REQUIRED"
+    )
     state = generator.advance_guided_learning(
-        state, {"claim_choice": "SAME_OPERATION_BOTH_COMPLETE_SIDES"}
+        state,
+        {
+            "reasoning_choice": contract["reason_id"],
+            "explanation_evidence": explanation,
+        },
     )
     assert state.stage == "PRACTICE"
     return state
+
+
+def test_all_families_require_task_bound_manipulation_and_explanation_evidence():
+    checked = 0
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(family, seed=seed, mode="guided")
+            contract, next_step, explanation = _task_bound_stage_evidence(variant)
+            manipulate = generator.LearningState(source=variant, stage="MANIPULATE")
+            generic = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "operation_choice": "PRESERVE_EQUALITY",
+                    "applied_to": ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"],
+                },
+            )
+            assert generic.stage == "MANIPULATE"
+            assert generic.feedback_code == "TASK_BOUND_ACTION_REQUIRED"
+
+            bad_step = dict(next_step)
+            numeric_field = next(iter(contract["manipulation_numeric"]))
+            bad_step[numeric_field] = str(
+                contract["manipulation_numeric"][numeric_field] + 1
+            )
+            wrong = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "action_choice": contract["action_id"],
+                    "next_step": bad_step,
+                },
+            )
+            assert wrong.stage == "MANIPULATE"
+            assert wrong.feedback_code == "EQUIVALENT_NEXT_STEP_REQUIRED"
+
+            explain = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "action_choice": contract["action_id"],
+                    "next_step": next_step,
+                },
+            )
+            assert explain.stage == "EXPLAIN"
+            payload = generator.learning_stage_payload(explain)
+            assert "claim_choices" not in payload
+            assert "expected" not in repr(payload).lower()
+            assert {field["name"] for field in payload["explanation_fields"]} == (
+                set(contract["explanation_numeric"])
+                | set(contract["explanation_choices"])
+            )
+
+            generic_reason = generator.advance_guided_learning(
+                explain, {"claim_choice": "SAME_OPERATION_BOTH_COMPLETE_SIDES"}
+            )
+            assert generic_reason.stage == "EXPLAIN"
+            assert generic_reason.feedback_code == "TASK_SPECIFIC_REASON_REQUIRED"
+
+            incomplete_explanation = dict(explanation)
+            incomplete_explanation.pop(next(iter(incomplete_explanation)))
+            missing = generator.advance_guided_learning(
+                explain,
+                {
+                    "reasoning_choice": contract["reason_id"],
+                    "explanation_evidence": incomplete_explanation,
+                },
+            )
+            assert missing.stage == "EXPLAIN"
+            assert (
+                missing.feedback_code
+                == "TASK_SPECIFIC_EXPLANATION_EVIDENCE_REQUIRED"
+            )
+
+            practice = generator.advance_guided_learning(
+                explain,
+                {
+                    "reasoning_choice": contract["reason_id"],
+                    "explanation_evidence": explanation,
+                },
+            )
+            assert practice.stage == "PRACTICE"
+            checked += 1
+    assert checked == len(generator.FAMILIES) * len(generator.PRIMARY_SEEDS)
 
 
 def test_guided_learning_flow_requires_math_evidence_transfer_binding_and_verification():
