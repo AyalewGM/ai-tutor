@@ -28,6 +28,20 @@ TRIAGE = (
 )
 
 IDS = ("8.G.B.6", "8.G.B.7", "8.G.B.8")
+GEOMETRY_CLUSTER_IDS = (
+    "8.G.A.1",
+    "8.G.A.2",
+    "8.G.A.3",
+    "8.G.A.4",
+    "8.G.A.5",
+)
+GEOMETRY_CLUSTER_PAGES = {
+    "8.G.A.1": 55,
+    "8.G.A.2": 55,
+    "8.G.A.3": 56,
+    "8.G.A.4": 56,
+    "8.G.A.5": 56,
+}
 OFFICIAL_PDF = (
     "https://corestandards.org/wp-content/uploads/2023/09/"
     "ADA-Compliant-Math-Standards.pdf"
@@ -36,7 +50,7 @@ ADOPTION_URL = (
     "https://osse.dc.gov/release/dc-state-board-education-holds-"
     "regularly-scheduled-public-meeting-10"
 )
-SOURCE_BLOB = "149b03e24695a4e32efb34e1cc673dfd38ce9d00"
+SOURCE_BLOB = "317f2d01a3a8f0084cf1b3228d2fb9376cdd5f4e"
 
 
 def _read(path: Path) -> dict:
@@ -157,6 +171,103 @@ def test_dmv_triage_records_three_separate_inactive_relations() -> None:
         assert row["missing_core_verified"] is False
         assert row["provisional"] is True
         assert relation["status"] == status
+        assert relation["coverage_credit"] is False
+        assert relation["mapping_activation"] is False
+        assert relation["canonical_correspondence"] == "NOT_ESTABLISHED"
+        assert relation["union_inheritance_forbidden"] is True
+
+
+def test_dc_geometry_cluster_uses_official_pages_and_no_coverage_claim() -> None:
+    manifest = _read(STANDARDS)
+    rows = {row["expectation_id"]: row for row in manifest["expectations"]}
+    correction = manifest["provenance"][
+        "geometry_congruence_similarity_slice_correction"
+    ]
+
+    assert correction["expectation_ids"] == list(GEOMETRY_CLUSTER_IDS)
+    assert correction["source_url"] == OFFICIAL_PDF
+    assert correction["source_printed_pages"] == [55, 56]
+    assert correction["version_date"] == "2010"
+    assert correction["adoption_date"] == "2010-07-21"
+    assert correction["access_date"] == "2026-10-26"
+    assert correction["mapping_evidence_status"] == (
+        "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS"
+    )
+
+    for expectation_id in GEOMETRY_CLUSTER_IDS:
+        row = rows[expectation_id]
+        boundary = row["mapping_evidence_boundary"]
+        assert row["source_locator"] == OFFICIAL_PDF
+        assert row["source_domain_section_url"] == OFFICIAL_PDF
+        assert row["source_printed_page"] == GEOMETRY_CLUSTER_PAGES[expectation_id]
+        assert row["adoption_date"] == "2010-07-21"
+        assert row["source_fidelity_status"] == (
+            "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE"
+        )
+        assert boundary["status"] == "NO_COVERAGE_CLAIM"
+        assert boundary["repository_specific_mapping_located"] is False
+        assert boundary["missing_mathematical_content_inferred"] is False
+        assert boundary["coverage_credit"] is False
+        assert boundary["mapping_activation"] is False
+        assert boundary["canonical_correspondence"] == "NOT_ESTABLISHED"
+
+    assert rows["8.G.A.1"]["official_subpart_identifiers"] == [
+        "8.G.A.1.a",
+        "8.G.A.1.b",
+        "8.G.A.1.c",
+    ]
+
+
+def test_dc_geometry_cluster_locator_and_triage_stay_fail_closed() -> None:
+    ledger = _read(LOCATORS)
+    locator_rows = {
+        row["expectation_id"]: row
+        for row in ledger["records"]
+        if row["expectation_id"] in GEOMETRY_CLUSTER_IDS
+    }
+    report = _read(TRIAGE)
+    triage_rows = {
+        row["expectation_id"]: row
+        for row in report["rows"]
+        if row["jurisdiction"] == "DC"
+        and row["expectation_id"] in GEOMETRY_CLUSTER_IDS
+    }
+    dc_source = next(
+        source
+        for source in report["source_manifests"]
+        if source["jurisdiction"] == "DC"
+    )
+    assert dc_source["blob_sha"] == SOURCE_BLOB
+
+    for expectation_id in GEOMETRY_CLUSTER_IDS:
+        locator = locator_rows[expectation_id]
+        scope = locator["bounded_mathematical_scope_evidence"]
+        boundary = locator["no_coverage_boundary"]
+        triage = triage_rows[expectation_id]
+        relation = triage["reuse_relation"]
+
+        assert locator["source_text_url"] == OFFICIAL_PDF
+        assert locator["source_section_url"] == OFFICIAL_PDF
+        assert locator["source_printed_page"] == (
+            GEOMETRY_CLUSTER_PAGES[expectation_id]
+        )
+        assert locator["independent_acceptance"] == "PENDING"
+        assert scope["required_conditions"]
+        assert scope["canonical_equivalence"] == "NOT_ESTABLISHED"
+        assert scope["downstream_full_coverage_allowed"] is False
+        assert boundary["status"] == "NO_COVERAGE_CLAIM"
+        assert boundary["candidate"] is None
+        assert boundary["missing_mathematical_content_inferred"] is False
+        assert boundary["coverage_credit"] is False
+        assert boundary["mapping_activation"] is False
+
+        assert triage["source_blob_sha"] == SOURCE_BLOB
+        assert triage["source_url"] == OFFICIAL_PDF
+        assert triage["coverage_classification"] == "NO_COVERAGE_CLAIM"
+        assert triage["missing_core_verified"] is False
+        assert triage["verified_depth"] is False
+        assert relation["candidate"] is None
+        assert relation["missing_mathematical_content_inferred"] is False
         assert relation["coverage_credit"] is False
         assert relation["mapping_activation"] is False
         assert relation["canonical_correspondence"] == "NOT_ESTABLISHED"
