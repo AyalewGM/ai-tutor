@@ -349,7 +349,7 @@ def test_dc_three_new_grade7_8_unlettered_scope_findings_are_preserved() -> None
         'properties of operations', 'convert', 'mental computation', 'estimation', 'reasonableness'
     ))
     assert all(word in conditions('8.NS.A.1') for word in (
-        'eventually repeats', 'eventually repeating', 'rational-number fraction'
+        'eventually repeats', 'eventually repeating', 'rational number'
     ))
 
 
