@@ -68,7 +68,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         ),
         evidence=_release(), scorer_revision="b" * 40, source_mapping_revision=_MAPPING,
         answer_variable="x", standards_manifest_sha=_STANDARDS,
-        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W", local_skill_code="MTH1W.C.ALG.EQ2",
         mapping_disposition="ACCEPTED", coverage_credit=True,
     )
     provider = Mock()
