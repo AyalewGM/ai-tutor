@@ -32,7 +32,9 @@
         "local_skill": "M6.NS.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": ["WORD_PROBLEM"],
+        "stored_families": [
+          "WORD_PROBLEM"
+        ],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
@@ -41,7 +43,9 @@
         "local_skill": "DC6.NS.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": ["WORD_PROBLEM"],
+        "stored_families": [
+          "WORD_PROBLEM"
+        ],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
@@ -50,7 +54,9 @@
         "local_skill": "VA6.CE.FRACTION",
         "canonical_code_reported_by_audit": "MATH.NS.FRACTION_DIVISION",
         "stored_distinct_tasks": 2,
-        "stored_families": ["WORD_PROBLEM"],
+        "stored_families": [
+          "WORD_PROBLEM"
+        ],
         "missing_metadata_rows": 2,
         "sampled_generator": "WORD_PROBLEM",
         "learner_visible_integrated_status": "NOT_VERIFIED"
@@ -129,13 +135,13 @@
     "coverage_credit": "NONE"
   },
   "independent_gates": {
-    "mathematics": "ACCEPTED_AT_74ed63c3f3637176272f38e6c0f2ba7f125cdf63_PRESERVED_UNCHANGED",
-    "pedagogy": "CHANGES_REQUIRED_AT_74ed63c3f3637176272f38e6c0f2ba7f125cdf63_TARGETED_SUPPORT_CORRECTION_PENDING_REREVIEW",
+    "mathematics": "ACCEPTED_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_REVIEW_6250407492",
+    "pedagogy": "ACCEPTED_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_REVIEW_6250594953",
     "standards_mapping": "PENDING_NOT_REQUIRED_FOR_SHARED_MATH_AUTHOR_REVIEW",
     "assessment_backend": "NOT_IMPLEMENTED",
     "frontend_mve": "NOT_IMPLEMENTED",
     "muse_browser_qa": "PENDING",
-    "ci_appsec": "PENDING",
+    "ci_appsec": "SUCCESS_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_CI_2193_APPSEC_1558",
     "release": "NOT_APPROVED",
     "deployment": "NOT_DEPLOYED"
   }
