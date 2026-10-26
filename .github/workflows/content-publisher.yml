@@ -50,8 +50,15 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ needs.preflight.outputs.sha }}
+          ref: main
           persist-credentials: false
+      - name: Verify preview checkout matches approved release SHA
+        env:
+          RELEASE_SHA: ${{ needs.preflight.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
