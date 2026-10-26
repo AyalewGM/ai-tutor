@@ -22,14 +22,14 @@ _SHA = "a" * 40
 
 
 def evidence(**changes):
-    defaults = dict(
-        package_sha=_SHA, math_accepted_sha=_SHA, pedagogy_accepted_sha=_SHA,
-        backend_scoring_sha=_SHA, frontend_integration_sha=_SHA,
-        muse_qa_sha=_SHA, engineering_authorized_sha=_SHA,
-        canonical_mapping_approved=True, exact_scorer_verified=True,
-        response_schema_verified=True, history_preservation_verified=True,
-        runtime_activation_approved=True,
-    )
+    defaults = {
+        "package_sha":_SHA, "math_accepted_sha":_SHA, "pedagogy_accepted_sha":_SHA,
+        "backend_scoring_sha":_SHA, "frontend_integration_sha":_SHA,
+        "muse_qa_sha":_SHA, "engineering_authorized_sha":_SHA,
+        "canonical_mapping_approved":True, "exact_scorer_verified":True,
+        "response_schema_verified":True, "history_preservation_verified":True,
+        "runtime_activation_approved":True,
+    }
     defaults.update(changes)
     return PackageReleaseEvidence(**defaults)
 
@@ -82,11 +82,11 @@ def test_schema_revision_and_duplicate_family_fail_closed():
 
 def test_positive_negative_mode_assistance_and_identity():
     reg = compile_registration(SCHEMA_VERSION, (registration(),))
-    args = dict(
-        registry=reg, family_id="SYNTHETIC.EQUATION.FRACTION",
-        canonical_skill_code="MATH.EE.EQUATION.TWO",
-        content_sha=_SHA, canonical_answer="x=-3/4", variable="x",
-    )
+    args = {
+        "registry":reg, "family_id":"SYNTHETIC.EQUATION.FRACTION",
+        "canonical_skill_code":"MATH.EE.EQUATION.TWO",
+        "content_sha":_SHA, "canonical_answer":""x":-3/4", "variable":"x",
+    }
     positive = score_registered_rational(
         **args, submitted_answer="X=6/-8", mode=AssessmentMode.INDEPENDENT
     )
@@ -116,12 +116,12 @@ def test_positive_negative_mode_assistance_and_identity():
 
 def test_repeat_scoring_is_pure_no_attempt_or_mastery_state():
     registry = compile_registration(SCHEMA_VERSION, (registration(),))
-    kwargs = dict(
-        registry=registry, family_id="SYNTHETIC.EQUATION.FRACTION",
-        canonical_skill_code="MATH.EE.EQUATION.TWO", content_sha=_SHA,
-        mode=AssessmentMode.INDEPENDENT, canonical_answer="x=-3/4",
-        submitted_answer="x=-6/8", variable="x",
-    )
+    kwargs = {
+        "registry":registry, "family_id":"SYNTHETIC.EQUATION.FRACTION",
+        "canonical_skill_code":"MATH.EE.EQUATION.TWO", "content_sha":_SHA,
+        "mode":AssessmentMode.INDEPENDENT, "canonical_answer":""x":-3/4",
+        "submitted_answer":""x":-6/8", "variable":"x",
+    }
     initial = score_registered_rational(**kwargs)
     assert all(score_registered_rational(**kwargs) == initial for _ in range(15))
     assert not AUTHORIZED_FAMILIES
