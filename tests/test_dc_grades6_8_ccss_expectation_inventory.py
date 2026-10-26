@@ -173,13 +173,28 @@ def test_dc_standards_provenance_is_reproducible_and_separate_from_inventory_dat
     assert all(row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED' for row in manifest['expectations'])
 
 
-def test_dc_2023_review_detects_missing_grade8_geometry_volume_standard() -> None:
+def test_dc_2023_review_preserves_grade8_geometry_volume_standard() -> None:
     manifest = _manifest()
     row = next(r for r in manifest['expectations'] if r['expectation_id'] == '8.G.C.9')
-    assert row['source_locator'] == 'https://www.thecorestandards.org/Math/Content/8/G/C/9/'
-    assert row['scope_summary'].startswith('Use formulas for the volumes of cones')
+    assert row['source_locator'] == (
+        'https://corestandards.org/wp-content/uploads/2023/09/'
+        'ADA-Compliant-Math-Standards.pdf'
+    )
+    assert row['source_publication_version'] == '2010'
+    assert row['source_printed_page'] == 56
+    assert row['official_subpart_identifiers'] == []
+    scope = row['scope_summary'].lower()
+    assert 'know the formulas' in scope
+    assert 'cones, cylinders, and spheres' in scope
+    assert 'real-world and mathematical problems' in scope
     assert row['classification']['standards_mapped'] == 'NO'
     assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    boundary = row['mapping_evidence_boundary']
+    assert boundary['status'] == 'NO_COVERAGE_CLAIM'
+    assert boundary['missing_mathematical_content_inferred'] is False
+    assert boundary['coverage_credit'] is False
+    assert boundary['mapping_activation'] is False
+    assert boundary['canonical_correspondence'] == 'NOT_ESTABLISHED'
     assert len([r for r in manifest['expectations'] if r['grade'] == 8 and r['domain'] == 'G']) == 9
 
 
