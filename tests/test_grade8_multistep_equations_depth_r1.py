@@ -156,6 +156,26 @@ def test_guided_diagnosis_requires_matching_answer_and_reasoning_probe():
     assert routes >= 384
 
 
+def test_every_misconception_code_has_distinct_targeted_repair_content():
+    repair_by_code = {}
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(family, seed=seed, mode="guided")
+            for signal in variant.misconception_signals:
+                repair = variant.guided_repair(
+                    signal["candidate_response"], signal["reasoning_choice"]
+                )
+                assert repair["status"] == "TARGETED_REPAIR"
+                signature = (tuple(repair["questions"]), repair["explanation"])
+                if signal["code"] in repair_by_code:
+                    assert repair_by_code[signal["code"]] == signature
+                repair_by_code[signal["code"]] = signature
+                assert repair["worked_answer_revealed"] is False
+
+    assert set(repair_by_code) == set(generator.MISCONCEPTION_REPAIRS)
+    assert len(set(repair_by_code.values())) == len(repair_by_code)
+
+
 def test_support_is_unavailable_outside_guided_mode():
     for mode in ("diagnostic", "independent", "mastery"):
         for family in generator.FAMILIES:
@@ -383,6 +403,46 @@ def test_guided_learning_flow_requires_math_evidence_transfer_binding_and_verifi
     )
     assert state.complete is True
     assert state.stage == generator.COMPLETE_STAGE
+
+
+def test_targeted_repair_is_a_separate_observable_state_before_correction():
+    variant = generator.create_variant(
+        "VARIABLES_BOTH_SIDES", seed=6, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    signal = variant.misconception_signals[0]
+    state = generator.advance_guided_learning(
+        state, {"answer": signal["candidate_response"]}
+    )
+    assert state.stage == "DIAGNOSE"
+
+    bypass = generator.advance_guided_learning(
+        state,
+        {
+            "reasoning_choice": signal["reasoning_choice"],
+            "corrected_response": variant.canonical_answer,
+        },
+    )
+    assert bypass.stage == "DIAGNOSE"
+    assert bypass.diagnosis_route == signal["code"]
+    assert (
+        bypass.feedback_code
+        == "TARGETED_REPAIR_MUST_BE_VIEWED_BEFORE_CORRECTION"
+    )
+    payload = generator.learning_stage_payload(bypass)
+    expected = variant.guided_repair(
+        signal["candidate_response"], signal["reasoning_choice"]
+    )
+    assert payload["repair"]["misconception_code"] == signal["code"]
+    assert payload["repair"]["questions"] == expected["questions"]
+    assert payload["repair"]["explanation"] == expected["explanation"]
+    assert payload["repair"]["worked_answer_revealed"] is False
+
+    repaired = generator.advance_guided_learning(
+        bypass, {"corrected_response": variant.canonical_answer}
+    )
+    assert repaired.stage == "TRANSFER"
+    assert repaired.transfer_variant is not None
 
 
 def test_correct_guided_practice_bypasses_repair_but_not_unhinted_transfer():
