@@ -112,12 +112,62 @@
       "publisher": "CCSSO/NGA",
       "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "title": "Common Core State Standards for Mathematics",
-      "version_date": "2010 standard; accessible publication hosted 2023",
-      "page": "printed page 55",
-      "standard_id": "8.EE.C.7a-b",
+      "version_date": "2010 publication; DC State Board adopted July 28, 2010",
+      "page": "printed page 54",
       "access_date": "2026-10-25",
+      "jurisdiction": "District of Columbia",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
       "mapping_status": "DC_PROVISIONAL_NOT_ACCEPTED",
-      "adaptation_rationale": "Identifier and scope reference only; no standard example or protected assessment expression is copied."
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "standard_id": "8.EE.C.7a",
+      "family_codes": [
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE"
+      ],
+      "coverage_boundary": "Only solution-class recognition, comparison, and bounded justification evidence in the three listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "Learner construction of examples having one, infinitely many, or no solution",
+        "Complete successive transformation of a given equation to x = a, a = a, or a = b for different numbers",
+        "Any other 8.EE.C.7a qualifier not explicitly implemented by the three listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no CCSS example or protected assessment expression is copied."
+    },
+    {
+      "publisher": "CCSSO/NGA",
+      "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "title": "Common Core State Standards for Mathematics",
+      "version_date": "2010 publication; DC State Board adopted July 28, 2010",
+      "page": "printed page 54",
+      "access_date": "2026-10-25",
+      "jurisdiction": "District of Columbia",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
+      "mapping_status": "DC_PROVISIONAL_NOT_ACCEPTED",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "standard_id": "8.EE.C.7b",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "NESTED_GROUPS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only solving rational-coefficient linear equations, including distribution and collecting-like-terms evidence in the nine listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The distinct 8.EE.C.7a solution-class and example-construction requirement, which is recorded separately",
+        "Any 8.EE.C.7b qualifier not explicitly implemented by the nine listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no CCSS example or protected assessment expression is copied."
     },
     {
       "publisher": "Virginia Department of Education",
