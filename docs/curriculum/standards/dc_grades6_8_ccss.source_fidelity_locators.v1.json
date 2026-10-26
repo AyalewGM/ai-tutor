@@ -2058,7 +2058,7 @@
         "source_printed_page": 55,
         "required_conditions": [
           "Recognize congruence through a sequence of rotations, reflections, and translations",
-          "For two congruent figures, describe a transformation sequence that demonstrates the congruence"
+          "Given congruent figures (the source specifies given two congruent figures), describe a sequence of rotations, reflections, and translations that exhibits congruence"
         ],
         "unlettered_standard": true,
         "short_summary_is_exhaustive": false,
@@ -2175,7 +2175,7 @@
         "source_printed_page": 56,
         "required_conditions": [
           "Recognize similarity through rotations, reflections, translations, and dilations",
-          "For two similar figures, describe a transformation sequence that demonstrates the similarity"
+          "Given similar figures (the source specifies given two similar two-dimensional figures), describe a transformation sequence that exhibits similarity"
         ],
         "unlettered_standard": true,
         "short_summary_is_exhaustive": false,
