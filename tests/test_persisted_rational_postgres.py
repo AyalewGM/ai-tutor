@@ -12,8 +12,8 @@ from sqlalchemy.orm import Session
 
 from app.answer_contracts import AnswerKind
 from app.content_models import ProblemContentMetadata
-from app.hint_models import HintEvent
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
+from app.hint_models import HintEvent
 from app.models import (
     Attempt,
     Curriculum,
