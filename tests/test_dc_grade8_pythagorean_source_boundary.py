@@ -36,7 +36,7 @@ ADOPTION_URL = (
     "https://osse.dc.gov/release/state-board-education-votes-adopt-"
     "common-core-standards-english-language-arts-and"
 )
-SOURCE_BLOB = "b297b5999e05b18f76a818343b7553fc73fe73b8"
+SOURCE_BLOB = "149b03e24695a4e32efb34e1cc673dfd38ce9d00"
 
 
 def _read(path: Path) -> dict:
@@ -53,7 +53,7 @@ def test_dc_pythagorean_rows_use_official_versioned_source() -> None:
     assert correction["source_printed_page"] == 56
     assert correction["version_date"] == "2010"
     assert correction["adoption_url"] == ADOPTION_URL
-    assert correction["adoption_date"] == "2010-07-28"
+    assert correction["adoption_date"] == "2010-07-21"
     assert correction["access_date"] == "2026-10-26"
 
     for expectation_id in IDS:
@@ -63,7 +63,7 @@ def test_dc_pythagorean_rows_use_official_versioned_source() -> None:
         assert row["source_publication_version"] == "2010"
         assert row["source_printed_page"] == 56
         assert row["adoption_url"] == ADOPTION_URL
-        assert row["adoption_date"] == "2010-07-28"
+        assert row["adoption_date"] == "2010-07-21"
         assert row["access_date"] == "2026-10-26"
         assert row["source_fidelity_status"] == (
             "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE"
@@ -94,7 +94,7 @@ def test_dc_pythagorean_locator_scope_and_reuse_stay_fail_closed() -> None:
         assert row["source_text_url"] == OFFICIAL_PDF
         assert row["source_section_url"] == OFFICIAL_PDF
         assert row["source_printed_page"] == 56
-        assert row["adoption_date"] == "2010-07-28"
+        assert row["adoption_date"] == "2010-07-21"
         assert row["independent_acceptance"] == "PENDING"
         assert scope["source_printed_page"] == 56
         assert scope["required_conditions"]
