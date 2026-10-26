@@ -10,7 +10,7 @@ import hashlib
 import math
 from dataclasses import dataclass, replace
 from fractions import Fraction
-from typing import Any
+from typing import Any, Final
 
 MODES = ("diagnostic", "guided", "independent", "mastery")
 LEARNING_STAGES = (
