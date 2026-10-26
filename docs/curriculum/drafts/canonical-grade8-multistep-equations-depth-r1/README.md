@@ -65,8 +65,9 @@ guards apply when either family is selected for independent transfer.
 The guided draft now exposes only the evidence needed at the current stage and enforces:
 Observe → Predict → Manipulate → Explain → Practice → Diagnose → Transfer → Verify.
 
-- Prediction and manipulation must use the reviewed equality-preserving operation and explicitly apply it to both complete sides.
-- Explanation uses learner-visible conceptual choices; sign-moving and one-side-only claims fail closed.
+- Prediction selects the reviewed family-specific next move.
+- Manipulation must submit the exact task-bound equivalent next step: affine coefficients for distribution, like-term, balance, fraction, modeling, and error-analysis families, or equation-specific invariants for the three-way solution-class comparison. Generic equality tokens alone fail closed.
+- Explanation requires the family-specific justification plus exact coefficient, term-correspondence, model-structure, or solution-class evidence from the current task. Generic claims, incomplete evidence, and memorized labels fail closed.
 - A genuine wrong practice response plus a corroborating reasoning choice is required before misconception-specific repair appears.
 - Every misconception code has its own answer-free Socratic questions and explanation; diagnosis labels do not route to shared generic guidance.
 - Repair is a separately observable DIAGNOSE state. A corrected answer submitted with the initial diagnosis cannot skip that state.
