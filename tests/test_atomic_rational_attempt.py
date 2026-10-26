@@ -34,3 +34,30 @@ def test_rejects_missing_database_bind():
     assert result.decision == DENIED
     assert result.attempt_id is None
     db.add.assert_not_called()
+
+
+def test_requires_existing_transaction_before_any_database_query():
+    from app.services.persisted_rational_resolution import TrustedAssessmentContext
+    from app.services.fraction_assessment_registry import AssessmentMode
+    import uuid
+
+    db = Mock()
+    db.bind.dialect.name = "postgresql"
+    db.in_transaction.return_value = False
+    context = TrustedAssessmentContext(
+        student_id=uuid.uuid4(),
+        session_id=uuid.uuid4(),
+        problem_id=uuid.uuid4(),
+        mode=AssessmentMode.INDEPENDENT,
+    )
+    result = record_rational_attempt(
+        db,
+        context=context,
+        submission="x=1/2",
+        approval_source=Mock(),
+        service_principal="synthetic",
+    )
+    assert result.decision == DENIED
+    assert result.attempt_id is None
+    db.scalar.assert_not_called()
+    db.add.assert_not_called()
