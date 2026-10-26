@@ -44,6 +44,8 @@ def record_rational_attempt(
         return RecordedRationalAttempt(DENIED, None)
     if not isinstance(context, TrustedAssessmentContext):
         return RecordedRationalAttempt(DENIED, None)
+    if not db.in_transaction():
+        return RecordedRationalAttempt(DENIED, None)
     # The student row is the serialization point across concurrent sessions.
     student = db.scalar(
         select(Student).where(Student.id == context.student_id).with_for_update()
