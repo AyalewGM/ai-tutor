@@ -45,7 +45,7 @@ def registration():
         scorer_revision="b" * 40,
         source_mapping_revision="c" * 40,
         answer_variable="x", standards_manifest_sha="d" * 40,
-        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W", local_skill_code="MTH1W.C.ALG.EQ2",
         mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
@@ -90,7 +90,7 @@ def test_positive_negative_mode_assistance_and_identity():
         "canonical_skill_code":"MATH.EE.EQUATION.TWO",
         "content_sha":_SHA, "canonical_answer":"x=-3/4", "variable":"x",
         "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
-        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W", "local_skill_code": "MTH1W.C.ALG.EQ2",
     }
     positive = score_registered_rational(
         **args, submitted_answer="X=6/-8", mode=AssessmentMode.INDEPENDENT
@@ -128,7 +128,7 @@ def test_repeat_scoring_is_pure_no_attempt_or_mastery_state():
         "mode":AssessmentMode.INDEPENDENT, "canonical_answer":"x=-3/4",
         "submitted_answer":"x=-6/8", "variable":"x",
         "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
-        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W", "local_skill_code": "MTH1W.C.ALG.EQ2",
     }
     initial = score_registered_rational(**kwargs)
     assert all(score_registered_rational(**kwargs) == initial for _ in range(15))
@@ -141,7 +141,7 @@ def test_reviewed_answer_kind_and_variable_cannot_be_switched_by_caller():
         "registry": registry, "family_id": "SYNTHETIC.EQUATION.FRACTION",
         "canonical_skill_code": "MATH.EE.EQUATION.TWO", "content_sha": _SHA,
         "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
-        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W", "local_skill_code": "MTH1W.C.ALG.EQ2",
         "mode": AssessmentMode.INDEPENDENT,
     }
     for wrong in (
@@ -178,7 +178,7 @@ def test_invalid_mapping_evidence_and_contract_are_denied():
             "content_sha": _SHA, "mode": AssessmentMode.INDEPENDENT,
             "canonical_answer": "x=-3/4", "submitted_answer": "x=-6/8", "variable": "x",
             "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
-            "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+            "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W", "local_skill_code": "MTH1W.C.ALG.EQ2",
         }
         values.update(override)
         assert score_registered_rational(**values) == DENIED
@@ -197,7 +197,7 @@ def test_bare_rational_family_cannot_accept_equation_form():
         "canonical_skill_code": bare.family.canonical_skill_code,
         "content_sha": _SHA, "mode": AssessmentMode.INDEPENDENT,
         "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
-        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W", "local_skill_code": "MTH1W.C.ALG.EQ2",
         "canonical_answer": "-3/4", "variable": None,
     }
     valid = score_registered_rational(**values, submitted_answer="6/-8")
