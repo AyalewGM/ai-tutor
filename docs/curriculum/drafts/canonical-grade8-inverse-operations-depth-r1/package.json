@@ -1,0 +1,171 @@
+{
+  "package_id": "CANONICAL-GRADE8-INVERSE-OPERATIONS-DEPTH-R1",
+  "revision": 1,
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "mastery_writes": false,
+  "build_once_map_many": true,
+  "scope": {
+    "grade": 8,
+    "existing_skills": [
+      "M8.ALG.INVERSE.ADD",
+      "M8.ALG.INVERSE.MULT"
+    ],
+    "family_count": 12,
+    "new_canonical_identity_created": false,
+    "jurisdiction_bank_created": false,
+    "curriculum_mapping_changed": false,
+    "dc_or_virginia_grade8_mapping_activated": false,
+    "maryland_mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+    "maryland_coverage_claim": "8.AT.B.3b_PARTIAL_NON_EXHAUSTIVE",
+    "maryland_full_standard_coverage": false
+  },
+  "reuse_first_audit": {
+    "main_sha": "518373df175c9de114845a5065a7588de2a43beb",
+    "audit_issue": 446,
+    "audit_pr": 447,
+    "evidence": "The synthetic persisted-question audit reports M8.ALG.INVERSE.ADD and M8.ALG.INVERSE.MULT at two distinct stored tasks each. This does not prove learner-visible availability, mode eligibility, or production counts.",
+    "existing_source": "scripts/seed_sprint1.py",
+    "learner_visible_availability": "NOT_VERIFIED",
+    "stored_candidate_mode_metadata": "UNKNOWN_PER_TARGET_ROW",
+    "actual_gap": "Both populated atomic skills have only coefficient-level stored variation and lack a reviewed shared package of distinct representations, contexts, error analysis, exact rational cases, and unseen transfer.",
+    "planned_improvement": "Author shared deterministic depth once as a runtime-disabled sidecar; preserve all stored rows and mappings."
+  },
+  "depth_contract": {
+    "distinct_families": 12,
+    "coefficient_swaps_are_variants": true,
+    "teaching_flow": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "representation_progression": [
+      "CONCRETE",
+      "VISUAL",
+      "SYMBOLIC"
+    ],
+    "mode_namespaces": [
+      "diagnostic",
+      "guided",
+      "independent",
+      "mastery"
+    ],
+    "guided_classification": "ANSWER_PLUS_LEARNER_STRATEGY_AND_SUBSTITUTION_REQUIRED_FAIL_CLOSED",
+    "learner_strategy_probe": "PUBLIC_LABELLED_CHOICES_NOT_INTERNAL_TOKENS",
+    "misconception_explanations": "GUIDED_ONLY_AFTER_AGREEING_EVIDENCE",
+    "stage_enforcement": {
+      "implementation": "pure LearningState state machine",
+      "prediction_locked_before_manipulation": true,
+      "prediction_evidence": "actual choice persisted; incorrect choice remains in PREDICT with a task-specific Socratic retry",
+      "same_operation_on_both_sides_required": true,
+      "equivalent_inverse_transformations": "accept exact divide-by-coefficient or multiply-by-reciprocal encodings when both isolate x",
+      "explanation_evidence_required": "correct public reasoning choice plus a learner explanation naming both sides and equality preservation",
+      "support_fading": "guided practice only; the learner's first parseable exact practice response is retained whether correct or incorrect",
+      "diagnosis_binding": "the retained authentic practice response, labelled strategy choice, and exact substitution evidence drive fail-closed classification; DIAGNOSE does not request a replacement answer",
+      "targeted_repair_exit": "a uniquely matched misconception remains in DIAGNOSE until an answer-free repair is acknowledged and the original equation is solved exactly; the corrected repair-exit answer replaces the retained wrong response for final verification",
+      "diagnostic_isolation": "diagnostic mode accepts only an exact unhinted answer, exposes no guided strategy or repair fields, and retains the accepted answer for final verification",
+      "transfer": "different family, independent mode, no support",
+      "verification": "reconstructs both original equation sides from the retained exact answer"
+    },
+    "independent_and_mastery": "SEPARATE_UNHINTED_ITEMS",
+    "deterministic_seed_contract": {
+      "primary_seed_band": "0..191",
+      "transfer_seed_band": "1000003..1000194",
+      "normalized_equation_uniqueness": "ZERO_OVERLAP_ACROSS_ALL_4_MODES_X_2_BANDS;_192_OF_192_WITHIN_EACH_SLICE",
+      "out_of_band": "REJECTED"
+    },
+    "exact_arithmetic": "fractions.Fraction",
+    "answer_equivalence": "any exact integer or fraction equal to the oracle",
+    "decimal_approximation_required": false
+  },
+  "source_provenance": [
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "document_title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
+      "page": 24,
+      "standard_id": "8.AT.B.3b",
+      "access_date": "2026-10-25",
+      "use": "Current scope and teaching-aim research for this bounded 8.AT.B.3b subset: rational coefficients, equality preservation, negative-number error analysis, multiple strategies, and explanation. No full-standard coverage is claimed.",
+      "license_adaptation": "Research reference only. No example, wording, diagram, or protected expression was reproduced.",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "coverage_boundary": "Only the one-step additive/subtractive and multiplicative/divisive equation subset authored in this package; this is not full 8.AT.B.3b coverage.",
+      "excluded_from_coverage_credit": [
+        "8.AT.B.3a (construct and justify equations with one, no, or infinitely many solutions)",
+        "The remaining 8.AT.B.3b scope, including equations that require the distributive property and combining like terms"
+      ]
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+      "document_title": "Mathematics Middle School",
+      "version_date": "Live page; 2026 site footer; no page-level revision date displayed",
+      "page": "web page, Our Mathematics Curriculum section",
+      "standard_id": "CURRENT_LOCAL_CURRICULUM_QUALIFIER_ONLY",
+      "access_date": "2026-10-25",
+      "use": "Current local publisher qualifier: MCPS identifies Amplify Desmos Math as its core curriculum for Grades 6-8 and Algebra 1. This page does not provide a public unit-to-standard mapping.",
+      "license_adaptation": "Factual publisher and curriculum-identification reference only; no protected curriculum content was copied or adapted."
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math8-unit4",
+      "document_title": "Math 8 - Unit 4 - Linear Equations and Linear Systems",
+      "version_date": "Undated family-support page reproducing 2017-2019 IM/Open Up Resources material; not evidence of current MCPS curriculum alignment",
+      "page": "web page, Puzzle Problems section",
+      "standard_id": "LEGACY_OPEN_RESOURCE_STRUCTURE_REFERENCE_ONLY_NOT_CURRENT_ALIGNMENT",
+      "access_date": "2026-10-25",
+      "use": "Historical, openly licensed mathematical-structure research for balanced equations and applying the same operation to both sides; not current local sequence or alignment evidence.",
+      "license_adaptation": "Page attributes underlying IM 6-8 Math to Open Up Resources under CC BY 4.0. This package nevertheless uses only high-level mathematical aims and entirely original prompts, contexts, diagrams-as-text, and parameterization."
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math7-unit5",
+      "document_title": "Math 7 - Unit 5 - Rational Number Arithmetic",
+      "version_date": "Live page; no page-level revision date displayed",
+      "page": "web page",
+      "standard_id": "PREREQUISITE_EVIDENCE_ONLY",
+      "access_date": "2026-10-25",
+      "use": "Prerequisite teaching-aim research for additive opposites and multiplicative reciprocals; not evidence of Grade 8 alignment.",
+      "license_adaptation": "No task wording or diagram was reproduced; all generated material is original."
+    }
+  ],
+  "accessibility": {
+    "keyboard_no_drag_required": true,
+    "screen_reader_equation_order": true,
+    "non_colour_cues": true,
+    "reduced_motion": true,
+    "focus_preservation": true,
+    "exact_fraction_input": true
+  },
+  "persistence_boundary": {
+    "registered_by_app": false,
+    "seeded": false,
+    "selector_or_scorer_changed": false,
+    "learner_records_changed": false,
+    "attempt_records_changed": false,
+    "diagnostic_attempt_records_changed": false,
+    "mastery_events_changed": false,
+    "variant_history_changed": false,
+    "idempotence_evidence": "Pure same-input replay; persistence remains an Assessment Backend gate."
+  },
+  "review_gates": {
+    "mathematical_review": "PENDING",
+    "pedagogical_review": "PENDING",
+    "source_and_mapping_review": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_rendering": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_release": "PENDING",
+    "deployed": false
+  },
+  "copyright": "Original Mihur-authored tasks and support. Public access was not treated as permission to copy source expression."
+}
+
+
+
