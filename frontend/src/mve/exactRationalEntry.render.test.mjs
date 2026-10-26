@@ -19,6 +19,9 @@ await build({
   bundle: true,
   format: "esm",
   platform: "node",
+  // Node defaults to the CommonJS lucide-react entry, which dynamically
+  // requires React from an ESM bundle. Prefer its ESM entry for SSR tests.
+  mainFields: ["module", "main"],
   jsx: "automatic",
   external: ["react", "react-dom", "react/jsx-runtime"],
   loader: { ".css": "empty" },
