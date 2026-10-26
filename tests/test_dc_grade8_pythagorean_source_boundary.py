@@ -36,7 +36,7 @@ ADOPTION_URL = (
     "https://osse.dc.gov/release/state-board-education-votes-adopt-"
     "common-core-standards-english-language-arts-and"
 )
-SOURCE_BLOB = "b03c50b5975ac2e5cf6953afecfb3d5b387f9dc8"
+SOURCE_BLOB = "b297b5999e05b18f76a818343b7553fc73fe73b8"
 
 
 def _read(path: Path) -> dict:
