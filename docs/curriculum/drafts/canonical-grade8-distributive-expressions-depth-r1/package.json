@@ -52,19 +52,33 @@
       "access_date": "2026-10-25",
       "coverage_relation": "PREREQUISITE_ONLY_NO_COVERAGE_CLAIM",
       "use": "Current evidence that Grade 8 linear-equation work includes distribution and combining like terms; this expression-only draft claims prerequisite depth, not standard coverage.",
-      "license_adaptation": "Used only to identify mathematical demand and sequence. All prompts, contexts, diagrams-as-text, distractors and repairs are original."
+      "license_adaptation": "Used only to identify mathematical demand and sequence. All prompts, contexts, diagrams-as-text, distractors and repairs are original.",
+      "jurisdiction": "Maryland",
+      "mapping_status": "MAPPING_INACTIVE_NOT_PROPOSED",
+      "canonical_correspondence": "PREREQUISITE_ONLY_NO_FAMILY_MAPPING",
+      "family_codes": [],
+      "coverage_boundary": "Distribution and negative-integer expression fluency are prerequisite evidence only; this package does not solve equations, preserve equality through solution steps, or satisfy any complete 8.AT.B.3b demand."
     },
     {
       "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
       "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "document_title": "Common Core State Standards for Mathematics",
-      "version_date": "2010",
+      "version_date": "2010 publication; DC State Board adopted July 28, 2010",
       "page": 54,
       "standard_id": "8.EE.C.7b",
       "access_date": "2026-10-25",
       "coverage_relation": "DC_PREREQUISITE_ONLY_NO_COVERAGE_CLAIM",
       "use": "Controlling DC-adopted standard identifies distribution and collecting like terms inside equation solving; this package does not claim the full equation-solving standard.",
-      "license_adaptation": "Mathematical scope only; no protected item, example, wording, image or answer key is reproduced."
+      "license_adaptation": "Mathematical scope only; no protected item, example, wording, image or answer key is reproduced.",
+      "jurisdiction": "District of Columbia",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
+      "mapping_status": "DC_MAPPING_INACTIVE_NOT_PROPOSED",
+      "canonical_correspondence": "PREREQUISITE_ONLY_NO_FAMILY_MAPPING",
+      "family_codes": [],
+      "coverage_boundary": "Distribution and collecting-like-terms expression fluency are prerequisite evidence only; this package does not solve rational-coefficient equations and receives no 8.EE.C.7b coverage credit."
     },
     {
       "publisher": "Virginia Department of Education",
@@ -76,19 +90,29 @@
       "access_date": "2026-10-25",
       "coverage_relation": "VIRGINIA_PREREQUISITE_ONLY_NO_COVERAGE_CLAIM",
       "use": "Current Grade 8 equation standard is a boundary reference only; expression equivalence does not receive Virginia coverage credit.",
-      "license_adaptation": "Scope research only; all learner-facing expression tasks and teaching moves are independently authored."
+      "license_adaptation": "Scope research only; all learner-facing expression tasks and teaching moves are independently authored.",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "knowledge_skill_clause": "b",
+      "clause_locator": "8.PFA.4(b)",
+      "source_authentication_status": "PENDING_INDEPENDENT_RETRIEVAL",
+      "source_authentication_note": "The official VDOE standards page authenticates the 2023 adoption identity, but the controlling Grade 8 binary and later first-party clause reproductions returned HTTP 403 to the independent reviewer. No Virginia clause or coverage credit is accepted until a retrievable first-party artifact is authenticated.",
+      "mapping_status": "VIRGINIA_MAPPING_INACTIVE_NOT_PROPOSED",
+      "canonical_correspondence": "PREREQUISITE_ONLY_NO_FAMILY_MAPPING",
+      "family_codes": [],
+      "coverage_boundary": "Expression distribution and like-term fluency are prerequisite evidence only; this package does not solve multistep equations, apply equality transformations through a solution, or satisfy any complete 8.PFA.4(b) demand."
     },
     {
       "publisher": "Montgomery County Public Schools",
       "url": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
-      "document_title": "Middle School Mathematics Curriculum",
-      "version_date": "Current web listing accessed 2026-10-25",
+      "document_title": "Mathematics Middle School",
+      "version_date": "Current web listing accessed 2026-10-25; Amplify Desmos Math identified as the Grades 6–8 and Algebra 1 core curriculum",
       "page": "web",
       "standard_id": "CURRENT_LOCAL_CURRICULUM_QUALIFIER_ONLY",
       "access_date": "2026-10-25",
       "coverage_relation": "LOCAL_SEQUENCE_QUALIFIER_ONLY",
-      "use": "Confirms the current MCPS middle-school curriculum context; it does not by itself establish lesson-level alignment.",
-      "license_adaptation": "No MCPS or vendor expression is copied."
+      "use": "Confirms Amplify Desmos Math as MCPS's current Grades 6–8 and Algebra 1 core mathematics curriculum; it does not establish lesson-level or standards alignment for this draft.",
+      "license_adaptation": "No MCPS or vendor expression is copied.",
+      "current_core_curriculum": "Amplify Desmos Math"
     },
     {
       "publisher": "Montgomery County Public Schools",
