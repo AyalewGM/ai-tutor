@@ -38,7 +38,9 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         primary_skill_id=skill_id, active_skill_id=skill_id, curriculum_id=curriculum_id,
     )
     problem = SimpleNamespace(id=problem_id, primary_skill_id=skill_id, canonical_answer="x=-3/4")
-    skill = SimpleNamespace(id=skill_id, code=_SKILL)
+    skill = SimpleNamespace(id=skill_id, code="MTH1W.C.ALG.EQ2", curriculum_id=curriculum_id)
+    mapping = SimpleNamespace(canonical_skill_id=uuid4())
+    canonical = SimpleNamespace(id=mapping.canonical_skill_id, code=_SKILL)
     metadata = SimpleNamespace(
         problem_id=problem_id, curriculum_id=curriculum_id,
         diagnostic_eligible=False, guided_eligible=False,
@@ -48,7 +50,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         },
     )
     db = Mock()
-    db.scalar.side_effect = [session if owner else None, problem, skill, metadata]
+    db.scalar.side_effect = [session if owner else None, problem, skill, metadata, mapping, canonical]
     record = FamilyRegistration(
         family=ReviewedFamily(
             _FAMILY, _SKILL, _SHA, frozenset({AssessmentMode.INDEPENDENT}),
@@ -69,7 +71,7 @@ def test_server_stored_provenance_and_mode_permit_pure_scoring():
     )
     assert result.eligible and result.correct and result.independent_evidence_eligible
     provider.approved_records.assert_called_once_with(service_principal="release-service")
-    assert db.scalar.call_count == 4
+    assert db.scalar.call_count == 6
     assert not hasattr(result, "canonical_answer")
 
 
