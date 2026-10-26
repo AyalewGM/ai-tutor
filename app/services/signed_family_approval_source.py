@@ -48,6 +48,7 @@ def canonical_release_payload(
             "standards_manifest_sha": entry.standards_manifest_sha,
             "jurisdiction_code": entry.jurisdiction_code,
             "curriculum_code": entry.curriculum_code,
+            "local_skill_code": entry.local_skill_code,
             "mapping_disposition": entry.mapping_disposition,
             "coverage_credit": entry.coverage_credit,
             "review_evidence": asdict(entry.evidence),
