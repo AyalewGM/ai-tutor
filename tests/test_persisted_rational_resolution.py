@@ -27,8 +27,7 @@ def test_denies_without_release_authority_before_database_lookup():
     ctx = _context()
     assert score_persisted_rational(
         db, context=ctx, submission="3/4",
-        approval_source=Mock(), service_principal="trusted-service",
-        stored_provenance=None,
+        approval_source=Mock(), service_principal="",
     ) == DENIED
     db.scalar.assert_not_called()
 
