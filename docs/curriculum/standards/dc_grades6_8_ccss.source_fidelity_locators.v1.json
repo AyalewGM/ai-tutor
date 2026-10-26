@@ -1428,41 +1428,229 @@
       "grade": 8,
       "domain": "NS",
       "cluster": "A",
-      "source_publication": "CCSS Mathematics 2010",
-      "adopting_authority": "DC OSSE",
-      "original_publisher": "NGA Center for Best Practices and CCSSO",
-      "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
-      "source_section": "Grade 8 / NS / A",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_publication": "Common Core State Standards for Mathematics",
+      "adopting_authority": "DC OSSE / DC State Board of Education",
+      "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "official_adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section": "Grade 8 Number System / 8.NS.A / printed page 54",
+      "source_locator_type": "OFFICIAL_CCSSO_NGA_PDF_PRINTED_PAGE",
+      "source_license": "CCSS ©2010 NGA/CCSSO; scope locator only, with no source example, task, diagram, protected expression, answer key, or source wording copied or adapted.",
       "lettered_subpart_ids": [],
-      "scope_summary_editorial": "Know that numbers that are not rational are called irrational; understand that every number has a decimal expansion; convert repeating decimals to fractions.",
-      "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
+      "scope_summary_editorial": "Know that non-rational numbers are irrational; understand informally that every number has a decimal expansion; for rational numbers show that the decimal expansion eventually repeats; and convert an eventually repeating decimal expansion into a rational number.",
+      "completeness_evidence": "OFFICIAL_PDF_PARENT_SCOPE_LOCATED_PENDING_INDEPENDENT_ACCEPTANCE",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
-        "editorial_mathematical_scope": "Know that numbers that are not rational are called irrational; understand that every number has a decimal expansion; convert repeating decimals to fractions.",
+        "editorial_mathematical_scope": "Know that non-rational numbers are irrational; understand informally that every number has a decimal expansion; for rational numbers show that the decimal expansion eventually repeats; and convert an eventually repeating decimal expansion into a rational number.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 54; OSSE meeting notice and official ESEA record establish DC State Board approval on July 21, 2010.",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
       },
       "bounded_mathematical_scope_evidence": {
-        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
-        "source_text_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
-        "source_publication": "NGA/CCSSO CCSS Mathematics 2010",
+        "evidence_type": "AUTHOR_EDITORIAL_SCOPE_LOCATOR_FROM_OFFICIAL_2010_CCSS",
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_publication": "NGA/CCSSO Common Core State Standards for Mathematics",
+        "source_version": "2010",
+        "source_printed_page": 54,
         "required_conditions": [
-          "Distinguish rational and irrational numbers through decimal expansions",
-          "A rational number has a decimal expansion that eventually repeats, including terminating cases viewed with trailing zeros",
-          "Convert an eventually repeating decimal expansion to a rational-number fraction"
+          "Know that numbers that are not rational are irrational.",
+          "Understand informally that every number has a decimal expansion.",
+          "For rational numbers, show that the decimal expansion eventually repeats.",
+          "Convert an eventually repeating decimal expansion into a rational number."
         ],
         "unlettered_standard": true,
         "short_summary_is_exhaustive": false,
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
-      }
+      },
+      "source_version": "2010",
+      "source_printed_page": 54,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "access_date": "2026-10-26",
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "provisional_reuse_boundary": {
+        "candidate": "M8.NS.RAD",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Classify one perfect-square root as rational.",
+          "Probe the misconception that every square root is irrational."
+        ],
+        "excluded_required_scope": [
+          "Classify non-square-root irrational numbers.",
+          "Informally establish that every real number has a decimal expansion.",
+          "Show that a rational number's decimal expansion eventually repeats.",
+          "Convert an eventually repeating decimal expansion into a rational-number fraction."
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+      },
+      "canonical_candidate_inventory": [
+        {
+          "candidate": "M8.NS.RAD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Classify one perfect-square root as rational.",
+            "Probe the misconception that every square root is irrational."
+          ],
+          "excluded_required_scope": [
+            "Classify non-square-root irrational numbers.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.CLASSIFY",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Classify square roots of perfect-square integers as rational.",
+            "Classify square roots of selected non-perfect-square integers as irrational.",
+            "Use consecutive perfect squares as classification support."
+          ],
+          "excluded_required_scope": [
+            "Classify non-square-root irrational numbers.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.APPROX",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Approximate a selected irrational square root to the nearest tenth."
+          ],
+          "excluded_required_scope": [
+            "Establish rational-versus-irrational classification.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.DEC.FRAC_TO_DEC",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Convert selected fractions whose decimal expansions terminate."
+          ],
+          "excluded_required_scope": [
+            "Show that arbitrary rational decimal expansions eventually repeat.",
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.DEC_TO_FRAC",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Convert a finite decimal over a power of ten into a simplified fraction."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.FRACTION.TENTHS",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Connect a fraction with denominator ten to a terminating decimal representation."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.FRACTION.HUNDREDTHS",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Connect a fraction with denominator one hundred to a terminating decimal representation."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        }
+      ]
     },
     {
       "expectation_id": "8.NS.A.2",
@@ -2817,5 +3005,25 @@
     "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
     "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
     "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
+  },
+  "irrational_decimal_expansion_slice_source": {
+    "expectation_ids": [
+      "8.NS.A.1"
+    ],
+    "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+    "source_printed_page": 54,
+    "source_version": "2010",
+    "lettered_subpart_ids": [],
+    "access_date": "2026-10-26",
+    "candidate_relations": [
+      "M8.NS.RAD",
+      "MATH.NS.IRRATIONAL.CLASSIFY",
+      "MATH.NS.IRRATIONAL.APPROX",
+      "MATH.DEC.FRAC_TO_DEC",
+      "MATH.DEC.DEC_TO_FRAC",
+      "MATH.DEC.FRACTION.TENTHS",
+      "MATH.DEC.FRACTION.HUNDREDTHS"
+    ],
+    "status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE"
   }
 }

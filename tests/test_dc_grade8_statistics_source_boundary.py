@@ -140,8 +140,8 @@ def test_dc_8_sp_a_3_top_level_source_manifest_matches_rows() -> None:
     dc_rows = [row for row in triage["rows"] if row["jurisdiction"] == "DC"]
     pins = {row["source_blob_sha"] for row in dc_rows}
 
-    assert dc_manifest["pr"] == 502
-    assert dc_manifest["ref"] == "refs/pull/502/head"
+    assert dc_manifest["pr"] == 508
+    assert dc_manifest["ref"] == "refs/pull/508/head"
     assert pins == {dc_manifest["blob_sha"]}
     assert "8.SP.A.3" in dc_manifest["scope_note"]
     assert "statistics" in dc_manifest["scope_note"].lower()
