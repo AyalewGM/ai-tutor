@@ -44,7 +44,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
                               solution={"variant_id": "v1", "task_fingerprint": "fresh-fp"})
     skill = SimpleNamespace(id=skill_id, code="MTH1W.C.ALG.EQ2", curriculum_id=curriculum_id)
     mapping = SimpleNamespace(
-        canonical_skill_id=uuid4(),
+        id=uuid4(), canonical_skill_id=uuid4(),
         provenance_json={
             "source_mapping_revision": _MAPPING, "standards_manifest_sha": _STANDARDS,
             "disposition": "ACCEPTED", "coverage_credit": True,
@@ -62,7 +62,7 @@ def _fixture(*, eligible=True, owner=True, provenance=None, state=TutorState.IND
         },
     )
     db = Mock()
-    db.scalar.side_effect = [session if owner else None, problem, None, None, skill, metadata, mapping, canonical, curriculum]
+    db.scalar.side_effect = [session if owner else None, problem, None, None, skill, metadata, mapping, None, canonical, curriculum]
     db.scalars.return_value.all.return_value = [SimpleNamespace(
         role="SYSTEM", pedagogical_action="ISSUE_ASSESSMENT",
         state=TutorState.INDEPENDENT_PRACTICE,
@@ -97,7 +97,7 @@ def test_server_stored_provenance_and_mode_permit_pure_scoring():
     assert result.eligible and result.correct
     assert not result.independent_evidence_eligible
     provider.approved_records.assert_called_once_with(service_principal="release-service")
-    assert db.scalar.call_count == 9
+    assert db.scalar.call_count == 10
     assert not hasattr(result, "canonical_answer")
 
 
@@ -156,3 +156,17 @@ def test_issued_task_fingerprint_or_mode_tamper_fails_closed():
             approval_source=provider, service_principal="release-service",
         ) == DENIED
         provider.approved_records.assert_not_called()
+
+
+def test_multiple_equivalent_mappings_deny_before_scoring():
+    db, context, provider = _fixture()
+    # Session, Problem, two historical replay probes, Skill, Metadata,
+    # first mapping, then an independently persisted competing mapping.
+    values = list(db.scalar.side_effect)
+    values[7] = uuid4()
+    db.scalar.side_effect = values
+    assert score_persisted_rational(
+        db, context=context, submission="x=-3/4",
+        approval_source=provider, service_principal="release-service",
+    ) == DENIED
+    provider.approved_records.assert_not_called()
