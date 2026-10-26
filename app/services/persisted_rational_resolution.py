@@ -6,6 +6,7 @@ from submitted answer payloads. Approvals must come from an independent service.
 """
 from __future__ import annotations
 
+import re
 import uuid
 from dataclasses import dataclass
 from typing import Protocol
@@ -136,9 +137,20 @@ def score_persisted_rational(
         registry = compile_registration(SCHEMA_VERSION, entries)
     except (ValueError, TypeError, PermissionError):
         return DENIED
+    variable = None
+    if problem.answer_kind == "VARIABLE_VALUE":
+        match = re.fullmatch(
+            r"\s*([A-Za-z])\s*=\s*[+-]?\d+(?:/[+-]?\d+)?\s*",
+            problem.canonical_answer,
+        )
+        if match is None:
+            return DENIED
+        variable = match.group(1)
+    elif problem.answer_kind != "RATIONAL":
+        return DENIED
     return score_registered_rational(
         registry, family_id=family, canonical_skill_code=canonical.code,
         content_sha=revision, mode=context.mode,
         canonical_answer=problem.canonical_answer,
-        submitted_answer=submission, assisted=context.assisted,
+        submitted_answer=submission, variable=variable, assisted=context.assisted,
     )
