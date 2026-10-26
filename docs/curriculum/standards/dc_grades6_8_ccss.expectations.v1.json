@@ -91,7 +91,7 @@
         "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
       ],
       "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
-      "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS"
+      "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
     }
   },
   "reconciliation": {
@@ -2148,7 +2148,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Verify experimentally the properties of rotations, reflections, and translations (lines, angles, parallel lines).",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2195,7 +2195,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Understand that a two-dimensional figure is congruent to another if it can be obtained by a sequence of rotations, reflections, and translations.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2238,7 +2238,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Describe the effect of dilations, translations, rotations, and reflections on two-dimensional figures using coordinates.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2281,7 +2281,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Understand that a two-dimensional figure is similar to another if it can be obtained by rotations, reflections, translations, and dilations.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2324,7 +2324,7 @@
       "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Use informal arguments to establish facts about the angle sum and exterior angle of triangles, angles created by parallel lines and transversals, and the angle-angle criterion for similarity.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_LOCATED_NOT_PROOF_OF_MISSING_MATHEMATICS",
+      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
