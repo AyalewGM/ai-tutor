@@ -74,3 +74,24 @@ def test_guided_mode_cannot_be_fresh_independent_evidence():
     db, student, session, problem, _ = fixture()
     assert not check(db, student, session, problem, AssessmentMode.GUIDED)
     db.scalar.assert_not_called()
+
+
+def test_non_assisted_learner_turn_does_not_hide_issuance():
+    db, student, session, problem, issued = fixture()
+    learner_turn = SimpleNamespace(
+        role="STUDENT", pedagogical_action="ANSWER_INPUT",
+        state=TutorState.INDEPENDENT_PRACTICE, metadata_json={},
+    )
+    db.scalars.return_value.all.return_value = [issued, learner_turn]
+    assert check(db, student, session, problem)
+
+
+def test_assistance_turn_blocks_independent_scoring():
+    for action in ("HINT", "GUIDED_REPAIR", "SHOW_SOLUTION", "SCAFFOLD"):
+        db, student, session, problem, issued = fixture()
+        assistance = SimpleNamespace(
+            role="ASSISTANT", pedagogical_action=action,
+            state=TutorState.GUIDED_PRACTICE, metadata_json={},
+        )
+        db.scalars.return_value.all.return_value = [issued, assistance]
+        assert not check(db, student, session, problem)
