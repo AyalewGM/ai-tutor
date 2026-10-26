@@ -44,6 +44,9 @@ def registration():
         evidence=evidence(),
         scorer_revision="b" * 40,
         source_mapping_revision="c" * 40,
+        answer_variable="x", standards_manifest_sha="d" * 40,
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
 
@@ -86,11 +89,14 @@ def test_positive_negative_mode_assistance_and_identity():
         "registry":reg, "family_id":"SYNTHETIC.EQUATION.FRACTION",
         "canonical_skill_code":"MATH.EE.EQUATION.TWO",
         "content_sha":_SHA, "canonical_answer":"x=-3/4", "variable":"x",
+        "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
     }
     positive = score_registered_rational(
         **args, submitted_answer="X=6/-8", mode=AssessmentMode.INDEPENDENT
     )
-    assert positive.eligible and positive.correct and positive.independent_evidence_eligible
+    assert positive.eligible and positive.correct
+    assert not positive.independent_evidence_eligible
     assert score_registered_rational(
         **args, submitted_answer="x=-3/4", mode=AssessmentMode.GUIDED
     ).independent_evidence_eligible is False
@@ -121,7 +127,58 @@ def test_repeat_scoring_is_pure_no_attempt_or_mastery_state():
         "canonical_skill_code":"MATH.EE.EQUATION.TWO", "content_sha":_SHA,
         "mode":AssessmentMode.INDEPENDENT, "canonical_answer":"x=-3/4",
         "submitted_answer":"x=-6/8", "variable":"x",
+        "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
     }
     initial = score_registered_rational(**kwargs)
     assert all(score_registered_rational(**kwargs) == initial for _ in range(15))
     assert not AUTHORIZED_FAMILIES
+
+
+def test_reviewed_answer_kind_and_variable_cannot_be_switched_by_caller():
+    registry = compile_registration(SCHEMA_VERSION, (registration(),))
+    common = {
+        "registry": registry, "family_id": "SYNTHETIC.EQUATION.FRACTION",
+        "canonical_skill_code": "MATH.EE.EQUATION.TWO", "content_sha": _SHA,
+        "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
+        "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        "mode": AssessmentMode.INDEPENDENT,
+    }
+    for wrong in (
+        {"canonical_answer": "-3/4", "submitted_answer": "6/-8", "variable": None},
+        {"canonical_answer": "y=-3/4", "submitted_answer": "y=6/-8", "variable": "y"},
+        {"canonical_answer": "x=-3/4", "submitted_answer": "y=6/-8", "variable": "x"},
+    ):
+        result = score_registered_rational(**common, **wrong)
+        assert not result.independent_evidence_eligible
+        assert result == DENIED or not result.correct
+
+
+def test_invalid_mapping_evidence_and_contract_are_denied():
+    base = registration()
+    for modified in (
+        replace(base, mapping_disposition="PROVISIONAL"),
+        replace(base, coverage_credit=False),
+        replace(base, standards_manifest_sha=""),
+        replace(base, jurisdiction_code=""),
+        replace(base, answer_variable=None),
+    ):
+        with pytest.raises(ValueError):
+            compile_registration(SCHEMA_VERSION, (modified,))
+    registry = compile_registration(SCHEMA_VERSION, (base,))
+    for override in (
+        {"source_mapping_revision": "f" * 40},
+        {"standards_manifest_sha": "e" * 40},
+        {"jurisdiction_code": "US.MD"},
+        {"curriculum_code": "MTH1W.FUTURE"},
+    ):
+        values = {
+            "registry": registry, "family_id": base.family.family_id,
+            "canonical_skill_code": base.family.canonical_skill_code,
+            "content_sha": _SHA, "mode": AssessmentMode.INDEPENDENT,
+            "canonical_answer": "x=-3/4", "submitted_answer": "x=-6/8", "variable": "x",
+            "source_mapping_revision": "c" * 40, "standards_manifest_sha": "d" * 40,
+            "jurisdiction_code": "CA.ON", "curriculum_code": "MTH1W",
+        }
+        values.update(override)
+        assert score_registered_rational(**values) == DENIED
