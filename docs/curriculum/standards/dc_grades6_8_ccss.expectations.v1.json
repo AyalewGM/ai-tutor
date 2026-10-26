@@ -19,7 +19,7 @@
   },
   "provenance": {
     "authoritative_source_url": "https://osse.dc.gov/page/dc-standards",
-    "standards_text_url": "https://www.thecorestandards.org/Math",
+    "standards_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
     "checked_date": "2026-10-12",
     "source_notes": [
       "The District of Columbia adopted the Common Core State Standards; OSSE publishes DC standards as the CCSS verbatim.",
@@ -29,10 +29,29 @@
       "2026-10-12 completeness correction: Grade 8 Geometry includes 8.G.C.9 (volume of cylinders, cones, spheres), omitted from the earlier 80-row draft; authoritative CCSS Grade 8 Geometry domain lists nine standards."
     ],
     "inventory_as_of": "2026-10-12",
-    "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
+    "adoption_history_authority_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
     "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
-    "source_text_host_classification": "THECORESTANDARDS.ORG_IS_UNOFFICIAL_REPUBLICATION; OSSE_ADOPTION_IS_JURISDICTIONAL_AUTHORITY",
-    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur."
+    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION; LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_REMAIN_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
+    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur.",
+    "adoption_date": "2010-07-28",
+    "pythagorean_slice_correction": {
+      "expectation_ids": [
+        "8.G.B.6",
+        "8.G.B.7",
+        "8.G.B.8"
+      ],
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 56,
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Standards text is used only to locate mathematical scope. No source task, example, diagram, protected expression, or answer key is reproduced."
+    }
   },
   "reconciliation": {
     "official_expectation_count": 81,
@@ -2229,7 +2248,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Explain a proof of the Pythagorean Theorem and its converse.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2247,9 +2266,18 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_date": "2010-07-28",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced."
     },
     {
       "expectation_id": "8.G.B.7",
@@ -2257,7 +2285,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2275,9 +2303,18 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_date": "2010-07-28",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced."
     },
     {
       "expectation_id": "8.G.B.8",
@@ -2285,7 +2322,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2303,9 +2340,18 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_date": "2010-07-28",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced."
     },
     {
       "expectation_id": "8.G.C.9",
