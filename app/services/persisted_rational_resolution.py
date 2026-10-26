@@ -180,6 +180,7 @@ def score_persisted_rational(
         standards_manifest_sha=provenance["standards_manifest_sha"],
         jurisdiction_code=f"{curriculum.country_code}.{curriculum.region_code}",
         curriculum_code=curriculum.code,
+        local_skill_code=skill.code,
         canonical_answer=problem.canonical_answer,
         submitted_answer=submission, variable=variable, assisted=context.assisted,
     )
