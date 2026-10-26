@@ -56,7 +56,7 @@ def _source(curriculum_code):
         scorer_revision="b" * 40,
         source_mapping_revision=_MAPPING,
         answer_variable="x", standards_manifest_sha=_STANDARDS,
-        jurisdiction_code="CA.ON", curriculum_code=curriculum_code,
+        jurisdiction_code="CA.ON", curriculum_code=curriculum_code, local_skill_code="MTH1W.C.ALG.EQ2",
         mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
