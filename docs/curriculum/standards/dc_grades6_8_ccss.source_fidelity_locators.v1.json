@@ -2663,7 +2663,48 @@
         "canonical_correspondence": "NOT_ESTABLISHED",
         "union_inheritance_forbidden": true,
         "evidence_source": "scripts/seed_grade8.py at main blob 013f88fff94217a770f91584557247b3ae44a0eb"
-      }
+      },
+      "canonical_candidate_inventory": [
+        {
+          "candidate": "M8.SP.STAT",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "evidenced_capability": "Evaluate the supplied model y = 2x + 1 at x = 3 to obtain y = 7.",
+          "excluded_required_scope": [
+            "A bivariate measurement-data context with named quantities and units.",
+            "Contextual interpretation of slope.",
+            "Contextual interpretation of intercept."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "evidence_source": "scripts/seed_grade8.py at main blob 013f88fff94217a770f91584557247b3ae44a0eb"
+        },
+        {
+          "candidate": "MATH.DATA.LINEFIT.SLOPE",
+          "canonical_parent": "MATH.DATA.LINEAR_MODEL",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Use named explanatory and response quantities with units.",
+            "Interpret slope as a contextual rate.",
+            "Probe intercept-as-slope and reversed-rate misconceptions."
+          ],
+          "excluded_required_scope": [
+            "Contextual interpretation of intercept.",
+            "Complete free-text answer-equivalence and domain contract.",
+            "Independent Mathematical, Pedagogical, Assessment, and MVE acceptance."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
+        }
+      ]
     },
     {
       "expectation_id": "8.SP.A.4",

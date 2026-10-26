@@ -54,11 +54,11 @@
     },
     {
       "jurisdiction": "DC",
-      "pr": 373,
-      "ref": "standards/dc-grade8-pythagorean-boundary-20261026",
+      "pr": 502,
+      "ref": "refs/pull/502/head",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "4e2a95c37bace6b1efcb0ff733eade42c44888c9",
-      "scope_note": "8.G.A.1–5, 8.G.B.6–8, and 8.G.C.9 corrected to the official CCSSO/NGA 2010 PDF with printed-page locators; all mappings remain provisional and inactive."
+      "blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
+      "scope_note": "DC Grade 8 geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9 and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; candidate relations remain provisional, separate, inactive, and without coverage credit."
     }
   ],
   "rows": [
@@ -2737,7 +2737,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2775,7 +2775,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2808,7 +2808,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2847,7 +2847,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2885,7 +2885,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2918,7 +2918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2951,7 +2951,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2982,7 +2982,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3013,7 +3013,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3049,7 +3049,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3082,7 +3082,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3113,7 +3113,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3144,7 +3144,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3175,7 +3175,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3206,7 +3206,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3237,7 +3237,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3268,7 +3268,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3301,7 +3301,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3334,7 +3334,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3367,7 +3367,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3400,7 +3400,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3433,7 +3433,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3469,7 +3469,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3506,7 +3506,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3539,7 +3539,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3570,7 +3570,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3601,7 +3601,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3632,7 +3632,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3663,7 +3663,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3694,7 +3694,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3725,7 +3725,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3756,7 +3756,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3790,7 +3790,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3825,7 +3825,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3856,7 +3856,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3887,7 +3887,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3918,7 +3918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3949,7 +3949,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3980,7 +3980,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4015,7 +4015,7 @@
       ],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4056,7 +4056,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4097,7 +4097,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4138,7 +4138,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4179,7 +4179,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4220,7 +4220,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4267,7 +4267,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4314,7 +4314,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4362,7 +4362,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4403,7 +4403,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4434,7 +4434,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4465,12 +4465,12 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
-      "reuse_evidence": "scripts/seed_grade8.py at main blob 013f88fff94217a770f91584557247b3ae44a0eb",
+      "reuse_evidence": "M8.SP.STAT in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.DATA.LINEFIT.SLOPE in app/domains/bivariate_sampling.py, registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "M8.SP.STAT learner-task evidence only evaluates a supplied linear model for prediction; the required bivariate measurement-data context and contextual interpretations of slope and intercept are not established.",
+      "classification_reason": "Two separate provisional candidates exist: M8.SP.STAT evidences supplied-model prediction, and MATH.DATA.LINEFIT.SLOPE evidences contextual slope structure. Contextual intercept interpretation and complete independently accepted depth remain unestablished.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4485,7 +4485,7 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Review canonical identity and the excluded contextual demands; commission content only if an independently reviewed mathematical-content gap remains.",
+      "next_action": "Architecture / Curriculum Identity must decide the two candidate correspondences separately; commission only independently confirmed residual intercept/depth work.",
       "reuse_relation": {
         "candidate": "M8.SP.STAT",
         "status": "PARTIAL_NON_EXHAUSTIVE",
@@ -4503,7 +4503,53 @@
         "mapping_activation": false,
         "canonical_correspondence": "NOT_ESTABLISHED",
         "union_inheritance_forbidden": true
-      }
+      },
+      "canonical_family_candidates": [
+        "MATH.DATA.LINEFIT.SLOPE"
+      ],
+      "reuse_relations": [
+        {
+          "candidate": "M8.SP.STAT",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "evidenced_scope": [
+            "Evaluate a supplied linear-model equation for a prediction."
+          ],
+          "excluded_required_scope": [
+            "A bivariate measurement-data context with named quantities and units.",
+            "Contextual interpretation of slope.",
+            "Contextual interpretation of intercept."
+          ],
+          "reason": "The existing learner task substitutes into a supplied equation but does not evidence the full contextual interpretation standard.",
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true
+        },
+        {
+          "candidate": "MATH.DATA.LINEFIT.SLOPE",
+          "canonical_parent": "MATH.DATA.LINEAR_MODEL",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Use named explanatory and response quantities with units.",
+            "Interpret slope as a contextual rate.",
+            "Probe intercept-as-slope and reversed-rate misconceptions."
+          ],
+          "excluded_required_scope": [
+            "Contextual interpretation of intercept.",
+            "Complete free-text answer-equivalence and domain contract.",
+            "Independent Mathematical, Pedagogical, Assessment, and MVE acceptance."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
+        }
+      ]
     },
     {
       "jurisdiction": "DC",
@@ -4514,7 +4560,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#373",
-      "source_blob_sha": "c3151d26fdea2facb09c29a8c9bb1d4f40187929",
+      "source_blob_sha": "78b4b5124d8d3de6fee542de05de25c056c6a814",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",

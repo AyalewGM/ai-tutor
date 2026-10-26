@@ -92,3 +92,56 @@ def test_dc_8_sp_a_3_manifest_pin_is_total_after_correction() -> None:
     assert len({row["source_blob_sha"] for row in dc_rows}) == 1
     assert next(row for row in dc_rows if row["expectation_id"] == "8.SP.A.3")["source_url"] == OFFICIAL_PDF
     assert len(expectations["expectations"]) == 81
+
+
+def test_dc_8_sp_a_3_records_both_candidates_without_union_credit() -> None:
+    expectation = _row(EXPECTATIONS, "expectations")
+    locator = _row(LOCATORS, "records")
+    triage = _row(TRIAGE, "rows")
+
+    expected = {"M8.SP.STAT", "MATH.DATA.LINEFIT.SLOPE"}
+    expectation_candidates = {
+        relation["candidate"]
+        for relation in expectation["mapping_evidence_boundary"]["candidate_inventory"]
+    }
+    locator_candidates = {
+        relation["candidate"] for relation in locator["canonical_candidate_inventory"]
+    }
+    triage_candidates = {relation["candidate"] for relation in triage["reuse_relations"]}
+
+    assert expectation_candidates == locator_candidates == triage_candidates == expected
+    assert triage["canonical_family_candidates"] == ["MATH.DATA.LINEFIT.SLOPE"]
+
+    slope = next(
+        relation
+        for relation in locator["canonical_candidate_inventory"]
+        if relation["candidate"] == "MATH.DATA.LINEFIT.SLOPE"
+    )
+    assert slope["canonical_parent"] == "MATH.DATA.LINEAR_MODEL"
+    assert any("contextual rate" in item for item in slope["included_scope"])
+    assert "Contextual interpretation of intercept." in slope["excluded_required_scope"]
+    assert slope["validated_practice"] is False
+    assert slope["assessment_ready"] is False
+
+    for relation in locator["canonical_candidate_inventory"]:
+        assert relation["status"] == "PARTIAL_NON_EXHAUSTIVE"
+        assert relation["acceptance_status"] == "PROVISIONAL_NOT_ACCEPTED"
+        assert relation["coverage_credit"] is False
+        assert relation["mapping_activation"] is False
+        assert relation["canonical_correspondence"] == "NOT_ESTABLISHED"
+        assert relation["union_inheritance_forbidden"] is True
+
+
+def test_dc_8_sp_a_3_top_level_source_manifest_matches_rows() -> None:
+    triage = json.loads(TRIAGE.read_text(encoding="utf-8"))
+    dc_manifest = next(
+        source for source in triage["source_manifests"] if source["jurisdiction"] == "DC"
+    )
+    dc_rows = [row for row in triage["rows"] if row["jurisdiction"] == "DC"]
+    pins = {row["source_blob_sha"] for row in dc_rows}
+
+    assert dc_manifest["pr"] == 502
+    assert dc_manifest["ref"] == "refs/pull/502/head"
+    assert pins == {dc_manifest["blob_sha"]}
+    assert "8.SP.A.3" in dc_manifest["scope_note"]
+    assert "statistics" in dc_manifest["scope_note"].lower()

@@ -2640,8 +2640,8 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Current learner-task evidence for M8.SP.STAT establishes only evaluation of a supplied linear model for prediction; it does not establish the bivariate measurement-data context or contextual interpretation of both slope and intercept.",
-        "Architecture / Curriculum Identity must review the canonical relation before any mapping is accepted; Curriculum Content may act only after an independently confirmed mathematical-content gap."
+        "M8.SP.STAT establishes only supplied-model prediction, while MATH.DATA.LINEFIT.SLOPE separately evidences contextual slope structure; neither candidate establishes the complete slope-and-intercept expectation.",
+        "Architecture / Curriculum Identity must decide candidate correspondence before any mapping is accepted; Curriculum Content may address only residual work confirmed by independent review."
       ],
       "official_subpart_identifiers": [],
       "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
@@ -2673,7 +2673,52 @@
         "mapping_activation": false,
         "canonical_correspondence": "NOT_ESTABLISHED",
         "union_inheritance_forbidden": true,
-        "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap"
+        "next_owner": "Architecture / Curriculum Identity for separate candidate correspondence; Curriculum Content only for residual work after an independently confirmed gap",
+        "candidate_inventory": [
+          {
+            "candidate": "M8.SP.STAT",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Evaluate a supplied linear-model equation for a prediction."
+            ],
+            "excluded_required_scope": [
+              "A bivariate measurement-data context with named quantities and units.",
+              "Contextual interpretation of slope.",
+              "Contextual interpretation of intercept."
+            ],
+            "missing_mathematical_content_inferred": false,
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap",
+            "evidence_source": "scripts/seed_grade8.py at main blob 013f88fff94217a770f91584557247b3ae44a0eb"
+          },
+          {
+            "candidate": "MATH.DATA.LINEFIT.SLOPE",
+            "canonical_parent": "MATH.DATA.LINEAR_MODEL",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Use named explanatory and response quantities with units.",
+              "Interpret slope as a contextual rate.",
+              "Probe intercept-as-slope and reversed-rate misconceptions."
+            ],
+            "excluded_required_scope": [
+              "Contextual interpretation of intercept.",
+              "Complete free-text answer-equivalence and domain contract.",
+              "Independent Mathematical, Pedagogical, Assessment, and MVE acceptance."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false,
+            "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
+          }
+        ]
       }
     },
     {
