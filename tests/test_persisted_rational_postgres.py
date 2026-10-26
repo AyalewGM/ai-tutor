@@ -169,7 +169,7 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 )
                 assert decision.eligible and decision.correct and not decision.independent_evidence_eligible
                 assert history_counts() == before
-                assert db.dirty == set()
+                assert not db.dirty
         finally:
             transaction.rollback()
     engine.dispose()
