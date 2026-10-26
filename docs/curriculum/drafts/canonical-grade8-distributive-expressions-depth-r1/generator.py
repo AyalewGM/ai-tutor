@@ -242,13 +242,12 @@ def _parameters(mode: str, seed: int) -> tuple[int, int, int, int]:
     band, slot = _seed_position(seed)
     if mode not in MODES:
         raise ValueError(f"unsupported mode: {mode}")
-    index = MODES.index(mode) * 64 + band * 32 + slot
-    u = index % 8
-    v = (index // 8) % 8
-    w = index // 64
-    factor = 2 + u
-    signed_term = (v + 1) * (1 if w % 2 == 0 else -1)
-    offset = 1 + w
+    mode_index = MODES.index(mode)
+    index = mode_index * 64 + band * 32 + slot
+    factor = 2 + slot % 8
+    magnitude = 1 + slot // 8 + 4 * band + 8 * mode_index
+    signed_term = magnitude * (1 if (mode_index + band) % 2 == 0 else -1)
+    offset = 1 + mode_index + 4 * band
     return index, factor, signed_term, offset
 
 
@@ -265,6 +264,25 @@ def _normalized_response(response: dict[str, Any]) -> tuple[tuple[str, Any], ...
             except (ValueError, ZeroDivisionError):
                 normalized.append((key, str(value).strip()))
     return tuple(normalized)
+
+
+def _response_matches(
+    response: dict[str, Any],
+    expected: dict[str, Any] | tuple[tuple[str, Any], ...],
+) -> bool:
+    """Compare exact responses while preserving Boolean versus numeric domains."""
+
+    expected_fields = dict(expected)
+    if set(response) != set(expected_fields):
+        return False
+    for key, value in response.items():
+        expected_value = expected_fields[key]
+        if isinstance(expected_value, bool):
+            if type(value) is not bool:
+                return False
+        elif isinstance(value, bool):
+            return False
+    return _normalized_response(response) == _normalized_response(expected_fields)
 
 
 @dataclass(frozen=True)
@@ -288,7 +306,7 @@ class Variant:
 
     def response_is_correct(self, response: dict[str, Any]) -> bool:
         try:
-            return _normalized_response(response) == self.oracle_response
+            return _response_matches(response, self.oracle_response)
         except (TypeError, ValueError, ZeroDivisionError):
             return False
 
@@ -341,11 +359,11 @@ class Variant:
     ) -> dict[str, Any]:
         if self.mode != "guided":
             return {"status": "SUPPORT_NOT_AVAILABLE"}
-        observed = _normalized_response(observed_response)
         response_matched = False
         for signal in self.misconception_signals:
-            candidate = _normalized_response(signal["candidate_response"])
-            if observed != candidate:
+            if not _response_matches(
+                observed_response, signal["candidate_response"]
+            ):
                 continue
             response_matched = True
             if reasoning_choice != signal["reasoning_choice"]:
@@ -406,8 +424,7 @@ def _affine_variant(
     if len(signals) < 2:
         raise AssertionError("each family needs two non-colliding misconception routes")
     fingerprint = (
-        f"{family}|{structure}|{mode}|{_fmt(x_coefficient)}|{_fmt(constant)}|"
-        f"{prompt}"
+        f"{family}|{structure}|{_fmt(x_coefficient)}|{_fmt(constant)}|{prompt}"
     )
     return Variant(
         variant_id=f"{NAMESPACE}:{mode}:{family}:{seed}",
@@ -641,7 +658,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
                 "Symbolic: divide every coefficient by the positive GCF.",
             ),
             misconception_signals=signals,
-            task_fingerprint=f"{family}|{mode}|{x_coeff}|{constant}|{common}",
+            task_fingerprint=f"{family}|{x_coeff}|{constant}|{common}",
         )
 
     if family == FAMILIES[7]:
@@ -694,7 +711,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
                 "Symbolic: compare exact x-coefficients and constants.",
             ),
             misconception_signals=signals,
-            task_fingerprint=f"{family}|{mode}|{true_claim}|{x_coeff}|{candidate_constant}",
+            task_fingerprint=f"{family}|{true_claim}|{x_coeff}|{candidate_constant}",
         )
 
     if family == FAMILIES[8]:
@@ -738,7 +755,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
                 "Symbolic: substitute one exact witness into both complete expressions.",
             ),
             misconception_signals=signals,
-            task_fingerprint=f"{family}|{mode}|{left_x}|{left_constant}|{right_constant}|{witness}",
+            task_fingerprint=f"{family}|{left_x}|{left_constant}|{right_constant}|{witness}",
         )
 
     if family == FAMILIES[9]:
@@ -777,7 +794,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
                 "Symbolic: repair the earliest invalid equality before simplifying.",
             ),
             misconception_signals=signals,
-            task_fingerprint=f"{family}|{mode}|{x_coeff}|{constant}|STEP_1",
+            task_fingerprint=f"{family}|{x_coeff}|{constant}|STEP_1",
         )
 
     if family == FAMILIES[10]:
@@ -814,7 +831,7 @@ def generate(family: str, seed: int, mode: str) -> Variant:
                 "Symbolic: multiply the outside factor by the signed constant.",
             ),
             misconception_signals=signals,
-            task_fingerprint=f"{family}|{mode}|{factor}|{signed_b}|{constant}",
+            task_fingerprint=f"{family}|{factor}|{signed_b}|{constant}",
         )
 
     length_offset = abs(b)
