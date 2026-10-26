@@ -1,8 +1,13 @@
 """Safety boundary tests for inactive rational attempt recorder."""
+import uuid
 from unittest.mock import Mock
+
+import app.services.atomic_rational_attempt as recorder
 
 from app.services.atomic_rational_attempt import record_rational_attempt
 from app.services.family_activation_adapter import DENIED
+from app.services.fraction_assessment_registry import AssessmentMode
+from app.services.persisted_rational_resolution import TrustedAssessmentContext
 
 
 def test_rejects_non_postgres_without_writing():
@@ -37,9 +42,6 @@ def test_rejects_missing_database_bind():
 
 
 def test_requires_existing_transaction_before_any_database_query():
-    from app.services.persisted_rational_resolution import TrustedAssessmentContext
-    from app.services.fraction_assessment_registry import AssessmentMode
-    import uuid
 
     db = Mock()
     db.bind.dialect.name = "postgresql"
@@ -64,10 +66,6 @@ def test_requires_existing_transaction_before_any_database_query():
 
 
 def test_replay_denied_without_scoring_or_writing(monkeypatch):
-    import uuid
-    from app.services.persisted_rational_resolution import TrustedAssessmentContext
-    from app.services.fraction_assessment_registry import AssessmentMode
-    import app.services.atomic_rational_attempt as recorder
 
     db = Mock()
     db.bind.dialect.name = "postgresql"
@@ -93,10 +91,6 @@ def test_replay_denied_without_scoring_or_writing(monkeypatch):
 
 
 def test_denied_scoring_never_persists(monkeypatch):
-    import uuid
-    from app.services.persisted_rational_resolution import TrustedAssessmentContext
-    from app.services.fraction_assessment_registry import AssessmentMode
-    import app.services.atomic_rational_attempt as recorder
 
     db = Mock()
     db.bind.dialect.name = "postgresql"
