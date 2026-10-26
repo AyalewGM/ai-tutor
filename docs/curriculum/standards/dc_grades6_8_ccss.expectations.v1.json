@@ -19,7 +19,7 @@
   },
   "provenance": {
     "authoritative_source_url": "https://osse.dc.gov/page/dc-standards",
-    "standards_text_url": "https://www.thecorestandards.org/Math",
+    "standards_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
     "checked_date": "2026-10-12",
     "source_notes": [
       "The District of Columbia adopted the Common Core State Standards; OSSE publishes DC standards as the CCSS verbatim.",
@@ -31,20 +31,120 @@
     "inventory_as_of": "2026-10-12",
     "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
     "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
-    "source_text_host_classification": "THECORESTANDARDS.ORG_IS_UNOFFICIAL_REPUBLICATION; OSSE_ADOPTION_IS_JURISDICTIONAL_AUTHORITY",
-    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur."
+    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
+    "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur.",
+    "adoption_date": "2010-07-21",
+    "pythagorean_slice_correction": {
+      "expectation_ids": [
+        "8.G.B.6",
+        "8.G.B.7",
+        "8.G.B.8"
+      ],
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 56,
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Standards text is used only to locate mathematical scope. No source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
+    },
+    "geometry_congruence_similarity_slice_correction": {
+      "expectation_ids": [
+        "8.G.A.1",
+        "8.G.A.2",
+        "8.G.A.3",
+        "8.G.A.4",
+        "8.G.A.5"
+      ],
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_pages": [
+        55,
+        56
+      ],
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Standards text is used only to locate mathematical scope. No source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
+    },
+    "volume_slice_correction": {
+      "expectation_ids": [
+        "8.G.C.9"
+      ],
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 56,
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Standards text is used only to locate mathematical scope. No source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "mapping_evidence_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND; EXPLICIT_BOUNDARY_NOT_PROOF_OF_MISSING_MATHEMATICS"
+    },
+    "statistics_linear_model_slice_correction": {
+      "expectation_ids": [
+        "8.SP.A.3"
+      ],
+      "mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "candidate_relations": [
+        "M8.SP.STAT",
+        "MATH.DATA.LINEFIT.SLOPE"
+      ],
+      "candidate_semantics": "Located repository evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 56,
+      "source_version": "2010",
+      "access_date": "2026-10-26"
+    }
   },
   "reconciliation": {
     "official_expectation_count": 81,
-    "repository_existing_expectation_rows": 28,
-    "unmapped_expectations": 53,
+    "repository_existing_expectation_rows": 29,
+    "unmapped_expectations": 52,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
-      "8": 0
+      "8": 1
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate; several are broad domain-level composites (e.g., DC7.SP.PROBABILITY spans all eight 7.SP expectations). Grade 8 has no repository seed rows at all."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.SP.A.3 has two located but unaccepted candidates recorded separately; no Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -2085,7 +2185,7 @@
       "domain": "G",
       "cluster": "A",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/1/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Verify experimentally the properties of rotations, reflections, and translations (lines, angles, parallel lines).",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2099,17 +2199,32 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [
         "8.G.A.1.a",
         "8.G.A.1.b",
         "8.G.A.1.c"
       ],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 55,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.G.A.2",
@@ -2117,7 +2232,7 @@
       "domain": "G",
       "cluster": "A",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/2/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Understand that a two-dimensional figure is congruent to another if it can be obtained by a sequence of rotations, reflections, and translations.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2131,13 +2246,28 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 55,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.G.A.3",
@@ -2145,7 +2275,7 @@
       "domain": "G",
       "cluster": "A",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/3/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Describe the effect of dilations, translations, rotations, and reflections on two-dimensional figures using coordinates.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2159,13 +2289,28 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.G.A.4",
@@ -2173,7 +2318,7 @@
       "domain": "G",
       "cluster": "A",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/4/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Understand that a two-dimensional figure is similar to another if it can be obtained by rotations, reflections, translations, and dilations.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2187,13 +2332,28 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.G.A.5",
@@ -2201,7 +2361,7 @@
       "domain": "G",
       "cluster": "A",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/A/5/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Use informal arguments to establish facts about the angle sum and exterior angle of triangles, angles created by parallel lines and transversals, and the angle-angle criterion for similarity.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2215,13 +2375,28 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.G.B.6",
@@ -2229,7 +2404,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Explain a proof of the Pythagorean Theorem and its converse.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2247,9 +2422,27 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.B.7",
@@ -2257,7 +2450,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2275,9 +2468,27 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.B.8",
@@ -2285,7 +2496,7 @@
       "domain": "G",
       "cluster": "B",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
@@ -2303,9 +2514,27 @@
         "No repository-specific local skill candidate was located for this expectation."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source task, example, diagram, protected expression, or answer key is reproduced.",
+      "adoption_date_evidence": "OSSE's 2010-07-15 meeting notice schedules the Common Core vote for 2010-07-21, and OSSE's official and later approved ESEA records state that the Board approved the standards on 2010-07-21.",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "adoption_date_status": "OFFICIAL_MEETING_NOTICE_AND_ESEA_RECORDS_CONTROL; JULY_29_RELEASE_DISCREPANCY_RETAINED",
+      "adoption_meeting_notice_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and"
     },
     {
       "expectation_id": "8.G.C.9",
@@ -2313,8 +2542,8 @@
       "domain": "G",
       "cluster": "C",
       "domain_title": "Geometry",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/G/C/9/",
-      "scope_summary": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "scope_summary": "Know the formulas for the volumes of cones, cylinders, and spheres and use them to solve real-world and mathematical problems.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
       "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
       "repository_existing_crosswalks": [],
@@ -2327,13 +2556,28 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards review must confirm full 8.G.C.9 scope and its source-to-canonical relation.",
-        "No repository-specific DC Grade 8 geometry seed or accepted mapping exists."
+        "No repository-specific mapping or independently accepted exact atom-to-expectation relation has been located; this is a standards-mapping evidence gap, not proof that Mihur lacks the mathematics.",
+        "Architecture / Curriculum Identity must search the full skill, generator, learning-package, MVE, and accepted-review surface before any new content is commissioned or any canonical correspondence is proposed."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/G/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "adoption_date_conflict_note": "OSSE's 2010-07-29 press release says the Board adopted the standards 'yesterday evening', which would imply 2010-07-28. The anomaly is retained as a source discrepancy and does not override the meeting notice plus repeated official historical records.",
+      "mapping_evidence_boundary": {
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "next_owner": "Architecture / Curriculum Identity for repository-wide identity search; Curriculum Content only after an independently confirmed content gap"
+      }
     },
     {
       "expectation_id": "8.SP.A.1",
@@ -2397,10 +2641,10 @@
       "domain": "SP",
       "cluster": "A",
       "domain_title": "Statistics and Probability",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/SP/A/3/",
-      "scope_summary": "Use the equation of a linear model to solve problems in the context of bivariate measurement data, interpreting slope and intercept.",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "scope_summary": "Use an equation of a linear model to solve problems in the context of bivariate measurement data, interpreting both the slope and intercept.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -2411,13 +2655,92 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "M8.SP.STAT establishes only supplied-model prediction, while MATH.DATA.LINEFIT.SLOPE separately evidences contextual slope structure; neither candidate establishes the complete slope-and-intercept expectation.",
+        "Architecture / Curriculum Identity must decide candidate correspondence before any mapping is accepted; Curriculum Content may address only residual work confirmed by independent review."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/SP/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 56,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source example, dataset, diagram, protected wording, task, or answer key is copied or adapted.",
+      "mapping_evidence_boundary": {
+        "candidate": "M8.SP.STAT",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Evaluate a supplied linear-model equation for a prediction."
+        ],
+        "excluded_required_scope": [
+          "A bivariate measurement-data context with named quantities and units.",
+          "Contextual interpretation of slope.",
+          "Contextual interpretation of intercept."
+        ],
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "next_owner": "Architecture / Curriculum Identity for separate candidate correspondence; Curriculum Content only for residual work after an independently confirmed gap",
+        "candidate_inventory": [
+          {
+            "candidate": "M8.SP.STAT",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Evaluate a supplied linear-model equation for a prediction."
+            ],
+            "excluded_required_scope": [
+              "A bivariate measurement-data context with named quantities and units.",
+              "Contextual interpretation of slope.",
+              "Contextual interpretation of intercept."
+            ],
+            "missing_mathematical_content_inferred": false,
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap",
+            "evidence_source": "scripts/seed_grade8.py at main blob 013f88fff94217a770f91584557247b3ae44a0eb"
+          },
+          {
+            "candidate": "MATH.DATA.LINEFIT.SLOPE",
+            "canonical_parent": "MATH.DATA.LINEAR_MODEL",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Use named explanatory and response quantities with units.",
+              "Interpret slope as a contextual rate.",
+              "Probe intercept-as-slope and reversed-rate misconceptions."
+            ],
+            "excluded_required_scope": [
+              "Contextual interpretation of intercept.",
+              "Complete free-text answer-equivalence and domain contract.",
+              "Independent Mathematical, Pedagogical, Assessment, and MVE acceptance."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false,
+            "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
+          }
+        ],
+        "mapping_status_semantics": "Repository candidates are located but neither relation is accepted as a standards mapping."
+      },
+      "repository_existing_crosswalks_semantics": "Accepted or legacy seed crosswalks only; empty means no accepted crosswalk, while repository_candidate_crosswalks records located but unaccepted candidates.",
+      "repository_candidate_crosswalks": [
+        "M8.SP.STAT",
+        "MATH.DATA.LINEFIT.SLOPE"
+      ]
     },
     {
       "expectation_id": "8.SP.A.4",

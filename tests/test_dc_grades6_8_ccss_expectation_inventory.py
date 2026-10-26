@@ -79,9 +79,19 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     }
 
-    assert len(existing) == 28
+    assert len(existing) == 29
     for row in rows:
-        if row["expectation_id"] in existing:
+        if row["expectation_id"] == "8.SP.A.3":
+            assert row["repository_existing_crosswalks"] == []
+            assert row["repository_candidate_crosswalks"] == [
+                "M8.SP.STAT",
+                "MATH.DATA.LINEFIT.SLOPE",
+            ]
+            assert row["classification"]["standards_mapped"] == "NO"
+            assert "no accepted crosswalk" in row[
+                "repository_existing_crosswalks_semantics"
+            ].lower()
+        elif row["expectation_id"] in existing:
             assert row["repository_existing_crosswalks"]
             assert all(
                 code.startswith(("DC6.", "DC7."))
@@ -98,14 +108,23 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
             )
 
 
-def test_grade8_has_no_repository_rows_at_all() -> None:
+def test_grade8_repository_candidates_remain_unaccepted() -> None:
     rows = _manifest()["expectations"]
     grade8 = [row for row in rows if row["grade"] == 8]
+    existing = [
+        row
+        for row in grade8
+        if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
+    ]
 
     assert len(grade8) == 28
+    assert [row["expectation_id"] for row in existing] == ["8.SP.A.3"]
+    assert existing[0]["classification"]["standards_mapped"] == "NO"
+    assert existing[0]["repository_existing_crosswalks"] == []
     assert all(
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
+        if row["expectation_id"] != "8.SP.A.3"
     )
     # No geometry seed exists for DC at any grade.
     assert all(
@@ -151,12 +170,12 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 81
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 28
-    assert reconciliation["unmapped_expectations"] == 81 - existing == 53
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 29
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 52
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
-        "8": 0,
+        "8": 1,
     }
 
 
@@ -173,13 +192,28 @@ def test_dc_standards_provenance_is_reproducible_and_separate_from_inventory_dat
     assert all(row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED' for row in manifest['expectations'])
 
 
-def test_dc_2023_review_detects_missing_grade8_geometry_volume_standard() -> None:
+def test_dc_2023_review_preserves_grade8_geometry_volume_standard() -> None:
     manifest = _manifest()
     row = next(r for r in manifest['expectations'] if r['expectation_id'] == '8.G.C.9')
-    assert row['source_locator'] == 'https://www.thecorestandards.org/Math/Content/8/G/C/9/'
-    assert row['scope_summary'].startswith('Use formulas for the volumes of cones')
+    assert row['source_locator'] == (
+        'https://corestandards.org/wp-content/uploads/2023/09/'
+        'ADA-Compliant-Math-Standards.pdf'
+    )
+    assert row['source_publication_version'] == '2010'
+    assert row['source_printed_page'] == 56
+    assert row['official_subpart_identifiers'] == []
+    scope = row['scope_summary'].lower()
+    assert 'know the formulas' in scope
+    assert 'cones, cylinders, and spheres' in scope
+    assert 'real-world and mathematical problems' in scope
     assert row['classification']['standards_mapped'] == 'NO'
     assert row['classification']['verified_mastery_evidence'] == 'NO_AND_MUST_NOT_BE_INFERRED'
+    boundary = row['mapping_evidence_boundary']
+    assert boundary['status'] == 'NO_COVERAGE_CLAIM'
+    assert boundary['missing_mathematical_content_inferred'] is False
+    assert boundary['coverage_credit'] is False
+    assert boundary['mapping_activation'] is False
+    assert boundary['canonical_correspondence'] == 'NOT_ESTABLISHED'
     assert len([r for r in manifest['expectations'] if r['grade'] == 8 and r['domain'] == 'G']) == 9
 
 

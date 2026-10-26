@@ -3,7 +3,7 @@
   "status": "DRAFT_REUSE_TRIAGE_NOT_VERIFIED",
   "control_issue": 377,
   "scope": "Maryland Virginia DC Grades 7-8 parent expectation inventory; official subparts retained for downstream review",
-  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. All source-fidelity independent reviews pending. No runtime coverage/credit.",
+  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.G.B.6–8 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
   "count": 132,
   "summary": {
     "MD G7": {
@@ -54,10 +54,11 @@
     },
     {
       "jurisdiction": "DC",
-      "pr": 373,
-      "ref": "refs/pull/373/head",
+      "pr": 502,
+      "ref": "refs/pull/502/head",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6"
+      "blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
+      "scope_note": "DC Grade 8 geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9 and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; candidate relations remain provisional, separate, inactive, and without coverage credit."
     }
   ],
   "rows": [
@@ -2735,8 +2736,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/RP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2773,8 +2774,8 @@
         "7.RP.A.2.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2806,8 +2807,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/RP/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2845,8 +2846,8 @@
         "7.NS.A.1.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2883,8 +2884,8 @@
         "7.NS.A.2.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2916,8 +2917,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/NS/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2949,8 +2950,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2980,8 +2981,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3011,8 +3012,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/B/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3047,8 +3048,8 @@
         "7.EE.B.4.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3080,8 +3081,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3111,8 +3112,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3142,8 +3143,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3173,8 +3174,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3204,8 +3205,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3235,8 +3236,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3266,8 +3267,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3299,8 +3300,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3332,8 +3333,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3365,8 +3366,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3398,8 +3399,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/C/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3431,8 +3432,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/C/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3467,8 +3468,8 @@
         "7.SP.C.7.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3504,8 +3505,8 @@
         "7.SP.C.8.c"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3537,8 +3538,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3568,8 +3569,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3599,8 +3600,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3630,8 +3631,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3661,8 +3662,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3692,8 +3693,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3723,8 +3724,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3754,8 +3755,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/B/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3788,8 +3789,8 @@
         "8.EE.C.7.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3823,8 +3824,8 @@
         "8.EE.C.8.c"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3854,8 +3855,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3885,8 +3886,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3916,8 +3917,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3947,8 +3948,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -3978,8 +3979,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4006,25 +4007,25 @@
       "grade": 8,
       "expectation_id": "8.G.A.1",
       "scope_summary": "Verify experimentally the properties of rotations, reflections, and translations (lines, angles, parallel lines).",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/1/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [
         "8.G.A.1.a",
         "8.G.A.1.b",
         "8.G.A.1.c"
       ],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4034,28 +4035,38 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.A.2",
       "scope_summary": "Understand that a two-dimensional figure is congruent to another if it can be obtained by a sequence of rotations, reflections, and translations.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/2/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4065,28 +4076,38 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.A.3",
       "scope_summary": "Describe the effect of dilations, translations, rotations, and reflections on two-dimensional figures using coordinates.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/3/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4096,28 +4117,38 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.A.4",
       "scope_summary": "Understand that a two-dimensional figure is similar to another if it can be obtained by rotations, reflections, translations, and dilations.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/4/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4127,28 +4158,38 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.A.5",
       "scope_summary": "Use informal arguments to establish facts about the angle sum and exterior angle of triangles, angles created by parallel lines and transversals, and the angle-angle criterion for similarity.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/A/5/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4158,23 +4199,33 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.B.6",
       "scope_summary": "Explain a proof of the Pythagorean Theorem and its converse.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/6/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Merged PR #167 does not provide the proof/explanation demand required by 8.G.B.6.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4189,23 +4240,39 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Keep no-coverage; Curriculum may propose original proof/explanation families only after identity review",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "evidenced_scope": [
+          "converse classification"
+        ],
+        "excluded_required_scope": [
+          "learner explanation of a proof of the Pythagorean Theorem",
+          "learner explanation of a proof of its converse"
+        ],
+        "reason": "Merged PR #167 does not provide the proof/explanation demand required by 8.G.B.6.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "status": "NO_COVERAGE_CLAIM"
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.B.7",
       "scope_summary": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles in real-world and mathematical problems in two and three dimensions.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/7/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Merged PR #167 demonstrates only a bounded two-dimensional mathematical side-length slice.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4220,23 +4287,39 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "evidenced_scope": [
+          "two-dimensional mathematical unknown-side calculation"
+        ],
+        "excluded_required_scope": [
+          "three-dimensional right-triangle application",
+          "real-world problem family"
+        ],
+        "reason": "Merged PR #167 demonstrates only a bounded two-dimensional mathematical side-length slice.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "status": "PARTIAL_NON_EXHAUSTIVE"
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.B.8",
       "scope_summary": "Apply the Pythagorean Theorem to find the distance between two points in a coordinate system.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/B/8/",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
-      "reuse_evidence": "PR #167",
+      "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Coordinate-distance reuse is plausible but has not passed the required identity, mathematics, assessment, and depth gates.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4251,28 +4334,45 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Obtain independent identity, mathematical, assessment, and depth review for this exact bounded relation",
+      "reuse_relation": {
+        "candidate": "M8.G.PYTH",
+        "evidenced_scope": [
+          "coordinate-distance reuse candidate"
+        ],
+        "excluded_required_scope": [
+          "complete atomic identity equivalence not established",
+          "independent mathematical review not established",
+          "assessment and depth acceptance not established"
+        ],
+        "reason": "Coordinate-distance reuse is plausible but has not passed the required identity, mathematics, assessment, and depth gates.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "status": "PROVISIONAL_NOT_ACCEPTED"
+      }
     },
     {
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.G.C.9",
-      "scope_summary": "Use formulas for the volumes of cones, cylinders, and spheres to solve real-world and mathematical problems.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/G/C/9/",
+      "scope_summary": "Know the formulas for the volumes of cones, cylinders, and spheres and use them to solve real-world and mathematical problems.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
       "coverage_classification": "UNKNOWN",
-      "classification_reason": "No independently supported exact atom-to-expectation match established; this does not prove missing core",
+      "classification_reason": "No repository-specific mapping or independently accepted exact relation was located. UNKNOWN records a mapping-evidence search state, not proof that Mihur lacks the mathematical content; the separate reuse relation withholds coverage.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
-      "priority": "P1_REUSE_TRIAGE",
-      "lead_owner": "Standards Mapping",
+      "priority": "P1_REPOSITORY_WIDE_IDENTITY_SEARCH",
+      "lead_owner": "Architecture / Curriculum Identity",
       "review_gates": [
         "Independent Standards",
         "Architecture",
@@ -4282,7 +4382,17 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Search entire generator/skill/MVE registry against exact source scope; refer identity decision if overlap found, otherwise investigate bounded content gap"
+      "next_action": "Search the complete canonical skill, generator, learning-package, MVE, and accepted-review surface. Commission content only if an independently reviewed mathematical-content gap remains.",
+      "reuse_relation": {
+        "candidate": null,
+        "status": "NO_COVERAGE_CLAIM",
+        "repository_specific_mapping_located": false,
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      }
     },
     {
       "jurisdiction": "DC",
@@ -4292,8 +4402,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4323,8 +4433,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4350,17 +4460,17 @@
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.SP.A.3",
-      "scope_summary": "Use the equation of a linear model to solve problems in the context of bivariate measurement data, interpreting slope and intercept.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/3/",
+      "scope_summary": "Use an equation of a linear model to solve problems in the context of bivariate measurement data, interpreting both the slope and intercept.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
-      "reuse_evidence": "PR #165",
+      "reuse_evidence": "M8.SP.STAT in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.DATA.LINEFIT.SLOPE in app/domains/bivariate_sampling.py, registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Two separate provisional candidates exist: M8.SP.STAT evidences supplied-model prediction, and MATH.DATA.LINEFIT.SLOPE evidences contextual slope structure. Contextual intercept interpretation and complete independently accepted depth remain unestablished.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -4375,7 +4485,71 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Architecture / Curriculum Identity must decide the two candidate correspondences separately; commission only independently confirmed residual intercept/depth work.",
+      "reuse_relation": {
+        "candidate": "M8.SP.STAT",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "evidenced_scope": [
+          "Evaluate a supplied linear-model equation for a prediction."
+        ],
+        "excluded_required_scope": [
+          "A bivariate measurement-data context with named quantities and units.",
+          "Contextual interpretation of slope.",
+          "Contextual interpretation of intercept."
+        ],
+        "reason": "The existing learner task substitutes into a supplied equation but does not evidence the full contextual interpretation standard.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      },
+      "canonical_family_candidates": [
+        "MATH.DATA.LINEFIT.SLOPE"
+      ],
+      "reuse_relations": [
+        {
+          "candidate": "M8.SP.STAT",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "evidenced_scope": [
+            "Evaluate a supplied linear-model equation for a prediction."
+          ],
+          "excluded_required_scope": [
+            "A bivariate measurement-data context with named quantities and units.",
+            "Contextual interpretation of slope.",
+            "Contextual interpretation of intercept."
+          ],
+          "reason": "The existing learner task substitutes into a supplied equation but does not evidence the full contextual interpretation standard.",
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true
+        },
+        {
+          "candidate": "MATH.DATA.LINEFIT.SLOPE",
+          "canonical_parent": "MATH.DATA.LINEAR_MODEL",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Use named explanatory and response quantities with units.",
+            "Interpret slope as a contextual rate.",
+            "Probe intercept-as-slope and reversed-rate misconceptions."
+          ],
+          "excluded_required_scope": [
+            "Contextual interpretation of intercept.",
+            "Complete free-text answer-equivalence and domain contract.",
+            "Independent Mathematical, Pedagogical, Assessment, and MVE acceptance."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/bivariate_sampling.py registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69"
+        }
+      ]
     },
     {
       "jurisdiction": "DC",
@@ -4385,8 +4559,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#373",
-      "source_blob_sha": "27d9d7cf6465bff3ce0914fee1b793d41238aad6",
+      "source_pr": "#502",
+      "source_blob_sha": "2c7f1d147b54a7d60af2b33b54499674d1cb3afe",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
