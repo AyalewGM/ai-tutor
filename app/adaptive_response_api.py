@@ -46,12 +46,14 @@ from app.services.awards import (
     learner_progress,
     level_for_xp,
 )
+from app.services.content_publishing import permitted
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
     require_skill_in_scope,
 )
 from app.services.focus_controller import apply_focus_policy
+from app.services.fraction_assessment_registry import AssessmentMode
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.learning_assessment import (
     ASSESSMENT_BLOCK_MESSAGE,
@@ -60,7 +62,7 @@ from app.services.learning_assessment import (
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_generation import regenerate_variant
-from app.services.problem_selection import select_next_problem
+from app.services.problem_selection import _eligibility_column, select_next_problem
 from app.services.review_schedule import (
     REVIEW_PASSED,
     REVIEW_REASON,
@@ -115,6 +117,24 @@ def respond(
     problem = db.get(Problem, payload.problem_id)
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
+
+    if problem.source_type == "PUBLISHED":
+        db.refresh(session, with_for_update=True)
+        issued_id = db.scalar(select(TutorTurn.problem_id).where(
+            TutorTurn.session_id == session.id, TutorTurn.role == "TUTOR",
+            TutorTurn.pedagogical_action != "WORK_STEP",
+        ).order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()).limit(1))
+        already_answered = db.scalar(select(Attempt.id).where(
+            Attempt.session_id == session.id, Attempt.problem_id == problem.id,
+        ).limit(1))
+        if issued_id != problem.id or already_answered is not None:
+            raise HTTPException(409, "Published item was not issued or has already been answered")
+
+    mode_column = _eligibility_column(session.current_state)
+    if problem.source_type == "PUBLISHED" and (
+        mode_column is None or not permitted(db, problem, mode_column.key.removesuffix("_eligible"))
+    ):
+        raise HTTPException(409, "Published package unavailable for this learning mode")
 
     student = db.get(Student, session.student_id)
     skill = db.get(Skill, active_skill_id)
@@ -197,6 +217,8 @@ def respond(
         problem_difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem.choices,
+        published_problem=problem,
+        assessment_mode=AssessmentMode(mode_column.key.removesuffix("_eligible")) if mode_column is not None else None,
         step_misconception_code=step_misconception_code,
         count_evidence=not is_extension,
     )

@@ -222,6 +222,9 @@ def respond(
     if problem is None or problem.primary_skill_id != session.primary_skill_id:
         raise HTTPException(400, "Problem does not belong to the active skill")
 
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published content requires the adaptive tutor endpoint")
+
     student = db.get(Student, session.student_id)
     if student is None:
         raise HTTPException(404, "Student not found")

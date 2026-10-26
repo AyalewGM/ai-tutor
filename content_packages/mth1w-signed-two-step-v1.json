@@ -1,0 +1,24 @@
+{
+  "schema": "MIHUR_CONTENT_PACKAGE_V1",
+  "package_id": "mth1w-signed-two-step-v1",
+  "family_id": "TWO_STEP_SIGNED_RATIONAL",
+  "content_revision": "4b2c878d94c5992a1ce657ff4541f3554ab01e14",
+  "generator_sha256": "544f02a9235b2fbd17cc5497ceefbe2bf10fe7498cfd3a3174c14f1881fef5a1",
+  "canonical_skill": "MATH.EE.EQUATION.TWO",
+  "curriculum": "MTH1W",
+  "curriculum_version": "2021",
+  "local_skill": "MTH1W.C.ALG.EQ2",
+  "modes": [
+    "diagnostic",
+    "guided",
+    "independent"
+  ],
+  "scorer": "EXACT_VARIABLE_RATIONAL_V1",
+  "activation": "pending",
+  "seed_count": 12,
+  "author_principals": [
+    "mihur-content-author"
+  ],
+  "review_evidence": [],
+  "runtime_sha256": "8c3c9d2e20f95758ca747a6e8111ff4b5cbb8a603298dc8416a45e16679ed9ae"
+}
