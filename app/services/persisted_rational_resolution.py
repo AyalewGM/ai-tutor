@@ -26,6 +26,7 @@ from app.services.family_activation_adapter import (
     score_registered_rational,
 )
 from app.services.fraction_assessment_registry import AssessmentMode
+from app.services.issued_rational_evidence import verify_fresh_issuance
 
 
 class AuthenticatedApprovalSource(Protocol):
@@ -92,6 +93,11 @@ def score_persisted_rational(
         problem is None
         or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
         or not problem.canonical_answer
+    ):
+        return DENIED
+    if context.mode in {AssessmentMode.INDEPENDENT, AssessmentMode.MASTERY} and not verify_fresh_issuance(
+        db, student_id=context.student_id, session_id=context.session_id,
+        problem=problem, mode=context.mode,
     ):
         return DENIED
     skill = db.scalar(select(Skill).where(Skill.id == problem.primary_skill_id))
