@@ -37,7 +37,7 @@ def _approved():
         ),
         evidence=evidence, scorer_revision="b" * 40, source_mapping_revision="c" * 40,
         answer_variable="x", standards_manifest_sha="d" * 40,
-        jurisdiction_code="CA.ON", curriculum_code="MTH1W",
+        jurisdiction_code="CA.ON", curriculum_code="MTH1W", local_skill_code="MTH1W.C.ALG.EQ2",
         mapping_disposition="ACCEPTED", coverage_credit=True,
     )
 
