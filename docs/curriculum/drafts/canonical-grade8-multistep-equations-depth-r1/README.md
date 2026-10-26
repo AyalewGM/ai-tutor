@@ -30,6 +30,11 @@ learner construction of examples and complete successive transformation to
 `x = a`, `a = a`, or `a = b` are expressly excluded from `8.EE.C.7a` coverage
 credit. Virginia `8.PFA.4(a–g)` is sourced to the Board-approved 2023 Grade 8
 standards on printed page 64 and remains `VIRGINIA_PROVISIONAL_NOT_ACCEPTED`.
+The complete clause identity and qualifiers are independently corroborated by VDOE's
+2025 *Just in Time Quick Check — Standard of Learning 8.PFA.4* (printed page 1)
+and 2025 Grade 8 *Instructional Guide to the 2023 Mathematics Standards of
+Learning* (printed page 101). These first-party verification sources do not
+replace the controlling Board-approved 2023 Grade 8 SOL or activate any mapping.
 Clauses (b), (e), and (g) have bounded `PARTIAL_NON_EXHAUSTIVE` family evidence;
 clauses (a), (c), (d), and (f) explicitly receive `NO_COVERAGE_CLAIM`. Declarative
 representation metadata is not credited as concrete/pictorial learner work; solving
