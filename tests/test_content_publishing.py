@@ -2,6 +2,8 @@
 import base64
 import copy
 import json
+import os
+import uuid
 from datetime import UTC
 from fractions import Fraction
 
@@ -9,7 +11,7 @@ import pytest
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, func, select
+from sqlalchemy import create_engine, func, select, text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm import Session
@@ -69,27 +71,35 @@ def signed(monkeypatch):
 
 @pytest.fixture
 def db():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
-    from sqlalchemy import DateTime, event
-    from sqlalchemy.types import TypeDecorator
+    pg_url = os.environ.get("MIHUR_PUBLISHER_TEST_DATABASE_URL")
+    admin, schema, original_types = None, None, {}
+    if pg_url:
+        schema = "publisher_test_" + uuid.uuid4().hex
+        admin = create_engine(pg_url)
+        with admin.begin() as connection:
+            connection.execute(text(f'CREATE SCHEMA "{schema}"'))
+        engine = create_engine(pg_url, connect_args={"options": f"-csearch_path={schema}"})
+    else:
+        engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+        from sqlalchemy import DateTime, event
+        from sqlalchemy.types import TypeDecorator
 
-    class SQLiteUTC(TypeDecorator):
-        impl = DateTime
-        cache_ok = True
+        class SQLiteUTC(TypeDecorator):
+            impl = DateTime
+            cache_ok = True
 
-        def process_result_value(self, value, _dialect):
-            return value.replace(tzinfo=UTC) if value is not None and value.tzinfo is None else value
+            def process_result_value(self, value, _dialect):
+                return value.replace(tzinfo=UTC) if value is not None and value.tzinfo is None else value
 
-    original_types = {}
-    for table in Base.metadata.tables.values():
-        for column in table.columns:
-            if isinstance(column.type, DateTime):
-                original_types[column] = column.type
-                column.type = SQLiteUTC(timezone=True)
+        for table in Base.metadata.tables.values():
+            for column in table.columns:
+                if isinstance(column.type, DateTime):
+                    original_types[column] = column.type
+                    column.type = SQLiteUTC(timezone=True)
 
-    @event.listens_for(engine, "connect")
-    def sqlite_functions(connection, _record):
-        connection.create_function("timezone", 2, lambda _zone, value: value)
+        @event.listens_for(engine, "connect")
+        def sqlite_functions(connection, _record):
+            connection.create_function("timezone", 2, lambda _zone, value: value)
 
     Base.metadata.create_all(engine)
     with Session(engine, expire_on_commit=False) as session:
@@ -106,6 +116,10 @@ def db():
     for column, original_type in original_types.items():
         column.type = original_type
     engine.dispose()
+    if admin is not None:
+        with admin.begin() as connection:
+            connection.execute(text(f'DROP SCHEMA "{schema}" CASCADE'))
+        admin.dispose()
 
 
 def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):

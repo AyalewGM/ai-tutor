@@ -148,7 +148,7 @@ Author tests use a private synthetic database and ephemeral review keys. They co
 signature tampering, self-approval, exact rational alternatives, mode isolation,
 learner selector and authenticated route, replay, feedback, no private JSON fields,
 reseed preservation and metadata-only rollback. CI runs them with the repository
-suite; they are not independent approvals or real staging evidence.
+suite and repeats the publisher tests against isolated PostgreSQL schemas; they are not independent approvals or real staging evidence.
 
 Before release, obtain exact-SHA independent Mathematics, Pedagogy, Standards,
 Security, QA and Engineering release decisions on the implementation PR, configure
