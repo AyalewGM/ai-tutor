@@ -673,6 +673,23 @@ def test_virginia_lettered_clauses_are_source_bounded_and_fail_closed():
         assert row["version_date"].startswith(
             "Virginia Board of Education approved August 31, 2023"
         )
+        verification = row["verification_sources"]
+        assert {source["url"] for source in verification} == {
+            "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+            "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+        }
+        assert {source["page"] for source in verification} == {
+            "printed page 1",
+            "printed page 101",
+        }
+        assert all(
+            source["publisher"] == "Virginia Department of Education"
+            and source["access_date"] == "2026-10-25"
+            and "does not replace" in source["verification_role"]
+            for source in verification
+        )
+        assert "controlling 2023 Grade 8 SOL" in row["source_authentication_note"]
+        assert "VIRGINIA_PROVISIONAL_NOT_ACCEPTED" in row["source_authentication_note"]
 
     assert {
         clause
