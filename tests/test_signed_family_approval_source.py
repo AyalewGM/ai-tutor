@@ -88,6 +88,10 @@ def test_tampered_modes_family_and_evidence_are_rejected():
         ),
         replace(
             original.registrations[0],
+            local_skill_code="MTH1W.C.DIFFERENT_STANDARD",
+        ),
+        replace(
+            original.registrations[0],
             evidence=replace(
                 original.registrations[0].evidence,
                 engineering_authorized_sha="d" * 40,
