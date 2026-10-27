@@ -22,6 +22,7 @@ EXPECTED_CANDIDATES = {
     "MATH.DEC.POWER10",
     "MATH.PV.POWERS_TEN",
     "MATH.PV.REASON.TEN_TIMES",
+    "MATH.EST.REASONABLE",
     "MATH.EST.BENCHMARK",
     "MATH.EST.WORD",
     "MATH.MUL.WORD.COMPARE",
@@ -30,6 +31,7 @@ EXPECTED_CANDIDATES = {
 PARTIAL_CANDIDATES = {
     "MATH.SCI.CONVERT",
     "MATH.PROP.SCALE_FACTOR",
+    "MATH.EST.REASONABLE",
     "MATH.EST.BENCHMARK",
     "MATH.EST.WORD",
 }
@@ -134,6 +136,12 @@ def test_dc_8_ee_a_3_candidate_boundaries_distinguish_estimation_from_adjacent_w
     benchmark = relations["MATH.EST.BENCHMARK"]
     assert any("factors of ten" in item for item in benchmark["included_scope"])
     assert any("very small" in item for item in benchmark["excluded_required_scope"])
+
+    reasonable = relations["MATH.EST.REASONABLE"]
+    assert any("factor of ten" in item for item in reasonable["included_scope"])
+    assert any("single-digit-times" in item for item in reasonable["excluded_required_scope"])
+    assert any("very small" in item for item in reasonable["excluded_required_scope"])
+    assert any("times as much" in item for item in reasonable["excluded_required_scope"])
 
     word = relations["MATH.EST.WORD"]
     assert any("contextual" in item for item in word["included_scope"])
