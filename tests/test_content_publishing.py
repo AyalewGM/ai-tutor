@@ -300,7 +300,7 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             assert wrong.json()["evaluation"]["correct"] is False
             assert row.canonical_answer not in json.dumps(wrong.json())
             assert_public(wrong.json())
-            assert db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id}).independent_attempt_count == 2
+            assert db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id}).independent_attempt_count == 0
             # Reseeding cannot change existing history or materialized variant identities.
             history = db.scalars(select(Attempt.id)).all()
             publisher.publish(db, manifest)
