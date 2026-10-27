@@ -232,6 +232,25 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 assert history_counts() == before
                 assert not db.dirty
 
+                # Incorrect answers must also persist as incorrect attempts,
+                # without mastery writes, and remain caller-rollback-safe.
+                with db.begin_nested() as nested:
+                    incorrect = record_rational_attempt(
+                        db, context=second, submission="x=999", **args,
+                    )
+                    assert incorrect.decision.eligible
+                    assert incorrect.decision.correct is False
+                    assert incorrect.decision.independent_evidence_eligible is False
+                    assert incorrect.attempt_id is not None
+                    stored = db.get(Attempt, incorrect.attempt_id)
+                    assert stored.is_correct is False
+                    assert stored.student_id == students[1].id
+                    assert stored.assistance_level == 0
+                    assert history_counts()[0] == before[0] + 1
+                    assert history_counts()[1] == before[1]
+                    nested.rollback()
+                assert history_counts() == before
+
                 # An eligible attempt is flushed inside a caller-owned
                 # PostgreSQL savepoint and cannot survive its rollback.
                 with db.begin_nested() as nested:
