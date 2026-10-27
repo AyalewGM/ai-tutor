@@ -232,6 +232,15 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 assert history_counts() == before
                 assert not db.dirty
 
+                # A persisted hint denies the real recorder before any write,
+                # even when the caller claims this is unassisted work.
+                denied_record = record_rational_attempt(
+                    db, context=first, submission="x=-3/4", **args,
+                )
+                assert denied_record.decision == DENIED
+                assert denied_record.attempt_id is None
+                assert history_counts() == before
+
                 # Incorrect answers must also persist as incorrect attempts,
                 # without mastery writes, and remain caller-rollback-safe.
                 with db.begin_nested() as nested:
