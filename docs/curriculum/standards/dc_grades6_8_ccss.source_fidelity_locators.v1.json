@@ -1772,6 +1772,69 @@
           "assessment_ready": false,
           "evidence_source": "app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 675baa9da77b3fb4c56a8ede61c8d50b61b36f37",
           "canonical_parent": "MATH.NS.SCIENTIFIC_NOTATION"
+        },
+        {
+          "candidate": "MATH.DEC.POWER10",
+          "status": "NO_COVERAGE_CLAIM",
+          "evidence_role": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Multiply a decimal by 10 using place-value reasoning."
+          ],
+          "excluded_required_scope": [
+            "Apply an exponent property to generate an equivalent numerical expression.",
+            "Apply exponent properties across zero or negative integer exponents."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 675baa9da77b3fb4c56a8ede61c8d50b61b36f37",
+          "canonical_parent": "MATH.NS.DECIMAL.PLACE_VALUE"
+        },
+        {
+          "candidate": "MATH.PV.POWERS_TEN",
+          "status": "NO_COVERAGE_CLAIM",
+          "evidence_role": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Relate place-value positions by a multiplicative power-of-ten factor and represent that factor as 10^n."
+          ],
+          "excluded_required_scope": [
+            "Apply an exponent property to generate an equivalent numerical expression.",
+            "Apply exponent properties across zero or negative integer exponents."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/place_value.py blob beb04f63c8ef10fbc41a4e152321c00a8cc42f0f, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 675baa9da77b3fb4c56a8ede61c8d50b61b36f37",
+          "canonical_parent": "MATH.NS.PLACE_VALUE"
+        },
+        {
+          "candidate": "MATH.PV.REASON.TEN_TIMES",
+          "status": "NO_COVERAGE_CLAIM",
+          "evidence_role": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Explain the adjacent-place relationship as multiplication by 10."
+          ],
+          "excluded_required_scope": [
+            "Apply an exponent property to generate an equivalent numerical expression.",
+            "Apply exponent properties across zero or negative integer exponents."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/place_value.py blob beb04f63c8ef10fbc41a4e152321c00a8cc42f0f, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 675baa9da77b3fb4c56a8ede61c8d50b61b36f37",
+          "canonical_parent": "MATH.NS.PLACE_VALUE"
         }
       ]
     },

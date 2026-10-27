@@ -12,6 +12,8 @@ EXPECTATIONS = ROOT / "docs/curriculum/standards/dc_grades6_8_ccss.expectations.
 LOCATORS = ROOT / "docs/curriculum/standards/dc_grades6_8_ccss.source_fidelity_locators.v1.json"
 TRIAGE = ROOT / "docs/curriculum/coverage/dmv_grades7_8_expectation_depth_triage.v1.json"
 ADVANCED_NUMBER = ROOT / "app/domains/advanced_number.py"
+FRACTION_DECIMAL_DEPTH = ROOT / "app/domains/fraction_decimal_depth.py"
+PLACE_VALUE = ROOT / "app/domains/place_value.py"
 
 OFFICIAL_PDF = (
     "https://corestandards.org/wp-content/uploads/2023/09/"
@@ -24,6 +26,9 @@ EXPECTED_CANDIDATES = {
     "MATH.EXP.POWER",
     "MATH.SCI.CONVERT",
     "MATH.SCI.MULTIPLY",
+    "MATH.DEC.POWER10",
+    "MATH.PV.POWERS_TEN",
+    "MATH.PV.REASON.TEN_TIMES",
 }
 
 
@@ -104,8 +109,13 @@ def test_dc_8_ee_a_1_inventories_all_candidates_without_union_credit() -> None:
             assert relation["assessment_ready"] is False
 
     status = {r["candidate"]: r["status"] for r in locator["canonical_candidate_inventory"]}
-    assert status["MATH.EXP.EVALUATE"] == "NO_COVERAGE_CLAIM"
-    assert status["MATH.SCI.CONVERT"] == "NO_COVERAGE_CLAIM"
+    assert all(status[c] == "NO_COVERAGE_CLAIM" for c in (
+        "MATH.EXP.EVALUATE",
+        "MATH.SCI.CONVERT",
+        "MATH.DEC.POWER10",
+        "MATH.PV.POWERS_TEN",
+        "MATH.PV.REASON.TEN_TIMES",
+    ))
     assert all(status[c] == "PARTIAL_NON_EXHAUSTIVE" for c in (
         "MATH.EXP.PRODUCT",
         "MATH.EXP.QUOTIENT",
@@ -118,9 +128,26 @@ def test_dc_8_ee_a_1_inventories_all_candidates_without_union_credit() -> None:
 def test_dc_8_ee_a_1_positive_only_families_do_not_claim_integer_exponent_scope() -> None:
     locator = _row(LOCATORS, "records")
     relations = {r["candidate"]: r for r in locator["canonical_candidate_inventory"]}
-    source = ADVANCED_NUMBER.read_text(encoding="utf-8")
+    advanced_number = ADVANCED_NUMBER.read_text(encoding="utf-8")
+    fraction_decimal = FRACTION_DECIMAL_DEPTH.read_text(encoding="utf-8")
+    place_value = PLACE_VALUE.read_text(encoding="utf-8")
 
-    assert all(f'"{candidate}"' in source for candidate in EXPECTED_CANDIDATES)
+    assert all(
+        f'"{candidate}"' in advanced_number
+        for candidate in (
+            "MATH.EXP.EVALUATE",
+            "MATH.EXP.PRODUCT",
+            "MATH.EXP.QUOTIENT",
+            "MATH.EXP.POWER",
+            "MATH.SCI.CONVERT",
+            "MATH.SCI.MULTIPLY",
+        )
+    )
+    assert '"MATH.DEC.POWER10"' in fraction_decimal
+    assert all(
+        f'"{candidate}"' in place_value
+        for candidate in ("MATH.PV.POWERS_TEN", "MATH.PV.REASON.TEN_TIMES")
+    )
     for candidate in (
         "MATH.EXP.PRODUCT",
         "MATH.EXP.QUOTIENT",
@@ -141,6 +168,19 @@ def test_dc_8_ee_a_1_positive_only_families_do_not_claim_integer_exponent_scope(
         evaluate["excluded_required_scope"]
     ).lower()
 
+    for candidate in (
+        "MATH.DEC.POWER10",
+        "MATH.PV.POWERS_TEN",
+        "MATH.PV.REASON.TEN_TIMES",
+    ):
+        relation = relations[candidate]
+        assert relation["status"] == "NO_COVERAGE_CLAIM"
+        assert relation["evidence_role"] == "PREREQUISITE_ONLY"
+        excluded = " ".join(relation["excluded_required_scope"]).lower()
+        assert "exponent property" in excluded
+        assert "zero" in excluded
+        assert "negative" in excluded
+
 
 def test_dc_8_ee_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
     expectations = json.loads(EXPECTATIONS.read_text(encoding="utf-8"))
@@ -152,7 +192,7 @@ def test_dc_8_ee_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
     assert len(dc_rows) == 52
     assert manifest["pr"] == 510
     assert manifest["ref"] == "refs/pull/510/head"
-    assert manifest["blob_sha"] == "e2361086f15bf595026a1236477ce39533aff310"
+    assert manifest["blob_sha"] == "392c7c792a897f081c5890d309d42024d73ebc67"
     assert all(row["source_pr"] == "#510" for row in dc_rows)
     assert {row["source_blob_sha"] for row in dc_rows} == {manifest["blob_sha"]}
     assert next(
