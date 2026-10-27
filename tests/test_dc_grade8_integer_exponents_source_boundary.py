@@ -106,12 +106,12 @@ def test_dc_8_ee_a_1_inventories_all_candidates_without_union_credit() -> None:
     status = {r["candidate"]: r["status"] for r in locator["canonical_candidate_inventory"]}
     assert status["MATH.EXP.EVALUATE"] == "NO_COVERAGE_CLAIM"
     assert status["MATH.SCI.CONVERT"] == "NO_COVERAGE_CLAIM"
-    assert all(status[c] == "PARTIAL_NON_EXHAUSTIVE" for c in {
+    assert all(status[c] == "PARTIAL_NON_EXHAUSTIVE" for c in (
         "MATH.EXP.PRODUCT",
         "MATH.EXP.QUOTIENT",
         "MATH.EXP.POWER",
         "MATH.SCI.MULTIPLY",
-    })
+    ))
     assert expectation["mapping_evidence_boundary"]["missing_mathematical_content_inferred"] is False
 
 
