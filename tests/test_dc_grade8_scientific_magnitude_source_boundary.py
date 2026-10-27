@@ -7,7 +7,6 @@ repository-wide candidate inventory, and inactive/no-credit semantics.
 import json
 from pathlib import Path
 
-
 ROOT = Path(__file__).parents[1]
 EXPECTATIONS = ROOT / "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json"
 LOCATORS = ROOT / "docs/curriculum/standards/dc_grades6_8_ccss.source_fidelity_locators.v1.json"
@@ -118,12 +117,12 @@ def test_dc_8_ee_a_3_candidate_boundaries_distinguish_estimation_from_adjacent_w
 
     assert relations["MATH.SCI.MULTIPLY"]["relation_qualifier"] == "ADJACENT_STANDARD_ONLY"
     assert relations["MATH.RATIO.ERROR.ADDITIVE"]["relation_qualifier"] == "REPAIR_ONLY"
-    for candidate in {
+    for candidate in (
         "MATH.EXP.EVALUATE",
         "MATH.DEC.POWER10",
         "MATH.PV.POWERS_TEN",
         "MATH.PV.REASON.TEN_TIMES",
-    }:
+    ):
         assert relations[candidate]["relation_qualifier"] == "PREREQUISITE_ONLY"
 
 
