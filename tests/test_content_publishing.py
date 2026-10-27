@@ -294,6 +294,90 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
         app.dependency_overrides.clear()
 
 
+def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_choice(
+    db, signed, monkeypatch,
+):
+    """A client's choice cannot invent a misconception or grant mastery."""
+    from sqlalchemy.orm import sessionmaker
+
+    from app.models import TutorTurn
+    from app.services.fraction_assessment_registry import score_fraction
+
+    for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
+                   "app.middleware.geo_restriction"):
+        monkeypatch.setattr(module + ".SessionLocal", sessionmaker(bind=db.get_bind()))
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9")
+    db.add(student)
+    db.flush()
+    db.add(StudentSkill(student_id=student.id, skill_id=skill.id, current_difficulty=3))
+    db.commit()
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        with TestClient(app) as client:
+            authenticate_parent_for_student(client, db, student)
+            start = client.post("/api/v1/adaptive-tutor/sessions", json={
+                "student_id": str(student.id), "skill_id": str(skill.id),
+            })
+            assert start.status_code == 200, start.text
+            session_id = start.json()["session_id"]
+            problem = db.get(Problem, uuid.UUID(start.json()["problem"]["id"]))
+            item = next(
+                candidate for mode, candidate in publisher.candidates(manifest)
+                if mode == problem.solution["mode"]
+                and candidate["variant_id"] == problem.solution["variant_id"]
+            )
+            signal = item["diagnostic_contract_for_author_review"]["signals"][0]
+            answer = signal["candidate_response"]
+            assert not score_fraction(answer, problem.canonical_answer, variable="x")
+            path = f"/api/v1/adaptive-tutor/sessions/{session_id}/published-reasoning"
+            assert client.get(path, params={"problem_id": str(problem.id)}).status_code == 409
+            first = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
+                "problem_id": str(problem.id), "answer": answer,
+            })
+            assert first.status_code == 200, first.text
+            assert first.json()["evaluation"]["correct"] is False
+            probe_response = client.get(path, params={"problem_id": str(problem.id)})
+            assert probe_response.status_code == 200, probe_response.text
+            probe = probe_response.json()
+            assert probe["stage"] == "CONFIRM_REASONING"
+            assert "misconception_code" not in json.dumps(probe)
+            assert "canonical_answer" not in json.dumps(probe)
+            assert probe["independent_evidence_eligible"] is False
+            wrong_choice = next(
+                c["id"] for c in probe["choices"]
+                if c["id"] != signal["confirmation_evidence_choice_for_author_review"]
+            )
+            rejected = client.post(path, json={
+                "problem_id": str(problem.id), "choice_id": wrong_choice,
+            })
+            assert rejected.status_code == 200
+            assert rejected.json()["stage"] == "PRACTICE_RETRY"
+            assert db.scalar(select(func.count(TutorTurn.id)).where(
+                TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+            )) == 0
+            confirmed = client.post(path, json={
+                "problem_id": str(problem.id),
+                "choice_id": signal["confirmation_evidence_choice_for_author_review"],
+            })
+            assert confirmed.status_code == 200, confirmed.text
+            assert confirmed.json()["stage"] == "REPAIR_PENDING_GUIDED_RETEST"
+            assert confirmed.json()["independent_evidence_eligible"] is False
+            assert "misconception_code" not in json.dumps(confirmed.json())
+            assert client.post(path, json={
+                "problem_id": str(problem.id),
+                "choice_id": signal["confirmation_evidence_choice_for_author_review"],
+            }).status_code == 409
+            progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
+            assert progress.independent_correct_count == 0
+            assert progress.independent_attempt_count == 0
+    finally:
+        app.dependency_overrides.clear()
+
+
 def test_authenticated_published_step_and_photo_assistance_fail_without_history(
     db, signed, monkeypatch,
 ):
