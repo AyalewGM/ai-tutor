@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 
 from app.models import Attempt, Problem, TutorSession, TutorState, TutorTurn
 from app.services.content_publishing import candidates, permitted
-from app.services.fraction_assessment_registry import AssessmentMode, score_fraction
+from app.services.fraction_assessment_registry import score_fraction
 
 
 class PublishedProbeUnavailable(ValueError):
