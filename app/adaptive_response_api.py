@@ -276,6 +276,8 @@ def respond(
             .where(
                 Attempt.session_id == session.id,
                 Problem.primary_skill_id == active_skill_id,
+                # Published answers remain feedback-only even when correct.
+                Problem.source_type != "PUBLISHED",
                 Attempt.is_correct.is_(True),
                 Attempt.assistance_level == 0,
                 Attempt.state_at_attempt != TutorState.EXTENSION,
@@ -581,7 +583,9 @@ def respond(
             )
         )
 
-    new_awards = evaluate_awards(
+    # Until the published learner journey is independently verified, correct
+    # published responses are feedback, not reward or mastery evidence.
+    new_awards = [] if problem.source_type == "PUBLISHED" else evaluate_awards(
         db,
         student_id=session.student_id,
         session_id=session.id,
@@ -594,11 +598,13 @@ def respond(
     )
     db.flush()
 
-    xp_earned = attempt_xp(
-        bool(evidence.evaluation.correct),
-        effective_assistance_level,
-        problem.difficulty,
-    ) + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards)
+    xp_earned = 0 if problem.source_type == "PUBLISHED" else (
+        attempt_xp(
+            bool(evidence.evaluation.correct),
+            effective_assistance_level,
+            problem.difficulty,
+        ) + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards)
+    )
     progress = learner_progress(db, session.student_id)
     level_now, _ = level_for_xp(progress["xp"])
     level_before, _ = level_for_xp(progress["xp"] - xp_earned)
