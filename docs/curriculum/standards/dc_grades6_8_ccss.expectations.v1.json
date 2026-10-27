@@ -2463,7 +2463,7 @@
               "Estimate a contextual whole-number quantity in a stadium-seating or budget model."
             ],
             "excluded_required_scope": [
-              "Express the estimate in normalized single-digit-times-integer-power-of-ten form.",
+              "Express the estimate in normalized scientific notation (single-digit-times-integer-power-of-ten form).",
               "Estimate very small quantities using negative powers of ten.",
               "Compare two estimated quantities multiplicatively."
             ],
