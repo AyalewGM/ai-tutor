@@ -66,7 +66,9 @@ def resolve_published_reasoning_probe(
             TutorTurn.session_id == session.id,
             TutorTurn.problem_id == problem.id,
             TutorTurn.attempt_id == attempt.id,
-            TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+            TutorTurn.pedagogical_action.in_(
+                ("PUBLISHED_REASONING_CONFIRMED", "PUBLISHED_REASONING_SUBMITTED")
+            ),
         ).limit(1)
     )
     if prior is not None:
