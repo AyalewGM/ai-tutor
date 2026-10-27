@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 
-import MathKeypad from "./MathKeypad";
 import { Input } from "./ui/input";
 
 export interface ExactRationalEntryProps {
@@ -11,13 +10,61 @@ export interface ExactRationalEntryProps {
   disabled?: boolean;
 }
 
+// Only offer tokens accepted by the exact-rational server response contract.
+// The shared MathKeypad also offers decimals and symbolic operations and must
+// remain available for other answer kinds, but not for this one. Until the
+// server exposes an immutable reviewed variable binding, never guess x or y.
+const EXACT_RATIONAL_KEYS = [
+  [{ label: "7", token: "7" }, { label: "8", token: "8" }, { label: "9", token: "9" }],
+  [{ label: "4", token: "4" }, { label: "5", token: "5" }, { label: "6", token: "6" }],
+  [{ label: "1", token: "1" }, { label: "2", token: "2" }, { label: "3", token: "3" }],
+  [
+    { label: "0", token: "0" },
+    { label: "−", token: "-", aria: "minus sign" },
+    { label: "/", token: "/", aria: "fraction slash" },
+    { label: "⌫", token: "\b", aria: "backspace" },
+  ],
+] as const;
+
+function ExactRationalKeypad({
+  onKey,
+  disabled,
+}: {
+  onKey: (token: string) => void;
+  disabled: boolean;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label="Exact rational keypad"
+      className="math-keypad space-y-1"
+      data-testid="exact-rational-keypad"
+    >
+      {EXACT_RATIONAL_KEYS.map((row, index) => (
+        <div key={index} className="flex gap-1">
+          {row.map((key) => (
+            <button
+              key={key.label}
+              type="button"
+              aria-label={"aria" in key ? key.aria : key.label}
+              disabled={disabled}
+              onClick={() => onKey(key.token)}
+              className="h-9 min-w-10 flex-1 rounded-md border border-input bg-card text-base font-semibold shadow-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {key.label}
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /**
- * Format guidance only. The server owns the answer key and equivalence check.
- *
- * Unlike the existing legacy FRACTION numerator/denominator control, this
- * field also accepts an integer and, for VARIABLE_VALUE, the variable binding
- * expected by the backend's exact rational answer contract (e.g. x=1/2).
- * Neither hints nor client-side answer validation belong in this component.
+ * Syntax-only guidance; all equivalence checks remain server-authoritative.
+ * This restricted keypad cannot suggest unsupported decimals or expressions.
+ * VARIABLE_VALUE learners enter the question's variable and '=' using their
+ * keyboard until a signed, server-owned variable shortcut contract exists.
  */
 const ExactRationalEntry = forwardRef<HTMLInputElement, ExactRationalEntryProps>(
   function ExactRationalEntry(
@@ -49,10 +96,10 @@ const ExactRationalEntry = forwardRef<HTMLInputElement, ExactRationalEntryProps>
           className="text-sm text-muted-foreground"
         >
           {isVariableValue
-            ? "Enter the variable, equals sign, then an exact integer or fraction (format: x=numerator/denominator). Use the variable in the question."
-            : "Enter an exact integer or fraction using / between numerator and denominator. Do not round to a decimal."}
+            ? "Type the variable shown in the question, then =, followed by an exact signed integer or fraction using /. Use your keyboard for the variable and equals sign."
+            : "Enter an exact signed integer or fraction using / between numerator and denominator. Do not round to a decimal."}
         </p>
-        <MathKeypad onKey={onKey} variables={isVariableValue} disabled={disabled} />
+        <ExactRationalKeypad onKey={onKey} disabled={disabled} />
       </div>
     );
   },
