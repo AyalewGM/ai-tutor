@@ -290,7 +290,8 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
                     break
             assert {"diagnostic", "guided", "independent"} <= modes
             progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
-            assert progress.independent_correct_count == 1
+            # Published responses are feedback-only until independent journey evidence is accepted.
+            assert progress.independent_correct_count == 0
             current = next_payload["next_problem"]
             row = db.get(Problem, __import__("uuid").UUID(current["id"]))
             wrong = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
