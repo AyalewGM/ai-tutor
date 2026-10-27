@@ -50,6 +50,10 @@ def record_evidence(
             db, published_problem, answer, assessment_mode, assisted=assistance_level > 0,
         )
         evaluation = EvaluationResult(decision.correct, 0.99, answer.strip())
+        # The inactive publisher has no authenticated fresh issuance/repair/
+        # independent transfer evidence. Record correctness for feedback only;
+        # never change mastery or progress on this unverified path.
+        count_evidence = False
         # Mode is server-owned. Guided correctness cannot become independent evidence.
         if assessment_mode.value in {"guided", "diagnostic"}:
             assistance_level = max(1, assistance_level)
