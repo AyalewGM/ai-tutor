@@ -62,12 +62,12 @@ from app.services.learning_assessment import (
 )
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
+from app.services.problem_generation import regenerate_variant
+from app.services.problem_selection import _eligibility_column, select_next_problem
 from app.services.published_reasoning_probe import (
     PublishedProbeUnavailable,
     resolve_published_reasoning_probe,
 )
-from app.services.problem_generation import regenerate_variant
-from app.services.problem_selection import _eligibility_column, select_next_problem
 from app.services.review_schedule import (
     REVIEW_PASSED,
     REVIEW_REASON,
