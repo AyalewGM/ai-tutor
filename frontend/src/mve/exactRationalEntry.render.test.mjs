@@ -75,11 +75,11 @@ test("restricted keypad never suggests unsupported syntax or guesses a variable"
   ];
   for (const answerKind of ["RATIONAL", "VARIABLE_VALUE"]) {
     const html = render(answerKind);
-    const labels = [...html.matchAll(/<button\\b[^>]*aria-label="([^"]+)"/g)]
+    const labels = [...html.matchAll(/<button\b[^>]*aria-label="([^"]+)"/g)]
       .map((match) => match[1]);
     assert.deepEqual(labels, expectedKeys);
     assert.match(html, /aria-label="Exact rational keypad"/);
-    assert.doesNotMatch(html, /aria-label="(?:x|y|\\.|exponent|multiply|divide|\\+|=)"/);
+    assert.doesNotMatch(html, /aria-label="(?:x|y|\.|exponent|multiply|divide|\+|=)"/);
   }
 });
 
@@ -106,7 +106,7 @@ test("numeric, sign, fraction and backspace shortcuts dispatch the displayed tok
     assert.equal(button.props.disabled, false);
     button.props.onClick();
   }
-  assert.deepEqual(pressed, ["7", "-", "/", "\\b"]);
+  assert.deepEqual(pressed, ["7", "-", "/", "\b"]);
 });
 
 test("Workspace routes only exact rational kinds through new field and preserves server submit", async () => {
