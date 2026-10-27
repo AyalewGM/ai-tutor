@@ -190,12 +190,27 @@ def test_dc_8_ee_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
 
     assert len(expectations["expectations"]) == 81
     assert len(dc_rows) == 52
+    repository_existing = {
+        row["expectation_id"]
+        for row in expectations["expectations"]
+        if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
+    }
+    assert repository_existing == {
+        "8.NS.A.1", "8.NS.A.2", "8.EE.A.1", "8.SP.A.3",
+        *{
+            row["expectation_id"]
+            for row in expectations["expectations"]
+            if row["grade"] in (6, 7)
+            and row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
+        },
+    }
     assert manifest["pr"] == 510
     assert manifest["ref"] == "refs/pull/510/head"
-    assert manifest["blob_sha"] == "392c7c792a897f081c5890d309d42024d73ebc67"
+    assert manifest["blob_sha"] == "656b0bb971469429d48677f98d5c00a47ecfc4bc"
     assert all(row["source_pr"] == "#510" for row in dc_rows)
     assert {row["source_blob_sha"] for row in dc_rows} == {manifest["blob_sha"]}
     assert next(
         row for row in dc_rows if row["expectation_id"] == "8.EE.A.1"
     )["source_url"] == OFFICIAL_PDF
+    assert "8.NS.A.1" in manifest["scope_note"]
     assert "8.EE.A.1" in manifest["scope_note"]

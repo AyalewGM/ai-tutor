@@ -3,7 +3,7 @@
   "status": "DRAFT_REUSE_TRIAGE_NOT_VERIFIED",
   "control_issue": 377,
   "scope": "Maryland Virginia DC Grades 7-8 parent expectation inventory; official subparts retained for downstream review",
-  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.NS.A.2, 8.EE.A.1, 8.G.B.6–8, and 8.SP.A.3 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
+  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.NS.A.1, 8.NS.A.2, 8.EE.A.1, 8.G.B.6–8, and 8.SP.A.3 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
   "count": 132,
   "summary": {
     "MD G7": {
@@ -57,8 +57,8 @@
       "pr": 510,
       "ref": "refs/pull/510/head",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
-      "scope_note": "DC Grade 8 number-system 8.NS.A.2, expressions-and-equations 8.EE.A.1, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; every located candidate relation is inventoried separately and remains provisional, inactive, and without coverage credit."
+      "blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
+      "scope_note": "DC Grade 8 number-system 8.NS.A.1 and 8.NS.A.2, expressions-and-equations 8.EE.A.1, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; every located candidate relation is inventoried separately and remains provisional, inactive, and without coverage credit."
     }
   ],
   "rows": [
@@ -2737,7 +2737,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2775,7 +2775,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2808,7 +2808,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2847,7 +2847,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2885,7 +2885,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2918,7 +2918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2951,7 +2951,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2982,7 +2982,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3013,7 +3013,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3049,7 +3049,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3082,7 +3082,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3113,7 +3113,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3144,7 +3144,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3175,7 +3175,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3206,7 +3206,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3237,7 +3237,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3268,7 +3268,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3301,7 +3301,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3334,7 +3334,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3367,7 +3367,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3400,7 +3400,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3433,7 +3433,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3469,7 +3469,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3506,7 +3506,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3534,17 +3534,17 @@
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.NS.A.1",
-      "scope_summary": "Know that numbers that are not rational are called irrational; understand that every number has a decimal expansion; convert repeating decimals to fractions.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/1/",
+      "scope_summary": "Know that non-rational numbers are irrational; understand informally that every number has a decimal expansion; for rational numbers show that the decimal expansion eventually repeats; and convert an eventually repeating decimal expansion into a rational number.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
-      "reuse_evidence": "PR #168",
+      "reuse_evidence": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5; app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8; app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a; all registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193; all at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Two candidates have bounded square-root classification overlap. One irrational-approximation family and four terminating-decimal conversion families are prerequisite/topical evidence only. No candidate shows rational decimal expansions eventually repeat or converts a nonterminating repeating decimal to a fraction.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -3559,7 +3559,192 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Architecture / Curriculum Identity must decide the seven candidate relations separately; commission only independently confirmed residual eventually-repeating decimal work.",
+      "reuse_relation": {
+        "candidate": "M8.NS.RAD",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Classify one perfect-square root as rational.",
+          "Probe the misconception that every square root is irrational."
+        ],
+        "excluded_required_scope": [
+          "Classify non-square-root irrational numbers.",
+          "Informally establish that every real number has a decimal expansion.",
+          "Show that a rational number's decimal expansion eventually repeats.",
+          "Convert an eventually repeating decimal expansion into a rational-number fraction."
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+        "reason": "The seed task classifies one perfect-square root but does not establish the decimal-expansion and repeating-decimal demands."
+      },
+      "canonical_family_candidates": [
+        "MATH.NS.IRRATIONAL.CLASSIFY",
+        "MATH.NS.IRRATIONAL.APPROX",
+        "MATH.DEC.FRAC_TO_DEC",
+        "MATH.DEC.DEC_TO_FRAC",
+        "MATH.DEC.FRACTION.TENTHS",
+        "MATH.DEC.FRACTION.HUNDREDTHS"
+      ],
+      "reuse_relations": [
+        {
+          "candidate": "M8.NS.RAD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Classify one perfect-square root as rational.",
+            "Probe the misconception that every square root is irrational."
+          ],
+          "excluded_required_scope": [
+            "Classify non-square-root irrational numbers.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.CLASSIFY",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Classify square roots of perfect-square integers as rational.",
+            "Classify square roots of selected non-perfect-square integers as irrational.",
+            "Use consecutive perfect squares as classification support."
+          ],
+          "excluded_required_scope": [
+            "Classify non-square-root irrational numbers.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.APPROX",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Approximate a selected irrational square root to the nearest tenth."
+          ],
+          "excluded_required_scope": [
+            "Establish rational-versus-irrational classification.",
+            "Informally establish that every real number has a decimal expansion.",
+            "Show that a rational number's decimal expansion eventually repeats.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.DEC.FRAC_TO_DEC",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Convert selected fractions whose decimal expansions terminate."
+          ],
+          "excluded_required_scope": [
+            "Show that arbitrary rational decimal expansions eventually repeat.",
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.DEC_TO_FRAC",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Convert a finite decimal over a power of ten into a simplified fraction."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.FRACTION.TENTHS",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Connect a fraction with denominator ten to a terminating decimal representation."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        },
+        {
+          "candidate": "MATH.DEC.FRACTION.HUNDREDTHS",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Connect a fraction with denominator one hundred to a terminating decimal representation."
+          ],
+          "excluded_required_scope": [
+            "Represent or reason about a nonterminating repeating block.",
+            "Convert an eventually repeating decimal expansion into a rational-number fraction.",
+            "Show why a rational decimal expansion eventually repeats."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.DECIMAL.CONVERT"
+        }
+      ]
     },
     {
       "jurisdiction": "DC",
@@ -3570,7 +3755,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "M8.NS.RAD in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193; all at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
@@ -3668,7 +3853,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "MATH.EXP.PRODUCT; MATH.EXP.QUOTIENT; MATH.EXP.POWER; MATH.SCI.MULTIPLY",
       "reuse_evidence": "app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb; app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a; app/domains/place_value.py blob beb04f63c8ef10fbc41a4e152321c00a8cc42f0f; all registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 675baa9da77b3fb4c56a8ede61c8d50b61b36f37",
@@ -3916,7 +4101,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3947,7 +4132,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3978,7 +4163,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4009,7 +4194,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4040,7 +4225,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4074,7 +4259,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4109,7 +4294,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4140,7 +4325,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4171,7 +4356,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4202,7 +4387,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4233,7 +4418,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4264,7 +4449,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4299,7 +4484,7 @@
       ],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4340,7 +4525,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4381,7 +4566,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4422,7 +4607,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4463,7 +4648,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4504,7 +4689,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4551,7 +4736,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4598,7 +4783,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4646,7 +4831,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4687,7 +4872,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4718,7 +4903,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4749,7 +4934,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "M8.SP.STAT in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.DATA.LINEFIT.SLOPE in app/domains/bivariate_sampling.py, registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69",
@@ -4844,7 +5029,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#510",
-      "source_blob_sha": "392c7c792a897f081c5890d309d42024d73ebc67",
+      "source_blob_sha": "656b0bb971469429d48677f98d5c00a47ecfc4bc",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
