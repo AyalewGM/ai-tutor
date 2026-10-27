@@ -83,9 +83,9 @@ def test_dc_8_ee_a_2_inventories_candidates_without_union_credit() -> None:
             assert relation["assessment_ready"] is False
 
     status = {r["candidate"]: r["status"] for r in locator["canonical_candidate_inventory"]}
-    assert all(status[c] == "PARTIAL_NON_EXHAUSTIVE" for c in {
+    assert all(status[c] == "PARTIAL_NON_EXHAUSTIVE" for c in (
         "M8.NS.RAD", "MATH.ROOT.SQUARE", "MATH.ROOT.CUBE",
-    })
+    ))
     assert all(status[c] == "NO_COVERAGE_CLAIM" for c in EXPECTED_CANDIDATES - {
         "M8.NS.RAD", "MATH.ROOT.SQUARE", "MATH.ROOT.CUBE",
     })
