@@ -79,14 +79,24 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     }
 
-    assert len(existing) == 29
+    assert len(existing) == 30
     for row in rows:
-        if row["expectation_id"] == "8.SP.A.3":
+        if row["expectation_id"] in {"8.EE.A.2", "8.SP.A.3"}:
             assert row["repository_existing_crosswalks"] == []
-            assert row["repository_candidate_crosswalks"] == [
-                "M8.SP.STAT",
-                "MATH.DATA.LINEFIT.SLOPE",
-            ]
+            if row["expectation_id"] == "8.EE.A.2":
+                assert row["repository_candidate_crosswalks"] == [
+                    "M8.NS.RAD",
+                    "MATH.ROOT.SQUARE",
+                    "MATH.ROOT.CUBE",
+                    "MATH.NS.IRRATIONAL.CLASSIFY",
+                    "MATH.NS.IRRATIONAL.APPROX",
+                    "MATH.EXP.EVALUATE",
+                ]
+            else:
+                assert row["repository_candidate_crosswalks"] == [
+                    "M8.SP.STAT",
+                    "MATH.DATA.LINEFIT.SLOPE",
+                ]
             assert row["classification"]["standards_mapped"] == "NO"
             assert "no accepted crosswalk" in row[
                 "repository_existing_crosswalks_semantics"
@@ -118,13 +128,13 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
     ]
 
     assert len(grade8) == 28
-    assert [row["expectation_id"] for row in existing] == ["8.SP.A.3"]
-    assert existing[0]["classification"]["standards_mapped"] == "NO"
-    assert existing[0]["repository_existing_crosswalks"] == []
+    assert [row["expectation_id"] for row in existing] == ["8.EE.A.2", "8.SP.A.3"]
+    assert all(row["classification"]["standards_mapped"] == "NO" for row in existing)
+    assert all(row["repository_existing_crosswalks"] == [] for row in existing)
     assert all(
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
-        if row["expectation_id"] != "8.SP.A.3"
+        if row["expectation_id"] not in {"8.EE.A.2", "8.SP.A.3"}
     )
     # No geometry seed exists for DC at any grade.
     assert all(
@@ -170,12 +180,12 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 81
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 29
-    assert reconciliation["unmapped_expectations"] == 81 - existing == 52
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 30
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 51
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
-        "8": 1,
+        "8": 2,
     }
 
 
