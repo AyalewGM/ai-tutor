@@ -3,7 +3,7 @@
   "status": "DRAFT_REUSE_TRIAGE_NOT_VERIFIED",
   "control_issue": 377,
   "scope": "Maryland Virginia DC Grades 7-8 parent expectation inventory; official subparts retained for downstream review",
-  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.NS.A.1, 8.NS.A.2, 8.G.B.6–8, and 8.SP.A.3 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
+  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.NS.A.1, 8.NS.A.2, 8.EE.A.3, 8.G.B.6–8, and 8.SP.A.3 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
   "count": 132,
   "summary": {
     "MD G7": {
@@ -54,11 +54,11 @@
     },
     {
       "jurisdiction": "DC",
-      "pr": 508,
-      "ref": "refs/pull/508/head",
+      "pr": 512,
+      "ref": "refs/pull/512/head",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
-      "scope_note": "DC Grade 8 number-system 8.NS.A.1 and 8.NS.A.2, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; every located candidate relation is inventoried separately and remains provisional, inactive, and without coverage credit."
+      "blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
+      "scope_note": "DC Grade 8 number-system 8.NS.A.1 and 8.NS.A.2, scientific-magnitude 8.EE.A.3, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; every located candidate relation is inventoried separately and remains provisional, inactive, and without coverage credit."
     }
   ],
   "rows": [
@@ -2736,8 +2736,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/RP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2774,8 +2774,8 @@
         "7.RP.A.2.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2807,8 +2807,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/RP/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2846,8 +2846,8 @@
         "7.NS.A.1.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2884,8 +2884,8 @@
         "7.NS.A.2.d"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2917,8 +2917,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/NS/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2950,8 +2950,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2981,8 +2981,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3012,8 +3012,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/EE/B/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3048,8 +3048,8 @@
         "7.EE.B.4.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3081,8 +3081,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3112,8 +3112,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3143,8 +3143,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3174,8 +3174,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3205,8 +3205,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3236,8 +3236,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/G/B/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3267,8 +3267,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3300,8 +3300,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3333,8 +3333,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3366,8 +3366,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3399,8 +3399,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/C/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3432,8 +3432,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/7/SP/C/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3468,8 +3468,8 @@
         "7.SP.C.7.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3505,8 +3505,8 @@
         "7.SP.C.8.c"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3538,8 +3538,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5; app/domains/decimals.py blob 6ead06fa726db3ac3fa628c22398898c1a84f4d8; app/domains/fraction_decimal_depth.py blob cb06f01630078e2f459722e2c55bd7efb47c2c4a; all registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193; all at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
@@ -3754,8 +3754,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "M8.NS.RAD in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193; all at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
@@ -3852,8 +3852,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3883,8 +3883,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3910,17 +3910,17 @@
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.EE.A.3",
-      "scope_summary": "Use numbers expressed in the form of a single digit times an integer power of 10 to estimate very large or very small quantities.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/3/",
+      "scope_summary": "Use numbers in single-digit-times-integer-power-of-ten form to estimate very large or very small quantities and express how many times as much one estimated quantity is than another.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
-      "shared_core_reuse_candidates": "shared linear/equation/exponent families",
-      "reuse_evidence": "PR #258; canonical registry review",
+      "shared_core_reuse_candidates": "MATH.SCI.CONVERT / MATH.SCI.MULTIPLY / MATH.EXP.EVALUATE / MATH.PROP.SCALE_FACTOR / MATH.RATIO.ERROR.ADDITIVE / MATH.DEC.POWER10 / MATH.PV.POWERS_TEN / MATH.PV.REASON.TEN_TIMES",
+      "reuse_evidence": "Repository-wide canonical domain inspection at main cce36cebb9711d5f7a6116c3df2896b2f05dd326: advanced_number.py 2b4648eaf66836cdbf6aab1a14a280b5375fbedb; proportions.py c47cc4620606ba0d801dbb4cb4e87f937e882ea4; ratios.py d39489e1c017b7bc6dde09f59fafab0a52ed2a40; fraction_decimal_depth.py cb06f01630078e2f459722e2c55bd7efb47c2c4a; place_value.py beb04f63c8ef10fbc41a4e152321c00a8cc42f0f; registry 144fcb79627905a909da9c5cc78dee9ab249c193",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Two candidates provide separate partial representation or multiplicative-comparison evidence; six others are adjacent-standard, prerequisite, or repair-only evidence. No candidate, and no union of candidates, establishes the complete estimation-and-comparison standard.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -3935,7 +3935,161 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Architecture / Curriculum Identity must decide the eight candidate relations separately; commission only an independently confirmed residual gap.",
+      "reuse_relations": [
+        {
+          "candidate": "MATH.SCI.CONVERT",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Represent a selected large whole number in normalized single-digit-times-positive-integer-power-of-ten form."
+          ],
+          "excluded_required_scope": [
+            "Estimate rather than exactly convert a real-world quantity.",
+            "Estimate very small quantities using negative integer powers of ten.",
+            "Express how many times as much one estimated quantity is than another."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.PROP.SCALE_FACTOR",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Determine an exact multiplicative comparison in an ordinary-number context."
+          ],
+          "excluded_required_scope": [
+            "Use single-digit-times-integer-power-of-ten form.",
+            "Estimate very large or very small quantities.",
+            "Compare estimated scientific-notation quantities."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.SCI.MULTIPLY",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "ADJACENT_STANDARD_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Multiply positive-power scientific-notation expressions and normalize the product."
+          ],
+          "excluded_required_scope": [
+            "Estimate a very large or very small quantity.",
+            "Express a multiplicative comparison between estimated quantities."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.EXP.EVALUATE",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Evaluate a selected integer power."
+          ],
+          "excluded_required_scope": [
+            "Represent and estimate a very large or very small quantity.",
+            "Express how many times as much one estimated quantity is than another."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.RATIO.ERROR.ADDITIVE",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "REPAIR_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Use a guided prompt about multiplicative rather than additive scaling."
+          ],
+          "excluded_required_scope": [
+            "Make multiplicative comparison the scored learner target.",
+            "Use scientific notation or estimated very large/very small quantities."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.DEC.POWER10",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Reason about multiplying one decimal by ten."
+          ],
+          "excluded_required_scope": [
+            "Use normalized scientific notation to estimate quantities.",
+            "Compare two estimated quantities multiplicatively."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.PV.POWERS_TEN",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Reason about place-value factors represented with powers of ten."
+          ],
+          "excluded_required_scope": [
+            "Estimate very large or very small quantities in scientific notation.",
+            "Express how many times as much one estimate is than another."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.PV.REASON.TEN_TIMES",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Explain the adjacent-place ten-times relationship."
+          ],
+          "excluded_required_scope": [
+            "Estimate scientific-notation quantities.",
+            "Compare two very large or very small estimates multiplicatively."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false
+        }
+      ]
     },
     {
       "jurisdiction": "DC",
@@ -3945,8 +4099,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3976,8 +4130,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4007,8 +4161,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/EE/B/6/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4041,8 +4195,8 @@
         "8.EE.C.7.b"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4076,8 +4230,8 @@
         "8.EE.C.8.c"
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4107,8 +4261,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4138,8 +4292,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4169,8 +4323,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/A/3/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4200,8 +4354,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4231,8 +4385,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/F/B/5/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4266,8 +4420,8 @@
         "8.G.A.1.c"
       ],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4307,8 +4461,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4348,8 +4502,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4389,8 +4543,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4430,8 +4584,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4471,8 +4625,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4518,8 +4672,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4565,8 +4719,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4613,8 +4767,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4654,8 +4808,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/1/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4685,8 +4839,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/2/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4716,8 +4870,8 @@
       "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "M8.SP.STAT in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.DATA.LINEFIT.SLOPE in app/domains/bivariate_sampling.py, registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69",
@@ -4811,8 +4965,8 @@
       "source_url": "https://www.thecorestandards.org/Math/Content/8/SP/A/4/",
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "source_pr": "#508",
-      "source_blob_sha": "a84c4d176896cca8cb76d18a7b90c04f18ca556c",
+      "source_pr": "#512",
+      "source_blob_sha": "ec5ed8f0e600df9308d33dd7875933c6ffcba4fb",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
