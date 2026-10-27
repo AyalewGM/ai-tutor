@@ -708,6 +708,8 @@ def work_step(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published step assistance is not yet authorized")
     if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
     start = stepwork.starting_point(problem)
