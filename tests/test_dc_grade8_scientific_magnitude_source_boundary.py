@@ -137,7 +137,7 @@ def test_dc_8_ee_a_3_candidate_boundaries_distinguish_estimation_from_adjacent_w
 
     word = relations["MATH.EST.WORD"]
     assert any("contextual" in item for item in word["included_scope"])
-    assert any("scientific" in item for item in word["excluded_required_scope"])
+    assert any("single-digit-times" in item for item in word["excluded_required_scope"])
 
     assert relations["MATH.SCI.MULTIPLY"]["relation_qualifier"] == "ADJACENT_STANDARD_ONLY"
     assert relations["MATH.RATIO.ERROR.ADDITIVE"]["relation_qualifier"] == "REPAIR_ONLY"
