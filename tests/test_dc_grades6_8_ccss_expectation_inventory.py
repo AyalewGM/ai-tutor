@@ -103,6 +103,10 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
                     "MATH.DEC.POWER10",
                     "MATH.PV.POWERS_TEN",
                     "MATH.PV.REASON.TEN_TIMES",
+                    "MATH.EST.BENCHMARK",
+                    "MATH.EST.WORD",
+                    "MATH.MUL.WORD.COMPARE",
+                    "MATH.MUL.ERROR.ADDITIVE",
                 ],
                 "8.SP.A.3": ["M8.SP.STAT", "MATH.DATA.LINEFIT.SLOPE"],
             }

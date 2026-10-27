@@ -2041,8 +2041,101 @@
           "union_inheritance_forbidden": true,
           "validated_practice": false,
           "assessment_ready": false
+        },
+        {
+          "candidate": "MATH.EST.BENCHMARK",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Choose a best whole-number product estimate from options separated by factors of ten."
+          ],
+          "excluded_required_scope": [
+            "Express the estimate in normalized single-digit-times-integer-power-of-ten form.",
+            "Estimate a very small quantity using a negative integer power of ten.",
+            "Determine how many times as much one estimated quantity is than another."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/estimation.py blob fb3ef939937851166314ab5406d16e8bedd0054d, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main cce36cebb9711d5f7a6116c3df2896b2f05dd326"
+        },
+        {
+          "candidate": "MATH.EST.WORD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Estimate a contextual whole-number quantity in a stadium-seating or budget model."
+          ],
+          "excluded_required_scope": [
+            "Express the estimate in normalized single-digit-times-integer-power-of-ten form.",
+            "Estimate very small quantities using negative powers of ten.",
+            "Compare two estimated quantities multiplicatively."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/estimation.py blob fb3ef939937851166314ab5406d16e8bedd0054d, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main cce36cebb9711d5f7a6116c3df2896b2f05dd326"
+        },
+        {
+          "candidate": "MATH.MUL.WORD.COMPARE",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "PREREQUISITE_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Interpret explicit whole-number times-as-many language when the comparison factor and baseline quantity are given."
+          ],
+          "excluded_required_scope": [
+            "Determine the multiplicative comparison factor from two estimated quantities.",
+            "Use scientific notation or very large/very small estimates."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/multiplication.py blob 1a14411fdab1c8b05b1967caf99b145c4897028c, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main cce36cebb9711d5f7a6116c3df2896b2f05dd326"
+        },
+        {
+          "candidate": "MATH.MUL.ERROR.ADDITIVE",
+          "status": "NO_COVERAGE_CLAIM",
+          "relation_qualifier": "REPAIR_ONLY",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Diagnose addition in place of multiplication in an explicit times-as-many whole-number context."
+          ],
+          "excluded_required_scope": [
+            "Make scientific-magnitude estimation the scored learner target.",
+            "Determine a comparison factor between two estimated quantities."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/multiplication.py blob 1a14411fdab1c8b05b1967caf99b145c4897028c, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main cce36cebb9711d5f7a6116c3df2896b2f05dd326"
         }
-      ]
+      ],
+      "candidate_selection_rule": {
+        "status": "BOUNDED_CANDIDATE_SELECTION_RULE",
+        "included_when": [
+          "Generated learner-facing work explicitly uses scientific notation or power-of-ten magnitude structure.",
+          "Generated learner-facing work makes an order-of-magnitude or contextual-quantity estimation judgment.",
+          "Generated learner-facing work explicitly uses or repairs times-as-many multiplicative-comparison language."
+        ],
+        "excluded_when": [
+          "The family only estimates an ordinary arithmetic result without contextual-quantity, factor-of-ten magnitude, scientific-notation, or explicit multiplicative-comparison structure.",
+          "The family only performs generic multiplication or scaling without the target-specific comparison structure."
+        ],
+        "coverage_inference_forbidden": true
+      }
     },
     {
       "expectation_id": "8.EE.A.4",
@@ -3315,7 +3408,11 @@
       "MATH.RATIO.ERROR.ADDITIVE",
       "MATH.DEC.POWER10",
       "MATH.PV.POWERS_TEN",
-      "MATH.PV.REASON.TEN_TIMES"
+      "MATH.PV.REASON.TEN_TIMES",
+      "MATH.EST.BENCHMARK",
+      "MATH.EST.WORD",
+      "MATH.MUL.WORD.COMPARE",
+      "MATH.MUL.ERROR.ADDITIVE"
     ],
     "status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE"
   }

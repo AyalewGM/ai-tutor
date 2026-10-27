@@ -1,7 +1,7 @@
 """Fail-closed regression for DC Grade 8 scientific-magnitude estimation.
 
 Locks the official 8.EE.A.3 source, complete unlettered qualifier boundary,
-repository-wide candidate inventory, and inactive/no-credit semantics.
+bounded candidate inventory, documented selection rule, and inactive/no-credit semantics.
 """
 
 import json
@@ -22,8 +22,17 @@ EXPECTED_CANDIDATES = {
     "MATH.DEC.POWER10",
     "MATH.PV.POWERS_TEN",
     "MATH.PV.REASON.TEN_TIMES",
+    "MATH.EST.BENCHMARK",
+    "MATH.EST.WORD",
+    "MATH.MUL.WORD.COMPARE",
+    "MATH.MUL.ERROR.ADDITIVE",
 }
-PARTIAL_CANDIDATES = {"MATH.SCI.CONVERT", "MATH.PROP.SCALE_FACTOR"}
+PARTIAL_CANDIDATES = {
+    "MATH.SCI.CONVERT",
+    "MATH.PROP.SCALE_FACTOR",
+    "MATH.EST.BENCHMARK",
+    "MATH.EST.WORD",
+}
 
 
 def _row(path: Path, collection: str) -> dict:
@@ -98,6 +107,13 @@ def test_dc_8_ee_a_3_inventories_candidates_without_union_credit() -> None:
     status = {relation["candidate"]: relation["status"] for relation in locator["canonical_candidate_inventory"]}
     assert all(status[candidate] == "PARTIAL_NON_EXHAUSTIVE" for candidate in PARTIAL_CANDIDATES)
     assert all(status[candidate] == "NO_COVERAGE_CLAIM" for candidate in EXPECTED_CANDIDATES - PARTIAL_CANDIDATES)
+    rule = locator["candidate_selection_rule"]
+    assert rule == triage["candidate_selection_rule"]
+    assert rule == expectation["mapping_evidence_boundary"]["candidate_selection_rule"]
+    assert rule["status"] == "BOUNDED_CANDIDATE_SELECTION_RULE"
+    assert rule["coverage_inference_forbidden"] is True
+    assert len(rule["included_when"]) == 3
+    assert len(rule["excluded_when"]) == 2
     assert expectation["mapping_evidence_boundary"]["missing_mathematical_content_inferred"] is False
     assert expectation["mapping_evidence_boundary"]["union_of_candidates_cannot_establish_coverage"] is True
 
@@ -115,13 +131,23 @@ def test_dc_8_ee_a_3_candidate_boundaries_distinguish_estimation_from_adjacent_w
     assert any("multiplicative comparison" in item for item in scale["included_scope"])
     assert any("scientific-notation" in item for item in scale["excluded_required_scope"])
 
+    benchmark = relations["MATH.EST.BENCHMARK"]
+    assert any("factors of ten" in item for item in benchmark["included_scope"])
+    assert any("very small" in item for item in benchmark["excluded_required_scope"])
+
+    word = relations["MATH.EST.WORD"]
+    assert any("contextual" in item for item in word["included_scope"])
+    assert any("scientific" in item for item in word["excluded_required_scope"])
+
     assert relations["MATH.SCI.MULTIPLY"]["relation_qualifier"] == "ADJACENT_STANDARD_ONLY"
     assert relations["MATH.RATIO.ERROR.ADDITIVE"]["relation_qualifier"] == "REPAIR_ONLY"
+    assert relations["MATH.MUL.ERROR.ADDITIVE"]["relation_qualifier"] == "REPAIR_ONLY"
     for candidate in (
         "MATH.EXP.EVALUATE",
         "MATH.DEC.POWER10",
         "MATH.PV.POWERS_TEN",
         "MATH.PV.REASON.TEN_TIMES",
+        "MATH.MUL.WORD.COMPARE",
     ):
         assert relations[candidate]["relation_qualifier"] == "PREREQUISITE_ONLY"
 
