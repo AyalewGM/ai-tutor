@@ -294,8 +294,9 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
         app.dependency_overrides.clear()
 
 
+@pytest.mark.parametrize("confirm", [False, True])
 def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_choice(
-    db, signed, monkeypatch,
+    db, signed, monkeypatch, confirm,
 ):
     """A client's choice cannot invent a misconception or grant mastery."""
     from sqlalchemy.orm import sessionmaker
@@ -351,22 +352,27 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 c["id"] for c in probe["choices"]
                 if c["id"] != signal["confirmation_evidence_choice_for_author_review"]
             )
-            rejected = client.post(path, json={
-                "problem_id": str(problem.id), "choice_id": wrong_choice,
+            choice_id = (
+                signal["confirmation_evidence_choice_for_author_review"]
+                if confirm else wrong_choice
+            )
+            result = client.post(path, json={
+                "problem_id": str(problem.id), "choice_id": choice_id,
             })
-            assert rejected.status_code == 200
-            assert rejected.json()["stage"] == "PRACTICE_RETRY"
-            assert db.scalar(select(func.count(TutorTurn.id)).where(
-                TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
-            )) == 0
-            confirmed = client.post(path, json={
-                "problem_id": str(problem.id),
-                "choice_id": signal["confirmation_evidence_choice_for_author_review"],
-            })
-            assert confirmed.status_code == 200, confirmed.text
-            assert confirmed.json()["stage"] == "REPAIR_PENDING_GUIDED_RETEST"
-            assert confirmed.json()["independent_evidence_eligible"] is False
-            assert "misconception_code" not in json.dumps(confirmed.json())
+            assert result.status_code == 200, result.text
+            assert result.json()["independent_evidence_eligible"] is False
+            if confirm:
+                assert result.json()["stage"] == "REPAIR_PENDING_GUIDED_RETEST"
+                assert "misconception_code" not in json.dumps(result.json())
+                assert db.scalar(select(func.count(TutorTurn.id)).where(
+                    TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+                )) == 1
+            else:
+                assert result.json()["stage"] == "PRACTICE_RETRY"
+                assert db.scalar(select(func.count(TutorTurn.id)).where(
+                    TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+                )) == 0
+            # Even a second, now-correct choice cannot brute-force the probe.
             assert client.post(path, json={
                 "problem_id": str(problem.id),
                 "choice_id": signal["confirmation_evidence_choice_for_author_review"],
