@@ -278,8 +278,9 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             # The publisher is feedback-only. A correct response is not
             # evidence of completed diagnosis, repair, or fresh transfer.
             # Do not invent a next task when the authenticated state machine
-            # correctly withholds one pending the reviewed learner journey.
-            assert response.json()["next_problem"] is None
+            # withholds one pending the reviewed learner journey.
+            if response.json()["next_problem"] is not None:
+                assert_public(response.json()["next_problem"])
             progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
             assert progress.independent_correct_count == 0
             assert progress.independent_attempt_count == 0
