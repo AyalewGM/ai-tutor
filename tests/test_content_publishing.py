@@ -362,8 +362,33 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
             assert result.status_code == 200, result.text
             assert result.json()["independent_evidence_eligible"] is False
             if confirm:
-                assert result.json()["stage"] == "REPAIR_PENDING_GUIDED_RETEST"
+                assert result.json()["stage"] == "GUIDED_RETEST"
                 assert "misconception_code" not in json.dumps(result.json())
+                assert "canonical_answer" not in json.dumps(result.json())
+                from app.services.published_reasoning_probe import server_guided_retest
+
+                private_retest = server_guided_retest(
+                    problem, misconception_code=signal["misconception_code"],
+                )
+                public_retest = result.json()["guided_retest_task"]
+                assert public_retest["variant_id"] == private_retest["variant_id"]
+                assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
+                assert public_retest["mode"] == "GUIDED"
+                verify = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id),
+                          "answer": private_retest["canonical_answer"]},
+                )
+                assert verify.status_code == 200, verify.text
+                assert verify.json()["stage"] == "READY_FOR_TRANSFER_CONFIRMATION"
+                assert verify.json()["correct"] is True
+                assert verify.json()["independent_evidence_eligible"] is False
+                assert verify.json()["mastery_eligible"] is False
+                assert client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id),
+                          "answer": private_retest["canonical_answer"]},
+                ).status_code == 409
                 assert db.scalar(select(func.count(TutorTurn.id)).where(
                     TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
                 )) == 1
