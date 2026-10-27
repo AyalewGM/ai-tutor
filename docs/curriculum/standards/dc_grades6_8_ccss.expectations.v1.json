@@ -205,9 +205,14 @@
         "MATH.RATIO.ERROR.ADDITIVE",
         "MATH.DEC.POWER10",
         "MATH.PV.POWERS_TEN",
-        "MATH.PV.REASON.TEN_TIMES"
+        "MATH.PV.REASON.TEN_TIMES",
+        "MATH.EST.REASONABLE",
+        "MATH.EST.BENCHMARK",
+        "MATH.EST.WORD",
+        "MATH.MUL.WORD.COMPARE",
+        "MATH.MUL.ERROR.ADDITIVE"
       ],
-      "candidate_semantics": "Eight separate candidates have located evidence only. Scientific-notation representation and ordinary-number multiplicative comparison are partial; operation, exponent-evaluation, place-value, and repair-only evidence does not establish the complete estimation-and-comparison standard. Candidate evidence cannot be unioned.",
+      "candidate_semantics": "Thirteen separate candidates have located evidence only. Scientific-notation representation, order-of-magnitude or contextual estimation, factor-of-ten reasonableness, and ordinary-number multiplicative comparison are partial; operation, exponent-evaluation, place-value, and repair-only evidence does not establish the complete estimation-and-comparison standard. Candidate evidence cannot be unioned.",
       "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
       "document_title": "Common Core State Standards for Mathematics",
       "version_date": "2010",
@@ -2255,6 +2260,7 @@
         "MATH.DEC.POWER10",
         "MATH.PV.POWERS_TEN",
         "MATH.PV.REASON.TEN_TIMES",
+        "MATH.EST.REASONABLE",
         "MATH.EST.BENCHMARK",
         "MATH.EST.WORD",
         "MATH.MUL.WORD.COMPARE",
@@ -2271,7 +2277,7 @@
       },
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "Architecture / Curriculum Identity must decide twelve located candidate relations separately; their union must not be treated as coverage.",
+        "Architecture / Curriculum Identity must decide thirteen located candidate relations separately; their union must not be treated as coverage.",
         "No located candidate independently establishes both very-large/very-small estimation and multiplicative comparison using the required power-of-ten form."
       ],
       "official_subpart_identifiers": [],
@@ -2428,6 +2434,25 @@
             "excluded_required_scope": [
               "Estimate scientific-notation quantities.",
               "Compare two very large or very small estimates multiplicatively."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.EST.REASONABLE",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Judge whether a proposed whole-number arithmetic result is reasonable using estimation; bounded wrong-result variants may differ by a factor of ten."
+            ],
+            "excluded_required_scope": [
+              "Express an estimate in normalized single-digit-times-integer-power-of-ten form.",
+              "Estimate a very small quantity using a negative integer power of ten.",
+              "Express how many times as much one estimated quantity is than another."
             ],
             "coverage_credit": false,
             "mapping_activation": false,
