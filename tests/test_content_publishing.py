@@ -21,16 +21,20 @@ from app.api import _problem_out
 from app.content_models import ProblemContentMetadata
 from app.core.database import Base, get_db
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
+from app.diagnostic_models import DiagnosticAttempt
+from app.hint_models import HintEvent
 from app.main import app
 from app.models import (
     Attempt,
     Curriculum,
+    MasteryEvent,
     Problem,
     Skill,
     Student,
     StudentSkill,
     TutorSession,
     TutorState,
+    TutorTurn,
 )
 from app.services import content_publishing as publisher
 from app.services.fraction_assessment_registry import AssessmentMode
@@ -306,6 +310,91 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             publisher.publish(db, manifest)
             assert db.scalars(select(Attempt.id)).all() == history
             assert db.scalar(select(func.count(TutorSession.id))) == 1
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_authenticated_published_step_and_photo_assistance_fail_without_history(
+    db, signed, monkeypatch,
+):
+    """Synthetic HTTP denial: unreviewed support must not grade, scan, or write evidence."""
+    from sqlalchemy.orm import sessionmaker
+
+    from app import adaptive_response_api
+
+    for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
+                   "app.middleware.geo_restriction"):
+        monkeypatch.setattr(module + ".SessionLocal", sessionmaker(bind=db.get_bind()))
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(
+        curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9",
+    )
+    db.add(student)
+    db.flush()
+    db.add(StudentSkill(student_id=student.id, skill_id=skill.id, current_difficulty=3))
+    db.commit()
+
+    def history_snapshot():
+        progress = db.get(
+            StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+        )
+        return (
+            *(db.scalar(select(func.count(model.id))) for model in (
+                Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+            )),
+            progress.attempt_count,
+            progress.correct_count,
+            progress.independent_attempt_count,
+            progress.independent_correct_count,
+            progress.mastery_score,
+            progress.confidence_score,
+        )
+
+    def forbidden_support(*_args, **_kwargs):
+        raise AssertionError("published unreviewed step assistance was invoked")
+
+    class ForbiddenOcr:
+        def scan(self, *_args, **_kwargs):
+            raise AssertionError("published photo OCR was invoked")
+
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[adaptive_response_api.photo_ocr.get_ocr_provider] = ForbiddenOcr
+    try:
+        with TestClient(app) as client:
+            authenticate_parent_for_student(client, db, student)
+            start = client.post("/api/v1/adaptive-tutor/sessions", json={
+                "student_id": str(student.id), "skill_id": str(skill.id),
+            })
+            assert start.status_code == 200, start.text
+            session_id = start.json()["session_id"]
+            problem_id = start.json()["problem"]["id"]
+            problem = db.get(Problem, uuid.UUID(problem_id))
+            assert problem.source_type == "PUBLISHED"
+            before = history_snapshot()
+            with monkeypatch.context() as patch:
+                patch.setattr(
+                    adaptive_response_api.stepwork, "problem_supports_steps",
+                    forbidden_support,
+                )
+                typed = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/work-step",
+                    json={"problem_id": problem_id, "line": "x=1"},
+                )
+                assert typed.status_code == 409, typed.text
+                assert "not yet authorized" in typed.json()["detail"]
+                assert history_snapshot() == before
+
+                photo = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/work-photo/scan",
+                    data={"problem_id": problem_id},
+                    files={"file": ("synthetic.jpg", b"not-an-image", "image/jpeg")},
+                )
+                assert photo.status_code == 409, photo.text
+                assert "not yet authorized" in photo.json()["detail"]
+                assert history_snapshot() == before
     finally:
         app.dependency_overrides.clear()
 
