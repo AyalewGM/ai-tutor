@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 from app.models import Attempt, Problem, TutorSession, TutorState, TutorTurn
 from app.services.content_publishing import candidates, permitted
 from app.services.fraction_assessment_registry import score_fraction
+from scripts.author_ontario_linear_depth import _create_target_preserving_guided_retest
 
 
 class PublishedProbeUnavailable(ValueError):
@@ -103,3 +104,46 @@ def resolve_published_reasoning_probe(
         confirming_choice_id=signal["confirmation_evidence_choice_for_author_review"],
         repair_questions=tuple(signal["socratic_repair_for_author_review"]),
     )
+
+
+def server_guided_retest(
+    problem: Problem, *, misconception_code: str,
+) -> dict:
+    """Reconstruct the same-family guided retest; keep oracle server-private.
+
+    The source comes from an approved, already-persisted publisher manifest.
+    Client-supplied family, seed, fingerprint and misconception are never used.
+    """
+    if not isinstance(problem.solution, dict):
+        raise PublishedProbeUnavailable("Missing published source")
+    manifest = problem.solution.get("manifest")
+    if not isinstance(manifest, dict):
+        raise PublishedProbeUnavailable("Missing signed package")
+    sources = [
+        item for mode, item in candidates(manifest)
+        if mode == problem.solution.get("mode")
+        and item["variant_id"] == problem.solution.get("variant_id")
+        and item["task_fingerprint"] == problem.solution.get("task_fingerprint")
+        and item["canonical_answer"] == problem.canonical_answer
+    ]
+    if len(sources) != 1:
+        raise PublishedProbeUnavailable("Published source is ambiguous")
+    source = sources[0]
+    valid_codes = {
+        signal["misconception_code"]
+        for signal in source["diagnostic_contract_for_author_review"]["signals"]
+    }
+    if misconception_code not in valid_codes:
+        raise PublishedProbeUnavailable("Unknown diagnosis for issued task")
+    target, _signal = _create_target_preserving_guided_retest(
+        source, misconception_code,
+    )
+    if (
+        target["candidate_family"] != source["candidate_family"]
+        or target["canonical_skill_hint"] != source["canonical_skill_hint"]
+        or target["task_fingerprint"] == source["task_fingerprint"]
+        or target["canonical_answer"] == source["canonical_answer"]
+        or target["mode"] != "GUIDED"
+    ):
+        raise PublishedProbeUnavailable("Guided retest was not fresh")
+    return target
