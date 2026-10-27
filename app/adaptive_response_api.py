@@ -891,6 +891,11 @@ async def work_photo_scan(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
+    # Published content must not accept OCR-derived work suggestions until the
+    # signed learning-journey and evidence-isolation contract is reviewed.
+    # This denial precedes image intake and does not modify learner history.
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published step assistance is not yet authorized")
     if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
     if file.content_type not in photo_ocr.ALLOWED_CONTENT_TYPES:
