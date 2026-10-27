@@ -3,7 +3,7 @@
   "status": "DRAFT_REUSE_TRIAGE_NOT_VERIFIED",
   "control_issue": 377,
   "scope": "Maryland Virginia DC Grades 7-8 parent expectation inventory; official subparts retained for downstream review",
-  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.G.B.6–8 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
+  "methodology": "No unverified MISSING_CORE, PARTIAL_DEPTH or CORE_EXISTS_NOT_MAPPED verdicts; topology-based reuse links are candidates only. DC 8.NS.A.2, 8.EE.A.2, 8.G.B.6–8, and 8.SP.A.3 have separate fail-closed relation qualifiers and must never inherit their union. No runtime coverage/credit.",
   "count": 132,
   "summary": {
     "MD G7": {
@@ -57,8 +57,8 @@
       "pr": 509,
       "ref": "refs/pull/509/head",
       "path": "docs/curriculum/standards/dc_grades6_8_ccss.expectations.v1.json",
-      "blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
-      "scope_note": "DC Grade 8 radicals/roots 8.EE.A.2, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; candidate relations remain provisional, separate, inactive, and without coverage credit."
+      "blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
+      "scope_note": "DC Grade 8 number-system 8.NS.A.2, radicals/roots 8.EE.A.2, geometry 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and statistics 8.SP.A.3 use the official CCSSO/NGA 2010 PDF with printed-page locators; every located candidate relation is inventoried separately and remains provisional, inactive, and without coverage credit."
     }
   ],
   "rows": [
@@ -2737,7 +2737,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2775,7 +2775,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL"
       ],
@@ -2808,7 +2808,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.RP.PROPORTIONAL",
         "DC7.RP.PERCENT"
@@ -2847,7 +2847,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2885,7 +2885,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2918,7 +2918,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.NS.RATIONAL"
       ],
@@ -2951,7 +2951,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -2982,7 +2982,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M7.EE.EXPR / M7.EE.EQUATION",
       "reuse_evidence": "PR #365",
@@ -3013,7 +3013,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3049,7 +3049,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.EE.EQUATION"
       ],
@@ -3082,7 +3082,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3113,7 +3113,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3144,7 +3144,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3175,7 +3175,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3206,7 +3206,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3237,7 +3237,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -3268,7 +3268,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3301,7 +3301,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3334,7 +3334,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3367,7 +3367,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3400,7 +3400,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3433,7 +3433,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3469,7 +3469,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3506,7 +3506,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [
         "DC7.SP.PROBABILITY"
       ],
@@ -3539,7 +3539,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
       "reuse_evidence": "PR #168",
@@ -3565,17 +3565,17 @@
       "jurisdiction": "DC",
       "grade": 8,
       "expectation_id": "8.NS.A.2",
-      "scope_summary": "Use rational approximations of irrational numbers to compare size, locate on a number line, and estimate the value of expressions.",
-      "source_url": "https://www.thecorestandards.org/Math/Content/8/NS/A/2/",
+      "scope_summary": "Use rational approximations of irrational numbers to compare irrational sizes, locate them approximately on a number-line diagram, estimate expressions, and explain successive refinement toward better approximations.",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
       "official_subpart_ids": [],
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD",
-      "reuse_evidence": "PR #168",
+      "reuse_evidence": "M8.NS.RAD in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193; all at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
       "coverage_classification": "NEEDS_IDENTITY_DECISION",
-      "classification_reason": "Existing local seed or shared-core topical overlap; atomic equivalence, complete expectation scope and rich instructional depth not established",
+      "classification_reason": "Two separate provisional candidates exist: M8.NS.RAD evidences integer bounding and one approximate square-root number-line location; MATH.NS.IRRATIONAL.APPROX evidences nearest-tenth approximation with neighboring-tenths reasoning and a truncation misconception probe. Irrational-size comparison, expression estimation, and explained multi-step refinement remain unestablished.",
       "verified_depth": false,
       "missing_core_verified": false,
       "provisional": true,
@@ -3590,7 +3590,74 @@
         "MVE / Frontend",
         "Muse QA"
       ],
-      "next_action": "Resolve source-fidelity and atom/composite equivalence, then inspect learner teaching/assessment evidence"
+      "next_action": "Architecture / Curriculum Identity must decide the two candidate correspondences separately; commission only independently confirmed residual rational-approximation and refinement work.",
+      "reuse_relation": {
+        "candidate": "M8.NS.RAD",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "evidenced_scope": [
+          "Bound a square root between consecutive integers.",
+          "Locate one supplied square root approximately on a number line."
+        ],
+        "excluded_required_scope": [
+          "Compare sizes of irrational numbers through rational approximations.",
+          "Estimate the value of expressions involving irrational numbers.",
+          "Generate and explain successively better rational or decimal approximations."
+        ],
+        "reason": "The existing learner tasks overlap two fragments but do not evidence the full rational-approximation method and progression.",
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true
+      },
+      "canonical_family_candidates": [
+        "MATH.NS.IRRATIONAL.APPROX"
+      ],
+      "reuse_relations": [
+        {
+          "candidate": "M8.NS.RAD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "evidenced_scope": [
+            "Bound a square root between consecutive integers.",
+            "Locate one supplied square root approximately on a number line."
+          ],
+          "excluded_required_scope": [
+            "Compare sizes of irrational numbers through rational approximations.",
+            "Estimate the value of expressions involving irrational numbers.",
+            "Generate and explain successively better rational or decimal approximations."
+          ],
+          "reason": "The existing learner tasks overlap two fragments but do not evidence the full rational-approximation method and progression.",
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.APPROX",
+          "canonical_parent": "MATH.NS.IRRATIONAL",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Generate a nearest-tenth decimal approximation for an irrational square root.",
+            "Compare squares of neighboring tenths to justify rounding.",
+            "Probe the truncation-versus-rounding misconception."
+          ],
+          "excluded_required_scope": [
+            "Compare sizes of multiple irrational numbers through rational approximations.",
+            "Locate irrational numbers approximately on a number line.",
+            "Estimate the value of expressions involving irrational numbers.",
+            "Generate and explain multi-step successive refinements beyond one-tenth precision."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        }
+      ]
     },
     {
       "jurisdiction": "DC",
@@ -3601,7 +3668,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3632,7 +3699,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.NS.RAD; MATH.ROOT.SQUARE; MATH.ROOT.CUBE",
       "reuse_evidence": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310; app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310; app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
@@ -3824,7 +3891,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3855,7 +3922,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3886,7 +3953,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3917,7 +3984,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3951,7 +4018,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -3986,7 +4053,7 @@
       ],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "shared linear/equation/exponent families",
       "reuse_evidence": "PR #258; canonical registry review",
@@ -4017,7 +4084,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4048,7 +4115,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4079,7 +4146,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4110,7 +4177,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4141,7 +4208,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.F.FN",
       "reuse_evidence": "PR #169",
@@ -4176,7 +4243,7 @@
       ],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4217,7 +4284,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4258,7 +4325,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4299,7 +4366,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4340,7 +4407,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4381,7 +4448,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4428,7 +4495,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4475,7 +4542,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.G.PYTH",
       "reuse_evidence": "Merged PR #167 at 7c6b9a3b740f9c94a182da1cdfbd2ef168d801c4",
@@ -4523,7 +4590,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": null,
       "reuse_evidence": null,
@@ -4564,7 +4631,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4595,7 +4662,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",
@@ -4626,7 +4693,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "M8.SP.STAT in scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb; MATH.DATA.LINEFIT.SLOPE in app/domains/bivariate_sampling.py, registered by app/canonical_problem_families.py at main 2406ecd853a2e593519e2fb273cfd00e8b5cee69",
@@ -4721,7 +4788,7 @@
       "official_subpart_ids": [],
       "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
       "source_pr": "#509",
-      "source_blob_sha": "c409d586709f383797ad904e4ea2c8a4a1720661",
+      "source_blob_sha": "ea543f393fc7870fe563e66a5fe4f37ff0846afa",
       "local_seed_candidates": [],
       "shared_core_reuse_candidates": "M8.SP.STAT",
       "reuse_evidence": "PR #165",

@@ -31,7 +31,7 @@
     "inventory_as_of": "2026-10-12",
     "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
     "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
-    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.EE.A.2_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
+    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.NS.A.2_8.EE.A.2_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
     "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur.",
     "adoption_date": "2010-07-21",
     "pythagorean_slice_correction": {
@@ -133,6 +133,33 @@
       "source_version": "2010",
       "access_date": "2026-10-26"
     },
+    "irrational_approximation_slice_correction": {
+      "expectation_ids": [
+        "8.NS.A.2"
+      ],
+      "mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "candidate_relations": [
+        "M8.NS.RAD",
+        "MATH.NS.IRRATIONAL.APPROX"
+      ],
+      "candidate_semantics": "Two separate repository candidates have located topical evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 54,
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source example, task, diagram, protected expression, answer key, or source wording is copied or adapted.",
+      "full_scope_boundary": [
+        "Use rational approximations to compare irrational sizes.",
+        "Locate irrational numbers approximately on a number-line diagram.",
+        "Estimate expressions involving irrational numbers.",
+        "Explain a successive rational or decimal refinement process that yields better approximations."
+      ]
+    },
     "radicals_roots_slice_correction": {
       "expectation_ids": [
         "8.EE.A.2"
@@ -155,15 +182,15 @@
   },
   "reconciliation": {
     "official_expectation_count": 81,
-    "repository_existing_expectation_rows": 30,
-    "unmapped_expectations": 51,
+    "repository_existing_expectation_rows": 31,
+    "unmapped_expectations": 50,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
-      "8": 2
+      "8": 3
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.EE.A.2 and 8.SP.A.3 have located but unaccepted candidates recorded separately; no Grade 8 standards mapping is accepted."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.2, 8.EE.A.2, and 8.SP.A.3 each have separate located but unaccepted candidates; no Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -1805,10 +1832,10 @@
       "domain": "NS",
       "cluster": "A",
       "domain_title": "The Number System",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/NS/A/2/",
-      "scope_summary": "Use rational approximations of irrational numbers to compare size, locate on a number line, and estimate the value of expressions.",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "scope_summary": "Use rational approximations of irrational numbers to compare irrational sizes, locate them approximately on a number-line diagram, estimate expressions, and explain successive refinement toward better approximations.",
       "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [],
       "classification": {
         "standards_mapped": "NO",
@@ -1819,13 +1846,96 @@
         "verified_mastery_evidence": "NO_AND_MUST_NOT_BE_INFERRED"
       },
       "blockers": [
-        "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "M8.NS.RAD evidences integer bounding and one approximate square-root number-line location; MATH.NS.IRRATIONAL.APPROX separately evidences nearest-tenth approximation, neighboring-tenths reasoning, and a truncation misconception probe. Neither candidate establishes the complete rational-approximation, expression-estimation, or explained successive-refinement scope.",
+        "Architecture / Curriculum Identity must decide both candidate correspondences separately before any mapping is accepted; Curriculum Content may address only residual work confirmed by independent review."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/NS/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_title": "Common Core State Standards for Mathematics",
+      "source_publication_version": "2010",
+      "source_printed_page": 54,
+      "source_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-26",
+      "license_adaptation": "Scope locator only; no source example, task, diagram, protected expression, answer key, or source wording is copied or adapted.",
+      "mapping_evidence_boundary": {
+        "candidate": "M8.NS.RAD",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Bound a square root between consecutive integers.",
+          "Locate one supplied square root approximately on a number line."
+        ],
+        "excluded_required_scope": [
+          "Compare sizes of irrational numbers through rational approximations.",
+          "Estimate the value of expressions involving irrational numbers.",
+          "Generate and explain successively better rational or decimal approximations."
+        ],
+        "missing_mathematical_content_inferred": false,
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "next_owner": "Architecture / Curriculum Identity for candidate correspondence; Curriculum Content only after an independently confirmed content gap",
+        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+        "candidate_inventory": [
+          {
+            "candidate": "M8.NS.RAD",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Bound a square root between consecutive integers.",
+              "Locate one supplied square root approximately on a number line."
+            ],
+            "excluded_required_scope": [
+              "Compare sizes of irrational numbers through rational approximations.",
+              "Estimate the value of expressions involving irrational numbers.",
+              "Generate and explain successively better rational or decimal approximations."
+            ],
+            "missing_mathematical_content_inferred": false,
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "next_owner": "Architecture / Curriculum Identity for canonical identity review; Curriculum Content only after an independently confirmed content gap",
+            "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+          },
+          {
+            "candidate": "MATH.NS.IRRATIONAL.APPROX",
+            "canonical_parent": "MATH.NS.IRRATIONAL",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Generate a nearest-tenth decimal approximation for an irrational square root.",
+              "Compare squares of neighboring tenths to justify rounding.",
+              "Probe the truncation-versus-rounding misconception."
+            ],
+            "excluded_required_scope": [
+              "Compare sizes of multiple irrational numbers through rational approximations.",
+              "Locate irrational numbers approximately on a number line.",
+              "Estimate the value of expressions involving irrational numbers.",
+              "Generate and explain multi-step successive refinements beyond one-tenth precision."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false,
+            "evidence_source": "MATH.NS.IRRATIONAL.APPROX in app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+          }
+        ],
+        "mapping_status_semantics": "Two separate repository candidates are located; neither relation is accepted as a standards mapping, and their scopes cannot be unioned."
+      },
+      "repository_existing_crosswalks_semantics": "Accepted or legacy seed crosswalks only; empty means no accepted crosswalk, while repository_candidate_crosswalks records located but unaccepted candidates.",
+      "repository_candidate_crosswalks": [
+        "M8.NS.RAD",
+        "MATH.NS.IRRATIONAL.APPROX"
+      ]
     },
     {
       "expectation_id": "8.EE.A.1",
