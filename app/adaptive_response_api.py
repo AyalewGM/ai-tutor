@@ -67,6 +67,7 @@ from app.services.problem_selection import _eligibility_column, select_next_prob
 from app.services.published_reasoning_probe import (
     PublishedProbeUnavailable,
     resolve_published_reasoning_probe,
+    server_guided_retest,
 )
 from app.services.review_schedule import (
     REVIEW_PASSED,
@@ -170,6 +171,12 @@ def submit_published_reasoning(
             "neutral_prompt": "Your answer and reasoning do not confirm a specific error. Try the same operation on both complete sides.",
             "independent_evidence_eligible": False,
         }
+    try:
+        retest = server_guided_retest(
+            problem, misconception_code=probe.misconception_code,
+        )
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
     db.add(TutorTurn(
         session_id=session.id, role="STUDENT", problem_id=problem.id,
         attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
@@ -183,11 +190,110 @@ def submit_published_reasoning(
             "independent_evidence_eligible": False,
         },
     ))
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+        message="Fresh guided retest issued",
+        metadata_json={
+            "variant_id": retest["variant_id"],
+            "task_fingerprint": retest["task_fingerprint"],
+            "source_fingerprint": problem.solution["task_fingerprint"],
+            "independent_evidence_eligible": False,
+        },
+    ))
     db.commit()
     return {
-        "stage": "REPAIR_PENDING_GUIDED_RETEST",
+        "stage": "GUIDED_RETEST",
         "socratic_repair_questions": list(probe.repair_questions),
+        "guided_retest_task": {
+            "variant_id": retest["variant_id"],
+            "mode": "GUIDED",
+            "prompt": retest["prompt"],
+        },
         "independent_evidence_eligible": False,
+    }
+
+
+class PublishedGuidedRetestIn(BaseModel):
+    problem_id: uuid.UUID
+    answer: str
+
+
+@router.post("/sessions/{session_id}/published-guided-retest")
+def submit_published_guided_retest(
+    session_id: uuid.UUID,
+    payload: PublishedGuidedRetestIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Verify the server-issued fresh guided task without mastery or rewards."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if (
+        session.status != "ACTIVE"
+        or problem is None
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Guided retest is unavailable")
+    turns = db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+        )),
+    )).all()
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    submitted = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if (
+        len(confirmed) != 1 or len(issued) != 1 or submitted
+        or confirmed[0].attempt_id != issued[0].attempt_id
+        or not isinstance(confirmed[0].metadata_json, dict)
+        or not isinstance(issued[0].metadata_json, dict)
+    ):
+        raise HTTPException(409, "Guided retest must be issued exactly once")
+    try:
+        retest = server_guided_retest(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Guided retest proof unavailable") from exc
+    if (
+        issued[0].metadata_json.get("variant_id") != retest["variant_id"]
+        or issued[0].metadata_json.get("task_fingerprint") != retest["task_fingerprint"]
+        or issued[0].metadata_json.get("source_fingerprint")
+        != problem.solution["task_fingerprint"]
+    ):
+        raise HTTPException(409, "Guided retest identity mismatch")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(payload.answer, retest["canonical_answer"], variable="x")
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=issued[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_GUIDED_RETEST_RESULT",
+        message=payload.answer,
+        metadata_json={
+            "variant_id": retest["variant_id"],
+            "task_fingerprint": retest["task_fingerprint"],
+            "correct": correct,
+            "assisted": True,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "READY_FOR_TRANSFER_CONFIRMATION" if correct else "GUIDED_RETEST_RETRY",
+        "correct": correct,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
     }
 
 
