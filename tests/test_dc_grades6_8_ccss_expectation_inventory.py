@@ -79,11 +79,20 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     }
 
-    assert len(existing) == 31
+    assert len(existing) == 32
     for row in rows:
-        if row["expectation_id"] in {"8.NS.A.2", "8.EE.A.2", "8.SP.A.3"}:
+        if row["expectation_id"] in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.SP.A.3"}:
             assert row["repository_existing_crosswalks"] == []
             expected_candidates = {
+                "8.NS.A.1": [
+                    "M8.NS.RAD",
+                    "MATH.NS.IRRATIONAL.CLASSIFY",
+                    "MATH.NS.IRRATIONAL.APPROX",
+                    "MATH.DEC.FRAC_TO_DEC",
+                    "MATH.DEC.DEC_TO_FRAC",
+                    "MATH.DEC.FRACTION.TENTHS",
+                    "MATH.DEC.FRACTION.HUNDREDTHS",
+                ],
                 "8.NS.A.2": ["M8.NS.RAD", "MATH.NS.IRRATIONAL.APPROX"],
                 "8.EE.A.2": [
                     "M8.NS.RAD",
@@ -128,6 +137,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
 
     assert len(grade8) == 28
     assert [row["expectation_id"] for row in existing] == [
+        "8.NS.A.1",
         "8.NS.A.2",
         "8.EE.A.2",
         "8.SP.A.3",
@@ -137,7 +147,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
     assert all(
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
-        if row["expectation_id"] not in {"8.NS.A.2", "8.EE.A.2", "8.SP.A.3"}
+        if row["expectation_id"] not in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.SP.A.3"}
     )
     # No geometry seed exists for DC at any grade.
     assert all(
@@ -183,12 +193,12 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 81
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 31
-    assert reconciliation["unmapped_expectations"] == 81 - existing == 50
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 32
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 49
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
-        "8": 3,
+        "8": 4,
     }
 
 
@@ -351,7 +361,7 @@ def test_dc_three_new_grade7_8_unlettered_scope_findings_are_preserved() -> None
         'properties of operations', 'convert', 'mental computation', 'estimation', 'reasonableness'
     ))
     assert all(word in conditions('8.NS.A.1') for word in (
-        'eventually repeats', 'eventually repeating', 'rational-number fraction'
+        'eventually repeats', 'eventually repeating', 'rational number'
     ))
 
 

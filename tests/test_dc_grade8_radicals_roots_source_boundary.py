@@ -126,4 +126,5 @@ def test_dc_8_ee_a_2_manifest_pin_and_pr_provenance_are_total() -> None:
     assert all(row["source_pr"] == "#509" for row in dc_rows)
     assert {row["source_blob_sha"] for row in dc_rows} == {manifest["blob_sha"]}
     assert next(row for row in dc_rows if row["expectation_id"] == "8.EE.A.2")["source_url"] == OFFICIAL_PDF
+    assert "8.NS.A.1" in manifest["scope_note"]
     assert "8.EE.A.2" in manifest["scope_note"]
