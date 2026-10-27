@@ -2043,6 +2043,26 @@
           "assessment_ready": false
         },
         {
+          "candidate": "MATH.EST.REASONABLE",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Judge whether a proposed whole-number arithmetic result is reasonable using estimation; bounded wrong-result variants may differ by a factor of ten."
+          ],
+          "excluded_required_scope": [
+            "Express an estimate in normalized single-digit-times-integer-power-of-ten form.",
+            "Estimate a very small quantity using a negative integer power of ten.",
+            "Express how many times as much one estimated quantity is than another."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/estimation.py blob fb3ef939937851166314ab5406d16e8bedd0054d, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main cce36cebb9711d5f7a6116c3df2896b2f05dd326"
+        },
+        {
           "candidate": "MATH.EST.BENCHMARK",
           "status": "PARTIAL_NON_EXHAUSTIVE",
           "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
@@ -3409,6 +3429,7 @@
       "MATH.DEC.POWER10",
       "MATH.PV.POWERS_TEN",
       "MATH.PV.REASON.TEN_TIMES",
+      "MATH.EST.REASONABLE",
       "MATH.EST.BENCHMARK",
       "MATH.EST.WORD",
       "MATH.MUL.WORD.COMPARE",
