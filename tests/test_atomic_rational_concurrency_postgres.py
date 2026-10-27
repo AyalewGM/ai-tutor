@@ -14,7 +14,16 @@ from sqlalchemy.orm import Session
 
 import app.services.atomic_rational_attempt as recorder
 from app.core.database import Base
-from app.models import Attempt, Curriculum, MasteryEvent, Problem, Skill, Student, TutorSession, TutorState
+from app.models import (
+    Attempt,
+    Curriculum,
+    MasteryEvent,
+    Problem,
+    Skill,
+    Student,
+    TutorSession,
+    TutorState,
+)
 from app.services.family_activation_adapter import DENIED, RegistrationDecision
 from app.services.fraction_assessment_registry import AssessmentMode
 from app.services.persisted_rational_resolution import TrustedAssessmentContext
