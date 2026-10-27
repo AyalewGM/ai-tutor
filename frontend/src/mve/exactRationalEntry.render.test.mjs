@@ -45,8 +45,9 @@ test("variable-value mode supports accessible exact signed fractions without sup
   assert.match(html, /id="exact-rational-answer-format"/);
   assert.match(html, /value="x=-5\/6"/);
   assert.match(html, /aria-label="fraction slash"/);
-  assert.match(html, /aria-label="x"/);
-  assert.match(html, /format: x=numerator\/denominator/);
+  assert.doesNotMatch(html, /aria-label="x"/);
+  assert.doesNotMatch(html, /aria-label="y"/);
+  assert.match(html, /Type the variable shown in the question/);
   assert.doesNotMatch(html, /correct answer|worked solution/i);
 });
 
@@ -65,6 +66,47 @@ test("a disabled answer field also disables on-screen keys", () => {
   assert.match(html, /<input[^>]+disabled=""/);
   assert.match(html, /<button[^>]+disabled=""/);
   assert.match(html, /maxlength="64"/i);
+});
+
+test("restricted keypad never suggests unsupported syntax or guesses a variable", () => {
+  const expectedKeys = [
+    "7", "8", "9", "4", "5", "6", "1", "2", "3",
+    "0", "minus sign", "fraction slash", "backspace",
+  ];
+  for (const answerKind of ["RATIONAL", "VARIABLE_VALUE"]) {
+    const html = render(answerKind);
+    const labels = [...html.matchAll(/<button\\b[^>]*aria-label="([^"]+)"/g)]
+      .map((match) => match[1]);
+    assert.deepEqual(labels, expectedKeys);
+    assert.match(html, /aria-label="Exact rational keypad"/);
+    assert.doesNotMatch(html, /aria-label="(?:x|y|\\.|exponent|multiply|divide|\\+|=)"/);
+  }
+});
+
+test("numeric, sign, fraction and backspace shortcuts dispatch the displayed token only", () => {
+  const pressed = [];
+  // Inspect the stateless forwardRef and keypad React element callbacks;
+  // browser-level keyboard/focus checks remain independent Muse QA.
+  const view = ExactRationalEntry.render({
+    answerKind: "VARIABLE_VALUE", value: "",
+    onValueChange: () => {}, onKey: (token) => pressed.push(token),
+    disabled: false,
+  }, null);
+  const keypad = React.Children.toArray(view.props.children)
+    .find((element) => element.type?.name === "ExactRationalKeypad");
+  assert.ok(keypad);
+  const keypadTree = keypad.type(keypad.props);
+  const buttons = React.Children.toArray(keypadTree.props.children).flatMap(
+    (row) => React.Children.toArray(row.props.children),
+  );
+  assert.deepEqual(buttons.map((button) => button.props.type), Array(13).fill("button"));
+  for (const label of ["7", "minus sign", "fraction slash", "backspace"]) {
+    const button = buttons.find((entry) => entry.props["aria-label"] === label);
+    assert.ok(button, label);
+    assert.equal(button.props.disabled, false);
+    button.props.onClick();
+  }
+  assert.deepEqual(pressed, ["7", "-", "/", "\\b"]);
 });
 
 test("Workspace routes only exact rational kinds through new field and preserves server submit", async () => {
