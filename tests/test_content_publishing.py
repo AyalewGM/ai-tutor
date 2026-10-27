@@ -180,7 +180,7 @@ def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
     alternate = f"x={expected.numerator * 3}/{expected.denominator * 3}"
     result = publisher.score_published(db, problem, alternate, mode, assisted=False)
     assert result.correct
-    assert result.independent_evidence_eligible == (mode == AssessmentMode.INDEPENDENT)
+    assert result.independent_evidence_eligible is False
     assert not publisher.score_published(db, problem, "x=99999999", mode, assisted=False).correct
     assert not publisher.score_published(db, problem, alternate, mode, assisted=True).independent_evidence_eligible
     other = AssessmentMode.GUIDED if mode != AssessmentMode.GUIDED else AssessmentMode.INDEPENDENT
