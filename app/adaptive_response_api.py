@@ -3,6 +3,7 @@ from decimal import Decimal
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -61,6 +62,10 @@ from app.services.learning_assessment import (
 )
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
+from app.services.published_reasoning_probe import (
+    PublishedProbeUnavailable,
+    resolve_published_reasoning_probe,
+)
 from app.services.problem_generation import regenerate_variant
 from app.services.problem_selection import _eligibility_column, select_next_problem
 from app.services.review_schedule import (
@@ -99,6 +104,80 @@ def _publish_adaptive_event(
             payload=payload,
         ),
     )
+
+
+class PublishedReasoningIn(BaseModel):
+    problem_id: uuid.UUID
+    choice_id: str
+
+
+@router.get("/sessions/{session_id}/published-reasoning")
+def published_reasoning_probe(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Give a neutral probe derived from an authenticated, stored wrong answer."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    try:
+        probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
+    # Misconception codes and evidence-choice oracles are server-private.
+    return {"problem_id": problem_id, "stage": "CONFIRM_REASONING",
+            "prompt": probe.prompt, "choices": list(probe.choices),
+            "independent_evidence_eligible": False}
+
+
+@router.post("/sessions/{session_id}/published-reasoning")
+def submit_published_reasoning(
+    session_id: uuid.UUID,
+    payload: PublishedReasoningIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Confirm a misconception with a second reasoning probe; no mastery credit."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    try:
+        probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
+    allowed = {choice["id"] for choice in probe.choices}
+    if payload.choice_id not in allowed:
+        raise HTTPException(422, "Choose one of the presented reasoning options")
+    if payload.choice_id != probe.confirming_choice_id:
+        return {
+            "stage": "PRACTICE_RETRY",
+            "neutral_prompt": "Your answer and reasoning do not confirm a specific error. Try the same operation on both complete sides.",
+            "independent_evidence_eligible": False,
+        }
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_REASONING_CONFIRMED",
+        message="Reasoning choice submitted",
+        metadata_json={
+            "misconception_code": probe.misconception_code,
+            "confirmation_choice_id": payload.choice_id,
+            "response_attempt_id": str(probe.attempt_id),
+            "task_fingerprint": problem.solution["task_fingerprint"],
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "REPAIR_PENDING_GUIDED_RETEST",
+        "socratic_repair_questions": list(probe.repair_questions),
+        "independent_evidence_eligible": False,
+    }
 
 
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
