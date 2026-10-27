@@ -31,7 +31,7 @@
     "inventory_as_of": "2026-10-12",
     "adoption_history_authority_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
     "source_text_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers (CCSS 2010)",
-    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.NS.A.1_8.NS.A.2_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
+    "source_text_host_classification": "OFFICIAL_CCSSO_NGA_PUBLICATION_FOR_CORRECTED_8.NS.A.1_8.NS.A.2_8.EE.A.3_8.G.A.1-5_8.G.B.6-8_8.G.C.9_AND_8.SP.A.3; REMAINING_LEGACY_THECORESTANDARDS.ORG_ROW_LOCATORS_UNOFFICIAL_PENDING_BOUNDED_CORRECTION",
     "license_note": "CCSS text ©2010 NGA/CCSSO; link to official publication/license, do not copy text into student-facing Mihur.",
     "adoption_date": "2010-07-21",
     "pythagorean_slice_correction": {
@@ -191,19 +191,57 @@
         "For rational numbers, show that the decimal expansion eventually repeats.",
         "Convert an eventually repeating decimal expansion into a rational number."
       ]
+    },
+    "scientific_magnitude_slice_correction": {
+      "expectation_ids": [
+        "8.EE.A.3"
+      ],
+      "mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
+      "candidate_relations": [
+        "MATH.SCI.CONVERT",
+        "MATH.SCI.MULTIPLY",
+        "MATH.EXP.EVALUATE",
+        "MATH.PROP.SCALE_FACTOR",
+        "MATH.RATIO.ERROR.ADDITIVE",
+        "MATH.DEC.POWER10",
+        "MATH.PV.POWERS_TEN",
+        "MATH.PV.REASON.TEN_TIMES",
+        "MATH.EST.REASONABLE",
+        "MATH.EST.BENCHMARK",
+        "MATH.EST.WORD",
+        "MATH.MUL.WORD.COMPARE",
+        "MATH.MUL.ERROR.ADDITIVE"
+      ],
+      "candidate_semantics": "Thirteen separate candidates have located evidence only. Scientific-notation representation, order-of-magnitude or contextual estimation, factor-of-ten reasonableness, and ordinary-number multiplicative comparison are partial; operation, exponent-evaluation, place-value, and repair-only evidence does not establish the complete estimation-and-comparison standard. Candidate evidence cannot be unioned.",
+      "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "document_title": "Common Core State Standards for Mathematics",
+      "version_date": "2010",
+      "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_printed_page": 54,
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-27",
+      "license_adaptation": "Scope locator and original editorial paraphrase only; no source example, task, diagram, protected wording, answer key, or source instructional expression is copied or adapted.",
+      "full_scope_boundary": [
+        "Use numbers in single-digit-times-integer-power-of-ten form.",
+        "Estimate very large quantities.",
+        "Estimate very small quantities.",
+        "Express how many times as much one estimated quantity is than another."
+      ]
     }
   },
   "reconciliation": {
     "official_expectation_count": 81,
-    "repository_existing_expectation_rows": 31,
-    "unmapped_expectations": 50,
+    "repository_existing_expectation_rows": 32,
+    "unmapped_expectations": 49,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
-      "8": 3
+      "8": 4
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.1, 8.NS.A.2, and 8.SP.A.3 each have separate located but unaccepted candidates; no Grade 8 standards mapping is accepted."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.1, 8.NS.A.2, 8.EE.A.3, and 8.SP.A.3 each have separate located but unaccepted candidates; no Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
@@ -2208,11 +2246,27 @@
       "domain": "EE",
       "cluster": "A",
       "domain_title": "Expressions and Equations",
-      "source_locator": "https://www.thecorestandards.org/Math/Content/8/EE/A/3/",
-      "scope_summary": "Use numbers expressed in the form of a single digit times an integer power of 10 to estimate very large or very small quantities.",
-      "official_text_capture_status": "AUTHORITATIVE_LINKED_EDITORIAL_SUMMARY",
-      "proposed_mapping_status": "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND",
+      "source_locator": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "scope_summary": "Use numbers in single-digit-times-integer-power-of-ten form to estimate very large or very small quantities and express how many times as much one estimated quantity is than another.",
+      "official_text_capture_status": "OFFICIAL_CCSSO_NGA_PUBLICATION_EDITORIAL_PARAPHRASE",
+      "proposed_mapping_status": "REPOSITORY_EXISTING_UNVERIFIED",
       "repository_existing_crosswalks": [],
+      "repository_candidate_crosswalks": [
+        "MATH.SCI.CONVERT",
+        "MATH.SCI.MULTIPLY",
+        "MATH.EXP.EVALUATE",
+        "MATH.PROP.SCALE_FACTOR",
+        "MATH.RATIO.ERROR.ADDITIVE",
+        "MATH.DEC.POWER10",
+        "MATH.PV.POWERS_TEN",
+        "MATH.PV.REASON.TEN_TIMES",
+        "MATH.EST.REASONABLE",
+        "MATH.EST.BENCHMARK",
+        "MATH.EST.WORD",
+        "MATH.MUL.WORD.COMPARE",
+        "MATH.MUL.ERROR.ADDITIVE"
+      ],
+      "repository_existing_crosswalks_semantics": "Located candidate evidence only; no accepted crosswalk, complete coverage, canonical correspondence, activation, or union inheritance.",
       "classification": {
         "standards_mapped": "NO",
         "mathematically_reviewed_skill": "NO_CURRENT_INDEPENDENT_ACCEPTANCE_FOR_EXACT_DC_TARGET",
@@ -2223,12 +2277,283 @@
       },
       "blockers": [
         "Independent standards and mathematical review must confirm the exact expectation-to-atomic-skill relationship before any mapping is accepted.",
-        "No repository-specific local skill candidate was located for this expectation."
+        "Architecture / Curriculum Identity must decide thirteen located candidate relations separately; their union must not be treated as coverage.",
+        "No located candidate independently establishes both very-large/very-small estimation and multiplicative comparison using the required power-of-ten form."
       ],
       "official_subpart_identifiers": [],
-      "source_domain_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
-      "source_fidelity_status": "AUTHOR_RECONCILED_PENDING_INDEPENDENT_ACCEPTANCE",
-      "scope_completeness_status": "PARENT_PLUS_ALL_PUBLISHED_LETTERED_SUBPARTS_LINKED_PENDING_INDEPENDENT_REVIEW"
+      "source_domain_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_fidelity_status": "AUTHOR_CORRECTED_OFFICIAL_PUBLICATION_PENDING_INDEPENDENT_ACCEPTANCE",
+      "scope_completeness_status": "COMPLETE_UNLETTERED_SCOPE_LOCATED_PENDING_INDEPENDENT_REVIEW",
+      "source_publication_version": "2010",
+      "source_printed_page": 54,
+      "adoption_date": "2010-07-21",
+      "access_date": "2026-10-27",
+      "mapping_evidence_boundary": {
+        "candidate_inventory": [
+          {
+            "candidate": "MATH.SCI.CONVERT",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Represent a selected large whole number in normalized single-digit-times-positive-integer-power-of-ten form."
+            ],
+            "excluded_required_scope": [
+              "Estimate rather than exactly convert a real-world quantity.",
+              "Estimate very small quantities using negative integer powers of ten.",
+              "Express how many times as much one estimated quantity is than another."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.PROP.SCALE_FACTOR",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Determine an exact multiplicative comparison in an ordinary-number context."
+            ],
+            "excluded_required_scope": [
+              "Use single-digit-times-integer-power-of-ten form.",
+              "Estimate very large or very small quantities.",
+              "Compare estimated scientific-notation quantities."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.SCI.MULTIPLY",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "ADJACENT_STANDARD_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Multiply positive-power scientific-notation expressions and normalize the product."
+            ],
+            "excluded_required_scope": [
+              "Estimate a very large or very small quantity.",
+              "Express a multiplicative comparison between estimated quantities."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.EXP.EVALUATE",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "PREREQUISITE_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Evaluate a selected integer power."
+            ],
+            "excluded_required_scope": [
+              "Represent and estimate a very large or very small quantity.",
+              "Express how many times as much one estimated quantity is than another."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.RATIO.ERROR.ADDITIVE",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "REPAIR_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Use a guided prompt about multiplicative rather than additive scaling."
+            ],
+            "excluded_required_scope": [
+              "Make multiplicative comparison the scored learner target.",
+              "Use scientific notation or estimated very large/very small quantities."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.DEC.POWER10",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "PREREQUISITE_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Reason about multiplying one decimal by ten."
+            ],
+            "excluded_required_scope": [
+              "Use normalized scientific notation to estimate quantities.",
+              "Compare two estimated quantities multiplicatively."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.PV.POWERS_TEN",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "PREREQUISITE_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Reason about place-value factors represented with powers of ten."
+            ],
+            "excluded_required_scope": [
+              "Estimate very large or very small quantities in scientific notation.",
+              "Express how many times as much one estimate is than another."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.PV.REASON.TEN_TIMES",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "PREREQUISITE_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Explain the adjacent-place ten-times relationship."
+            ],
+            "excluded_required_scope": [
+              "Estimate scientific-notation quantities.",
+              "Compare two very large or very small estimates multiplicatively."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.EST.REASONABLE",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Judge whether a proposed whole-number arithmetic result is reasonable using estimation; bounded wrong-result variants may differ by a factor of ten."
+            ],
+            "excluded_required_scope": [
+              "Express an estimate in normalized single-digit-times-integer-power-of-ten form.",
+              "Estimate a very small quantity using a negative integer power of ten.",
+              "Express how many times as much one estimated quantity is than another."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.EST.BENCHMARK",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Choose a best whole-number product estimate from options separated by factors of ten."
+            ],
+            "excluded_required_scope": [
+              "Express the estimate in normalized single-digit-times-integer-power-of-ten form.",
+              "Estimate a very small quantity using a negative integer power of ten.",
+              "Determine how many times as much one estimated quantity is than another."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.EST.WORD",
+            "status": "PARTIAL_NON_EXHAUSTIVE",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Estimate a contextual whole-number quantity in a stadium-seating or budget model."
+            ],
+            "excluded_required_scope": [
+              "Express the estimate in normalized scientific notation (single-digit-times-integer-power-of-ten form).",
+              "Estimate very small quantities using negative powers of ten.",
+              "Compare two estimated quantities multiplicatively."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.MUL.WORD.COMPARE",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "PREREQUISITE_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Interpret explicit whole-number times-as-many language when the comparison factor and baseline quantity are given."
+            ],
+            "excluded_required_scope": [
+              "Determine the multiplicative comparison factor from two estimated quantities.",
+              "Use scientific notation or very large/very small estimates."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          },
+          {
+            "candidate": "MATH.MUL.ERROR.ADDITIVE",
+            "status": "NO_COVERAGE_CLAIM",
+            "relation_qualifier": "REPAIR_ONLY",
+            "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+            "included_scope": [
+              "Diagnose addition in place of multiplication in an explicit times-as-many whole-number context."
+            ],
+            "excluded_required_scope": [
+              "Make scientific-magnitude estimation the scored learner target.",
+              "Determine a comparison factor between two estimated quantities."
+            ],
+            "coverage_credit": false,
+            "mapping_activation": false,
+            "canonical_correspondence": "NOT_ESTABLISHED",
+            "union_inheritance_forbidden": true,
+            "validated_practice": false,
+            "assessment_ready": false
+          }
+        ],
+        "missing_mathematical_content_inferred": false,
+        "union_of_candidates_cannot_establish_coverage": true,
+        "candidate_selection_rule": {
+          "status": "BOUNDED_CANDIDATE_SELECTION_RULE",
+          "included_when": [
+            "Generated learner-facing work explicitly uses scientific notation or power-of-ten magnitude structure.",
+            "Generated learner-facing work makes an order-of-magnitude or contextual-quantity estimation judgment.",
+            "Generated learner-facing work explicitly uses or repairs times-as-many multiplicative-comparison language."
+          ],
+          "excluded_when": [
+            "The family only estimates an ordinary arithmetic result without contextual-quantity, factor-of-ten magnitude, scientific-notation, or explicit multiplicative-comparison structure.",
+            "The family only performs generic multiplication or scaling without the target-specific comparison structure."
+          ],
+          "coverage_inference_forbidden": true
+        }
+      }
     },
     {
       "expectation_id": "8.EE.A.4",
