@@ -138,6 +138,13 @@ def validate(manifest, *, require_approvals=True):
     payload = {k: v for k, v in manifest.items() if k != "review_evidence"}
     if not require_approvals:
         return digest(payload)
+    if (
+        manifest["standards_provenance"].get("acceptance") != "ACCEPTED"
+        or manifest["standards_provenance"].get("disposition") != "ACCEPTED"
+        or manifest["standards_provenance"].get("coverage_credit") is not True
+        or manifest["standards_provenance"].get("production_taxonomy_activation") is not True
+    ):
+        raise PublicationBlocked("Official standards mapping not independently accepted")
     if manifest["activation"] != "staging":
         raise PublicationBlocked("Package pending; staging authorization required")
     try:
