@@ -154,6 +154,17 @@ def submit_published_reasoning(
     if payload.choice_id not in allowed:
         raise HTTPException(422, "Choose one of the presented reasoning options")
     if payload.choice_id != probe.confirming_choice_id:
+        # Consume the reasoning choice without attributing a misconception.
+        # Otherwise a learner could brute-force the confirmation oracle.
+        db.add(TutorTurn(
+            session_id=session.id, role="STUDENT", problem_id=problem.id,
+            attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_REASONING_SUBMITTED",
+            message="Reasoning choice submitted",
+            metadata_json={"response_attempt_id": str(probe.attempt_id),
+                           "independent_evidence_eligible": False},
+        ))
+        db.commit()
         return {
             "stage": "PRACTICE_RETRY",
             "neutral_prompt": "Your answer and reasoning do not confirm a specific error. Try the same operation on both complete sides.",
