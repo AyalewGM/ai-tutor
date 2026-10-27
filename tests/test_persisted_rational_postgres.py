@@ -11,7 +11,6 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 
 from app.answer_contracts import AnswerKind
-from app.services.atomic_rational_attempt import record_rational_attempt
 from app.content_models import ProblemContentMetadata
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping
 from app.hint_models import HintEvent
@@ -26,6 +25,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.services.atomic_rational_attempt import record_rational_attempt
 from app.services.family_activation_adapter import DENIED, FamilyRegistration
 from app.services.fraction_assessment_registry import AssessmentMode, ReviewedFamily
 from app.services.issued_rational_evidence import ISSUANCE_VERSION
