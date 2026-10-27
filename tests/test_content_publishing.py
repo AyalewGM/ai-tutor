@@ -243,6 +243,15 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             assert response.json()["tutor"]["message"]
             assert_public(response.json())
             assert db.scalar(select(func.count(Attempt.id))) == 1
+            # Scoring feedback must not become independent mastery via the
+            # separate persisted-attempt evidence loader.
+            from app.services.mastery_gate_evidence import load_mastery_gate_evidence
+
+            gate_evidence = load_mastery_gate_evidence(
+                db, student_id=student.id, skill_id=skill.id,
+            )
+            assert gate_evidence.independent_correct_count == 0
+            assert gate_evidence.strong_help_seen is False
             replay = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
                 "problem_id": problem_id, "answer": problem.canonical_answer})
             assert replay.status_code == 409
