@@ -244,6 +244,8 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
                 "problem_id": problem_id, "answer": problem.canonical_answer})
             assert response.status_code == 200, response.text
             assert response.json()["evaluation"]["correct"] is True
+            assert response.json()["xp_earned"] == 0
+            assert response.json()["new_awards"] == []
             assert response.json()["tutor"]["message"]
             assert_public(response.json())
             assert db.scalar(select(func.count(Attempt.id))) == 1
@@ -288,6 +290,8 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
                 assert reply.status_code == 200, reply.text
                 next_payload = reply.json()
                 assert next_payload["evaluation"]["correct"] is True
+                assert next_payload["xp_earned"] == 0
+                assert next_payload["new_awards"] == []
                 assert_public(next_payload)
                 modes.add(mode)
                 if {"guided", "independent"} <= modes:
@@ -302,6 +306,8 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
                 "problem_id": current["id"], "answer": "x=99999999"})
             assert wrong.status_code == 200, wrong.text
             assert wrong.json()["evaluation"]["correct"] is False
+            assert wrong.json()["xp_earned"] == 0
+            assert wrong.json()["new_awards"] == []
             assert row.canonical_answer not in json.dumps(wrong.json())
             assert_public(wrong.json())
             assert db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id}).independent_attempt_count == 0
