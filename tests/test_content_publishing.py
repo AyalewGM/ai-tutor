@@ -275,42 +275,15 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
                 current_difficulty=3, state=TutorState.INDEPENDENT_PRACTICE, student_id=student.id)
             assert guided.solution["mode"] == "guided"
             assert independent.solution["mode"] == "independent"
-            # Complete actual guided then independent questions through the same route.
-            modes = {problem.solution["mode"]}
-            next_payload = response.json()
-            for _ in range(6):
-                current = next_payload["next_problem"]
-                assert current is not None
-                row = db.get(Problem, __import__("uuid").UUID(current["id"]))
-                mode = row.solution["mode"]
-                expected = Fraction(row.canonical_answer.split("=")[1])
-                alternate = f"x={expected.numerator * 2}/{expected.denominator * 2}"
-                reply = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
-                    "problem_id": current["id"], "answer": alternate})
-                assert reply.status_code == 200, reply.text
-                next_payload = reply.json()
-                assert next_payload["evaluation"]["correct"] is True
-                assert next_payload["xp_earned"] == 0
-                assert next_payload["new_awards"] == []
-                assert_public(next_payload)
-                modes.add(mode)
-                if {"guided", "independent"} <= modes:
-                    break
-            assert {"diagnostic", "guided", "independent"} <= modes
+            # The publisher is feedback-only. A correct response is not
+            # evidence of completed diagnosis, repair, or fresh transfer.
+            # Do not invent a next task when the authenticated state machine
+            # correctly withholds one pending the reviewed learner journey.
+            assert response.json()["next_problem"] is None
             progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
-            # Published responses are feedback-only until independent journey evidence is accepted.
             assert progress.independent_correct_count == 0
-            current = next_payload["next_problem"]
-            row = db.get(Problem, __import__("uuid").UUID(current["id"]))
-            wrong = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
-                "problem_id": current["id"], "answer": "x=99999999"})
-            assert wrong.status_code == 200, wrong.text
-            assert wrong.json()["evaluation"]["correct"] is False
-            assert wrong.json()["xp_earned"] == 0
-            assert wrong.json()["new_awards"] == []
-            assert row.canonical_answer not in json.dumps(wrong.json())
-            assert_public(wrong.json())
-            assert db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id}).independent_attempt_count == 0
+            assert progress.independent_attempt_count == 0
+            assert progress.attempt_count == 0
             # Reseeding cannot change existing history or materialized variant identities.
             history = db.scalars(select(Attempt.id)).all()
             publisher.publish(db, manifest)
