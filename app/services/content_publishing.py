@@ -294,8 +294,10 @@ def score_published(db, problem, answer, mode, *, assisted):
         or not permitted(db, problem, mode.value)):
         raise PublicationBlocked("Published item is not authorized for this session mode")
     correct = score_fraction(answer, problem.canonical_answer, variable="x")
-    return ScoringDecision(True, correct, correct and not assisted and mode in {
-        AssessmentMode.INDEPENDENT, AssessmentMode.MASTERY})
+    # Correctness alone is not proof of independently issued, unassisted,
+    # replay-safe work. Only the established mastery evidence pipeline may
+    # authorize credit after trusted journey verification.
+    return ScoringDecision(True, correct, False)
 
 
 def report(db, manifest):
