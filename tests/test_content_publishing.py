@@ -52,6 +52,15 @@ def _uuid(*_args, **_kwargs):
 @pytest.fixture
 def signed(monkeypatch):
     manifest = json.loads(MANIFEST.read_text())
+    # Synthetic signers exercise only the publisher mechanism. The checked-in
+    # Ontario mapping remains PROVISIONAL_NOT_ACCEPTED and cannot activate.
+    synthetic_source = copy.deepcopy(publisher.STANDARDS_PROVENANCE)
+    synthetic_source["acceptance"] = "ACCEPTED"
+    synthetic_source["disposition"] = "ACCEPTED"
+    synthetic_source["coverage_credit"] = True
+    synthetic_source["production_taxonomy_activation"] = True
+    monkeypatch.setattr(publisher, "STANDARDS_PROVENANCE", synthetic_source)
+    manifest["standards_provenance"] = synthetic_source
     manifest["activation"] = "staging"
     manifest["seed_count"] = 4
     private = {role: Ed25519PrivateKey.generate() for role in publisher.ROLES}
@@ -127,6 +136,7 @@ def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):
     manifest, policy = signed
     assert publisher.validate(manifest)
     pending = json.loads(MANIFEST.read_text())
+    pending["standards_provenance"] = publisher.STANDARDS_PROVENANCE
     with pytest.raises(publisher.PublicationBlocked, match="pending"):
         publisher.validate(pending)
     for field, value in [
@@ -305,3 +315,11 @@ def test_revoked_authority_and_tampered_runtime_deny_selection(db, signed, monke
     changed["runtime_sha256"] = "0" * 64
     with pytest.raises(publisher.PublicationBlocked, match="Runtime contract"):
         publisher.validate(changed)
+
+
+def test_actual_provisional_ontario_mapping_is_never_authorized():
+    manifest = json.loads(MANIFEST.read_text())
+    assert manifest["standards_provenance"]["acceptance"] == "PROVISIONAL_NOT_ACCEPTED"
+    manifest["activation"] = "staging"
+    with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
+        publisher.validate(manifest)
