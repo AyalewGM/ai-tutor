@@ -110,7 +110,7 @@ def test_two_connections_one_student_problem_commit_then_replay_denied(monkeypat
             assert attempts[0].session_id == sessions[0]
             assert attempts[0].student_id == student_id
             assert db.scalar(select(func.count()).select_from(MasteryEvent)) == 0
-            with db.begin():
+        with Session(engine) as db, db.begin():
                 replay = recorder.record_rational_attempt(
                     db,
                     context=TrustedAssessmentContext(
