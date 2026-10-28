@@ -4,7 +4,7 @@ import { parsePublishedStage, type PublishedStage } from "../publishedLearningFl
 
 /**
  * A no-credit lesson overlay anchored to ONE server-issued, incorrectly
- * answered published problem. Does not infer authority from skill_name,
+ * answered published problem. Does not infer authority from display labels,
  * client flags or taxonomy IDs. Unauthorized GET is invisible.
  */
 export default function PublishedLearningRecovery({
