@@ -109,6 +109,30 @@ def resolve_published_reasoning_probe(
     )
 
 
+def server_repair_coefficients(problem: Problem) -> dict[str, str]:
+    """Return exact coefficients from the uniquely matched signed source task."""
+    if not isinstance(problem.solution, dict):
+        raise PublishedProbeUnavailable("Missing published source")
+    manifest = problem.solution.get("manifest")
+    if not isinstance(manifest, dict):
+        raise PublishedProbeUnavailable("Missing signed package")
+    sources = [
+        item for mode, item in candidates(manifest)
+        if mode == problem.solution.get("mode")
+        and item["variant_id"] == problem.solution.get("variant_id")
+        and item["task_fingerprint"] == problem.solution.get("task_fingerprint")
+        and item["canonical_answer"] == problem.canonical_answer
+    ]
+    if len(sources) != 1:
+        raise PublishedProbeUnavailable("Repair source is ambiguous")
+    coefficients = sources[0].get("equation_coefficients")
+    if not isinstance(coefficients, dict) or set((
+        "lhs_x", "lhs_constant", "rhs_x", "rhs_constant",
+    )) - coefficients.keys():
+        raise PublishedProbeUnavailable("Reviewable repair coefficients unavailable")
+    return coefficients
+
+
 def server_guided_retest(
     problem: Problem, *, misconception_code: str, retry_index: int = 0,
 ) -> dict:
