@@ -69,6 +69,7 @@ from app.services.published_reasoning_probe import (
     PublishedProbeUnavailable,
     resolve_published_reasoning_probe,
     server_guided_retest,
+    server_repair_coefficients,
     server_unhinted_transfer,
 )
 from app.services.review_schedule import (
@@ -204,9 +205,10 @@ def submit_published_reasoning(
 
 def _published_repair_prompt(problem: Problem, step: int) -> str:
     """Two mathematical equalities checked server-side, never a mere text response."""
-    coefficients = problem.solution.get("equation_coefficients", {})
-    if set(("lhs_x", "lhs_constant", "rhs_x", "rhs_constant")) - coefficients.keys():
-        raise HTTPException(409, "Published repair coefficients unavailable")
+    try:
+        server_repair_coefficients(problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, "Published repair coefficients unavailable") from exc
     if step == 0:
         return (
             "Subtract the right-side x term from both complete sides. "
@@ -269,13 +271,15 @@ def submit_published_repair(
     step = len(passed)
     if step >= 2:
         raise HTTPException(409, "Repair already complete")
-    coefficients = problem.solution.get("equation_coefficients", {})
     try:
+        coefficients = server_repair_coefficients(problem)
         a = Fraction(coefficients["lhs_x"])
         b = Fraction(coefficients["lhs_constant"])
         c = Fraction(coefficients["rhs_x"])
         d = Fraction(coefficients["rhs_constant"])
         submitted = Fraction(payload.response.strip().replace(" ", ""))
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, "Published repair source unavailable") from exc
     except (KeyError, ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
         raise HTTPException(422, "Enter a valid exact rational number") from exc
     expected = a - c if step == 0 else d - b
