@@ -559,6 +559,22 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert started.json()["mastery_eligible"] is False
                 assert started.json()["independent_evidence_eligible"] is False
                 assert started.json()["independent_task"] == transfer["learner_task"]
+                recovered_transfer = client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                )
+                assert recovered_transfer.status_code == 200, recovered_transfer.text
+                assert recovered_transfer.json()["independent_task"] == started.json()["independent_task"]
+                transfer_issue = db.scalar(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED",
+                ))
+                original_transfer_meta = dict(transfer_issue.metadata_json)
+                transfer_issue.metadata_json = {**original_transfer_meta, "target_fingerprint": "tampered"}
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                transfer_issue.metadata_json = original_transfer_meta
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
                 assert "canonical_answer" not in json.dumps(started.json())
                 assert client.post(
                     f"{transfer_path}/start", params={"problem_id": str(problem.id)},
@@ -594,6 +610,22 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 )
                 assert started_mastery.status_code == 200, started_mastery.text
                 assert started_mastery.json()["verification_task"] == private_mastery["learner_task"]
+                recovered_mastery = client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                )
+                assert recovered_mastery.status_code == 200, recovered_mastery.text
+                assert recovered_mastery.json()["verification_task"] == started_mastery.json()["verification_task"]
+                mastery_issue = db.scalar(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.pedagogical_action == "PUBLISHED_MASTERY_ISSUED",
+                ))
+                original_mastery_meta = dict(mastery_issue.metadata_json)
+                mastery_issue.metadata_json = {**original_mastery_meta, "variant_id": "tampered"}
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                mastery_issue.metadata_json = original_mastery_meta
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
                 assert started_mastery.json()["hints_allowed"] is False
                 assert started_mastery.json()["mastery_eligible"] is False
                 assert started_mastery.json()["independent_evidence_eligible"] is False
