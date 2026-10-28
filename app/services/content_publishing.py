@@ -75,7 +75,8 @@ ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_FILES = (
     "app/services/content_publishing.py", "app/services/fraction_assessment_registry.py",
     "app/services/fraction_scoring_handoff.py", "app/services/attempt_evidence.py",
-    "app/services/problem_selection.py", "app/adaptive_response_api.py", "app/diagnostic_api.py",
+    "app/services/problem_selection.py", "app/services/published_reasoning_probe.py",
+    "app/adaptive_response_api.py", "app/diagnostic_api.py",
     "app/api.py", "scripts/ops/publish_content.py", "scripts/ops/content_learner_probe.py",
     "deploy/staging/publish_content.py", ".github/workflows/content-publisher.yml",
 )
