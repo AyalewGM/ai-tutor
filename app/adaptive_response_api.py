@@ -1,5 +1,6 @@
 import uuid
 from decimal import Decimal
+from fractions import Fraction
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
@@ -191,11 +192,128 @@ def submit_published_reasoning(
             "independent_evidence_eligible": False,
         },
     ))
+    db.commit()
+    return {
+        "stage": "SOCRATIC_REPAIR",
+        "socratic_repair_questions": list(probe.repair_questions),
+        "repair_check": _published_repair_prompt(problem, 0),
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+    }
+
+
+def _published_repair_prompt(problem: Problem, step: int) -> str:
+    """Two mathematical equalities checked server-side, never a mere text response."""
+    coefficients = problem.solution.get("equation_coefficients", {})
+    if set(("lhs_x", "lhs_constant", "rhs_x", "rhs_constant")) - coefficients.keys():
+        raise HTTPException(409, "Published repair coefficients unavailable")
+    if step == 0:
+        return (
+            "Subtract the right-side x term from both complete sides. "
+            "What coefficient of x remains on the left? Enter an exact number."
+        )
+    return (
+        "Subtract the original left-side constant from both complete sides. "
+        "What constant remains on the right? Enter an exact number."
+    )
+
+
+class PublishedRepairIn(BaseModel):
+    problem_id: uuid.UUID
+    response: str
+
+
+@router.post("/sessions/{session_id}/published-repair")
+def submit_published_repair(
+    session_id: uuid.UUID,
+    payload: PublishedRepairIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Require two independently checked mathematical repair steps before retest."""
+    if not 0 < len(payload.response) <= 64:
+        raise HTTPException(422, "Enter an exact number")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if (
+        session.status != "ACTIVE" or problem is None
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Repair is unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_REPAIR_RESULT",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    checks = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
+    if len(confirmed) != 1 or any(
+        t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED" for t in turns
+    ) or len(checks) >= 4 or any(
+        not isinstance(t.metadata_json, dict)
+        or t.attempt_id != confirmed[0].attempt_id
+        for t in checks
+    ):
+        raise HTTPException(409, "Repair stage is unavailable or complete")
+    passed = [t for t in checks if t.metadata_json["correct"] is True]
+    if len(passed) > 2 or any(
+        t.metadata_json.get("step") != index for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair proof is inconsistent")
+    step = len(passed)
+    if step >= 2:
+        raise HTTPException(409, "Repair already complete")
+    coefficients = problem.solution.get("equation_coefficients", {})
+    try:
+        a = Fraction(coefficients["lhs_x"])
+        b = Fraction(coefficients["lhs_constant"])
+        c = Fraction(coefficients["rhs_x"])
+        d = Fraction(coefficients["rhs_constant"])
+        submitted = Fraction(payload.response.strip().replace(" ", ""))
+    except (KeyError, ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
+        raise HTTPException(422, "Enter a valid exact rational number") from exc
+    expected = a - c if step == 0 else d - b
+    correct = submitted == expected
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_REPAIR_RESULT",
+        message="Equality-preserving repair step answered",
+        metadata_json={
+            "step": step, "correct": correct, "independent_evidence_eligible": False,
+        },
+    ))
+    if not correct:
+        db.commit()
+        return {
+            "stage": "SOCRATIC_REPAIR_RETRY",
+            "correct": False, "repair_check": _published_repair_prompt(problem, step),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if step == 0:
+        db.commit()
+        return {
+            "stage": "SOCRATIC_REPAIR",
+            "correct": True, "repair_check": _published_repair_prompt(problem, 1),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    try:
+        retest = server_guided_retest(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Guided retest unavailable") from exc
     db.add(TutorTurn(
         session_id=session.id, role="SYSTEM", problem_id=problem.id,
-        attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+        attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
         pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
-        message="Fresh guided retest issued",
+        message="Fresh guided retest issued after verified repair",
         metadata_json={
             "variant_id": retest["variant_id"],
             "task_fingerprint": retest["task_fingerprint"],
@@ -206,13 +324,12 @@ def submit_published_reasoning(
     db.commit()
     return {
         "stage": "GUIDED_RETEST",
-        "socratic_repair_questions": list(probe.repair_questions),
+        "correct": True,
         "guided_retest_task": {
-            "variant_id": retest["variant_id"],
-            "mode": "GUIDED",
+            "variant_id": retest["variant_id"], "mode": "GUIDED",
             "prompt": retest["prompt"],
         },
-        "independent_evidence_eligible": False,
+        "independent_evidence_eligible": False, "mastery_eligible": False,
     }
 
 
