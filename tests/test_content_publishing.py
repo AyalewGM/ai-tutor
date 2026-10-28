@@ -511,6 +511,48 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert result.json()["xp_earned"] == 0
                 assert result.json()["mastery_eligible"] is False
                 assert result.json()["independent_evidence_eligible"] is False
+                # Separate verification is a fresh, single-use task and remains
+                # explicitly disconnected from independent/mastery credit.
+                from app.services.published_reasoning_probe import server_distinct_mastery_task
+
+                private_mastery = server_distinct_mastery_task(
+                    problem, misconception_code=signal["misconception_code"],
+                    guided_retry_index=1,
+                )
+                assert private_mastery["private_target_fingerprint_for_review"] not in {
+                    problem.solution["task_fingerprint"],
+                    recovery["task_fingerprint"],
+                    transfer["private_target_fingerprint_for_review"],
+                }
+                mastery_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery"
+                )
+                started_mastery = client.post(
+                    f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                )
+                assert started_mastery.status_code == 200, started_mastery.text
+                assert started_mastery.json()["verification_task"] == private_mastery["learner_task"]
+                assert started_mastery.json()["hints_allowed"] is False
+                assert started_mastery.json()["mastery_eligible"] is False
+                assert started_mastery.json()["independent_evidence_eligible"] is False
+                assert "canonical_answer" not in json.dumps(started_mastery.json())
+                assert client.post(
+                    f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                answer_mastery = client.post(
+                    f"{mastery_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": private_mastery["private_exact_oracle_for_review"]},
+                )
+                assert answer_mastery.status_code == 200, answer_mastery.text
+                assert answer_mastery.json()["correct"] is True
+                assert answer_mastery.json()["xp_earned"] == 0
+                assert answer_mastery.json()["mastery_eligible"] is False
+                assert client.post(
+                    f"{mastery_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": private_mastery["private_exact_oracle_for_review"]},
+                ).status_code == 409
                 assert client.post(
                     f"{transfer_path}/respond",
                     json={"problem_id": str(problem.id),
