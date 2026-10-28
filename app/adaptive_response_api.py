@@ -198,8 +198,14 @@ def submit_published_reasoning(
     return {
         "stage": "SOCRATIC_REPAIR",
         "socratic_repair_questions": list(probe.repair_questions),
-        "repair_check": server_targeted_repair(probe.misconception_code)["prompt"],
-        "repair_choices": list(server_targeted_repair(probe.misconception_code)["choices"]),
+        "repair_check": server_targeted_repair(
+            probe.misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )["prompt"],
+        "repair_choices": list(server_targeted_repair(
+            probe.misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )["choices"]),
         "independent_evidence_eligible": False,
         "mastery_eligible": False,
     }
@@ -259,7 +265,7 @@ def submit_published_repair(
     checks = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
     if len(confirmed) != 1 or any(
         t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED" for t in turns
-    ) or len(checks) >= 4 or any(
+    ) or any(
         not isinstance(t.metadata_json, dict)
         or t.attempt_id != confirmed[0].attempt_id
         for t in checks
@@ -275,7 +281,10 @@ def submit_published_repair(
         raise HTTPException(409, "Repair already complete")
     try:
         misconception_code = confirmed[0].metadata_json["misconception_code"]
-        targeted = server_targeted_repair(misconception_code)
+        targeted = server_targeted_repair(
+            misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )
         coefficients = server_repair_coefficients(problem)
         a = Fraction(coefficients["lhs_x"])
         b = Fraction(coefficients["lhs_constant"])
