@@ -68,6 +68,7 @@ from app.services.problem_selection import _eligibility_column, select_next_prob
 from app.services.published_reasoning_probe import (
     PublishedProbeUnavailable,
     resolve_published_reasoning_probe,
+    server_distinct_mastery_task,
     server_guided_retest,
     server_repair_coefficients,
     server_targeted_repair,
@@ -639,6 +640,159 @@ def submit_published_transfer(
     db.commit()
     return {
         "stage": "TRANSFER_FEEDBACK_ONLY",
+        "correct": correct,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
+    }
+
+
+def _published_verified_transfer(db: DbSession, session: TutorSession, problem: Problem):
+    """Require exactly one committed, correct unhinted transfer before verification."""
+    if (
+        session.status != "ACTIVE"
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Separate verification unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+            "PUBLISHED_TRANSFER_ISSUED",
+            "PUBLISHED_TRANSFER_RESULT",
+            "PUBLISHED_MASTERY_ISSUED",
+            "PUBLISHED_MASTERY_RESULT",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmations = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    guided = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    transfers = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"]
+    if (
+        len(confirmations) != 1 or not 1 <= len(guided) <= 3
+        or len(transfers) != 1 or len(issued) != 1
+        or any(not isinstance(t.metadata_json, dict) for t in turns)
+        or any(t.attempt_id != confirmations[0].attempt_id for t in turns)
+        or any(t.metadata_json.get("correct") is not False for t in guided[:-1])
+        or guided[-1].metadata_json.get("correct") is not True
+        or transfers[0].metadata_json.get("correct") is not True
+        or issued[0].metadata_json.get("hints_allowed") is not False
+        or transfers[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "A successful unhinted transfer is required")
+    try:
+        guided_index = len(guided) - 1
+        code = confirmations[0].metadata_json["misconception_code"]
+        transfer = server_unhinted_transfer(
+            problem, misconception_code=code, guided_retry_index=guided_index,
+        )
+        mastery = server_distinct_mastery_task(
+            problem, misconception_code=code, guided_retry_index=guided_index,
+        )
+    except (KeyError, TypeError, PublishedProbeUnavailable) as exc:
+        raise HTTPException(409, "Separate verification source invalid") from exc
+    if (
+        issued[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+        or transfers[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+    ):
+        raise HTTPException(409, "Transfer identity does not match verified source")
+    return mastery, confirmations[0], turns
+
+
+@router.post("/sessions/{session_id}/published-mastery/start")
+def start_published_mastery(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Issue fresh verification only after correct transfer; never authorize credit."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    mastery, confirmed, turns = _published_verified_transfer(db, session, problem)
+    if any(t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED" for t in turns):
+        raise HTTPException(409, "Separate verification already issued")
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.MASTERY_CHECK,
+        pedagogical_action="PUBLISHED_MASTERY_ISSUED",
+        message="Separate no-hint verification task issued",
+        metadata_json={
+            "variant_id": mastery["learner_task"]["variant_id"],
+            "target_fingerprint": mastery["private_target_fingerprint_for_review"],
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+        "verification_task": mastery["learner_task"],
+        "hints_allowed": False,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
+    }
+
+
+@router.post("/sessions/{session_id}/published-mastery/respond")
+def submit_published_mastery(
+    session_id: uuid.UUID,
+    payload: PublishedTransferIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Exact-oracle separate verification. No XP, progress or mastery writes."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    mastery, confirmed, turns = _published_verified_transfer(db, session, problem)
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED"]
+    answered = [t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_RESULT"]
+    if (
+        len(issued) != 1 or answered
+        or issued[0].attempt_id != confirmed.attempt_id
+        or issued[0].metadata_json.get("target_fingerprint")
+        != mastery["private_target_fingerprint_for_review"]
+        or issued[0].metadata_json.get("variant_id")
+        != mastery["learner_task"]["variant_id"]
+        or issued[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "Verification was not issued or was answered")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(
+        payload.answer, mastery["private_exact_oracle_for_review"], variable="x",
+    )
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.MASTERY_CHECK,
+        pedagogical_action="PUBLISHED_MASTERY_RESULT",
+        message="Separate verification response recorded",
+        metadata_json={
+            "target_fingerprint": mastery["private_target_fingerprint_for_review"],
+            "correct": correct,
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
         "correct": correct,
         "independent_evidence_eligible": False,
         "mastery_eligible": False,
