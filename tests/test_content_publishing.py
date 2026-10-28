@@ -406,6 +406,40 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert verify.json()["correct"] is True
                 assert verify.json()["independent_evidence_eligible"] is False
                 assert verify.json()["mastery_eligible"] is False
+                from scripts.author_ontario_linear_depth import create_unhinted_transfer
+
+                transfer = create_unhinted_transfer(recovery)
+                transfer_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-transfer"
+                )
+                started = client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                )
+                assert started.status_code == 200, started.text
+                assert started.json()["stage"] == "INDEPENDENT_EXIT"
+                assert started.json()["hints_allowed"] is False
+                assert started.json()["mastery_eligible"] is False
+                assert started.json()["independent_evidence_eligible"] is False
+                assert started.json()["independent_task"] == transfer["learner_task"]
+                assert "canonical_answer" not in json.dumps(started.json())
+                assert client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                result = client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"]},
+                )
+                assert result.status_code == 200, result.text
+                assert result.json()["correct"] is True
+                assert result.json()["xp_earned"] == 0
+                assert result.json()["mastery_eligible"] is False
+                assert result.json()["independent_evidence_eligible"] is False
+                assert client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"]},
+                ).status_code == 409
                 assert client.post(
                     f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
                     json={"problem_id": str(problem.id),
