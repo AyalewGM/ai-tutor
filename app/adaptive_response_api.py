@@ -70,6 +70,7 @@ from app.services.published_reasoning_probe import (
     resolve_published_reasoning_probe,
     server_guided_retest,
     server_repair_coefficients,
+    server_targeted_repair,
     server_unhinted_transfer,
 )
 from app.services.review_schedule import (
@@ -197,7 +198,8 @@ def submit_published_reasoning(
     return {
         "stage": "SOCRATIC_REPAIR",
         "socratic_repair_questions": list(probe.repair_questions),
-        "repair_check": _published_repair_prompt(problem, 0),
+        "repair_check": server_targeted_repair(probe.misconception_code)["prompt"],
+        "repair_choices": list(server_targeted_repair(probe.misconception_code)["choices"]),
         "independent_evidence_eligible": False,
         "mastery_eligible": False,
     }
@@ -264,26 +266,37 @@ def submit_published_repair(
     ):
         raise HTTPException(409, "Repair stage is unavailable or complete")
     passed = [t for t in checks if t.metadata_json["correct"] is True]
-    if len(passed) > 2 or any(
+    if len(passed) > 3 or any(
         t.metadata_json.get("step") != index for index, t in enumerate(passed)
     ):
         raise HTTPException(409, "Repair proof is inconsistent")
     step = len(passed)
-    if step >= 2:
+    if step >= 3:
         raise HTTPException(409, "Repair already complete")
     try:
+        misconception_code = confirmed[0].metadata_json["misconception_code"]
+        targeted = server_targeted_repair(misconception_code)
         coefficients = server_repair_coefficients(problem)
         a = Fraction(coefficients["lhs_x"])
         b = Fraction(coefficients["lhs_constant"])
         c = Fraction(coefficients["rhs_x"])
         d = Fraction(coefficients["rhs_constant"])
-        submitted = Fraction(payload.response.strip().replace(" ", ""))
+        submitted = (
+            Fraction(payload.response.strip().replace(" ", ""))
+            if step > 0 else None
+        )
     except PublishedProbeUnavailable as exc:
         raise HTTPException(409, "Published repair source unavailable") from exc
     except (KeyError, ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
         raise HTTPException(422, "Enter a valid exact rational number") from exc
-    expected = a - c if step == 0 else d - b
-    correct = submitted == expected
+    if step == 0:
+        allowed = {choice["id"] for choice in targeted["choices"]}
+        if payload.response not in allowed:
+            raise HTTPException(422, "Choose a presented reasoning option")
+        correct = payload.response == targeted["expected"]
+    else:
+        expected = a - c if step == 1 else d - b
+        correct = submitted == expected
     db.add(TutorTurn(
         session_id=session.id, role="STUDENT", problem_id=problem.id,
         attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
@@ -297,14 +310,20 @@ def submit_published_repair(
         db.commit()
         return {
             "stage": "SOCRATIC_REPAIR_RETRY",
-            "correct": False, "repair_check": _published_repair_prompt(problem, step),
+            "correct": False,
+            "repair_check": (
+                targeted["prompt"] if step == 0
+                else _published_repair_prompt(problem, step - 1)
+            ),
+            "repair_choices": list(targeted["choices"]) if step == 0 else [],
             "independent_evidence_eligible": False, "mastery_eligible": False,
         }
-    if step == 0:
+    if step < 2:
         db.commit()
         return {
             "stage": "SOCRATIC_REPAIR",
-            "correct": True, "repair_check": _published_repair_prompt(problem, 1),
+            "correct": True,
+            "repair_check": _published_repair_prompt(problem, step),
             "independent_evidence_eligible": False, "mastery_eligible": False,
         }
     try:
