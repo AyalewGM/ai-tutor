@@ -289,3 +289,38 @@ def server_unhinted_transfer(
     ):
         raise PublishedProbeUnavailable("Independent transfer contract invalid")
     return transfer
+
+
+def server_distinct_mastery_task(
+    problem: Problem, *, misconception_code: str, guided_retry_index: int,
+) -> dict:
+    """Separate, fresh exact-oracle mastery *verification*, never credit issuance."""
+    guided = server_guided_retest(
+        problem, misconception_code=misconception_code,
+        retry_index=guided_retry_index,
+    )
+    transfer = server_unhinted_transfer(
+        problem, misconception_code=misconception_code,
+        guided_retry_index=guided_retry_index,
+    )
+    mastery = create_unhinted_transfer(guided, target_mode="MASTERY")
+    if (
+        mastery["target_mode"] != "MASTERY"
+        or mastery["learner_task"]["mode"] != "MASTERY"
+        or mastery["hints_allowed"] is not False
+        or mastery["runtime_credit_authorized"] is not False
+        or mastery["target_family"] == guided["candidate_family"]
+        or mastery["target_family"] != transfer["target_family"]
+        or mastery["private_target_fingerprint_for_review"] in {
+            problem.solution["task_fingerprint"],
+            guided["task_fingerprint"],
+            transfer["private_target_fingerprint_for_review"],
+        }
+        or mastery["private_exact_oracle_for_review"] in {
+            problem.canonical_answer,
+            guided["canonical_answer"],
+            transfer["private_exact_oracle_for_review"],
+        }
+    ):
+        raise PublishedProbeUnavailable("Mastery verification task is not distinct")
+    return mastery
