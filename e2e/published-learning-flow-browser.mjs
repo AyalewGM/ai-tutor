@@ -46,7 +46,7 @@ try {
     const send = body => route.fulfill({
       status: 200, contentType: "application/json", body: JSON.stringify(body),
     });
-    if (endpoint.endsWith("/published-reasoning") && req.method() === "GET") {
+    if (endpoint.endsWith("/published-recovery") && req.method() === "GET") {
       if (!authorized) return route.fulfill({ status: 409,
         contentType: "application/json", body: '{"detail":"Unavailable"}' });
       assert.equal(url.searchParams.get("problem_id"), "source-1");
