@@ -407,6 +407,12 @@ def submit_published_guided_retest(
         or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
     ):
         raise HTTPException(409, "Guided retest is unavailable")
+    # Revalidate release authorization after locking the owned session.
+    # An already-issued task must not survive family, signed-policy, or
+    # content-metadata revocation. Reject before scoring or any history write.
+    mode = problem.solution.get("mode") if isinstance(problem.solution, dict) else None
+    if mode not in {"diagnostic", "guided"} or not permitted(db, problem, mode):
+        raise HTTPException(409, "Published question authorization was revoked")
     turns = db.scalars(select(TutorTurn).where(
         TutorTurn.session_id == session.id,
         TutorTurn.problem_id == problem.id,
