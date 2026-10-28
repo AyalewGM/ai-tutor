@@ -36,12 +36,16 @@ export default function PublishedLearningRecovery({
     setNotice("");
     setSelection("");
     setAnswer("");
-    void api<unknown>(prefix + "/published-reasoning?problem_id=" +
+    void api<unknown>(prefix + "/published-recovery?problem_id=" +
       encodeURIComponent(problemId)).then((data) => {
       if (current !== revision.current) return;
       const parsed = parsePublishedStage(data);
-      if (!parsed || parsed.stage !== "CONFIRM_REASONING" ||
-          parsed.problem_id !== problemId) {
+      if (!parsed || (parsed.problem_id !== undefined && parsed.problem_id !== problemId) ||
+          parsed.stage === "INDEPENDENT_EXIT" ||
+          (parsed.stage === "MASTERY_VERIFICATION_FEEDBACK_ONLY" && parsed.verification_task)) {
+        // Until independently accepted issuance-identity proof exists for
+        // recovered independent/mastery tasks, never replay their prompt.
+        setStage(null);
         unavailable.current();
         return;
       }
