@@ -279,6 +279,22 @@ def submit_published_repair(
     step = len(passed)
     if step >= 3:
         raise HTTPException(409, "Repair already complete")
+    # Retry limits are per checked operation, not a global count. A learner
+    # may recover from one mistake in each of the three stages.
+    if any(
+        t.metadata_json.get("step") not in (0, 1, 2)
+        or t.metadata_json.get("correct") is not False
+        for t in checks if t not in passed
+    ) or any(
+        sum(t.metadata_json.get("step") == index for t in checks) > 3
+        for index in (0, 1, 2)
+    ) or sum(t.metadata_json.get("step") == step for t in checks) >= 3:
+        raise HTTPException(409, "Repair retry limit reached")
+    if any(
+        t.metadata_json.get("step") != index
+        for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair stage ordering invalid")
     try:
         misconception_code = confirmed[0].metadata_json["misconception_code"]
         targeted = server_targeted_repair(
