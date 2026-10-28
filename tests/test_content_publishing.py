@@ -386,6 +386,21 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 second_value = (
                     Fraction(coeffs["rhs_constant"]) - Fraction(coeffs["lhs_constant"])
                 )
+                from app.services.published_reasoning_probe import server_targeted_repair
+
+                targeted = server_targeted_repair(signal["misconception_code"])
+                assert result.json()["repair_check"] == targeted["prompt"]
+                assert result.json()["repair_choices"] == list(targeted["choices"])
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": "DISTRACTOR_A",
+                }).json()["stage"] == "SOCRATIC_REPAIR_RETRY"
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": targeted["expected"],
+                }).json()["stage"] == "SOCRATIC_REPAIR"
                 # A wrong equality transformation remains non-credit and does
                 # not expose or issue a guided item.
                 wrong_repair = client.post(repair_path, json={
