@@ -1034,7 +1034,10 @@ export default function Workspace() {
                       key={publishedRecovery.sessionId + ":" + publishedRecovery.problemId}
                       sessionId={publishedRecovery.sessionId}
                       problemId={publishedRecovery.problemId}
-                      onUnavailable={() => setPublishedRecovery(null)}
+                      onUnavailable={() => {
+                        setPublishedRecovery(null);
+                        setStatus("This recovery step could not be restored or was revoked. Return to your learning session for a server-authorized fresh task.");
+                      }}
                       onClose={() => setPublishedRecovery(null)}
                     />
                   ) : (
