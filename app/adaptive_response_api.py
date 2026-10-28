@@ -112,6 +112,53 @@ def _publish_adaptive_event(
     )
 
 
+@router.get("/sessions/{session_id}/published-recovery/current")
+def discover_published_recovery(
+    session_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Find a recoverable published task from this authenticated learner session.
+
+    No browser-provided problem identity, no cross-session fallback, and no
+    automatic selection among multiple unfinished questions. The downstream
+    recovery endpoint independently checks issuer identity and live authority.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    ids = list(db.scalars(
+        select(Attempt.problem_id)
+        .join(Problem, Problem.id == Attempt.problem_id)
+        .where(
+            Attempt.session_id == session.id,
+            Attempt.student_id == session.student_id,
+            Attempt.is_correct.is_(False),
+            Problem.source_type == "PUBLISHED",
+            Problem.primary_skill_id == active_skill_id,
+        )
+        .distinct()
+        .limit(2)
+    ))
+    if not ids:
+        return {
+            "stage": "NONE", "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        }
+    if len(ids) != 1:
+        raise HTTPException(409, "Ambiguous published recovery history")
+    # The same owner, live publication and task-issuance checks apply whether
+    # the problem ID came from a browser or the server's own lookup.
+    state = published_recovery_state(
+        session_id=session_id, problem_id=ids[0], access=access, db=db,
+    )
+    return {"problem_id": ids[0], **state}
+
+
 @router.get("/sessions/{session_id}/published-recovery")
 def published_recovery_state(
     session_id: uuid.UUID,
