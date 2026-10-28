@@ -374,10 +374,32 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert public_retest["variant_id"] == private_retest["variant_id"]
                 assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
                 assert public_retest["mode"] == "GUIDED"
+                # A plausible near-miss must not count as mathematical success;
+                # recovery must use a fresh server-issued variant.
+                wrong = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id), "answer": "x=99999999"},
+                )
+                assert wrong.status_code == 200, wrong.text
+                assert wrong.json()["stage"] == "GUIDED_RETEST_RETRY"
+                assert wrong.json()["correct"] is False
+                assert wrong.json()["independent_evidence_eligible"] is False
+                assert wrong.json()["mastery_eligible"] is False
+                fresh = wrong.json()["guided_retest_task"]
+                assert fresh["variant_id"] != public_retest["variant_id"]
+                recovery = server_guided_retest(
+                    problem, misconception_code=signal["misconception_code"],
+                    retry_index=1,
+                )
+                assert recovery["task_fingerprint"] != private_retest["task_fingerprint"]
+                assert recovery["task_fingerprint"] != problem.solution["task_fingerprint"]
+                assert fresh["variant_id"] == recovery["variant_id"]
+                exact = Fraction(recovery["canonical_answer"].split("=")[1])
+                equivalent = f"x={exact.numerator * 2}/{exact.denominator * 2}"
                 verify = client.post(
                     f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
                     json={"problem_id": str(problem.id),
-                          "answer": private_retest["canonical_answer"]},
+                          "answer": equivalent},
                 )
                 assert verify.status_code == 200, verify.text
                 assert verify.json()["stage"] == "READY_FOR_TRANSFER_CONFIRMATION"
