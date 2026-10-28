@@ -14,7 +14,10 @@ from sqlalchemy.orm import Session
 from app.models import Attempt, Problem, TutorSession, TutorState, TutorTurn
 from app.services.content_publishing import candidates, permitted
 from app.services.fraction_assessment_registry import score_fraction
-from scripts.author_ontario_linear_depth import _create_target_preserving_guided_retest
+from scripts.author_ontario_linear_depth import (
+    _create_target_preserving_guided_retest,
+    create_unhinted_transfer,
+)
 
 
 class PublishedProbeUnavailable(ValueError):
@@ -161,3 +164,26 @@ def server_guided_retest(
     ):
         raise PublishedProbeUnavailable("Guided retest was not fresh")
     return target
+
+
+def server_unhinted_transfer(
+    problem: Problem, *, misconception_code: str, guided_retry_index: int,
+) -> dict:
+    """Derive an alternate-family independent task without mastery authority."""
+    guided = server_guided_retest(
+        problem, misconception_code=misconception_code,
+        retry_index=guided_retry_index,
+    )
+    transfer = create_unhinted_transfer(guided)
+    if (
+        not transfer["reasoning_structure_changed"]
+        or not transfer["task_fingerprint_changed"]
+        or transfer["target_family"] == guided["candidate_family"]
+        or transfer["private_target_fingerprint_for_review"]
+        in {guided["task_fingerprint"], problem.solution["task_fingerprint"]}
+        or transfer["learner_task"]["mode"] != "INDEPENDENT"
+        or transfer["hints_allowed"]
+        or transfer["runtime_credit_authorized"]
+    ):
+        raise PublishedProbeUnavailable("Independent transfer contract invalid")
+    return transfer
