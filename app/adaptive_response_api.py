@@ -248,7 +248,7 @@ def submit_published_guided_retest(
             "PUBLISHED_GUIDED_RETEST_ISSUED",
             "PUBLISHED_GUIDED_RETEST_RESULT",
         )),
-    )).all()
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())).all()
     confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
     issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
     submitted = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
