@@ -107,7 +107,7 @@ def resolve_published_reasoning_probe(
 
 
 def server_guided_retest(
-    problem: Problem, *, misconception_code: str,
+    problem: Problem, *, misconception_code: str, retry_index: int = 0,
 ) -> dict:
     """Reconstruct the same-family guided retest; keep oracle server-private.
 
@@ -135,9 +135,23 @@ def server_guided_retest(
     }
     if misconception_code not in valid_codes:
         raise PublishedProbeUnavailable("Unknown diagnosis for issued task")
+    if not 0 <= retry_index <= 2:
+        raise PublishedProbeUnavailable("Guided retest retry limit reached")
+    # Deterministic server-owned retry identity, never supplied by the learner.
+    retry_source = dict(source)
+    if retry_index:
+        retry_source["variant_id"] = f"{source['variant_id']}|retry|{retry_index}"
     target, _signal = _create_target_preserving_guided_retest(
-        source, misconception_code,
+        retry_source, misconception_code,
     )
+    prior_fingerprints = {source["task_fingerprint"]}
+    for previous_index in range(retry_index):
+        prior_fingerprints.add(server_guided_retest(
+            problem, misconception_code=misconception_code,
+            retry_index=previous_index,
+        )["task_fingerprint"])
+    if target["task_fingerprint"] in prior_fingerprints:
+        raise PublishedProbeUnavailable("Guided retry task is not distinct")
     if (
         target["candidate_family"] != source["candidate_family"]
         or target["canonical_skill_hint"] != source["canonical_skill_hint"]
