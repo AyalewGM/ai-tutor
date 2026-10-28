@@ -68,6 +68,7 @@ from app.services.published_reasoning_probe import (
     PublishedProbeUnavailable,
     resolve_published_reasoning_probe,
     server_guided_retest,
+    server_unhinted_transfer,
 )
 from app.services.review_schedule import (
     REVIEW_PASSED,
@@ -336,6 +337,147 @@ def submit_published_guided_retest(
         "guided_retest_task": next_task,
         "independent_evidence_eligible": False,
         "mastery_eligible": False,
+    }
+
+
+class PublishedTransferIn(BaseModel):
+    problem_id: uuid.UUID
+    answer: str
+
+
+def _published_transfer_proof(db: DbSession, session: TutorSession, problem: Problem):
+    """Server-only proof of a successful, fresh guided retest."""
+    if (
+        session.status != "ACTIVE" or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Transfer is unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+            "PUBLISHED_TRANSFER_ISSUED",
+            "PUBLISHED_TRANSFER_RESULT",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if (
+        len(confirmed) != 1 or not issued or len(results) != len(issued)
+        or not 1 <= len(issued) <= 3
+        or any(t.attempt_id != confirmed[0].attempt_id for t in (*issued, *results))
+        or any(not isinstance(t.metadata_json, dict) for t in (*confirmed, *issued, *results))
+        or any(t.metadata_json.get("correct") is not False for t in results[:-1])
+        or results[-1].metadata_json.get("correct") is not True
+        or len([t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"])
+    ):
+        raise HTTPException(409, "Verified guided success is required before transfer")
+    try:
+        transfer = server_unhinted_transfer(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+            guided_retry_index=len(results) - 1,
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Transfer generation unavailable") from exc
+    return transfer, confirmed[0], turns
+
+
+@router.post("/sessions/{session_id}/published-transfer/start")
+def start_published_transfer(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Issue a single new-family, unhinted transfer in the owned learner session."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    transfer, confirmed, turns = _published_transfer_proof(db, session, problem)
+    if any(t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED" for t in turns):
+        raise HTTPException(409, "Independent transfer already issued")
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.INDEPENDENT_PRACTICE,
+        pedagogical_action="PUBLISHED_TRANSFER_ISSUED",
+        message="Unhinted alternate-family task issued",
+        metadata_json={
+            "variant_id": transfer["learner_task"]["variant_id"],
+            "target_fingerprint": transfer["private_target_fingerprint_for_review"],
+            "source_fingerprint": problem.solution["task_fingerprint"],
+            "target_family": transfer["target_family"],
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "INDEPENDENT_EXIT",
+        "independent_task": transfer["learner_task"],
+        "hints_allowed": False,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+    }
+
+
+@router.post("/sessions/{session_id}/published-transfer/respond")
+def submit_published_transfer(
+    session_id: uuid.UUID,
+    payload: PublishedTransferIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Exact-oracle transfer feedback, strictly separate from mastery credit."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    transfer, confirmed, turns = _published_transfer_proof(db, session, problem)
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"]
+    if (
+        len(issued) != 1 or issued[0].attempt_id != confirmed.attempt_id
+        or not isinstance(issued[0].metadata_json, dict)
+        or issued[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+        or issued[0].metadata_json.get("variant_id")
+        != transfer["learner_task"]["variant_id"]
+        or issued[0].metadata_json.get("target_family") != transfer["target_family"]
+        or issued[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "Unhinted transfer issuance proof is invalid")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(
+        payload.answer, transfer["private_exact_oracle_for_review"], variable="x",
+    )
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.INDEPENDENT_PRACTICE,
+        pedagogical_action="PUBLISHED_TRANSFER_RESULT",
+        message="Independent task answered",
+        metadata_json={
+            "target_fingerprint": transfer["private_target_fingerprint_for_review"],
+            "correct": correct,
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "TRANSFER_FEEDBACK_ONLY",
+        "correct": correct,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
     }
 
 
