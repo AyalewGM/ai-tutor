@@ -253,22 +253,35 @@ def submit_published_guided_retest(
     issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
     submitted = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
     if (
-        len(confirmed) != 1 or len(issued) != 1 or submitted
-        or confirmed[0].attempt_id != issued[0].attempt_id
-        or not isinstance(confirmed[0].metadata_json, dict)
-        or not isinstance(issued[0].metadata_json, dict)
+        len(confirmed) != 1
+        or len(issued) != len(submitted) + 1
+        or len(issued) > 3
+        or any(
+            t.attempt_id != confirmed[0].attempt_id
+            for t in (*issued, *submitted)
+        )
+        or any(
+            not isinstance(t.metadata_json, dict)
+            for t in (*confirmed, *issued, *submitted)
+        )
+        or any(
+            t.metadata_json.get("correct") is not False
+            for t in submitted
+        )
     ):
-        raise HTTPException(409, "Guided retest must be issued exactly once")
+        raise HTTPException(409, "Guided retest issuance or recovery proof is invalid")
+    retry_index = len(submitted)
     try:
         retest = server_guided_retest(
             problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+            retry_index=retry_index,
         )
     except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
         raise HTTPException(409, "Guided retest proof unavailable") from exc
     if (
-        issued[0].metadata_json.get("variant_id") != retest["variant_id"]
-        or issued[0].metadata_json.get("task_fingerprint") != retest["task_fingerprint"]
-        or issued[0].metadata_json.get("source_fingerprint")
+        issued[-1].metadata_json.get("variant_id") != retest["variant_id"]
+        or issued[-1].metadata_json.get("task_fingerprint") != retest["task_fingerprint"]
+        or issued[-1].metadata_json.get("source_fingerprint")
         != problem.solution["task_fingerprint"]
     ):
         raise HTTPException(409, "Guided retest identity mismatch")
@@ -277,7 +290,7 @@ def submit_published_guided_retest(
     correct = score_fraction(payload.answer, retest["canonical_answer"], variable="x")
     db.add(TutorTurn(
         session_id=session.id, role="STUDENT", problem_id=problem.id,
-        attempt_id=issued[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        attempt_id=issued[-1].attempt_id, state=TutorState.GUIDED_PRACTICE,
         pedagogical_action="PUBLISHED_GUIDED_RETEST_RESULT",
         message=payload.answer,
         metadata_json={
@@ -288,10 +301,39 @@ def submit_published_guided_retest(
             "independent_evidence_eligible": False,
         },
     ))
+    next_task = None
+    if not correct and retry_index < 2:
+        try:
+            retry = server_guided_retest(
+                problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+                retry_index=retry_index + 1,
+            )
+        except PublishedProbeUnavailable as exc:
+            raise HTTPException(409, str(exc)) from exc
+        db.add(TutorTurn(
+            session_id=session.id, role="SYSTEM", problem_id=problem.id,
+            attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+            message="Fresh guided recovery task issued",
+            metadata_json={
+                "variant_id": retry["variant_id"],
+                "task_fingerprint": retry["task_fingerprint"],
+                "source_fingerprint": problem.solution["task_fingerprint"],
+                "independent_evidence_eligible": False,
+            },
+        ))
+        next_task = {
+            "variant_id": retry["variant_id"], "mode": "GUIDED",
+            "prompt": retry["prompt"],
+        }
     db.commit()
     return {
-        "stage": "READY_FOR_TRANSFER_CONFIRMATION" if correct else "GUIDED_RETEST_RETRY",
+        "stage": (
+            "READY_FOR_TRANSFER_CONFIRMATION" if correct else
+            "GUIDED_RETEST_RETRY" if next_task else "GUIDED_RETEST_EXHAUSTED"
+        ),
         "correct": correct,
+        "guided_retest_task": next_task,
         "independent_evidence_eligible": False,
         "mastery_eligible": False,
     }
