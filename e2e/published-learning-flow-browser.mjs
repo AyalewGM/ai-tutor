@@ -54,7 +54,11 @@ try {
       if (recoverStage === "GUIDED_RETEST") return send(reply("GUIDED_RETEST", {
         guided_retest_task: task("GUIDED", "Persisted guided retest") }));
       if (recoverStage === "INDEPENDENT_EXIT") return send(reply("INDEPENDENT_EXIT", {
-        independent_task: task("INDEPENDENT", "Should stay hidden"), hints_allowed: false }));
+        independent_task: task("INDEPENDENT", "Persisted independent task"), hints_allowed: false }));
+      if (recoverStage === "MASTERY_VERIFICATION_FEEDBACK_ONLY") return send(reply(
+        "MASTERY_VERIFICATION_FEEDBACK_ONLY", {
+          verification_task: task("MASTERY", "Persisted verification task"), hints_allowed: false }));
+      if (recoverStage === "COMPLETE_FEEDBACK_ONLY") return send(reply("COMPLETE_FEEDBACK_ONLY"));
       return send(reply("CONFIRM_REASONING", {
         problem_id: "source-1", prompt: "Why are the two sides equal?",
         choices: [{ id: "CHOICE_1", text: "One side only" }, { id: "CHOICE_2", text: "Same operation on both sides" }],
@@ -163,12 +167,21 @@ try {
   await page.reload();
   await page.getByRole("button", { name: "Offer recovery" }).click();
   await region.getByText("Persisted guided retest").waitFor();
-  // Pending independent issuance identity is not accepted for recovery yet.
+  // Latest backend validates persisted issuance identity before returning each task.
   recoverStage = "INDEPENDENT_EXIT";
   await page.reload();
   await page.getByRole("button", { name: "Offer recovery" }).click();
-  await page.waitForFunction(() => document.querySelector("button")?.getAttribute("aria-pressed") === "false");
-  assert.equal(await region.count(), 0);
+  await region.getByText("Persisted independent task").waitFor();
+  assert.equal(await region.getByText("Persisted guided retest").count(), 0);
+  recoverStage = "MASTERY_VERIFICATION_FEEDBACK_ONLY";
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await region.getByText("Persisted verification task").waitFor();
+  assert.equal(await region.getByText("Persisted independent task").count(), 0);
+  recoverStage = "COMPLETE_FEEDBACK_ONLY";
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await region.getByText(/Verification recorded/).waitFor();
   assert.deepEqual(pageErrors, []);
   console.log("PASS: server-gated diagnosis, targeted repair, retry, unhinted transfer, no-credit verification and hidden guided content");
 } finally {

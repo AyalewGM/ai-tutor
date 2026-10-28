@@ -35,6 +35,7 @@ test("server-authorized exact stages accept only noncredit, correctly typed payl
     { ...base, stage: "READY_FOR_TRANSFER_CONFIRMATION", correct: true },
     { ...base, stage: "INDEPENDENT_EXIT", independent_task: task("INDEPENDENT"), hints_allowed: false },
     { ...base, stage: "TRANSFER_FEEDBACK_ONLY", correct: true },
+    { ...base, stage: "COMPLETE_FEEDBACK_ONLY" },
     { ...base, stage: "MASTERY_VERIFICATION_FEEDBACK_ONLY", verification_task: task("MASTERY"), hints_allowed: false },
     { ...base, stage: "MASTERY_VERIFICATION_FEEDBACK_ONLY", correct: true },
   ];

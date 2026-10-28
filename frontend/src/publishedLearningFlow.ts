@@ -7,7 +7,8 @@ export type PublishedStep =
   | "SOCRATIC_REPAIR" | "SOCRATIC_REPAIR_RETRY"
   | "GUIDED_RETEST" | "GUIDED_RETEST_RETRY" | "GUIDED_RETEST_EXHAUSTED"
   | "READY_FOR_TRANSFER_CONFIRMATION" | "INDEPENDENT_EXIT"
-  | "TRANSFER_FEEDBACK_ONLY" | "MASTERY_VERIFICATION_FEEDBACK_ONLY";
+  | "TRANSFER_FEEDBACK_ONLY" | "MASTERY_VERIFICATION_FEEDBACK_ONLY"
+  | "COMPLETE_FEEDBACK_ONLY";
 
 export interface PublishedChoice { id: string; text: string }
 export interface PublishedTask { variant_id: string; mode: "GUIDED" | "INDEPENDENT" | "MASTERY"; prompt: string }
@@ -35,7 +36,7 @@ const stages = new Set<string>([
   "SOCRATIC_REPAIR_RETRY", "GUIDED_RETEST", "GUIDED_RETEST_RETRY",
   "GUIDED_RETEST_EXHAUSTED", "READY_FOR_TRANSFER_CONFIRMATION",
   "INDEPENDENT_EXIT", "TRANSFER_FEEDBACK_ONLY",
-  "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+  "MASTERY_VERIFICATION_FEEDBACK_ONLY", "COMPLETE_FEEDBACK_ONLY",
 ]);
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === "object" && !Array.isArray(value);

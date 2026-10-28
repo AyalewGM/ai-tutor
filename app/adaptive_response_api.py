@@ -112,6 +112,178 @@ def _publish_adaptive_event(
     )
 
 
+@router.get("/sessions/{session_id}/published-recovery")
+def published_recovery_state(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Read-only recovery of a server-issued published journey after UI reload.
+
+    Never trusts a browser stage, returns private oracles, or revives a revoked
+    publication. Unrecognized or inconsistent histories fail closed.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    problem = db.get(Problem, problem_id)
+    if (
+        problem is None or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+        or not isinstance(problem.solution, dict)
+    ):
+        raise HTTPException(409, "Published recovery unavailable")
+    mode = problem.solution.get("mode")
+    if mode not in {"diagnostic", "guided"} or not permitted(db, problem, mode):
+        raise HTTPException(409, "Published recovery authorization unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.like("PUBLISHED_%"),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    if not turns:
+        try:
+            probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+        except PublishedProbeUnavailable as exc:
+            raise HTTPException(409, "No recoverable published journey") from exc
+        return {
+            "stage": "CONFIRM_REASONING", "problem_id": problem_id,
+            "prompt": probe.prompt, "choices": list(probe.choices),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    confirmations = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    if len(confirmations) != 1 or any(
+        t.attempt_id != confirmations[0].attempt_id for t in turns
+    ) or not isinstance(confirmations[0].metadata_json, dict):
+        raise HTTPException(409, "Published recovery proof invalid")
+    code = confirmations[0].metadata_json.get("misconception_code")
+    if not isinstance(code, str):
+        raise HTTPException(409, "Published recovery diagnosis invalid")
+    actions = [t.pedagogical_action for t in turns]
+    if "PUBLISHED_MASTERY_RESULT" in actions:
+        return {"stage": "COMPLETE_FEEDBACK_ONLY",
+                "independent_evidence_eligible": False, "mastery_eligible": False}
+    if "PUBLISHED_MASTERY_ISSUED" in actions:
+        mastery_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED"
+        ]
+        if len(mastery_issues) != 1 or (
+            mastery_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Mastery issuance history invalid")
+        try:
+            guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+            mastery = server_distinct_mastery_task(
+                problem, misconception_code=code, guided_retry_index=len(guided_results) - 1,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Mastery recovery unavailable") from exc
+        proof = mastery_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != mastery["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != mastery["private_target_fingerprint_for_review"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+            proof.get("mastery_eligible") is not False,
+        )):
+            raise HTTPException(409, "Mastery issuance identity mismatch")
+        return {
+            "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+            "verification_task": mastery["learner_task"], "hints_allowed": False,
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if "PUBLISHED_TRANSFER_RESULT" in actions:
+        return {"stage": "TRANSFER_FEEDBACK_ONLY",
+                "independent_evidence_eligible": False, "mastery_eligible": False}
+    if "PUBLISHED_TRANSFER_ISSUED" in actions:
+        transfer_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"
+        ]
+        if len(transfer_issues) != 1 or (
+            transfer_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Transfer issuance history invalid")
+        try:
+            guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+            transfer = server_unhinted_transfer(
+                problem, misconception_code=code, guided_retry_index=len(guided_results) - 1,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Transfer recovery unavailable") from exc
+        proof = transfer_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != transfer["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != transfer["private_target_fingerprint_for_review"],
+            proof.get("target_family") != transfer["target_family"],
+            proof.get("source_fingerprint") != problem.solution["task_fingerprint"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+        )):
+            raise HTTPException(409, "Transfer issuance identity mismatch")
+        return {
+            "stage": "INDEPENDENT_EXIT", "independent_task": transfer["learner_task"],
+            "hints_allowed": False, "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        }
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if len(issued) == len(results) + 1 and 1 <= len(issued) <= 3:
+        try:
+            guided = server_guided_retest(
+                problem, misconception_code=code, retry_index=len(results),
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Guided recovery unavailable") from exc
+        proof = issued[-1].metadata_json
+        if (
+            issued[-1].attempt_id != confirmations[0].attempt_id
+            or not isinstance(proof, dict)
+            or proof.get("variant_id") != guided["variant_id"]
+            or proof.get("task_fingerprint") != guided["task_fingerprint"]
+            or proof.get("source_fingerprint") != problem.solution["task_fingerprint"]
+            or proof.get("independent_evidence_eligible") is not False
+        ):
+            raise HTTPException(409, "Guided recovery issuance identity mismatch")
+        return {
+            "stage": "GUIDED_RETEST_RETRY" if results else "GUIDED_RETEST",
+            "guided_retest_task": {
+                "variant_id": guided["variant_id"], "mode": "GUIDED",
+                "prompt": guided["prompt"],
+            },
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if issued:
+        if len(results) == len(issued) and results and (
+            isinstance(results[-1].metadata_json, dict)
+            and results[-1].metadata_json.get("correct") is True
+        ):
+            return {"stage": "READY_FOR_TRANSFER_CONFIRMATION",
+                    "independent_evidence_eligible": False, "mastery_eligible": False}
+        raise HTTPException(409, "Guided recovery stage unavailable")
+    repairs = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
+    if any(not isinstance(t.metadata_json, dict) for t in repairs):
+        raise HTTPException(409, "Repair recovery proof invalid")
+    passed = [t for t in repairs if t.metadata_json.get("correct") is True]
+    if len(passed) > 2 or any(
+        t.metadata_json.get("step") != index for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair recovery order invalid")
+    step = len(passed)
+    if step == 0:
+        targeted = server_targeted_repair(
+            code, task_fingerprint=problem.solution["task_fingerprint"],
+        )
+        return {
+            "stage": "SOCRATIC_REPAIR", "repair_check": targeted["prompt"],
+            "repair_choices": list(targeted["choices"]),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    return {
+        "stage": "SOCRATIC_REPAIR",
+        "repair_check": _published_repair_prompt(problem, step - 1),
+        "independent_evidence_eligible": False, "mastery_eligible": False,
+    }
+
+
 class PublishedReasoningIn(BaseModel):
     problem_id: uuid.UUID
     choice_id: str

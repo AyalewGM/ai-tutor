@@ -40,9 +40,7 @@ export default function PublishedLearningRecovery({
       encodeURIComponent(problemId)).then((data) => {
       if (current !== revision.current) return;
       const parsed = parsePublishedStage(data);
-      if (!parsed || (parsed.problem_id !== undefined && parsed.problem_id !== problemId) ||
-          parsed.stage === "INDEPENDENT_EXIT" ||
-          (parsed.stage === "MASTERY_VERIFICATION_FEEDBACK_ONLY" && parsed.verification_task)) {
+      if (!parsed || (parsed.problem_id !== undefined && parsed.problem_id !== problemId)) {
         // Until independently accepted issuance-identity proof exists for
         // recovered independent/mastery tasks, never replay their prompt.
         setStage(null);
@@ -234,8 +232,9 @@ export default function PublishedLearningRecovery({
       {stage?.stage === "GUIDED_RETEST_EXHAUSTED" && <p>
         Guided attempts are complete. Return to your learning session.
       </p>}
-      {(stage?.stage === "MASTERY_VERIFICATION_FEEDBACK_ONLY" &&
-        !stage.verification_task) && <p>
+      {(stage?.stage === "COMPLETE_FEEDBACK_ONLY" ||
+        (stage?.stage === "MASTERY_VERIFICATION_FEEDBACK_ONLY" &&
+        !stage.verification_task)) && <p>
         Verification recorded. This result does not grant mastery credit.
       </p>}
       {notice && <p role="status" aria-live="polite">{notice}</p>}
