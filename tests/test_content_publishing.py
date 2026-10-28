@@ -450,6 +450,17 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert public_retest["variant_id"] == private_retest["variant_id"]
                 assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
                 assert public_retest["mode"] == "GUIDED"
+                recovery_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-recovery"
+                )
+                recovered = client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                )
+                assert recovered.status_code == 200, recovered.text
+                assert recovered.json()["stage"] == "GUIDED_RETEST"
+                assert recovered.json()["guided_retest_task"] == public_retest
+                assert recovered.json()["independent_evidence_eligible"] is False
+                assert "canonical_answer" not in json.dumps(recovered.json())
                 # Revoking a previously issued family's authorization must
                 # reject an authenticated retest without changing any history.
                 family = db.scalar(select(ProblemFamily))
@@ -477,6 +488,9 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                     "answer": private_retest["canonical_answer"],
                 })
                 assert revoked.status_code == 409, revoked.text
+                assert client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                ).status_code == 409
                 assert {
                     model.__name__: db.scalar(select(func.count(model.id)))
                     for model in (
