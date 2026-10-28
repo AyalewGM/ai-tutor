@@ -79,9 +79,9 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     }
 
-    assert len(existing) == 32
+    assert len(existing) == 33
     for row in rows:
-        if row["expectation_id"] in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.3", "8.SP.A.3"}:
+        if row["expectation_id"] in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.EE.A.3", "8.SP.A.3"}:
             assert row["repository_existing_crosswalks"] == []
             expected_candidates = {
                 "8.NS.A.1": [
@@ -94,6 +94,14 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
                     "MATH.DEC.FRACTION.HUNDREDTHS",
                 ],
                 "8.NS.A.2": ["M8.NS.RAD", "MATH.NS.IRRATIONAL.APPROX"],
+                "8.EE.A.2": [
+                    "M8.NS.RAD",
+                    "MATH.ROOT.SQUARE",
+                    "MATH.ROOT.CUBE",
+                    "MATH.NS.IRRATIONAL.CLASSIFY",
+                    "MATH.NS.IRRATIONAL.APPROX",
+                    "MATH.EXP.EVALUATE",
+                ],
                 "8.EE.A.3": [
                     "MATH.SCI.CONVERT",
                     "MATH.SCI.MULTIPLY",
@@ -146,6 +154,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
     assert [row["expectation_id"] for row in existing] == [
         "8.NS.A.1",
         "8.NS.A.2",
+        "8.EE.A.2",
         "8.EE.A.3",
         "8.SP.A.3",
     ]
@@ -155,7 +164,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
         if row["expectation_id"] not in {
-            "8.NS.A.1", "8.NS.A.2", "8.EE.A.3", "8.SP.A.3"
+            "8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.EE.A.3", "8.SP.A.3"
         }
     )
     # No geometry seed exists for DC at any grade.
@@ -202,12 +211,12 @@ def test_reconciliation_counts_are_internally_consistent() -> None:
     )
 
     assert reconciliation["official_expectation_count"] == len(rows) == 81
-    assert reconciliation["repository_existing_expectation_rows"] == existing == 32
-    assert reconciliation["unmapped_expectations"] == 81 - existing == 49
+    assert reconciliation["repository_existing_expectation_rows"] == existing == 33
+    assert reconciliation["unmapped_expectations"] == 81 - existing == 48
     assert reconciliation["existing_seed_rows_by_grade"] == {
         "6": 5,
         "7": 5,
-        "8": 4,
+        "8": 5,
     }
 
 
