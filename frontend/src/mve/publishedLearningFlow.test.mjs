@@ -65,7 +65,7 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   assert.match(workspace, /canOfferPublishedRecovery\(/);
   assert.match(workspace, /publishedRecovery\.sessionId === sessionId/);
   assert.match(workspace, /\["DIAGNOSE", "GUIDED_PRACTICE", "REMEDIATION"\]/);
-  assert.match(panel, /published-reasoning\?problem_id=/);
+  assert.match(panel, /published-recovery\?problem_id=/);
   assert.match(panel, /if \(!stage && !error\) return null/);
   assert.match(panel, /revision\.current/);
   assert.match(panel, /transfer\/respond/);
