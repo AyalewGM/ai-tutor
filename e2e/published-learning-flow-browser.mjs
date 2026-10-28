@@ -13,6 +13,7 @@ const base = { independent_evidence_eligible: false, mastery_eligible: false, xp
 const task = (mode, prompt) => ({ variant_id: "server-generated", mode, prompt });
 const reply = (stage, extra = {}) => ({ ...base, stage, ...extra });
 let authorized = false;
+let recoverStage = "CONFIRM_REASONING";
 let exactStage = 0;
 let guidedCalls = 0;
 try {
@@ -50,6 +51,10 @@ try {
       if (!authorized) return route.fulfill({ status: 409,
         contentType: "application/json", body: '{"detail":"Unavailable"}' });
       assert.equal(url.searchParams.get("problem_id"), "source-1");
+      if (recoverStage === "GUIDED_RETEST") return send(reply("GUIDED_RETEST", {
+        guided_retest_task: task("GUIDED", "Persisted guided retest") }));
+      if (recoverStage === "INDEPENDENT_EXIT") return send(reply("INDEPENDENT_EXIT", {
+        independent_task: task("INDEPENDENT", "Should stay hidden"), hints_allowed: false }));
       return send(reply("CONFIRM_REASONING", {
         problem_id: "source-1", prompt: "Why are the two sides equal?",
         choices: [{ id: "CHOICE_1", text: "One side only" }, { id: "CHOICE_2", text: "Same operation on both sides" }],
@@ -153,6 +158,17 @@ try {
   await region.getByRole("button", { name: "Check response" }).click();
   await region.getByText(/Verification recorded/).waitFor();
   assert.equal(await region.getByText(/mastery badge earned/i).count(), 0);
+  // Reload/remount is a fresh server-owned stage fetch, never browser-local replay.
+  recoverStage = "GUIDED_RETEST";
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await region.getByText("Persisted guided retest").waitFor();
+  // Pending independent issuance identity is not accepted for recovery yet.
+  recoverStage = "INDEPENDENT_EXIT";
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await page.waitForFunction(() => document.querySelector("button")?.getAttribute("aria-pressed") === "false");
+  assert.equal(await region.count(), 0);
   assert.deepEqual(pageErrors, []);
   console.log("PASS: server-gated diagnosis, targeted repair, retry, unhinted transfer, no-credit verification and hidden guided content");
 } finally {
