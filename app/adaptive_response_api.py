@@ -163,6 +163,13 @@ def published_recovery_state(
         return {"stage": "COMPLETE_FEEDBACK_ONLY",
                 "independent_evidence_eligible": False, "mastery_eligible": False}
     if "PUBLISHED_MASTERY_ISSUED" in actions:
+        mastery_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED"
+        ]
+        if len(mastery_issues) != 1 or (
+            mastery_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Mastery issuance history invalid")
         try:
             guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
             mastery = server_distinct_mastery_task(
@@ -170,6 +177,15 @@ def published_recovery_state(
             )
         except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
             raise HTTPException(409, "Mastery recovery unavailable") from exc
+        proof = mastery_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != mastery["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != mastery["private_target_fingerprint_for_review"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+            proof.get("mastery_eligible") is not False,
+        )):
+            raise HTTPException(409, "Mastery issuance identity mismatch")
         return {
             "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
             "verification_task": mastery["learner_task"], "hints_allowed": False,
@@ -179,6 +195,13 @@ def published_recovery_state(
         return {"stage": "TRANSFER_FEEDBACK_ONLY",
                 "independent_evidence_eligible": False, "mastery_eligible": False}
     if "PUBLISHED_TRANSFER_ISSUED" in actions:
+        transfer_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"
+        ]
+        if len(transfer_issues) != 1 or (
+            transfer_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Transfer issuance history invalid")
         try:
             guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
             transfer = server_unhinted_transfer(
@@ -186,6 +209,16 @@ def published_recovery_state(
             )
         except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
             raise HTTPException(409, "Transfer recovery unavailable") from exc
+        proof = transfer_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != transfer["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != transfer["private_target_fingerprint_for_review"],
+            proof.get("target_family") != transfer["target_family"],
+            proof.get("source_fingerprint") != problem.solution["task_fingerprint"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+        )):
+            raise HTTPException(409, "Transfer issuance identity mismatch")
         return {
             "stage": "INDEPENDENT_EXIT", "independent_task": transfer["learner_task"],
             "hints_allowed": False, "independent_evidence_eligible": False,
@@ -200,10 +233,16 @@ def published_recovery_state(
             )
         except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
             raise HTTPException(409, "Guided recovery unavailable") from exc
-        if not isinstance(issued[-1].metadata_json, dict) or (
-            issued[-1].metadata_json.get("task_fingerprint") != guided["task_fingerprint"]
+        proof = issued[-1].metadata_json
+        if (
+            issued[-1].attempt_id != confirmations[0].attempt_id
+            or not isinstance(proof, dict)
+            or proof.get("variant_id") != guided["variant_id"]
+            or proof.get("task_fingerprint") != guided["task_fingerprint"]
+            or proof.get("source_fingerprint") != problem.solution["task_fingerprint"]
+            or proof.get("independent_evidence_eligible") is not False
         ):
-            raise HTTPException(409, "Guided recovery fingerprint mismatch")
+            raise HTTPException(409, "Guided recovery issuance identity mismatch")
         return {
             "stage": "GUIDED_RETEST_RETRY" if results else "GUIDED_RETEST",
             "guided_retest_task": {
