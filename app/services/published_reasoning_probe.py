@@ -7,6 +7,7 @@ wrong Attempt. Diagnosis is feedback-only; no mastery or release gate is set.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -162,20 +163,27 @@ _TARGETED_REPAIR = {
 }
 
 
-def server_targeted_repair(misconception_code: str) -> dict:
-    """Server-only corrective prompt and option oracle tied to confirmed signal."""
+def server_targeted_repair(
+    misconception_code: str, *, task_fingerprint: str,
+) -> dict:
+    """Neutral, per-task ordered choices with the oracle kept server-private."""
     entry = _TARGETED_REPAIR.get(misconception_code)
-    if entry is None:
+    if entry is None or not task_fingerprint:
         raise PublishedProbeUnavailable("No reviewed targeted repair for diagnosis")
-    question, expected, correct, wrong_a, wrong_b = entry
+    question, _action, correct, wrong_a, wrong_b = entry
+    texts = (correct, wrong_a, wrong_b)
+    # Deterministic for a persisted task, but neither ID nor position marks
+    # the correct choice. Different tasks shuffle choices independently.
+    ordered = sorted(range(3), key=lambda i: hashlib.sha256(
+        f"{task_fingerprint}|repair|{misconception_code}|{i}".encode()
+    ).digest())
     return {
         "prompt": question,
-        "choices": (
-            {"id": expected, "text": correct},
-            {"id": "DISTRACTOR_A", "text": wrong_a},
-            {"id": "DISTRACTOR_B", "text": wrong_b},
+        "choices": tuple(
+            {"id": f"OPTION_{position + 1}", "text": texts[item]}
+            for position, item in enumerate(ordered)
         ),
-        "expected": expected,
+        "expected": f"OPTION_{ordered.index(0) + 1}",
     }
 
 
