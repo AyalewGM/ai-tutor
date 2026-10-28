@@ -362,7 +362,7 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
             assert result.status_code == 200, result.text
             assert result.json()["independent_evidence_eligible"] is False
             if confirm:
-                assert result.json()["stage"] == "GUIDED_RETEST"
+                assert result.json()["stage"] == "SOCRATIC_REPAIR"
                 assert "misconception_code" not in json.dumps(result.json())
                 assert "canonical_answer" not in json.dumps(result.json())
                 from app.services.published_reasoning_probe import server_guided_retest
@@ -370,7 +370,58 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 private_retest = server_guided_retest(
                     problem, misconception_code=signal["misconception_code"],
                 )
-                public_retest = result.json()["guided_retest_task"]
+                # A correct answer cannot bypass both mathematical repair steps.
+                guided_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest"
+                )
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                repair_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-repair"
+                )
+                coeffs = item["equation_coefficients"]
+                first_value = Fraction(coeffs["lhs_x"]) - Fraction(coeffs["rhs_x"])
+                second_value = (
+                    Fraction(coeffs["rhs_constant"]) - Fraction(coeffs["lhs_constant"])
+                )
+                # A wrong equality transformation remains non-credit and does
+                # not expose or issue a guided item.
+                wrong_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": str(first_value + 1),
+                })
+                assert wrong_repair.status_code == 200
+                assert wrong_repair.json()["stage"] == "SOCRATIC_REPAIR_RETRY"
+                assert wrong_repair.json()["correct"] is False
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                first_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": f"{first_value.numerator * 2}/{first_value.denominator * 2}",
+                })
+                assert first_repair.status_code == 200, first_repair.text
+                assert first_repair.json()["stage"] == "SOCRATIC_REPAIR"
+                assert first_repair.json()["correct"] is True
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                second_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": str(second_value),
+                })
+                assert second_repair.status_code == 200, second_repair.text
+                assert second_repair.json()["stage"] == "GUIDED_RETEST"
+                assert second_repair.json()["correct"] is True
+                assert second_repair.json()["mastery_eligible"] is False
+                public_retest = second_repair.json()["guided_retest_task"]
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": str(second_value),
+                }).status_code == 409
                 assert public_retest["variant_id"] == private_retest["variant_id"]
                 assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
                 assert public_retest["mode"] == "GUIDED"
