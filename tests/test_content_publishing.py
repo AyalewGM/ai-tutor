@@ -388,11 +388,21 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 )
                 from app.services.published_reasoning_probe import server_targeted_repair
 
-                targeted = server_targeted_repair(signal["misconception_code"])
+                targeted = server_targeted_repair(
+                    signal["misconception_code"],
+                    task_fingerprint=problem.solution["task_fingerprint"],
+                )
                 assert result.json()["repair_check"] == targeted["prompt"]
                 assert result.json()["repair_choices"] == list(targeted["choices"])
+                assert {choice["id"] for choice in result.json()["repair_choices"]} == {
+                    "OPTION_1", "OPTION_2", "OPTION_3",
+                }
+                wrong_option = next(
+                    choice["id"] for choice in targeted["choices"]
+                    if choice["id"] != targeted["expected"]
+                )
                 assert client.post(repair_path, json={
-                    "problem_id": str(problem.id), "response": "DISTRACTOR_A",
+                    "problem_id": str(problem.id), "response": wrong_option,
                 }).json()["stage"] == "SOCRATIC_REPAIR_RETRY"
                 assert client.post(guided_path, json={
                     "problem_id": str(problem.id),
