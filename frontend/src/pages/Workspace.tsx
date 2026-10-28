@@ -17,6 +17,8 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import PublishedLearningRecovery from "../components/PublishedLearningRecovery";
+import { canOfferPublishedRecovery } from "../publishedLearningFlow";
 import {
   equationEquivalenceEligible,
   equationEquivalenceExampleIndex,
@@ -145,6 +147,7 @@ export default function Workspace() {
   const [extensionProblem, setExtensionProblem] = useState<WorkspaceProblem | null>(null);
   const [extensionSessionId, setExtensionSessionId] = useState<string | null>(null);
   const [recap, setRecap] = useState<SessionSummary | null>(null);
+  const [publishedRecovery, setPublishedRecovery] = useState<{ sessionId: string; problemId: string } | null>(null);
   const [goalWasReached, setGoalWasReached] = useState(false);
   const answerRef = useRef<HTMLInputElement>(null);
   const workspaceRequestRef = useRef(0);
@@ -202,6 +205,7 @@ export default function Workspace() {
     setError("");
     setFeedback("");
     setRecap(null);
+    setPublishedRecovery(null);
     setGoalOpen(false);
     setLearnOpen(false);
     setBadgeToast([]);
@@ -382,6 +386,7 @@ export default function Workspace() {
     const submittedProblemId = currentProblem.id;
     const submittedExtension = Boolean(activeExtensionProblem);
     setError("");
+    setPublishedRecovery(null);
     setStatus("Checking your work…");
     try {
       const result = await post<RespondOut>(
@@ -406,6 +411,11 @@ export default function Workspace() {
       setFracNum("");
       setFracDen("");
       const correct = result.evaluation.correct;
+      // The server-owned published-reasoning GET is the real authorization.
+      // Display labels, unapproved skill IDs and client flags never grant a route.
+      setPublishedRecovery(canOfferPublishedRecovery(
+        workspace?.state, Boolean(currentProblem), correct, submittedExtension,
+      ) ? { sessionId: requestedSessionId, problemId: submittedProblemId } : null);
       setFeedback("");
       requestAnimationFrame(() => {
         if (
@@ -1016,6 +1026,19 @@ export default function Workspace() {
                   )}
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {publishedRecovery &&
+                   publishedRecovery.sessionId === sessionId &&
+                   ["DIAGNOSE", "GUIDED_PRACTICE", "REMEDIATION"].includes(workspace.state) ? (
+                    <PublishedLearningRecovery
+                      key={publishedRecovery.sessionId + ":" + publishedRecovery.problemId}
+                      sessionId={publishedRecovery.sessionId}
+                      problemId={publishedRecovery.problemId}
+                      onUnavailable={() => setPublishedRecovery(null)}
+                      onClose={() => setPublishedRecovery(null)}
+                    />
+                  ) : (
+                    <>
+
                   {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
                     <div className="rounded-lg border border-accent/50 bg-accent/5">
                       <button
@@ -1276,6 +1299,8 @@ export default function Workspace() {
                     >
                       {status}
                     </p>
+                  )}
+                    </>
                   )}
                 </CardContent>
               </Card>
