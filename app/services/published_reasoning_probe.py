@@ -6,8 +6,8 @@ wrong Attempt. Diagnosis is feedback-only; no mastery or release gate is set.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
 import hashlib
+from dataclasses import dataclass
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
