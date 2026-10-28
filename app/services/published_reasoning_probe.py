@@ -109,6 +109,76 @@ def resolve_published_reasoning_probe(
     )
 
 
+# Each confirmed misconception has its own *corrective* reasoning checkpoint.
+# IDs are internal and the expected ID must never be returned to the learner.
+_TARGETED_REPAIR = {
+    "EQ.OMIT_CONSTANT": (
+        "Before dividing, what should you do to the additive constant?",
+        "REMOVE_CONSTANT_BOTH_SIDES",
+        "Remove it from both complete sides", "Ignore it", "Divide first",
+    ),
+    "EQ.MULTIPLY_INSTEAD_OF_DIVIDE_FRACTION": (
+        "What undoes multiplication by a nonzero fractional coefficient?",
+        "USE_RECIPROCAL_BOTH_SIDES",
+        "Multiply both complete sides by its reciprocal",
+        "Multiply by the original coefficient again", "Change only one side",
+    ),
+    "EQ.DROPPED_BRACKET_CONSTANT": (
+        "What happens when distributing a negative factor into parentheses?",
+        "DISTRIBUTE_ALL_TERMS",
+        "Multiply every term, including the constant",
+        "Multiply only the variable", "Change just the sign of the constant",
+    ),
+    "EQ.IGNORED_RIGHT_VARIABLE": (
+        "How can the variable term on the right be removed?",
+        "SUBTRACT_RIGHT_TERM_BOTH_SIDES",
+        "Subtract the complete right variable term from both sides",
+        "Ignore the right variable", "Cancel only one side",
+    ),
+    "EQ.MOVED_LEFT_CONSTANT_WRONG_SIGN": (
+        "How do you remove the original left-side constant?",
+        "INVERSE_BOTH_SIDES",
+        "Use its inverse operation on both complete sides",
+        "Change its sign without balancing", "Move it unchanged",
+    ),
+    "EQ.OMITTED_LEFT_CONSTANT": (
+        "What must happen before dividing by the variable coefficient?",
+        "ISOLATE_PRODUCT_FIRST",
+        "Remove the additive term on both sides first",
+        "Divide while the constant remains", "Drop the constant",
+    ),
+    "EQ.ADDED_VARIABLE_COEFFICIENTS": (
+        "How should variable coefficients on opposite sides be combined?",
+        "SUBTRACT_VARIABLE_TERM",
+        "Subtract one complete variable term on both sides",
+        "Add coefficients without balancing", "Cancel both terms",
+    ),
+    "EQ.USED_RECIPROCAL_WRONG_DIRECTION": (
+        "How do you make the isolated variable coefficient equal one?",
+        "UNDO_COEFFICIENT",
+        "Divide by the coefficient or multiply by its reciprocal",
+        "Multiply by the same coefficient", "Invert only one side",
+    ),
+}
+
+
+def server_targeted_repair(misconception_code: str) -> dict:
+    """Server-only corrective prompt and option oracle tied to confirmed signal."""
+    entry = _TARGETED_REPAIR.get(misconception_code)
+    if entry is None:
+        raise PublishedProbeUnavailable("No reviewed targeted repair for diagnosis")
+    question, expected, correct, wrong_a, wrong_b = entry
+    return {
+        "prompt": question,
+        "choices": (
+            {"id": expected, "text": correct},
+            {"id": "DISTRACTOR_A", "text": wrong_a},
+            {"id": "DISTRACTOR_B", "text": wrong_b},
+        ),
+        "expected": expected,
+    }
+
+
 def server_repair_coefficients(problem: Problem) -> dict[str, str]:
     """Return exact coefficients from the uniquely matched signed source task."""
     if not isinstance(problem.solution, dict):
