@@ -456,6 +456,13 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 recovered = client.get(
                     recovery_path, params={"problem_id": str(problem.id)},
                 )
+                discovery_path = f"{recovery_path}/current"
+                discovered = client.get(discovery_path)
+                assert discovered.status_code == 200, discovered.text
+                assert discovered.json()["problem_id"] == str(problem.id)
+                assert discovered.json()["stage"] == "GUIDED_RETEST"
+                assert discovered.json()["guided_retest_task"] == public_retest
+                assert "canonical_answer" not in json.dumps(discovered.json())
                 assert recovered.status_code == 200, recovered.text
                 assert recovered.json()["stage"] == "GUIDED_RETEST"
                 assert recovered.json()["guided_retest_task"] == public_retest
@@ -491,6 +498,7 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert client.get(
                     recovery_path, params={"problem_id": str(problem.id)},
                 ).status_code == 409
+                assert client.get(discovery_path).status_code == 409
                 assert {
                     model.__name__: db.scalar(select(func.count(model.id)))
                     for model in (
