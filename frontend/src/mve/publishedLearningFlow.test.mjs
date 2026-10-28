@@ -72,3 +72,11 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   assert.match(panel, /transfer\/respond/);
   assert.doesNotMatch(panel, /skill_name|MATH\.[A-Z_]+|xp_earned\s*=|mastery_eligible\s*=\s*true/);
 });
+
+
+test("failed recovery displays an explicit safe continuation rather than silently disappearing", async () => {
+  const workspace = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
+  assert.match(workspace, /This recovery step could not be restored or was revoked/);
+  assert.match(workspace, /server-authorized fresh task/);
+  assert.match(workspace, /setPublishedRecovery\(null\)/);
+});
