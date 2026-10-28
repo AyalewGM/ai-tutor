@@ -126,9 +126,9 @@ def server_repair_coefficients(problem: Problem) -> dict[str, str]:
     if len(sources) != 1:
         raise PublishedProbeUnavailable("Repair source is ambiguous")
     coefficients = sources[0].get("equation_coefficients")
-    if not isinstance(coefficients, dict) or set((
+    if not isinstance(coefficients, dict) or {
         "lhs_x", "lhs_constant", "rhs_x", "rhs_constant",
-    )) - coefficients.keys():
+    } - coefficients.keys():
         raise PublishedProbeUnavailable("Reviewable repair coefficients unavailable")
     return coefficients
 
