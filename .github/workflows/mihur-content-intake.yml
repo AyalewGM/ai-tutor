@@ -1,0 +1,97 @@
+name: Mihur Content Factory — pre-PR intake
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Approved Mihur content request issue"
+        required: true
+        type: number
+      course:
+        description: "Course to audit and develop"
+        required: true
+        type: choice
+        options:
+          - maryland-algebra1
+          - ontario-mth1w-eq3
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  intake:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action == 'labeled' &&
+       github.event.label.name == 'mihur-content-request')
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      EVENT_ISSUE: ${{ github.event.issue.number }}
+      MANUAL_ISSUE: ${{ inputs.issue_number }}
+      REQUESTED_COURSE: ${{ inputs.course }}
+    steps:
+      - name: Checkout trusted default branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate approved issue and generate pre-PR plan
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          text = os.environ.get("MANUAL_ISSUE") or os.environ.get("EVENT_ISSUE")
+          if not text or not text.isascii() or not text.isdecimal():
+              raise SystemExit("No valid issue number")
+          number = int(text)
+          if not 1 <= number <= 1000000:
+              raise SystemExit("Invalid issue number")
+          with open(os.environ["GITHUB_ENV"], "a") as output:
+              output.write(f"CONTENT_ISSUE_NUMBER={number}\n")
+          PY
+
+      - name: Generate read-only pre-PR plan
+        run: |
+          python -m scripts.math_content_pre_pr \
+            --issue-number "$CONTENT_ISSUE_NUMBER" \
+            --course "${REQUESTED_COURSE:-ontario-mth1w-eq3}" \
+            --output "$RUNNER_TEMP/mihur-pre-pr.json"
+
+      - name: Publish one accountable owner report
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result = json.loads(
+              (Path(os.environ["RUNNER_TEMP"]) / "mihur-pre-pr.json").read_text()
+          )
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as output:
+              output.write("## Mihur Math Content Factory — pre-PR intake\n\n")
+              output.write(f"**Issue:** #{result['issue_number']}\n\n")
+              output.write(f"**Course:** {result['course']}\n\n")
+              output.write(f"**Canonical skill:** {result['canonical_skill']}\n\n")
+              output.write(f"**Next owner:** {result['next_owner']}\n\n")
+              output.write(f"**Next action:** {result['next_action']}\n\n")
+              output.write("No agent invoked, no PR created, no content activated.\n")
+          PY
+
+      - name: Attach audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mihur-pre-pr-${{ env.CONTENT_ISSUE_NUMBER }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/mihur-pre-pr.json
+          retention-days: 14
