@@ -62,7 +62,10 @@ CurrentParent = Annotated[ParentProfile, Depends(current_parent)]
 
 def require_parent_owns_student(parent: ParentProfile, student: Student | None) -> Student:
     """Fail closed without disclosing whether another family's learner exists."""
-    if student is None or student.parent_id != parent.user_id:
+    # A family-owned learner may be revoked while an old tutor session still
+    # says ACTIVE. Deactivation must invalidate all learner-scoped routes,
+    # including parent-driven resume of that old session.
+    if student is None or not student.active or student.parent_id != parent.user_id:
         raise HTTPException(status_code=404, detail="Learner not found")
     return student
 

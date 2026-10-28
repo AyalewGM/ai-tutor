@@ -12,7 +12,7 @@ let server, browser;
 try {
   await writeFile(path.join(directory, 'index.html'), '<html lang="en"><head><title>MVE test</title></head><body><div id="root"></div><script type="module" src="./entry.tsx"></script></body></html>');
   await writeFile(path.join(directory, 'entry.tsx'), `
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { InteractiveLinearExplorer } from '/src/mve/InteractiveLinearExplorer';
 import { InteractiveIntegerNumberLine } from '/src/mve/InteractiveIntegerNumberLine';
@@ -20,7 +20,35 @@ import { InteractiveEquationBalance } from '/src/mve/InteractiveEquationBalance'
 import { InteractiveDotPlotExplorer } from '/src/mve/InteractiveDotPlotExplorer';
 import { InteractiveProbabilityTree } from '/src/mve/InteractiveProbabilityTree';
 import { InteractivePolynomialDivision } from '/src/mve/InteractivePolynomialDivision';
+import ExactRationalEntry from '/src/components/ExactRationalEntry';
 import '/src/styles.css';
+function RationalEntryHarness() {
+ const [value, setValue] = useState('');
+ const [answerKind, setAnswerKind] = useState<'RATIONAL' | 'VARIABLE_VALUE'>('RATIONAL');
+ const [disabled, setDisabled] = useState(false);
+ const answerRef = useRef<HTMLInputElement>(null);
+ function insertToken(token: string) {
+  const input = answerRef.current;
+  const start = input?.selectionStart ?? value.length;
+  const end = input?.selectionEnd ?? start;
+  const from = token === '\b' && start === end ? Math.max(0, start - 1) : start;
+  const next = value.slice(0, from) + (token === '\b' ? '' : token) + value.slice(end);
+  const cursor = from + (token === '\b' ? 0 : token.length);
+  setValue(next);
+  requestAnimationFrame(() => {
+   input?.focus();
+   input?.setSelectionRange(cursor, cursor);
+  });
+ }
+ return <section aria-label="Exact rational entry browser checks">
+  <button type="button" onClick={() => { setAnswerKind('VARIABLE_VALUE'); setValue(''); }}>Use variable-value input</button>
+  <button type="button" onClick={() => { setAnswerKind('RATIONAL'); setValue(''); }}>Use rational input</button>
+  <button type="button" onClick={() => setDisabled(value => !value)}>Toggle entry disabled</button>
+  <ExactRationalEntry ref={answerRef} answerKind={answerKind} value={value}
+   onValueChange={setValue} onKey={insertToken} disabled={disabled} />
+  <output aria-label="Exact entry value">{value}</output>
+ </section>;
+}
 function Harness() {
  const [assessment, setAssessment] = useState(false);
  const [event, setEvent] = useState('');
@@ -31,7 +59,8 @@ function Harness() {
  <InteractiveDotPlotExplorer independentAssessment={assessment} />
  <InteractiveProbabilityTree independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
  <InteractivePolynomialDivision independentAssessment={assessment} onMathEvent={e => setEvent(JSON.stringify(e))} />
- <output aria-label="Last semantic event">{event}</output></>;
+ <output aria-label="Last semantic event">{event}</output>
+ <RationalEntryHarness /></>;
 }
 createRoot(document.getElementById('root')!).render(<Harness />);`);
   server = await createServer({ root: frontend, server: { host: '127.0.0.1', port: 0 } });
@@ -156,8 +185,32 @@ createRoot(document.getElementById('root')!).render(<Harness />);`);
   const integer = page.getByLabel('Starting integer:');
   await integer.focus(); await page.keyboard.press('ArrowRight');
   assert.equal(await integer.inputValue(), '-1');
+  // Exact-rational input: real keyboard, caret insertion, focus restoration,
+  // touch keypad restrictions, variable identity and server-owned disable.
+  const exact = page.getByRole('region', { name: 'Exact rational entry browser checks' });
+  const rationalInput = exact.getByRole('textbox', { name: 'Exact rational number' });
+  const exactKeys = exact.getByRole('group', { name: 'Exact rational keypad' });
+  await rationalInput.fill('1/2');
+  await rationalInput.focus();
+  await page.keyboard.press('End');
+  await exactKeys.getByRole('button', { name: '3', exact: true }).click();
+  assert.equal(await rationalInput.inputValue(), '1/23');
+  await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Exact rational number');
+  await exactKeys.getByRole('button', { name: 'backspace' }).click();
+  assert.equal(await rationalInput.inputValue(), '1/2');
+  await exact.getByRole('button', { name: 'Use variable-value input' }).click();
+  const variableInput = exact.getByRole('textbox', { name: 'Exact variable value' });
+  await variableInput.fill('n=-5/6');
+  assert.equal(await variableInput.inputValue(), 'n=-5/6');
+  for (const notAllowed of ['x', 'y', '.', '^', '+', '×', '÷', '=']) {
+    assert.equal(await exactKeys.getByRole('button', { name: notAllowed, exact: true }).count(), 0);
+  }
+  assert.ok((await exact.getByText(/Use your keyboard for the variable and equals sign/).count()) > 0);
+  await exact.getByRole('button', { name: 'Toggle entry disabled' }).click();
+  assert.equal(await variableInput.isDisabled(), true);
+  assert.equal(await exactKeys.getByRole('button', { name: '7', exact: true }).isDisabled(), true);
   assert.deepEqual(errors, []);
-  console.log('PASS: keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, grouped-term polynomial division, reduced-motion mode, assessment unmount and fresh remount for all six activities, plus equal-side operations and undo.');
+  console.log('PASS: exact-rational keyboard/caret/focus/disabled contract, keyboard arrows/Home, run boundary, semantic events, equivalent-fraction practice, grouped-term polynomial division, reduced-motion mode, assessment unmount and fresh remount for all six activities, plus equal-side operations and undo.');
 } finally {
   await browser?.close();
   await server?.close();

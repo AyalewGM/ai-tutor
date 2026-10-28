@@ -450,6 +450,54 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert public_retest["variant_id"] == private_retest["variant_id"]
                 assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
                 assert public_retest["mode"] == "GUIDED"
+                # Revoking a previously issued family's authorization must
+                # reject an authenticated retest without changing any history.
+                family = db.scalar(select(ProblemFamily))
+                family.active = False
+                db.commit()
+                history_before = {
+                    model.__name__: db.scalar(select(func.count(model.id)))
+                    for model in (
+                        Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+                    )
+                }
+                progress_before = db.get(
+                    StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+                )
+                counters_before = (
+                    progress_before.attempt_count,
+                    progress_before.correct_count,
+                    progress_before.independent_attempt_count,
+                    progress_before.independent_correct_count,
+                    progress_before.mastery_score,
+                    progress_before.confidence_score,
+                )
+                revoked = client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                })
+                assert revoked.status_code == 409, revoked.text
+                assert {
+                    model.__name__: db.scalar(select(func.count(model.id)))
+                    for model in (
+                        Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+                    )
+                } == history_before
+                progress_after = db.get(
+                    StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+                )
+                assert (
+                    progress_after.attempt_count,
+                    progress_after.correct_count,
+                    progress_after.independent_attempt_count,
+                    progress_after.independent_correct_count,
+                    progress_after.mastery_score,
+                    progress_after.confidence_score,
+                ) == counters_before
+                # Restoring test-only authority permits the normal journey.
+                # The rejected request must not consume the already-issued task.
+                family.active = True
+                db.commit()
                 # A plausible near-miss must not count as mathematical success;
                 # recovery must use a fresh server-issued variant.
                 wrong = client.post(
