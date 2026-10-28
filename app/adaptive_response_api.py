@@ -174,7 +174,7 @@ def submit_published_reasoning(
             "independent_evidence_eligible": False,
         }
     try:
-        retest = server_guided_retest(
+        server_guided_retest(
             problem, misconception_code=probe.misconception_code,
         )
     except PublishedProbeUnavailable as exc:
