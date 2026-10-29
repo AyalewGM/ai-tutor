@@ -3,7 +3,11 @@ import unittest
 import uuid
 
 from app.content_audit import audit_curriculum_isolation
-from app.content_models import CurriculumExpectation, ExpectationSkillMapping, ProblemContentMetadata
+from app.content_models import (
+    CurriculumExpectation,
+    ExpectationSkillMapping,
+    ProblemContentMetadata,
+)
 from app.content_validation import ContentValidationError
 from app.models import Curriculum, Skill, SkillPrerequisite
 
@@ -49,9 +53,16 @@ class PrerequisiteScopeAuditTests(unittest.TestCase):
         self.selected_skill = self.skill(self.audited)
 
     def curriculum(self, *, grade="8", **changes):
-        values = dict(id=uuid.uuid4(), code=f"TEST-{grade}", name="Synthetic curriculum",
-                      active=True, jurisdiction="Ontario", authority_id=self.authority,
-                      version="2026", grade_level=grade)
+        values = {
+            "id": uuid.uuid4(),
+            "code": f"TEST-{grade}",
+            "name": "Synthetic curriculum",
+            "active": True,
+            "jurisdiction": "Ontario",
+            "authority_id": self.authority,
+            "version": "2026",
+            "grade_level": grade,
+        }
         values.update(changes)
         return Curriculum(**values)
 
@@ -83,27 +94,35 @@ class PrerequisiteScopeAuditTests(unittest.TestCase):
 
     def test_different_authority_is_rejected_in_both_directions(self):
         for incoming in (False, True):
-            with self.subTest(incoming=incoming):
-                with self.assertRaisesRegex(ContentValidationError, "authority boundaries"):
-                    self.audit_edge(self.curriculum(authority_id=uuid.uuid4()), incoming=incoming)
+            with (
+                self.subTest(incoming=incoming),
+                self.assertRaisesRegex(ContentValidationError, "authority boundaries"),
+            ):
+                self.audit_edge(self.curriculum(authority_id=uuid.uuid4()), incoming=incoming)
 
     def test_missing_authority_cannot_match_known_authority(self):
         for incoming in (False, True):
-            with self.subTest(incoming=incoming):
-                with self.assertRaisesRegex(ContentValidationError, "authority boundaries"):
-                    self.audit_edge(self.curriculum(authority_id=None), incoming=incoming)
+            with (
+                self.subTest(incoming=incoming),
+                self.assertRaisesRegex(ContentValidationError, "authority boundaries"),
+            ):
+                self.audit_edge(self.curriculum(authority_id=None), incoming=incoming)
 
     def test_different_version_is_rejected_in_both_directions(self):
         for incoming in (False, True):
-            with self.subTest(incoming=incoming):
-                with self.assertRaisesRegex(ContentValidationError, "version boundaries"):
-                    self.audit_edge(self.curriculum(version="2025"), incoming=incoming)
+            with (
+                self.subTest(incoming=incoming),
+                self.assertRaisesRegex(ContentValidationError, "version boundaries"),
+            ):
+                self.audit_edge(self.curriculum(version="2025"), incoming=incoming)
 
     def test_different_jurisdiction_is_still_rejected(self):
         for incoming in (False, True):
-            with self.subTest(incoming=incoming):
-                with self.assertRaisesRegex(ContentValidationError, "jurisdiction boundaries"):
-                    self.audit_edge(self.curriculum(jurisdiction="Maryland"), incoming=incoming)
+            with (
+                self.subTest(incoming=incoming),
+                self.assertRaisesRegex(ContentValidationError, "jurisdiction boundaries"),
+            ):
+                self.audit_edge(self.curriculum(jurisdiction="Maryland"), incoming=incoming)
 
     def test_unrelated_edges_are_ignored(self):
         self.audit_edge(self.curriculum(authority_id=uuid.uuid4(), version="2025"), touching=False)
