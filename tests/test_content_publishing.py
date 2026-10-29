@@ -10,6 +10,7 @@ from fractions import Fraction
 import pytest
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, func, select, text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
@@ -790,6 +791,116 @@ def test_revoked_authority_and_tampered_runtime_deny_selection(db, signed, monke
     changed["runtime_sha256"] = "0" * 64
     with pytest.raises(publisher.PublicationBlocked, match="Runtime contract"):
         publisher.validate(changed)
+
+
+def test_real_exhausted_guided_source_does_not_block_newer_owned_recovery(
+    db, signed, monkeypatch,
+):
+    """Actual ORM projector: verified exhausted old source is terminal, not ambiguous."""
+    from app import adaptive_response_api as api
+    from app.services.published_reasoning_probe import server_guided_retest
+
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9")
+    db.add(student)
+    db.flush()
+    session = TutorSession(
+        student_id=student.id, primary_skill_id=skill.id,
+        active_skill_id=skill.id, curriculum_id=skill.curriculum_id,
+        current_state=TutorState.GUIDED_PRACTICE, status="ACTIVE",
+    )
+    db.add(session)
+    db.flush()
+    rows = [row for row in db.scalars(select(Problem)).all()
+            if row.solution.get("mode") == "guided"]
+    old, newer = rows[:2]
+    assert old.id != newer.id
+    monkeypatch.setattr(api, "require_learning_owns_session", lambda db, access, s: s)
+    monkeypatch.setattr(api, "require_session_scope", lambda db, s: object())
+    monkeypatch.setattr(api, "require_skill_in_scope", lambda *args, **kwargs: None)
+
+    def add_source(problem, *, exhausted):
+        source = next(item for mode, item in publisher.candidates(manifest)
+                      if mode == "guided"
+                      and item["variant_id"] == problem.solution["variant_id"])
+        code = source["diagnostic_contract_for_author_review"]["signals"][0]["misconception_code"]
+        attempt = Attempt(
+            session_id=session.id, student_id=student.id, problem_id=problem.id,
+            student_answer="x=999", is_correct=False,
+            state_at_attempt=TutorState.GUIDED_PRACTICE,
+        )
+        db.add(attempt)
+        db.flush()
+        db.add(TutorTurn(
+            session_id=session.id, role="STUDENT", problem_id=problem.id,
+            attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_REASONING_CONFIRMED",
+            message="synthetic confirmation",
+            metadata_json={"misconception_code": code, "independent_evidence_eligible": False},
+        ))
+        for index in range(3 if exhausted else 1):
+            task = server_guided_retest(
+                problem, misconception_code=code, retry_index=index,
+            )
+            db.add(TutorTurn(
+                session_id=session.id, role="SYSTEM", problem_id=problem.id,
+                attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+                pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+                message="synthetic issue",
+                metadata_json={
+                    "variant_id": task["variant_id"],
+                    "task_fingerprint": task["task_fingerprint"],
+                    "source_fingerprint": problem.solution["task_fingerprint"],
+                    "independent_evidence_eligible": False,
+                },
+            ))
+            if exhausted:
+                db.add(TutorTurn(
+                    session_id=session.id, role="STUDENT", problem_id=problem.id,
+                    attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+                    pedagogical_action="PUBLISHED_GUIDED_RETEST_RESULT",
+                    message="synthetic wrong response",
+                    metadata_json={
+                        "variant_id": task["variant_id"],
+                        "task_fingerprint": task["task_fingerprint"],
+                        "correct": False, "assisted": True,
+                        "independent_evidence_eligible": False,
+                    },
+                ))
+        db.flush()
+        return attempt
+
+    add_source(old, exhausted=True)
+    add_source(newer, exhausted=False)
+    db.commit()
+    before_counts = (db.scalar(select(func.count(Attempt.id))),
+                     db.scalar(select(func.count(TutorTurn.id))),
+                     db.scalar(select(func.count(MasteryEvent.id))))
+    old_state = api.published_recovery_state(
+        session.id, problem_id=old.id, access=object(), db=db,
+    )
+    assert old_state["stage"] == "GUIDED_RETEST_EXHAUSTED"
+    discovered = api.discover_published_recovery(session.id, access=object(), db=db)
+    assert discovered["problem_id"] == newer.id
+    assert discovered["stage"] == "GUIDED_RETEST"
+    assert discovered["mastery_eligible"] is False
+    assert (db.scalar(select(func.count(Attempt.id))),
+            db.scalar(select(func.count(TutorTurn.id))),
+            db.scalar(select(func.count(MasteryEvent.id)))) == before_counts
+    # Tamper with one recorded exhausted issuance. It must never become a
+    # silently filtered terminal lesson.
+    first = db.scalar(select(TutorTurn).where(
+        TutorTurn.problem_id == old.id,
+        TutorTurn.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED",
+    ).order_by(TutorTurn.created_at, TutorTurn.id))
+    first.metadata_json = {**first.metadata_json, "task_fingerprint": "tampered"}
+    db.commit()
+    with pytest.raises(HTTPException) as error:
+        api.discover_published_recovery(session.id, access=object(), db=db)
+    assert error.value.status_code == 409
 
 
 def test_actual_provisional_ontario_mapping_is_never_authorized():
