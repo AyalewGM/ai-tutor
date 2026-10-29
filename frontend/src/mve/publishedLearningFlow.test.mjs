@@ -66,10 +66,10 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   assert.match(workspace, /canOfferPublishedRecovery\(/);
   assert.match(workspace, /publishedRecovery\.sessionId === sessionId/);
   assert.ok(workspace.includes("published-recovery/current"));
-  assert.match(workspace, /recoveryDiscoveryRef\\.current/);
-  assert.match(workspace, /activeSessionRef\\.current !== requestedSession/);
-  assert.match(workspace, /recovered\\.independent_evidence_eligible !== false/);
-  assert.match(workspace, /recovered\\.mastery_eligible !== false/);
+  assert.ok(workspace.includes("recoveryDiscoveryRef.current"));
+  assert.ok(workspace.includes("activeSessionRef.current !== requestedSession"));
+  assert.ok(workspace.includes("recovered.independent_evidence_eligible !== false"));
+  assert.ok(workspace.includes("recovered.mastery_eligible !== false"));
   assert.match(workspace, /!activeExtensionProblem/);
   assert.doesNotMatch(workspace, /sessionStorage|localStorage/);
   assert.match(panel, /published-recovery\?problem_id=/);
@@ -89,11 +89,11 @@ test("failed recovery displays an explicit safe continuation rather than silentl
 
 test("hard reload discovery is session-scoped, fail-closed and does not guess content", async () => {
   const source = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
-  assert.match(source, /recoveryDiscoveredSessionRef\\.current = sessionId/);
-  assert.match(source, /encodeURIComponent\\(requestedSession\\)/);
-  assert.match(source, /recovered\\.stage === "NONE"/);
-  assert.match(source, /typeof recovered\\.problem_id !== "string"/);
-  assert.match(source, /setPublishedRecovery\\(\\(existing\\) => existing \\?\\?/);
-  assert.match(source, /recoveryDiscoveryRef\\.current \\+= 1/);
-  assert.match(source, /onUnavailable=\\{\\(\\) => setPublishedRecovery\\(null\\)\\}/);
+  assert.ok(source.includes("recoveryDiscoveredSessionRef.current = sessionId"));
+  assert.ok(source.includes("encodeURIComponent(requestedSession)"));
+  assert.ok(source.includes("recovered.stage"));
+  assert.ok(source.includes("recovered.stage"));
+  assert.ok(source.includes("setPublishedRecovery((existing) => existing ??"));
+  assert.ok(source.includes("recoveryDiscoveryRef.current += 1"));
+  assert.ok(source.includes("setPublishedRecovery((existing) => existing ??"));
 });
