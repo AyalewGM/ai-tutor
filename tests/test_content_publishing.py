@@ -295,9 +295,9 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
         app.dependency_overrides.clear()
 
 
-@pytest.mark.parametrize("confirm", [False, True])
+@pytest.mark.parametrize("confirm,transfer_correct", [(False, False), (True, False), (True, True)])
 def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_choice(
-    db, signed, monkeypatch, confirm,
+    db, signed, monkeypatch, confirm, transfer_correct,
 ):
     """A client's choice cannot invent a misconception or grant mastery."""
     from sqlalchemy.orm import sessionmaker
@@ -591,76 +591,125 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 result = client.post(
                     f"{transfer_path}/respond",
                     json={"problem_id": str(problem.id),
-                          "answer": transfer["private_exact_oracle_for_review"]},
+                          "answer": transfer["private_exact_oracle_for_review"] if transfer_correct else "x=99999999"},
                 )
                 assert result.status_code == 200, result.text
-                assert result.json()["correct"] is True
+                assert result.json()["correct"] is transfer_correct
                 assert result.json()["xp_earned"] == 0
                 assert result.json()["mastery_eligible"] is False
                 assert result.json()["independent_evidence_eligible"] is False
-                # Separate verification is a fresh, single-use task and remains
-                # explicitly disconnected from independent/mastery credit.
-                from app.services.published_reasoning_probe import server_distinct_mastery_task
-
-                private_mastery = server_distinct_mastery_task(
-                    problem, misconception_code=signal["misconception_code"],
-                    guided_retry_index=1,
-                )
-                assert private_mastery["private_target_fingerprint_for_review"] not in {
-                    problem.solution["task_fingerprint"],
-                    recovery["task_fingerprint"],
-                    transfer["private_target_fingerprint_for_review"],
-                }
-                mastery_path = (
-                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery"
-                )
-                started_mastery = client.post(
-                    f"{mastery_path}/start", params={"problem_id": str(problem.id)},
-                )
-                assert started_mastery.status_code == 200, started_mastery.text
-                assert started_mastery.json()["verification_task"] == private_mastery["learner_task"]
-                recovered_mastery = client.get(
-                    recovery_path, params={"problem_id": str(problem.id)},
-                )
-                assert recovered_mastery.status_code == 200, recovered_mastery.text
-                assert recovered_mastery.json()["verification_task"] == started_mastery.json()["verification_task"]
-                mastery_issue = db.scalar(select(TutorTurn).where(
+                # Both direct reload and discovery retain only validated outcomes.
+                reloaded = client.get(recovery_path, params={"problem_id": str(problem.id)})
+                assert reloaded.status_code == 200, reloaded.text
+                assert reloaded.json()["stage"] == "TRANSFER_FEEDBACK_ONLY"
+                assert reloaded.json()["correct"] is transfer_correct
+                assert reloaded.json()["xp_earned"] == 0
+                assert reloaded.json()["mastery_eligible"] is False
+                assert reloaded.json()["independent_evidence_eligible"] is False
+                discovered = client.get(discovery_path)
+                assert discovered.status_code == 200, discovered.text
+                assert discovered.json()["stage"] == ("TRANSFER_FEEDBACK_ONLY" if transfer_correct else "NONE")
+                if transfer_correct:
+                    assert discovered.json()["correct"] is True
+                persisted = db.scalar(select(TutorTurn).where(
                     TutorTurn.session_id == uuid.UUID(session_id),
-                    TutorTurn.pedagogical_action == "PUBLISHED_MASTERY_ISSUED",
+                    TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_RESULT",
                 ))
-                original_mastery_meta = dict(mastery_issue.metadata_json)
-                mastery_issue.metadata_json = {**original_mastery_meta, "variant_id": "tampered"}
+                original_result = dict(persisted.metadata_json)
+                for corrupt in ({**original_result, "correct": "true"},
+                                {**original_result, "target_fingerprint": "tampered"},
+                                {**original_result, "hints_allowed": True}, None):
+                    persisted.metadata_json = corrupt
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                    assert client.get(discovery_path).status_code == 409
+                persisted.metadata_json = original_result
+                original_attempt_id = persisted.attempt_id
+                persisted.attempt_id = None
                 db.commit()
                 assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
-                mastery_issue.metadata_json = original_mastery_meta
+                persisted.attempt_id = original_attempt_id
                 db.commit()
-                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
-                assert started_mastery.json()["hints_allowed"] is False
-                assert started_mastery.json()["mastery_eligible"] is False
-                assert started_mastery.json()["independent_evidence_eligible"] is False
-                assert "canonical_answer" not in json.dumps(started_mastery.json())
-                assert client.post(
-                    f"{mastery_path}/start", params={"problem_id": str(problem.id)},
-                ).status_code == 409
-                answer_mastery = client.post(
-                    f"{mastery_path}/respond",
-                    json={"problem_id": str(problem.id),
-                          "answer": private_mastery["private_exact_oracle_for_review"]},
+                duplicate = TutorTurn(
+                    session_id=persisted.session_id, problem_id=persisted.problem_id,
+                    attempt_id=persisted.attempt_id, role=persisted.role,
+                    state=persisted.state, pedagogical_action=persisted.pedagogical_action,
+                    message="Synthetic duplicate outcome", metadata_json=original_result,
                 )
-                assert answer_mastery.status_code == 200, answer_mastery.text
-                assert answer_mastery.json()["correct"] is True
-                # A completed source must not remain a recovery candidate on reload.
-                completed_discovery = client.get(discovery_path)
-                assert completed_discovery.status_code == 200, completed_discovery.text
-                assert completed_discovery.json()["stage"] == "NONE"
-                assert completed_discovery.json()["independent_evidence_eligible"] is False
-                assert answer_mastery.json()["xp_earned"] == 0
-                assert answer_mastery.json()["mastery_eligible"] is False
-                assert client.post(
-                    f"{mastery_path}/respond",
-                    json={"problem_id": str(problem.id),
-                          "answer": private_mastery["private_exact_oracle_for_review"]},
-                ).status_code == 409
+                db.add(duplicate)
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                db.delete(duplicate)
+                db.commit()
+                if transfer_correct:
+                    # Separate verification is a fresh, single-use task and remains
+                    # explicitly disconnected from independent/mastery credit.
+                    from app.services.published_reasoning_probe import server_distinct_mastery_task
+
+                    private_mastery = server_distinct_mastery_task(
+                        problem, misconception_code=signal["misconception_code"],
+                        guided_retry_index=1,
+                    )
+                    assert private_mastery["private_target_fingerprint_for_review"] not in {
+                        problem.solution["task_fingerprint"],
+                        recovery["task_fingerprint"],
+                        transfer["private_target_fingerprint_for_review"],
+                    }
+                    mastery_path = (
+                        f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery"
+                    )
+                    started_mastery = client.post(
+                        f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                    )
+                    assert started_mastery.status_code == 200, started_mastery.text
+                    assert started_mastery.json()["verification_task"] == private_mastery["learner_task"]
+                    recovered_mastery = client.get(
+                        recovery_path, params={"problem_id": str(problem.id)},
+                    )
+                    assert recovered_mastery.status_code == 200, recovered_mastery.text
+                    assert recovered_mastery.json()["verification_task"] == started_mastery.json()["verification_task"]
+                    mastery_issue = db.scalar(select(TutorTurn).where(
+                        TutorTurn.session_id == uuid.UUID(session_id),
+                        TutorTurn.pedagogical_action == "PUBLISHED_MASTERY_ISSUED",
+                    ))
+                    original_mastery_meta = dict(mastery_issue.metadata_json)
+                    mastery_issue.metadata_json = {**original_mastery_meta, "variant_id": "tampered"}
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                    mastery_issue.metadata_json = original_mastery_meta
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
+                    assert started_mastery.json()["hints_allowed"] is False
+                    assert started_mastery.json()["mastery_eligible"] is False
+                    assert started_mastery.json()["independent_evidence_eligible"] is False
+                    assert "canonical_answer" not in json.dumps(started_mastery.json())
+                    assert client.post(
+                        f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                    ).status_code == 409
+                    answer_mastery = client.post(
+                        f"{mastery_path}/respond",
+                        json={"problem_id": str(problem.id),
+                              "answer": private_mastery["private_exact_oracle_for_review"]},
+                    )
+                    assert answer_mastery.status_code == 200, answer_mastery.text
+                    assert answer_mastery.json()["correct"] is True
+                    # A completed source must not remain a recovery candidate on reload.
+                    completed_discovery = client.get(discovery_path)
+                    assert completed_discovery.status_code == 200, completed_discovery.text
+                    assert completed_discovery.json()["stage"] == "NONE"
+                    assert completed_discovery.json()["independent_evidence_eligible"] is False
+                    assert answer_mastery.json()["xp_earned"] == 0
+                    assert answer_mastery.json()["mastery_eligible"] is False
+                    assert client.post(
+                        f"{mastery_path}/respond",
+                        json={"problem_id": str(problem.id),
+                              "answer": private_mastery["private_exact_oracle_for_review"]},
+                    ).status_code == 409
+                else:
+                    assert client.post(
+                        f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery/start",
+                        params={"problem_id": str(problem.id)},
+                    ).status_code == 409
                 assert client.post(
                     f"{transfer_path}/respond",
                     json={"problem_id": str(problem.id),

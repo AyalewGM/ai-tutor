@@ -262,10 +262,7 @@ def published_recovery_state(
             "verification_task": mastery["learner_task"], "hints_allowed": False,
             "independent_evidence_eligible": False, "mastery_eligible": False,
         }
-    if "PUBLISHED_TRANSFER_RESULT" in actions:
-        return {"stage": "TRANSFER_FEEDBACK_ONLY",
-                "independent_evidence_eligible": False, "mastery_eligible": False}
-    if "PUBLISHED_TRANSFER_ISSUED" in actions:
+    if "PUBLISHED_TRANSFER_RESULT" in actions or "PUBLISHED_TRANSFER_ISSUED" in actions:
         transfer_issues = [
             t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"
         ]
@@ -290,6 +287,32 @@ def published_recovery_state(
             proof.get("independent_evidence_eligible") is not False,
         )):
             raise HTTPException(409, "Transfer issuance identity mismatch")
+        if "PUBLISHED_TRANSFER_RESULT" in actions:
+            results = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"]
+            guided_issues = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+            if (
+                len(results) != 1
+                or not 1 <= len(guided_results) <= 3
+                or len(guided_results) != len(guided_issues)
+                or any(not isinstance(t.metadata_json, dict) for t in guided_results)
+                or any(t.metadata_json.get("correct") is not False for t in guided_results[:-1])
+                or guided_results[-1].metadata_json.get("correct") is not True
+                or turns.index(results[0]) <= turns.index(transfer_issues[0])
+            ):
+                raise HTTPException(409, "Published transfer completion history invalid")
+            result = results[0].metadata_json
+            if not isinstance(result, dict) or any((
+                type(result.get("correct")) is not bool,
+                result.get("target_fingerprint") != transfer["private_target_fingerprint_for_review"],
+                result.get("hints_allowed") is not False,
+                result.get("independent_evidence_eligible") is not False,
+            )):
+                raise HTTPException(409, "Published transfer completion proof invalid")
+            return {
+                "stage": "TRANSFER_FEEDBACK_ONLY", "correct": result["correct"],
+                "hints_allowed": False, "xp_earned": 0,
+                "independent_evidence_eligible": False, "mastery_eligible": False,
+            }
         return {
             "stage": "INDEPENDENT_EXIT", "independent_task": transfer["learner_task"],
             "hints_allowed": False, "independent_evidence_eligible": False,
