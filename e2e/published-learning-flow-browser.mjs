@@ -16,6 +16,8 @@ let authorized = false;
 let recoverStage = "CONFIRM_REASONING";
 let exactStage = 0;
 let guidedCalls = 0;
+let recoveredTransferCorrect = true;
+let verificationStarts = 0;
 try {
   await writeFile(path.join(dir, "index.html"),
     '<html lang="en"><body><main id="root"></main><script type="module" src="./entry.tsx"></script></body></html>');
@@ -58,6 +60,9 @@ try {
       if (recoverStage === "MASTERY_VERIFICATION_FEEDBACK_ONLY") return send(reply(
         "MASTERY_VERIFICATION_FEEDBACK_ONLY", {
           verification_task: task("MASTERY", "Persisted verification task"), hints_allowed: false }));
+      if (recoverStage === "TRANSFER_FEEDBACK_ONLY") return send(reply("TRANSFER_FEEDBACK_ONLY", {
+        correct: recoveredTransferCorrect, hints_allowed: false,
+      }));
       if (recoverStage === "COMPLETE_FEEDBACK_ONLY") return send(reply("COMPLETE_FEEDBACK_ONLY"));
       return send(reply("CONFIRM_REASONING", {
         problem_id: "source-1", prompt: "Why are the two sides equal?",
@@ -113,10 +118,12 @@ try {
       assert.equal(data.answer, "2/3");
       return send(reply("TRANSFER_FEEDBACK_ONLY", { correct: true }));
     }
-    if (endpoint.endsWith("/published-mastery/start")) return send(reply(
-      "MASTERY_VERIFICATION_FEEDBACK_ONLY", {
+    if (endpoint.endsWith("/published-mastery/start")) {
+      verificationStarts++;
+      return send(reply("MASTERY_VERIFICATION_FEEDBACK_ONLY", {
         verification_task: task("MASTERY", "New verification equation"), hints_allowed: false,
       }));
+    }
     if (endpoint.endsWith("/published-mastery/respond")) {
       assert.equal(data.answer, "-3/4");
       return send(reply("MASTERY_VERIFICATION_FEEDBACK_ONLY", { correct: true }));
@@ -173,6 +180,31 @@ try {
   await page.getByRole("button", { name: "Offer recovery" }).click();
   await region.getByText("Persisted independent task").waitFor();
   assert.equal(await region.getByText("Persisted guided retest").count(), 0);
+  // A validated persisted success restores the separate verification control.
+  recoverStage = "TRANSFER_FEEDBACK_ONLY";
+  recoveredTransferCorrect = true;
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await region.getByRole("button", { name: "Begin separate feedback-only verification" }).waitFor();
+  assert.equal(await region.getByText("Persisted guided retest").count(), 0);
+  assert.equal(await region.getByText("Think about the equality of both sides.").count(), 0);
+  assert.equal(await region.getByLabel("Your exact answer").count(), 0);
+  assert.equal(await region.getByRole("button", { name: "Start unhinted transfer" }).count(), 0);
+  await region.getByRole("button", { name: "Begin separate feedback-only verification" }).click();
+  await region.getByText("New verification equation").waitFor();
+  assert.equal(verificationStarts, 2);
+  // Persisted failure remains feedback-only and must not issue verification.
+  recoveredTransferCorrect = false;
+  await page.reload();
+  await page.getByRole("button", { name: "Offer recovery" }).click();
+  await region.getByRole("heading", { name: "Learning feedback" }).waitFor();
+  assert.equal(await region.getByRole("button", { name: "Begin separate feedback-only verification" }).count(), 0);
+  assert.equal(await region.getByText("New verification equation").count(), 0);
+  assert.equal(await region.getByText("Persisted guided retest").count(), 0);
+  assert.equal(await region.getByText("Think about the equality of both sides.").count(), 0);
+  assert.equal(await region.getByLabel("Your exact answer").count(), 0);
+  assert.equal(verificationStarts, 2);
+  await region.getByText(/does not award XP, independent/).waitFor();
   recoverStage = "MASTERY_VERIFICATION_FEEDBACK_ONLY";
   await page.reload();
   await page.getByRole("button", { name: "Offer recovery" }).click();

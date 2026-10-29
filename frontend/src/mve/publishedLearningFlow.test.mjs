@@ -97,3 +97,25 @@ test("hard reload discovery is session-scoped, fail-closed and does not guess co
   assert.ok(source.includes("onUnavailable="));
   assert.ok(source.includes("setPublishedRecovery(null)"));
 });
+
+
+test("reload preserves strict persisted transfer outcomes without granting credit", async () => {
+  for (const correct of [true, false]) {
+    const reloaded = JSON.parse(JSON.stringify({
+      ...base, stage: "TRANSFER_FEEDBACK_ONLY", correct, hints_allowed: false,
+    }));
+    const parsed = api.parsePublishedStage(reloaded);
+    assert.equal(parsed?.correct, correct);
+    assert.equal(parsed?.xp_earned, 0);
+    assert.equal(parsed?.independent_evidence_eligible, false);
+    assert.equal(parsed?.mastery_eligible, false);
+    assert.equal(parsed?.guided_retest_task, undefined);
+    assert.equal(parsed?.socratic_repair_questions, undefined);
+  }
+  for (const correct of ["true", "false", 1, 0, null]) {
+    assert.equal(api.parsePublishedStage({ ...base, stage: "TRANSFER_FEEDBACK_ONLY", correct }), null);
+  }
+  const panel = await readFile(new URL("../components/PublishedLearningRecovery.tsx", import.meta.url), "utf8");
+  assert.match(panel, /stage\?\.stage === "TRANSFER_FEEDBACK_ONLY" && stage\.correct === true &&/);
+  assert.match(panel, /mastery\/start\?problem_id=/);
+});
