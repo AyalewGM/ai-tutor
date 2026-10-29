@@ -65,7 +65,7 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   const panel = await readFile(new URL("../components/PublishedLearningRecovery.tsx", import.meta.url), "utf8");
   assert.match(workspace, /canOfferPublishedRecovery\(/);
   assert.match(workspace, /publishedRecovery\.sessionId === sessionId/);
-  assert.match(workspace, /published-recovery\\/current/);
+  assert.ok(workspace.includes("published-recovery/current"));
   assert.match(workspace, /recoveryDiscoveryRef\\.current/);
   assert.match(workspace, /activeSessionRef\\.current !== requestedSession/);
   assert.match(workspace, /recovered\\.independent_evidence_eligible !== false/);
