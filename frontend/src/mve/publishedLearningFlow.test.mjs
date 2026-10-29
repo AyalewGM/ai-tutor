@@ -91,9 +91,9 @@ test("hard reload discovery is session-scoped, fail-closed and does not guess co
   const source = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
   assert.ok(source.includes("recoveryDiscoveredSessionRef.current = sessionId"));
   assert.ok(source.includes("encodeURIComponent(requestedSession)"));
-  assert.ok(source.includes("recovered.stage"));
-  assert.ok(source.includes("recovered.stage"));
+  assert.ok(source.includes('recovered.stage === "NONE"'));
+  assert.ok(source.includes('typeof recovered.problem_id !== "string"'));
   assert.ok(source.includes("setPublishedRecovery((existing) => existing ??"));
   assert.ok(source.includes("recoveryDiscoveryRef.current += 1"));
-  assert.ok(source.includes("setPublishedRecovery((existing) => existing ??"));
+  assert.ok(source.includes("onUnavailable={() => setPublishedRecovery(null)}"));
 });
