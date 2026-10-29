@@ -174,3 +174,20 @@ trusted policy and protected environment/runner, build/deploy the exact image,
 then execute the command. Do not claim student readiness until live staging and
 required browser/QA reviews have passed. Only after that success extend this same
 publisher with reviewed data (#472) and inverse-operation (#495) adapters.
+
+
+### Parser resource bound (PR #501 remediation)
+
+The fraction scorer bounds each raw response, including variable assignment syntax,
+to 64 characters before whitespace processing. Decimal/sign/slash validation uses
+linear string operations, preserving exact rational equality and signed denominators.
+Oversized whitespace and zero-digit near misses fail closed. Regression coverage is
+in `tests/test_fraction_assessment_registry.py`; these author tests do not grant
+specialist or release acceptance.
+
+The scorer is one of the 14 source files in `RUNTIME_FILES`. Its source change
+requires the pending package runtime pin to change from `97f7b01c21bea33942c9ef91e2bb2047cd8b86b4731ed591d108c083ee564373` to `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455`.
+The pin was recomputed from that existing inventory using SHA-256 of file bytes and
+the existing sorted compact JSON digest format, without importing product modules.
+The package remains pending with empty review evidence; no signatures, approvals,
+activation, content identities, or learner records were added or changed.

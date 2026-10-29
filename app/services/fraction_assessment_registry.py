@@ -7,7 +7,6 @@ This module does not write Problems, Attempts or MasteryEvents.
 
 from __future__ import annotations
 
-import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from enum import StrEnum
@@ -37,49 +36,67 @@ class ReviewedFamily:
 # change, immutable identity evidence and explicit per-mode test coverage.
 AUTHORIZED_FAMILIES: Mapping[str, ReviewedFamily] = MappingProxyType({})
 
-_RATIONAL = re.compile(r"[+-]?\d+(?:/[+-]?\d+)?\Z")
-_VARIABLE_RATIONAL = re.compile(r"([A-Za-z])\s*=\s*(.+)\Z")
+# Bound raw input before stripping, splitting or parsing. This includes variable
+# syntax so long whitespace prefixes cannot bypass the rational-answer budget.
+_MAX_ANSWER_LENGTH = 64
+
+
+def _signed_decimal(value: str) -> bool:
+    digits = value[1:] if value.startswith(("+", "-")) else value
+    # isdecimal matches the Unicode decimal digits previously accepted by \d,
+    # without admitting superscripts or other non-decimal digit characters.
+    return bool(digits) and digits.isdecimal()
 
 
 def _fraction(raw: object) -> Fraction | None:
-    if not isinstance(raw, str) or len(raw) > 64:
+    if not isinstance(raw, str) or len(raw) > _MAX_ANSWER_LENGTH:
         return None
     value = raw.strip()
-    if not _RATIONAL.fullmatch(value):
+    numerator, separator, denominator = value.partition("/")
+    if not _signed_decimal(numerator):
+        return None
+    if separator and not _signed_decimal(denominator):
         return None
     try:
-        if "/" in value:
-            numerator, denominator = value.split("/", 1)
-            return Fraction(int(numerator), int(denominator))
-        return Fraction(int(value))
+        return Fraction(int(numerator), int(denominator)) if separator else Fraction(int(numerator))
     except (ValueError, ZeroDivisionError):
         return None
 
 
+def _variable_value(raw: str, variable: str) -> str | None:
+    value = raw.strip()
+    if not value or not value[0].isascii() or not value[0].isalpha():
+        return None
+    if value[0].casefold() != variable.casefold():
+        return None
+    remainder = value[1:].lstrip()
+    if not remainder.startswith("="):
+        return None
+    return remainder[1:].lstrip()
+
+
 def score_fraction(candidate: str, expected: str, *, variable: str | None = None) -> bool:
     """Server-only equality; never evaluate expressions, floats or arbitrary code."""
+    if not isinstance(candidate, str) or not isinstance(expected, str):
+        return False
+    if len(candidate) > _MAX_ANSWER_LENGTH or len(expected) > _MAX_ANSWER_LENGTH:
+        return False
     if variable is not None:
-        if len(variable) != 1 or not variable.isalpha():
+        if not isinstance(variable, str) or len(variable) != 1 or not variable.isalpha():
             return False
-        if not isinstance(candidate, str) or not isinstance(expected, str):
+        candidate = _variable_value(candidate, variable)
+        expected = _variable_value(expected, variable)
+        if candidate is None or expected is None:
             return False
-        left = _VARIABLE_RATIONAL.fullmatch(candidate.strip())
-        right = _VARIABLE_RATIONAL.fullmatch(expected.strip())
-        if not left or not right:
-            return False
-        if left.group(1).casefold() != variable.casefold():
-            return False
-        if right.group(1).casefold() != variable.casefold():
-            return False
-        candidate, expected = left.group(2), right.group(2)
     # Existing AnswerContract remains authoritative for positive denominators
     # and canonical variable-value parsing. Signed-denominator syntax is
     # narrowly accepted via exact Fraction parsing, never a symbolic evaluator.
     contract = AnswerContract(AnswerKind.RATIONAL)
+    actual, truth = _fraction(candidate), _fraction(expected)
     return (
-        _fraction(candidate) is not None
-        and _fraction(expected) is not None
-        and _fraction(candidate) == _fraction(expected)
+        actual is not None
+        and truth is not None
+        and actual == truth
         and (contract.equivalent(candidate, expected) or "/" in candidate or "/" in expected)
     )
 
