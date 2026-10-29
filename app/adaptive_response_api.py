@@ -157,8 +157,20 @@ def discover_published_recovery(
             continue
         # A finished transfer (including unsuccessful feedback-only transfer)
         # cannot be silently restarted as if it were a new independent task.
-        if state["stage"] == "TRANSFER_FEEDBACK_ONLY" and state.get("correct") is False:
-            continue
+        if state["stage"] == "TRANSFER_FEEDBACK_ONLY":
+            transfer_results = list(db.scalars(select(TutorTurn).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem_id,
+                TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_RESULT",
+            ).limit(2)))
+            if (
+                len(transfer_results) != 1
+                or not isinstance(transfer_results[0].metadata_json, dict)
+                or type(transfer_results[0].metadata_json.get("correct")) is not bool
+            ):
+                raise HTTPException(409, "Published transfer completion proof invalid")
+            if transfer_results[0].metadata_json["correct"] is False:
+                continue
         unfinished.append((problem_id, state))
         if len(unfinished) > 1:
             raise HTTPException(409, "Ambiguous published recovery history")
