@@ -69,6 +69,7 @@ def test_replay_denied_without_scoring_or_writing(monkeypatch):
     db = Mock()
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
+    db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.scalar.side_effect = [object(), object(), uuid.uuid4()]
     scorer = Mock()
     monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
@@ -94,6 +95,7 @@ def test_denied_scoring_never_persists(monkeypatch):
     db = Mock()
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
+    db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.scalar.side_effect = [object(), object(), None]
     monkeypatch.setattr(recorder, "score_persisted_rational", lambda *args, **kwargs: DENIED)
     context = TrustedAssessmentContext(
@@ -116,6 +118,7 @@ def test_eligible_correct_response_records_attempt_without_commit(monkeypatch):
     db = Mock()
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
+    db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     session = Mock(current_state=TutorState.INDEPENDENT_PRACTICE)
     db.scalar.side_effect = [object(), session, None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
@@ -147,6 +150,7 @@ def test_eligible_incorrect_assisted_response_records_without_mastery(monkeypatc
     db = Mock()
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
+    db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.scalar.side_effect = [object(), Mock(current_state=TutorState.GUIDED_PRACTICE), None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
     monkeypatch.setattr(
@@ -169,3 +173,41 @@ def test_eligible_incorrect_assisted_response_records_without_mastery(monkeypatc
     assert attempt.assistance_level == 1
     assert attempt.state_at_attempt == TutorState.GUIDED_PRACTICE
     db.commit.assert_not_called()
+
+
+def test_unsupported_or_unavailable_isolation_denied_before_queries(monkeypatch):
+    from sqlalchemy.exc import InvalidRequestError
+
+    scorer = Mock()
+    monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
+    context = TrustedAssessmentContext(
+        student_id=uuid.uuid4(), session_id=uuid.uuid4(),
+        problem_id=uuid.uuid4(), mode=AssessmentMode.INDEPENDENT,
+    )
+    for isolation in ("REPEATABLE READ", "SERIALIZABLE", "READ UNCOMMITTED", None):
+        db = Mock()
+        db.bind.dialect.name = "postgresql"
+        db.in_transaction.return_value = True
+        db.connection.return_value.get_isolation_level.return_value = isolation
+        result = record_rational_attempt(
+            db, context=context, submission="x=1/2",
+            approval_source=Mock(), service_principal="synthetic",
+        )
+        assert result.decision == DENIED and result.attempt_id is None
+        db.scalar.assert_not_called()
+        db.add.assert_not_called()
+        db.flush.assert_not_called()
+    for error in (InvalidRequestError("Unavailable"), NotImplementedError(), AttributeError()):
+        db = Mock()
+        db.bind.dialect.name = "postgresql"
+        db.in_transaction.return_value = True
+        db.connection.return_value.get_isolation_level.side_effect = error
+        result = record_rational_attempt(
+            db, context=context, submission="x=1/2",
+            approval_source=Mock(), service_principal="synthetic",
+        )
+        assert result.decision == DENIED and result.attempt_id is None
+        db.scalar.assert_not_called()
+        db.add.assert_not_called()
+        db.flush.assert_not_called()
+    scorer.assert_not_called()

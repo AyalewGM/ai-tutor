@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.models import Attempt, Student, TutorSession
@@ -36,7 +37,7 @@ def record_rational_attempt(
 ) -> RecordedRationalAttempt:
     """Record at most one submission per student/problem, without committing.
 
-    Must run inside a PostgreSQL transaction. Never call on SQLite or before
+    Must run inside a PostgreSQL READ COMMITTED transaction. Never call on SQLite or before
     independently authorized package activation. Rejected/replayed requests
     create no Attempt. Incorrect eligible answers are recorded as incorrect.
     """
@@ -45,6 +46,15 @@ def record_rational_attempt(
     if not isinstance(context, TrustedAssessmentContext):
         return RecordedRationalAttempt(DENIED, None)
     if not db.in_transaction():
+        return RecordedRationalAttempt(DENIED, None)
+    # The replay query needs a fresh statement snapshot after waiting on the
+    # student lock. REPEATABLE READ can retain a snapshot predating that wait.
+    # Inspect the actual transaction connection; never change isolation here.
+    try:
+        isolation = db.connection().get_isolation_level()
+    except (SQLAlchemyError, NotImplementedError, AttributeError):
+        return RecordedRationalAttempt(DENIED, None)
+    if isolation != "READ COMMITTED":
         return RecordedRationalAttempt(DENIED, None)
     # The student row is the serialization point across concurrent sessions.
     student = db.scalar(
