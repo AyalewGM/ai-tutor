@@ -132,9 +132,9 @@ def test_dc_8_ns_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
 
     assert len(expectations["expectations"]) == 81
     assert len(dc_rows) == 52
-    assert manifest["pr"] == 512
-    assert manifest["ref"] == "refs/pull/512/head"
-    assert all(row["source_pr"] == "#512" for row in dc_rows)
+    assert manifest["pr"] == 510
+    assert manifest["ref"] == "refs/pull/510/head"
+    assert all(row["source_pr"] == "#510" for row in dc_rows)
     assert {row["source_blob_sha"] for row in dc_rows} == {manifest["blob_sha"]}
     assert next(row for row in dc_rows if row["expectation_id"] == "8.NS.A.1")["source_url"] == OFFICIAL_PDF
     assert "8.NS.A.1" in manifest["scope_note"]
