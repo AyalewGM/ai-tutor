@@ -207,6 +207,9 @@ jobs:
       - name: Guided MVE keyboard and assessment browser checks
         run: node e2e/mve-guided-browser.mjs
 
+      - name: Published learner reasoning and recovery browser contract
+        run: node e2e/published-learning-flow-browser.mjs
+
       - name: Draft MTH1W equation Workspace isolation journey
         run: node e2e/equation-learning-flow-browser.mjs
 

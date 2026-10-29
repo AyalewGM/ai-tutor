@@ -17,6 +17,8 @@ import VoiceChatControls from "../components/chat/VoiceChatControls";
 import MathText from "../components/MathText";
 import ChatMessage from "../components/chat/ChatMessage";
 import LearnPanel from "../components/LearnPanel";
+import PublishedLearningRecovery from "../components/PublishedLearningRecovery";
+import { canOfferPublishedRecovery } from "../publishedLearningFlow";
 import {
   equationEquivalenceEligible,
   equationEquivalenceExampleIndex,
@@ -27,6 +29,7 @@ import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/Intera
 import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
+import ExactRationalEntry from "../components/ExactRationalEntry";
 import ScratchPad from "../components/ScratchPad";
 import SmartScoreBadge from "../components/SmartScoreBadge";
 import StepWork from "../components/StepWork";
@@ -145,11 +148,14 @@ export default function Workspace() {
   const [extensionProblem, setExtensionProblem] = useState<WorkspaceProblem | null>(null);
   const [extensionSessionId, setExtensionSessionId] = useState<string | null>(null);
   const [recap, setRecap] = useState<SessionSummary | null>(null);
+  const [publishedRecovery, setPublishedRecovery] = useState<{ sessionId: string; problemId: string } | null>(null);
   const [goalWasReached, setGoalWasReached] = useState(false);
   const answerRef = useRef<HTMLInputElement>(null);
   const workspaceRequestRef = useRef(0);
   const extensionRequestRef = useRef(0);
   const answerRequestRef = useRef(0);
+  const recoveryDiscoveryRef = useRef(0);
+  const recoveryDiscoveredSessionRef = useRef<string | null>(null);
   const helpRequestRef = useRef(0);
   const recapRequestRef = useRef(0);
   const goalRequestRef = useRef(0);
@@ -189,6 +195,8 @@ export default function Workspace() {
     workspaceRequestRef.current += 1;
     extensionRequestRef.current += 1;
     answerRequestRef.current += 1;
+    recoveryDiscoveryRef.current += 1;
+    recoveryDiscoveredSessionRef.current = null;
     helpRequestRef.current += 1;
     recapRequestRef.current += 1;
     goalRequestRef.current += 1;
@@ -202,6 +210,7 @@ export default function Workspace() {
     setError("");
     setFeedback("");
     setRecap(null);
+    setPublishedRecovery(null);
     setGoalOpen(false);
     setLearnOpen(false);
     setBadgeToast([]);
@@ -212,11 +221,41 @@ export default function Workspace() {
       workspaceRequestRef.current += 1;
       extensionRequestRef.current += 1;
       answerRequestRef.current += 1;
+      recoveryDiscoveryRef.current += 1;
       helpRequestRef.current += 1;
       recapRequestRef.current += 1;
       goalRequestRef.current += 1;
     };
   }, [load, sessionId]);
+
+  useEffect(() => {
+    // Discover an unfinished published journey only from the owned backend.
+    // No sessionStorage, client-selected problem ID or display-name authority.
+    if (!sessionId || !workspace || recoveryDiscoveredSessionRef.current === sessionId) return;
+    recoveryDiscoveredSessionRef.current = sessionId;
+    const requestId = ++recoveryDiscoveryRef.current;
+    const requestedSession = sessionId;
+    void api<unknown>(
+      `/adaptive-tutor/sessions/${encodeURIComponent(requestedSession)}/published-recovery/current`,
+    ).then((data) => {
+      if (requestId !== recoveryDiscoveryRef.current ||
+          activeSessionRef.current !== requestedSession) return;
+      if (!data || typeof data !== "object" || Array.isArray(data)) return;
+      const recovered = data as Record<string, unknown>;
+      if (recovered.stage === "NONE") return;
+      if (typeof recovered.problem_id !== "string" || !recovered.problem_id ||
+          recovered.independent_evidence_eligible !== false ||
+          recovered.mastery_eligible !== false) return;
+      // The mounted component independently rechecks exact persisted stage,
+      // issued-task identity and live publication permissions.
+      setPublishedRecovery((existing) => existing ?? {
+        sessionId: requestedSession, problemId: recovered.problem_id as string,
+      });
+    }).catch(() => {
+      // 403/404/409, revoked family and ambiguous history fail closed.
+    });
+    return () => { recoveryDiscoveryRef.current += 1; };
+  }, [sessionId, workspace?.session_id]);
 
   useEffect(() => {
     if (!badgeToast.length) return;
@@ -382,6 +421,8 @@ export default function Workspace() {
     const submittedProblemId = currentProblem.id;
     const submittedExtension = Boolean(activeExtensionProblem);
     setError("");
+    recoveryDiscoveryRef.current += 1;
+    setPublishedRecovery(null);
     setStatus("Checking your work…");
     try {
       const result = await post<RespondOut>(
@@ -406,6 +447,11 @@ export default function Workspace() {
       setFracNum("");
       setFracDen("");
       const correct = result.evaluation.correct;
+      // The server-owned published-reasoning GET is the real authorization.
+      // Display labels, unapproved skill IDs and client flags never grant a route.
+      setPublishedRecovery(canOfferPublishedRecovery(
+        workspace?.state, Boolean(currentProblem), correct, submittedExtension,
+      ) ? { sessionId: requestedSessionId, problemId: submittedProblemId } : null);
       setFeedback("");
       requestAnimationFrame(() => {
         if (
@@ -1016,6 +1062,22 @@ export default function Workspace() {
                   )}
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {publishedRecovery &&
+                   publishedRecovery.sessionId === sessionId &&
+                   !activeExtensionProblem ? (
+                    <PublishedLearningRecovery
+                      key={publishedRecovery.sessionId + ":" + publishedRecovery.problemId}
+                      sessionId={publishedRecovery.sessionId}
+                      problemId={publishedRecovery.problemId}
+                      onUnavailable={() => {
+                        setPublishedRecovery(null);
+                        setStatus("This recovery step could not be restored or was revoked. Return to your learning session for a server-authorized fresh task.");
+                      }}
+                      onClose={() => setPublishedRecovery(null)}
+                    />
+                  ) : (
+                    <>
+
                   {learn && (workspace.state === "GUIDED_PRACTICE" || workspace.state === "REMEDIATION") && (
                     <div className="rounded-lg border border-accent/50 bg-accent/5">
                       <button
@@ -1197,6 +1259,15 @@ export default function Workspace() {
                             autoComplete="off"
                           />
                         </div>
+                      ) : problemKind === "RATIONAL" || problemKind === "VARIABLE_VALUE" ? (
+                        <ExactRationalEntry
+                          ref={answerRef}
+                          answerKind={problemKind}
+                          value={answer}
+                          onValueChange={setAnswer}
+                          onKey={insertToken}
+                          disabled={!hasAction("SUBMIT_ANSWER") || !currentProblem}
+                        />
                       ) : (
                         <div className="space-y-2">
                           <Input
@@ -1276,6 +1347,8 @@ export default function Workspace() {
                     >
                       {status}
                     </p>
+                  )}
+                    </>
                   )}
                 </CardContent>
               </Card>
