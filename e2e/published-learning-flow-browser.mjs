@@ -198,6 +198,14 @@ try {
   await page.reload();
   await page.getByRole("button", { name: "Offer recovery" }).click();
   await region.getByRole("heading", { name: "Learning feedback" }).waitFor();
+  // Restored failure must explain the result and next action to interrupted learners.
+  const restoredFailure = region.getByRole("status", {
+    name: "",
+  }).filter({ hasText: /independent transfer answer was not correct/i });
+  await restoredFailure.waitFor();
+  assert.match(await restoredFailure.innerText(), /verification is not available/i);
+  assert.match(await restoredFailure.innerText(), /return to your learning session/i);
+  await region.getByRole("button", { name: "Return to learning session" }).waitFor();
   assert.equal(await region.getByRole("button", { name: "Begin separate feedback-only verification" }).count(), 0);
   assert.equal(await region.getByText("New verification equation").count(), 0);
   assert.equal(await region.getByText("Persisted guided retest").count(), 0);
