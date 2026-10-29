@@ -129,14 +129,14 @@ class Guards(unittest.TestCase):
             ("tutor-api", {**valid, "Type": "tmpfs"}),
         ]
         for service, mount in cases:
-            with self.subTest(service=service, mount=mount):
-                with (
-                    patch.object(control, "run", side_effect=[
-                        "synthetic-id", json.dumps([self.bind_container(service, mount)]),
-                    ]),
-                    self.assertRaisesRegex(RuntimeError, "Unexpected bind mount"),
-                ):
-                    control.inventory()
+            with (
+                self.subTest(service=service, mount=mount),
+                patch.object(control, "run", side_effect=[
+                    "synthetic-id", json.dumps([self.bind_container(service, mount)]),
+                ]),
+                self.assertRaisesRegex(RuntimeError, "Unexpected bind mount"),
+            ):
+                control.inventory()
 
     def test_caddy_bind_remains_exact_readonly_and_proxy_only(self):
         valid = {"Type": "bind", "Source": str(control.CONFIG.parent / "Caddyfile"),
@@ -151,14 +151,14 @@ class Guards(unittest.TestCase):
             ("proxy", {**valid, "Source": "/etc/foreign/Caddyfile"}),
             ("proxy", {**valid, "RW": True}),
         ]:
-            with self.subTest(service=service, mount=mount):
-                with (
-                    patch.object(control, "run", side_effect=[
-                        "synthetic-id", json.dumps([self.bind_container(service, mount)]),
-                    ]),
-                    self.assertRaisesRegex(RuntimeError, "Unexpected bind mount"),
-                ):
-                    control.inventory()
+            with (
+                self.subTest(service=service, mount=mount),
+                patch.object(control, "run", side_effect=[
+                    "synthetic-id", json.dumps([self.bind_container(service, mount)]),
+                ]),
+                self.assertRaisesRegex(RuntimeError, "Unexpected bind mount"),
+            ):
+                control.inventory()
 
     def test_edge_network_scope(self):
         edge = {"Name": "mihur-staging_edge", "Driver": "bridge", "Internal": False,
