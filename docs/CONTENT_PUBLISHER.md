@@ -191,3 +191,18 @@ The pin was recomputed from that existing inventory using SHA-256 of file bytes 
 the existing sorted compact JSON digest format, without importing product modules.
 The package remains pending with empty review evidence; no signatures, approvals,
 activation, content identities, or learner records were added or changed.
+
+
+### Persisted transfer feedback after reload (PR #501 remediation)
+
+Recovery now returns the stored boolean transfer outcome only after checking a
+unique result, matching attempt and regenerated transfer identity, valid issuance,
+completed guided success, and non-credit/unhinted metadata. Successful reloads can
+continue to the separate verification task; failed outcomes remain feedback-only.
+Malformed, mismatched, or duplicate results fail closed. This grants no XP,
+independent evidence, mastery credit, or publication authority.
+
+Because `app/adaptive_response_api.py` is in the existing runtime inventory, the
+pending unsigned package pin changes from `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455` to `fafcf9db918e4b665adb92a9c2482176f6f36b0551d2516425c22d947192e270`.
+The digest was computed from source-file bytes without importing product code;
+review evidence remains empty and activation remains pending.
