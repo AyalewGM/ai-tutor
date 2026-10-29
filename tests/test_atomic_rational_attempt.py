@@ -70,6 +70,7 @@ def test_replay_denied_without_scoring_or_writing(monkeypatch):
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
+    db.connection.return_value.connection.driver_connection.autocommit = False
     db.scalar.side_effect = [object(), object(), uuid.uuid4()]
     scorer = Mock()
     monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
@@ -96,6 +97,7 @@ def test_denied_scoring_never_persists(monkeypatch):
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
+    db.connection.return_value.connection.driver_connection.autocommit = False
     db.scalar.side_effect = [object(), object(), None]
     monkeypatch.setattr(recorder, "score_persisted_rational", lambda *args, **kwargs: DENIED)
     context = TrustedAssessmentContext(
@@ -119,6 +121,7 @@ def test_eligible_correct_response_records_attempt_without_commit(monkeypatch):
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
+    db.connection.return_value.connection.driver_connection.autocommit = False
     session = Mock(current_state=TutorState.INDEPENDENT_PRACTICE)
     db.scalar.side_effect = [object(), session, None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
@@ -151,6 +154,7 @@ def test_eligible_incorrect_assisted_response_records_without_mastery(monkeypatc
     db.bind.dialect.name = "postgresql"
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
+    db.connection.return_value.connection.driver_connection.autocommit = False
     db.scalar.side_effect = [object(), Mock(current_state=TutorState.GUIDED_PRACTICE), None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
     monkeypatch.setattr(
@@ -202,6 +206,40 @@ def test_unsupported_or_unavailable_isolation_denied_before_queries(monkeypatch)
         db.bind.dialect.name = "postgresql"
         db.in_transaction.return_value = True
         db.connection.return_value.get_isolation_level.side_effect = error
+        result = record_rational_attempt(
+            db, context=context, submission="x=1/2",
+            approval_source=Mock(), service_principal="synthetic",
+        )
+        assert result.decision == DENIED and result.attempt_id is None
+        db.scalar.assert_not_called()
+        db.add.assert_not_called()
+        db.flush.assert_not_called()
+    scorer.assert_not_called()
+
+
+def test_actual_driver_autocommit_must_be_explicitly_false(monkeypatch):
+    from unittest.mock import PropertyMock
+
+    scorer = Mock()
+    monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
+    context = TrustedAssessmentContext(
+        student_id=uuid.uuid4(), session_id=uuid.uuid4(),
+        problem_id=uuid.uuid4(), mode=AssessmentMode.INDEPENDENT,
+    )
+    for state in (True, None, 0, "False", Mock(), "missing", "error"):
+        db = Mock()
+        db.bind.dialect.name = "postgresql"
+        db.in_transaction.return_value = True
+        connection = db.connection.return_value
+        connection.get_isolation_level.return_value = "READ COMMITTED"
+        if state == "missing":
+            connection.connection.driver_connection = object()
+        elif state == "error":
+            driver = Mock()
+            type(driver).autocommit = PropertyMock(side_effect=RuntimeError("Unavailable"))
+            connection.connection.driver_connection = driver
+        else:
+            connection.connection.driver_connection.autocommit = state
         result = record_rational_attempt(
             db, context=context, submission="x=1/2",
             approval_source=Mock(), service_principal="synthetic",

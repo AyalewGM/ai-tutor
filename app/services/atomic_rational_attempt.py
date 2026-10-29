@@ -9,7 +9,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from sqlalchemy import select
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.models import Attempt, Student, TutorSession
@@ -51,10 +50,14 @@ def record_rational_attempt(
     # student lock. REPEATABLE READ can retain a snapshot predating that wait.
     # Inspect the actual transaction connection; never change isolation here.
     try:
-        isolation = db.connection().get_isolation_level()
-    except (SQLAlchemyError, NotImplementedError, AttributeError):
+        connection = db.connection()
+        isolation = connection.get_isolation_level()
+        # SQLAlchemy isolation reporting excludes DBAPI AUTOCOMMIT, and its
+        # logical transaction alone does not keep row locks across statements.
+        autocommit = connection.connection.driver_connection.autocommit
+    except Exception:  # Introspection only: unknown driver state must deny.
         return RecordedRationalAttempt(DENIED, None)
-    if isolation != "READ COMMITTED":
+    if isolation != "READ COMMITTED" or autocommit is not False:
         return RecordedRationalAttempt(DENIED, None)
     # The student row is the serialization point across concurrent sessions.
     student = db.scalar(
