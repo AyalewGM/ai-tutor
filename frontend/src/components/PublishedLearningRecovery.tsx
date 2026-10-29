@@ -229,6 +229,13 @@ export default function PublishedLearningRecovery({
             encodeURIComponent(problemId))}>
           Begin separate feedback-only verification
         </button>}
+      {stage?.stage === "TRANSFER_FEEDBACK_ONLY" && stage.correct === false && (
+        <p role="status" aria-live="polite">
+          Your independent transfer answer was not correct. Separate verification
+          is not available for this attempt. Return to your learning session
+          to continue with a new practice opportunity.
+        </p>
+      )}
       {stage?.stage === "GUIDED_RETEST_EXHAUSTED" && <p>
         Guided attempts are complete. Return to your learning session.
       </p>}
