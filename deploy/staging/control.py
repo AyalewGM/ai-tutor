@@ -108,10 +108,21 @@ def inventory():
                         "Unexpected container volume",
                     )
                 else:
+                    service = labels.get("com.docker.compose.service")
+                    caddy = (
+                        service == "proxy"
+                        and mount.get("Source") == str(CONFIG.parent / "Caddyfile")
+                        and mount.get("Destination") == "/etc/caddy/Caddyfile"
+                    )
+                    policy = (
+                        service in {"tutor-api", "migrate"}
+                        and mount.get("Source") == "/etc/mihur-staging/content-review-policy.json"
+                        and mount.get("Destination") == "/run/mihur/content-review-policy.json"
+                    )
                     require(
                         mount["Type"] == "bind"
-                        and mount["Source"] == str(CONFIG.parent / "Caddyfile")
-                        and not mount["RW"],
+                        and mount.get("RW") is False
+                        and (caddy or policy),
                         "Unexpected bind mount",
                     )
     names = run(DOCKER + ["volume", "ls", "-q"]).split()
