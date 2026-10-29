@@ -154,6 +154,8 @@ export default function Workspace() {
   const workspaceRequestRef = useRef(0);
   const extensionRequestRef = useRef(0);
   const answerRequestRef = useRef(0);
+  const recoveryDiscoveryRef = useRef(0);
+  const recoveryDiscoveredSessionRef = useRef<string | null>(null);
   const helpRequestRef = useRef(0);
   const recapRequestRef = useRef(0);
   const goalRequestRef = useRef(0);
@@ -193,6 +195,8 @@ export default function Workspace() {
     workspaceRequestRef.current += 1;
     extensionRequestRef.current += 1;
     answerRequestRef.current += 1;
+    recoveryDiscoveryRef.current += 1;
+    recoveryDiscoveredSessionRef.current = null;
     helpRequestRef.current += 1;
     recapRequestRef.current += 1;
     goalRequestRef.current += 1;
@@ -217,11 +221,41 @@ export default function Workspace() {
       workspaceRequestRef.current += 1;
       extensionRequestRef.current += 1;
       answerRequestRef.current += 1;
+      recoveryDiscoveryRef.current += 1;
       helpRequestRef.current += 1;
       recapRequestRef.current += 1;
       goalRequestRef.current += 1;
     };
   }, [load, sessionId]);
+
+  useEffect(() => {
+    // Discover an unfinished published journey only from the owned backend.
+    // No sessionStorage, client-selected problem ID or display-name authority.
+    if (!sessionId || !workspace || recoveryDiscoveredSessionRef.current === sessionId) return;
+    recoveryDiscoveredSessionRef.current = sessionId;
+    const requestId = ++recoveryDiscoveryRef.current;
+    const requestedSession = sessionId;
+    void api<unknown>(
+      `/adaptive-tutor/sessions/${encodeURIComponent(requestedSession)}/published-recovery/current`,
+    ).then((data) => {
+      if (requestId !== recoveryDiscoveryRef.current ||
+          activeSessionRef.current !== requestedSession) return;
+      if (!data || typeof data !== "object" || Array.isArray(data)) return;
+      const recovered = data as Record<string, unknown>;
+      if (recovered.stage === "NONE") return;
+      if (typeof recovered.problem_id !== "string" || !recovered.problem_id ||
+          recovered.independent_evidence_eligible !== false ||
+          recovered.mastery_eligible !== false) return;
+      // The mounted component independently rechecks exact persisted stage,
+      // issued-task identity and live publication permissions.
+      setPublishedRecovery((existing) => existing ?? {
+        sessionId: requestedSession, problemId: recovered.problem_id as string,
+      });
+    }).catch(() => {
+      // 403/404/409, revoked family and ambiguous history fail closed.
+    });
+    return () => { recoveryDiscoveryRef.current += 1; };
+  }, [sessionId, workspace?.session_id]);
 
   useEffect(() => {
     if (!badgeToast.length) return;
@@ -387,6 +421,7 @@ export default function Workspace() {
     const submittedProblemId = currentProblem.id;
     const submittedExtension = Boolean(activeExtensionProblem);
     setError("");
+    recoveryDiscoveryRef.current += 1;
     setPublishedRecovery(null);
     setStatus("Checking your work…");
     try {
@@ -1029,7 +1064,7 @@ export default function Workspace() {
                 <CardContent className="space-y-4">
                   {publishedRecovery &&
                    publishedRecovery.sessionId === sessionId &&
-                   ["DIAGNOSE", "GUIDED_PRACTICE", "REMEDIATION"].includes(workspace.state) ? (
+                   !activeExtensionProblem ? (
                     <PublishedLearningRecovery
                       key={publishedRecovery.sessionId + ":" + publishedRecovery.problemId}
                       sessionId={publishedRecovery.sessionId}

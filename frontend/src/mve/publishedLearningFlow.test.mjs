@@ -65,7 +65,13 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   const panel = await readFile(new URL("../components/PublishedLearningRecovery.tsx", import.meta.url), "utf8");
   assert.match(workspace, /canOfferPublishedRecovery\(/);
   assert.match(workspace, /publishedRecovery\.sessionId === sessionId/);
-  assert.match(workspace, /\["DIAGNOSE", "GUIDED_PRACTICE", "REMEDIATION"\]/);
+  assert.match(workspace, /published-recovery\\/current/);
+  assert.match(workspace, /recoveryDiscoveryRef\\.current/);
+  assert.match(workspace, /activeSessionRef\\.current !== requestedSession/);
+  assert.match(workspace, /recovered\\.independent_evidence_eligible !== false/);
+  assert.match(workspace, /recovered\\.mastery_eligible !== false/);
+  assert.match(workspace, /!activeExtensionProblem/);
+  assert.doesNotMatch(workspace, /sessionStorage|localStorage/);
   assert.match(panel, /published-recovery\?problem_id=/);
   assert.match(panel, /if \(!stage && !error\) return null/);
   assert.match(panel, /revision\.current/);
@@ -79,4 +85,15 @@ test("failed recovery displays an explicit safe continuation rather than silentl
   assert.match(workspace, /This recovery step could not be restored or was revoked/);
   assert.match(workspace, /server-authorized fresh task/);
   assert.match(workspace, /setPublishedRecovery\(null\)/);
+});
+
+test("hard reload discovery is session-scoped, fail-closed and does not guess content", async () => {
+  const source = await readFile(new URL("../pages/Workspace.tsx", import.meta.url), "utf8");
+  assert.match(source, /recoveryDiscoveredSessionRef\\.current = sessionId/);
+  assert.match(source, /encodeURIComponent\\(requestedSession\\)/);
+  assert.match(source, /recovered\\.stage === "NONE"/);
+  assert.match(source, /typeof recovered\\.problem_id !== "string"/);
+  assert.match(source, /setPublishedRecovery\\(\\(existing\\) => existing \\?\\?/);
+  assert.match(source, /recoveryDiscoveryRef\\.current \\+= 1/);
+  assert.match(source, /onUnavailable=\\{\\(\\) => setPublishedRecovery\\(null\\)\\}/);
 });

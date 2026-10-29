@@ -456,6 +456,13 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 recovered = client.get(
                     recovery_path, params={"problem_id": str(problem.id)},
                 )
+                discovery_path = f"{recovery_path}/current"
+                discovered = client.get(discovery_path)
+                assert discovered.status_code == 200, discovered.text
+                assert discovered.json()["problem_id"] == str(problem.id)
+                assert discovered.json()["stage"] == "GUIDED_RETEST"
+                assert discovered.json()["guided_retest_task"] == public_retest
+                assert "canonical_answer" not in json.dumps(discovered.json())
                 assert recovered.status_code == 200, recovered.text
                 assert recovered.json()["stage"] == "GUIDED_RETEST"
                 assert recovered.json()["guided_retest_task"] == public_retest
@@ -491,6 +498,7 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 assert client.get(
                     recovery_path, params={"problem_id": str(problem.id)},
                 ).status_code == 409
+                assert client.get(discovery_path).status_code == 409
                 assert {
                     model.__name__: db.scalar(select(func.count(model.id)))
                     for model in (
@@ -640,6 +648,11 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 )
                 assert answer_mastery.status_code == 200, answer_mastery.text
                 assert answer_mastery.json()["correct"] is True
+                # A completed source must not remain a recovery candidate on reload.
+                completed_discovery = client.get(discovery_path)
+                assert completed_discovery.status_code == 200, completed_discovery.text
+                assert completed_discovery.json()["stage"] == "NONE"
+                assert completed_discovery.json()["independent_evidence_eligible"] is False
                 assert answer_mastery.json()["xp_earned"] == 0
                 assert answer_mastery.json()["mastery_eligible"] is False
                 assert client.post(

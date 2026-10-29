@@ -112,6 +112,77 @@ def _publish_adaptive_event(
     )
 
 
+@router.get("/sessions/{session_id}/published-recovery/current")
+def discover_published_recovery(
+    session_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Find a recoverable published task from this authenticated learner session.
+
+    No browser-provided problem identity, no cross-session fallback, and no
+    automatic selection among multiple unfinished questions. The downstream
+    recovery endpoint independently checks issuer identity and live authority.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    ids = list(db.scalars(
+        select(Attempt.problem_id)
+        .join(Problem, Problem.id == Attempt.problem_id)
+        .where(
+            Attempt.session_id == session.id,
+            Attempt.student_id == session.student_id,
+            Attempt.is_correct.is_(False),
+            Problem.source_type == "PUBLISHED",
+            Problem.primary_skill_id == active_skill_id,
+        )
+        .distinct()
+        .limit(101)
+    ))
+    if len(ids) > 100:
+        raise HTTPException(409, "Published recovery history requires review")
+    # Completed or terminal journeys are no longer recovery candidates.
+    # Never select by recency when two genuinely unfinished tasks exist.
+    unfinished = []
+    for problem_id in ids:
+        state = published_recovery_state(
+            session_id=session_id, problem_id=problem_id, access=access, db=db,
+        )
+        if state["stage"] in {"COMPLETE_FEEDBACK_ONLY", "GUIDED_RETEST_EXHAUSTED"}:
+            continue
+        # A finished transfer (including unsuccessful feedback-only transfer)
+        # cannot be silently restarted as if it were a new independent task.
+        if state["stage"] == "TRANSFER_FEEDBACK_ONLY":
+            transfer_results = list(db.scalars(select(TutorTurn).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem_id,
+                TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_RESULT",
+            ).limit(2)))
+            if (
+                len(transfer_results) != 1
+                or not isinstance(transfer_results[0].metadata_json, dict)
+                or type(transfer_results[0].metadata_json.get("correct")) is not bool
+            ):
+                raise HTTPException(409, "Published transfer completion proof invalid")
+            if transfer_results[0].metadata_json["correct"] is False:
+                continue
+        unfinished.append((problem_id, state))
+        if len(unfinished) > 1:
+            raise HTTPException(409, "Ambiguous published recovery history")
+    if not unfinished:
+        return {
+            "stage": "NONE", "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        }
+    problem_id, state = unfinished[0]
+    return {"problem_id": problem_id, **state}
+
+
 @router.get("/sessions/{session_id}/published-recovery")
 def published_recovery_state(
     session_id: uuid.UUID,
