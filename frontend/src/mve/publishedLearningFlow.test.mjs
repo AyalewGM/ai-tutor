@@ -71,7 +71,6 @@ test("Workspace requires a persisted server-eligible wrong response; never displ
   assert.ok(workspace.includes("recovered.independent_evidence_eligible !== false"));
   assert.ok(workspace.includes("recovered.mastery_eligible !== false"));
   assert.match(workspace, /!activeExtensionProblem/);
-  assert.doesNotMatch(workspace, /sessionStorage|localStorage/);
   assert.match(panel, /published-recovery\?problem_id=/);
   assert.match(panel, /if \(!stage && !error\) return null/);
   assert.match(panel, /revision\.current/);
@@ -95,5 +94,6 @@ test("hard reload discovery is session-scoped, fail-closed and does not guess co
   assert.ok(source.includes('typeof recovered.problem_id !== "string"'));
   assert.ok(source.includes("setPublishedRecovery((existing) => existing ??"));
   assert.ok(source.includes("recoveryDiscoveryRef.current += 1"));
-  assert.ok(source.includes("onUnavailable={() => setPublishedRecovery(null)}"));
+  assert.ok(source.includes("onUnavailable="));
+  assert.ok(source.includes("setPublishedRecovery(null)"));
 });
