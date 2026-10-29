@@ -323,13 +323,43 @@ def published_recovery_state(
             "independent_evidence_eligible": False, "mastery_eligible": False,
         }
     if issued:
-        if len(results) == len(issued) and results and (
-            isinstance(results[-1].metadata_json, dict)
-            and results[-1].metadata_json.get("correct") is True
-        ):
+        # A fully answered guided sequence is terminal only if each persisted
+        # task is exactly the server-issued deterministic variant. Otherwise a
+        # malformed history must remain a 409, never masquerade as completion.
+        if not (len(issued) == len(results) and 1 <= len(issued) <= 3):
+            raise HTTPException(409, "Guided recovery sequence invalid")
+        for index, (issue, result) in enumerate(zip(issued, results)):
+            try:
+                expected = server_guided_retest(
+                    problem, misconception_code=code, retry_index=index,
+                )
+            except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+                raise HTTPException(409, "Guided recovery source invalid") from exc
+            issuance = issue.metadata_json
+            outcome = result.metadata_json
+            if (
+                issue.attempt_id != confirmations[0].attempt_id
+                or result.attempt_id != confirmations[0].attempt_id
+                or not isinstance(issuance, dict)
+                or not isinstance(outcome, dict)
+                or issuance.get("variant_id") != expected["variant_id"]
+                or issuance.get("task_fingerprint") != expected["task_fingerprint"]
+                or issuance.get("source_fingerprint") != problem.solution["task_fingerprint"]
+                or issuance.get("independent_evidence_eligible") is not False
+                or outcome.get("variant_id") != expected["variant_id"]
+                or outcome.get("task_fingerprint") != expected["task_fingerprint"]
+                or outcome.get("independent_evidence_eligible") is not False
+                or type(outcome.get("correct")) is not bool
+                or (index < len(results) - 1 and outcome["correct"] is not False)
+            ):
+                raise HTTPException(409, "Guided recovery history identity mismatch")
+        if results[-1].metadata_json["correct"] is True:
             return {"stage": "READY_FOR_TRANSFER_CONFIRMATION",
                     "independent_evidence_eligible": False, "mastery_eligible": False}
-        raise HTTPException(409, "Guided recovery stage unavailable")
+        if len(issued) == 3:
+            return {"stage": "GUIDED_RETEST_EXHAUSTED",
+                    "independent_evidence_eligible": False, "mastery_eligible": False}
+        raise HTTPException(409, "Guided recovery missing next issued retest")
     repairs = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
     if any(not isinstance(t.metadata_json, dict) for t in repairs):
         raise HTTPException(409, "Repair recovery proof invalid")
