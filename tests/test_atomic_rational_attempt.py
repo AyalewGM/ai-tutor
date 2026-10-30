@@ -64,6 +64,34 @@ def test_requires_existing_transaction_before_any_database_query():
     db.add.assert_not_called()
 
 
+def test_revoked_student_or_closed_session_denied_before_scoring(monkeypatch):
+    scorer = Mock()
+    monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
+    context = TrustedAssessmentContext(
+        student_id=uuid.uuid4(), session_id=uuid.uuid4(),
+        problem_id=uuid.uuid4(), mode=AssessmentMode.INDEPENDENT,
+    )
+    for student_active, session_status in ((False, "ACTIVE"), (True, "CLOSED")):
+        db = Mock()
+        db.bind.dialect.name = "postgresql"
+        db.in_transaction.return_value = True
+        db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
+        db.connection.return_value.connection.driver_connection.autocommit = False
+        db.scalar.side_effect = [
+            Mock(active=student_active), Mock(status=session_status), None,
+        ]
+        result = record_rational_attempt(
+            db, context=context, submission="x=1/2",
+            approval_source=Mock(), service_principal="synthetic",
+        )
+        assert result.decision == DENIED
+        assert result.attempt_id is None
+        db.add.assert_not_called()
+        db.flush.assert_not_called()
+        db.commit.assert_not_called()
+    scorer.assert_not_called()
+
+
 def test_replay_denied_without_scoring_or_writing(monkeypatch):
 
     db = Mock()
@@ -71,7 +99,7 @@ def test_replay_denied_without_scoring_or_writing(monkeypatch):
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.connection.return_value.connection.driver_connection.autocommit = False
-    db.scalar.side_effect = [object(), object(), uuid.uuid4()]
+    db.scalar.side_effect = [Mock(active=True), Mock(status="ACTIVE"), uuid.uuid4()]
     scorer = Mock()
     monkeypatch.setattr(recorder, "score_persisted_rational", scorer)
     context = TrustedAssessmentContext(
@@ -98,7 +126,7 @@ def test_denied_scoring_never_persists(monkeypatch):
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.connection.return_value.connection.driver_connection.autocommit = False
-    db.scalar.side_effect = [object(), object(), None]
+    db.scalar.side_effect = [Mock(active=True), Mock(status="ACTIVE"), None]
     monkeypatch.setattr(recorder, "score_persisted_rational", lambda *args, **kwargs: DENIED)
     context = TrustedAssessmentContext(
         student_id=uuid.uuid4(), session_id=uuid.uuid4(),
@@ -122,8 +150,8 @@ def test_eligible_correct_response_records_attempt_without_commit(monkeypatch):
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.connection.return_value.connection.driver_connection.autocommit = False
-    session = Mock(current_state=TutorState.INDEPENDENT_PRACTICE)
-    db.scalar.side_effect = [object(), session, None]
+    session = Mock(current_state=TutorState.INDEPENDENT_PRACTICE, status="ACTIVE")
+    db.scalar.side_effect = [Mock(active=True), session, None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
     decision = RegistrationDecision(True, True, False)
     scorer = Mock(return_value=decision)
@@ -155,7 +183,7 @@ def test_eligible_incorrect_assisted_response_records_without_mastery(monkeypatc
     db.in_transaction.return_value = True
     db.connection.return_value.get_isolation_level.return_value = "READ COMMITTED"
     db.connection.return_value.connection.driver_connection.autocommit = False
-    db.scalar.side_effect = [object(), Mock(current_state=TutorState.GUIDED_PRACTICE), None]
+    db.scalar.side_effect = [Mock(active=True), Mock(current_state=TutorState.GUIDED_PRACTICE, status="ACTIVE"), None]
     db.flush.side_effect = lambda: setattr(db.add.call_args.args[0], "id", uuid.uuid4())
     monkeypatch.setattr(
         recorder, "score_persisted_rational",
