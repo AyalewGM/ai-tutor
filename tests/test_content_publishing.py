@@ -559,10 +559,57 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 transfer_path = (
                     f"/api/v1/adaptive-tutor/sessions/{session_id}/published-transfer"
                 )
+                # Muse D1: a corrupted guided result must block both
+                # independent issuance and scoring, even after issuance.
+                guided_result = db.scalar(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.problem_id == problem.id,
+                    TutorTurn.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT",
+                    TutorTurn.metadata_json["correct"].as_boolean().is_(True),
+                ))
+                assert guided_result is not None
+                guided_original = dict(guided_result.metadata_json)
+                guided_result.metadata_json = {
+                    **guided_original, "task_fingerprint": "tampered",
+                }
+                db.commit()
+                counts_before = (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                )
+                assert client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                assert (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                ) == counts_before
+                guided_result.metadata_json = guided_original
+                db.commit()
                 started = client.post(
                     f"{transfer_path}/start", params={"problem_id": str(problem.id)},
                 )
                 assert started.status_code == 200, started.text
+                guided_result.metadata_json = {
+                    **guided_original, "task_fingerprint": "tampered",
+                }
+                db.commit()
+                assert client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"]},
+                ).status_code == 409
+                assert (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                ) == (
+                    counts_before[0], counts_before[1] + 1, counts_before[2],
+                )
+                guided_result.metadata_json = guided_original
+                db.commit()
                 assert started.json()["stage"] == "INDEPENDENT_EXIT"
                 assert started.json()["hints_allowed"] is False
                 assert started.json()["mastery_eligible"] is False
