@@ -72,51 +72,57 @@ def test_two_connections_one_student_problem_commit_then_replay_denied(monkeypat
 
         # Reject an unsupported real PostgreSQL transaction before any scorer or
         # recorder writes. Read back both tables after commit to prove no effect.
-        with engine.connect().execution_options(isolation_level="REPEATABLE READ") as connection:
-            with Session(bind=connection) as db, db.begin():
-                assert db.connection().get_isolation_level() == "REPEATABLE READ"
-                scorer_calls = []
-                monkeypatch.setattr(
-                    recorder, "score_persisted_rational",
-                    lambda *_args, **_kwargs: scorer_calls.append(True),
-                )
-                rejected = recorder.record_rational_attempt(
-                    db,
-                    context=TrustedAssessmentContext(
-                        student_id, sessions[0], problem_id, AssessmentMode.INDEPENDENT,
-                    ),
-                    submission="x=2/4", approval_source=object(),
-                    service_principal="synthetic",
-                )
-                assert rejected.decision == DENIED and rejected.attempt_id is None
-                assert not scorer_calls
+        with (
+            engine.connect().execution_options(isolation_level="REPEATABLE READ") as connection,
+            Session(bind=connection) as db,
+            db.begin(),
+        ):
+            assert db.connection().get_isolation_level() == "REPEATABLE READ"
+            scorer_calls = []
+            monkeypatch.setattr(
+                recorder, "score_persisted_rational",
+                lambda *_args, **_kwargs: scorer_calls.append(True),
+            )
+            rejected = recorder.record_rational_attempt(
+                db,
+                context=TrustedAssessmentContext(
+                    student_id, sessions[0], problem_id, AssessmentMode.INDEPENDENT,
+                ),
+                submission="x=2/4", approval_source=object(),
+                service_principal="synthetic",
+            )
+            assert rejected.decision == DENIED and rejected.attempt_id is None
+            assert not scorer_calls
         # SQLAlchemy still reports READ COMMITTED under driver AUTOCOMMIT,
         # despite db.begin() creating a logical Session transaction.
-        with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
-            with Session(bind=connection) as db, db.begin():
-                assert db.in_transaction()
-                actual = db.connection()
-                assert actual.get_isolation_level() == "READ COMMITTED"
-                assert actual.connection.driver_connection.autocommit is True
-                monkeypatch.setattr(
-                    db, "scalar",
-                    lambda *_args, **_kwargs: pytest.fail("recorder queried before autocommit denial"),
-                )
-                scorer_calls = []
-                monkeypatch.setattr(
-                    recorder, "score_persisted_rational",
-                    lambda *_args, **_kwargs: scorer_calls.append(True),
-                )
-                rejected = recorder.record_rational_attempt(
-                    db,
-                    context=TrustedAssessmentContext(
-                        student_id, sessions[0], problem_id, AssessmentMode.INDEPENDENT,
-                    ),
-                    submission="x=2/4", approval_source=object(),
-                    service_principal="synthetic",
-                )
-                assert rejected.decision == DENIED and rejected.attempt_id is None
-                assert not scorer_calls
+        with (
+            engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection,
+            Session(bind=connection) as db,
+            db.begin(),
+        ):
+            assert db.in_transaction()
+            actual = db.connection()
+            assert actual.get_isolation_level() == "READ COMMITTED"
+            assert actual.connection.driver_connection.autocommit is True
+            monkeypatch.setattr(
+                db, "scalar",
+                lambda *_args, **_kwargs: pytest.fail("recorder queried before autocommit denial"),
+            )
+            scorer_calls = []
+            monkeypatch.setattr(
+                recorder, "score_persisted_rational",
+                lambda *_args, **_kwargs: scorer_calls.append(True),
+            )
+            rejected = recorder.record_rational_attempt(
+                db,
+                context=TrustedAssessmentContext(
+                    student_id, sessions[0], problem_id, AssessmentMode.INDEPENDENT,
+                ),
+                submission="x=2/4", approval_source=object(),
+                service_principal="synthetic",
+            )
+            assert rejected.decision == DENIED and rejected.attempt_id is None
+            assert not scorer_calls
         with Session(engine) as db:
             assert db.connection().get_isolation_level() == "READ COMMITTED"
             assert db.connection().connection.driver_connection.autocommit is False

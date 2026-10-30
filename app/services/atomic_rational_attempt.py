@@ -55,7 +55,7 @@ def record_rational_attempt(
         # SQLAlchemy isolation reporting excludes DBAPI AUTOCOMMIT, and its
         # logical transaction alone does not keep row locks across statements.
         autocommit = connection.connection.driver_connection.autocommit
-    except Exception:  # Introspection only: unknown driver state must deny.
+    except Exception:  # noqa: BLE001 - Unknown introspection state must deny before queries/writes.
         return RecordedRationalAttempt(DENIED, None)
     if isolation != "READ COMMITTED" or autocommit is not False:
         return RecordedRationalAttempt(DENIED, None)
