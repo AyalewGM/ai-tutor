@@ -561,13 +561,11 @@ def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_cho
                 )
                 # Muse D1: a corrupted guided result must block both
                 # independent issuance and scoring, even after issuance.
-                guided_result = db.scalar(select(TutorTurn).where(
+                guided_result = next(t for t in db.scalars(select(TutorTurn).where(
                     TutorTurn.session_id == uuid.UUID(session_id),
                     TutorTurn.problem_id == problem.id,
                     TutorTurn.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT",
-                    TutorTurn.metadata_json["correct"].as_boolean().is_(True),
-                ))
-                assert guided_result is not None
+                )) if t.metadata_json.get("correct") is True)
                 guided_original = dict(guided_result.metadata_json)
                 guided_result.metadata_json = {
                     **guided_original, "task_fingerprint": "tampered",
