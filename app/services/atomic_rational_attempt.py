@@ -63,7 +63,7 @@ def record_rational_attempt(
     student = db.scalar(
         select(Student).where(Student.id == context.student_id).with_for_update()
     )
-    if student is None:
+    if student is None or student.active is not True:
         return RecordedRationalAttempt(DENIED, None)
     session = db.scalar(
         select(TutorSession).where(
@@ -71,7 +71,7 @@ def record_rational_attempt(
             TutorSession.student_id == context.student_id,
         ).with_for_update()
     )
-    if session is None:
+    if session is None or session.status != "ACTIVE":
         return RecordedRationalAttempt(DENIED, None)
     previous = db.scalar(
         select(Attempt.id).where(
