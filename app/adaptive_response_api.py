@@ -813,6 +813,52 @@ class PublishedTransferIn(BaseModel):
     answer: str
 
 
+def _require_published_guided_result_integrity(
+    problem: Problem, confirmation: TutorTurn,
+    issued: list[TutorTurn], results: list[TutorTurn],
+) -> None:
+    """Bind each completed guided result to its exact server-issued task.
+
+    Shared by transfer issuance/scoring and separate verification. A plausible
+    final correct Boolean cannot rehabilitate a corrupted earlier response.
+    """
+    if (
+        len(issued) != len(results)
+        or not 1 <= len(issued) <= 3
+        or not isinstance(confirmation.metadata_json, dict)
+    ):
+        raise HTTPException(409, "Guided history incomplete or inconsistent")
+    code = confirmation.metadata_json.get("misconception_code")
+    if not isinstance(code, str):
+        raise HTTPException(409, "Guided diagnosis invalid")
+    for index, (issue, outcome) in enumerate(zip(issued, results)):
+        try:
+            expected = server_guided_retest(
+                problem, misconception_code=code, retry_index=index,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Guided task identity unavailable") from exc
+        proof = issue.metadata_json
+        result = outcome.metadata_json
+        if (
+            issue.attempt_id != confirmation.attempt_id
+            or outcome.attempt_id != confirmation.attempt_id
+            or not isinstance(proof, dict)
+            or not isinstance(result, dict)
+            or proof.get("variant_id") != expected["variant_id"]
+            or proof.get("task_fingerprint") != expected["task_fingerprint"]
+            or proof.get("source_fingerprint") != problem.solution["task_fingerprint"]
+            or proof.get("independent_evidence_eligible") is not False
+            or result.get("variant_id") != expected["variant_id"]
+            or result.get("task_fingerprint") != expected["task_fingerprint"]
+            or result.get("independent_evidence_eligible") is not False
+            or result.get("assisted") is not True
+            or type(result.get("correct")) is not bool
+            or result["correct"] is not (index == len(results) - 1)
+        ):
+            raise HTTPException(409, "Guided result does not match issued task")
+
+
 def _published_transfer_proof(db: DbSession, session: TutorSession, problem: Problem):
     """Server-only proof of a successful, fresh guided retest."""
     if (
@@ -844,6 +890,7 @@ def _published_transfer_proof(db: DbSession, session: TutorSession, problem: Pro
         or len([t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"])
     ):
         raise HTTPException(409, "Verified guided success is required before transfer")
+    _require_published_guided_result_integrity(problem, confirmed[0], issued, results)
     try:
         transfer = server_unhinted_transfer(
             problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
@@ -962,6 +1009,7 @@ def _published_verified_transfer(db: DbSession, session: TutorSession, problem: 
         TutorTurn.problem_id == problem.id,
         TutorTurn.pedagogical_action.in_((
             "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
             "PUBLISHED_GUIDED_RETEST_RESULT",
             "PUBLISHED_TRANSFER_ISSUED",
             "PUBLISHED_TRANSFER_RESULT",
@@ -985,6 +1033,12 @@ def _published_verified_transfer(db: DbSession, session: TutorSession, problem: 
         or transfers[0].metadata_json.get("hints_allowed") is not False
     ):
         raise HTTPException(409, "A successful unhinted transfer is required")
+    guided_issues = [
+        t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"
+    ]
+    _require_published_guided_result_integrity(
+        problem, confirmations[0], guided_issues, guided,
+    )
     try:
         guided_index = len(guided) - 1
         code = confirmations[0].metadata_json["misconception_code"]
