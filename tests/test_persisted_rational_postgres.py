@@ -25,6 +25,7 @@ from app.models import (
     TutorState,
     TutorTurn,
 )
+from app.services.atomic_rational_attempt import record_rational_attempt
 from app.services.family_activation_adapter import DENIED, FamilyRegistration
 from app.services.fraction_assessment_registry import AssessmentMode, ReviewedFamily
 from app.services.issued_rational_evidence import ISSUANCE_VERSION
@@ -230,6 +231,52 @@ def test_postgres_two_students_two_sessions_no_history_writes():
                 ) == DENIED
                 assert history_counts() == before
                 assert not db.dirty
+
+                # A persisted hint denies the real recorder before any write,
+                # even when the caller claims this is unassisted work.
+                denied_record = record_rational_attempt(
+                    db, context=first, submission="x=-3/4", **args,
+                )
+                assert denied_record.decision == DENIED
+                assert denied_record.attempt_id is None
+                assert history_counts() == before
+
+                # Incorrect answers must also persist as incorrect attempts,
+                # without mastery writes, and remain caller-rollback-safe.
+                with db.begin_nested() as nested:
+                    incorrect = record_rational_attempt(
+                        db, context=second, submission="x=999", **args,
+                    )
+                    assert incorrect.decision.eligible
+                    assert incorrect.decision.correct is False
+                    assert incorrect.decision.independent_evidence_eligible is False
+                    assert incorrect.attempt_id is not None
+                    stored = db.get(Attempt, incorrect.attempt_id)
+                    assert stored.is_correct is False
+                    assert stored.student_id == students[1].id
+                    assert stored.assistance_level == 0
+                    assert history_counts()[0] == before[0] + 1
+                    assert history_counts()[1] == before[1]
+                    nested.rollback()
+                assert history_counts() == before
+
+                # An eligible attempt is flushed inside a caller-owned
+                # PostgreSQL savepoint and cannot survive its rollback.
+                with db.begin_nested() as nested:
+                    second_write = record_rational_attempt(
+                        db, context=second, submission="x=-3/4", **args,
+                    )
+                    assert second_write.decision.eligible
+                    assert second_write.decision.correct
+                    assert not second_write.decision.independent_evidence_eligible
+                    assert second_write.attempt_id is not None
+                    assert history_counts()[0] == before[0] + 1
+                    assert history_counts()[1] == before[1]
+                    assert record_rational_attempt(
+                        db, context=second, submission="x=-3/4", **args,
+                    ).decision == DENIED
+                    nested.rollback()
+                assert history_counts() == before
         finally:
             transaction.rollback()
     engine.dispose()
