@@ -30,7 +30,8 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
 
     def setUp(self):
         self.policy = {**auth.SCOPE, "schema": auth.POLICY_SCHEMA,
-                       "owner_public_key": self.public, "revoked": False, "max_age_seconds": 3600}
+                       "owner_public_key": self.public, "revoked": False, "max_age_seconds": 3600,
+                       "max_runtime_seconds": 86400, "operator_pins_sha256": "1" * 64}
         self.bundle = {"schema": auth.EVIDENCE_SCHEMA, "source_sha": "a" * 40,
                        "package_sha256": "b" * 64, "author_sessions": ["fixture-author"],
                        "reviews": []}
@@ -44,18 +45,19 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
         self.context = {**auth.SCOPE, "source_sha": "a" * 40, "source_tree": "c" * 40,
                         "package_sha256": "b" * 64, "runtime_sha256": "d" * 64,
                         "evidence_sha256": auth.digest(self.bundle), "actions": ["deploy", "publish"],
+                        "database_cluster_id": "1234567890123456789",
                         "images": {key: "example.invalid/fixture-" + key + "@sha256:" + "e" * 64
                                    for key in auth.IMAGE_KEYS}}
         self.payload = {**self.context, "schema": auth.AUTH_SCHEMA, "namespace": auth.NAMESPACE,
                         "policy_sha256": auth.digest(self.policy), "issued_at": 1000,
-                        "expires_at": 2000, "nonce": "f" * 64}
+                        "expires_at": 2000, "runtime_expires_at": 3000, "nonce": "f" * 64}
 
-    def sign(self, payload=None, namespace=None):
+    def sign(self, payload=None, namespace=None, key=None):
         data = auth.canonical(self.payload if payload is None else payload)
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             path = Path(directory) / "fixture-payload"
             path.write_bytes(data)
-            subprocess.run(["/usr/bin/ssh-keygen", "-Y", "sign", "-f", str(self.key),
+            subprocess.run(["/usr/bin/ssh-keygen", "-Y", "sign", "-f", str(self.key if key is None else key),
                             "-n", namespace or auth.NAMESPACE, str(path)], check=True,
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return data, Path(str(path) + ".sig").read_bytes()
@@ -98,12 +100,24 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
                         self.bundle, self.artifacts, now=1500)
         self.assertNotEqual(data, auth.canonical(changed))
 
+    def test_valid_signature_from_another_real_fixture_key_is_not_owner_authorization(self):
+        with tempfile.TemporaryDirectory(dir=self.root) as directory:
+            unauthorized_key = Path(directory) / "UNAUTHORIZED_FIXTURE_ONLY"
+            subprocess.run(["/usr/bin/ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-f",
+                            str(unauthorized_key)], check=True, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL)
+            data, signature = self.sign(key=unauthorized_key)
+            with self.assertRaisesRegex(auth.AuthorizationRejected, "owner_signature_invalid"):
+                auth.verify(data, signature, self.policy, self.context, self.bundle,
+                            self.artifacts, now=1500)
+
     def test_changed_exact_subject_rejected_even_with_valid_owner_fixture_signature(self):
         changes = {"source_sha": "1" * 40, "source_tree": "2" * 40,
                    "package_sha256": "3" * 64, "runtime_sha256": "4" * 64,
                    "evidence_sha256": "5" * 64, "host_sha256": "6" * 64,
                    "repository_id": 1, "owner_id": 1, "application_url": "https://production.invalid",
-                   "database": "production", "environment": "production",
+                   "database": "production", "database_role": "production",
+                   "database_cluster_id": "9876543210123456789", "environment": "production",
                    "actions": ["publish", "deploy"], "images": {}}
         for key, value in changes.items():
             with self.subTest(field=key), self.assertRaises(auth.AuthorizationRejected):
@@ -117,6 +131,19 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
         with patch.dict(os.environ, {"APP_ENV": "production", "DATABASE_URL": "production"}):
             # Ambient variables cannot grant authority or alter the fixed dev scope.
             self.assertEqual(self.verify().nonce, self.payload["nonce"])
+
+    def test_signed_runtime_window_is_separate_bounded_and_tamper_rejected(self):
+        result = self.verify()
+        self.assertEqual(result.expires_at, 2000)
+        self.assertEqual(result.runtime_expires_at, 3000)
+        for runtime_expires in (1999, 1000 + 86401, True):
+            with self.subTest(runtime_expires=runtime_expires), self.assertRaises(auth.AuthorizationRejected):
+                self.verify(payload={**self.payload, "runtime_expires_at": runtime_expires})
+        data, signature = self.sign()
+        self.assertTrue(data)
+        with self.assertRaisesRegex(auth.AuthorizationRejected, "owner_signature_invalid"):
+            auth.verify(auth.canonical({**self.payload, "runtime_expires_at": 3001}), signature,
+                        self.policy, self.context, self.bundle, self.artifacts, now=1500)
 
     def test_unknown_fields_duplicate_json_and_noncanonical_bytes_rejected(self):
         data, signature = self.sign()
@@ -134,6 +161,15 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
                 self.verify(policy=value)
         with self.assertRaises(auth.AuthorizationRejected):
             self.verify(payload={**self.payload, "policy_sha256": "0" * 64})
+
+    def test_cluster_identity_and_runtime_policy_bounds_rejected(self):
+        for cluster in ("", "0", "01", "18446744073709551616", True):
+            with self.subTest(cluster=cluster), self.assertRaises(auth.AuthorizationRejected):
+                self.verify(payload={**self.payload, "database_cluster_id": cluster},
+                            context={**self.context, "database_cluster_id": cluster})
+        for maximum in (0, 604801, True):
+            with self.subTest(maximum=maximum), self.assertRaises(auth.AuthorizationRejected):
+                self.verify(policy={**self.policy, "max_runtime_seconds": maximum})
 
     def test_expiry_future_issue_and_unbounded_lifetime_rejected(self):
         for payload, now in ((self.payload, 2000), (self.payload, 999),

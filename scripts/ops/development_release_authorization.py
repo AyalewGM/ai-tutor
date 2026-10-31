@@ -1,7 +1,7 @@
-"""INACTIVE proposal: verify a detached development-owner authorization.
+"""Detached owner authorization for fixed development-only release entrypoints.
 
-No publisher, runtime permission check or deployment entrypoint calls this module.
-A trusted future adapter must collect its own context and reserve before effects.
+The native operator collects its own context and reserves before effects.
+Runtime package permission is separate and never consumes an operation nonce.
 Pure verification does not authenticate caller-supplied context or agent provenance.
 """
 from __future__ import annotations
@@ -25,19 +25,22 @@ POLICY_SCHEMA = "MIHUR_DEVELOPMENT_OWNER_POLICY_V1"
 AUTH_SCHEMA = "MIHUR_DEVELOPMENT_OWNER_AUTHORIZATION_V1"
 EVIDENCE_SCHEMA = "MIHUR_CODEX_TECHNICAL_EVIDENCE_V1"
 ROLES = frozenset({"math", "pedagogy", "standards", "security", "qa"})
-POLICY_PATH = Path("/etc/mihur-staging/development-owner-policy.json")
-CONTEXT_PATH = Path("/etc/mihur-staging/development-release-context.json")
+POLICY_PATH = Path("/etc/mihur-staging/development-owner/policy.json")
+CONTEXT_PATH = Path("/etc/mihur-staging/development-owner/context.json")
 REPOSITORY = "AyalewGM/ai-tutor"
 REPOSITORY_ID = 1367979340
 OWNER_ID = 22088298
 HOST = "3ee0437dd6184c8f150d0530093391fe7499cce86999f3c1a2e67dc0daec1c4b"
 SCOPE = {"repository": REPOSITORY, "repository_id": REPOSITORY_ID, "owner_id": OWNER_ID,
          "environment": "development", "host_sha256": HOST,
-         "application_url": "https://dev.mihureducation.com", "database": "mihur_staging"}
+         "application_url": "https://dev.mihureducation.com", "database": "mihur_staging",
+         "database_role": "mihur_staging"}
 BINDINGS = frozenset(SCOPE) | {"source_sha", "source_tree", "package_sha256", "runtime_sha256",
-                                    "images", "evidence_sha256", "actions"}
-POLICY_FIELDS = frozenset(SCOPE) | {"schema", "owner_public_key", "revoked", "max_age_seconds"}
-AUTH_FIELDS = BINDINGS | {"schema", "namespace", "policy_sha256", "issued_at", "expires_at", "nonce"}
+                                    "images", "evidence_sha256", "actions", "database_cluster_id"}
+POLICY_FIELDS = frozenset(SCOPE) | {"schema", "owner_public_key", "revoked", "max_age_seconds",
+                                           "max_runtime_seconds", "operator_pins_sha256"}
+AUTH_FIELDS = BINDINGS | {"schema", "namespace", "policy_sha256", "issued_at", "expires_at",
+                          "runtime_expires_at", "nonce"}
 IMAGE_KEYS = frozenset({"api", "gateway", "frontend", "db", "redis", "proxy"})
 ACTION_PLANS = (("deploy",), ("publish",), ("deploy", "publish"), ("rollback",))
 MAX_BYTES = 65536
@@ -93,9 +96,12 @@ def _scope(value):
 def validate_policy(policy):
     require(type(policy) is dict and set(policy) == POLICY_FIELDS, "policy_fields")
     _scope(policy)
+    require(_hex(policy["operator_pins_sha256"], 64), "operator_pins_digest")
     require(policy["schema"] == POLICY_SCHEMA and policy["revoked"] is False, "policy_revoked")
     require(type(policy["max_age_seconds"]) is int and 1 <= policy["max_age_seconds"] <= 3600,
             "policy_lifetime")
+    require(type(policy["max_runtime_seconds"]) is int
+            and 1 <= policy["max_runtime_seconds"] <= 604800, "policy_runtime_lifetime")
     key = policy["owner_public_key"]
     require(isinstance(key, str) and re.fullmatch(r"ssh-ed25519 [A-Za-z0-9+/]+={0,2}", key),
             "owner_public_key")
@@ -141,6 +147,7 @@ class VerifiedAuthorization:
     payload_sha256: str
     nonce: str
     expires_at: int
+    runtime_expires_at: int
 
 
 def verify(envelope, signature, policy, expected_context, bundle, artifacts, *, now=None):
@@ -162,6 +169,9 @@ def verify(envelope, signature, policy, expected_context, bundle, artifacts, *, 
     require(all(payload[key] == expected_context[key] for key in BINDINGS), "release_subject_changed")
     require(payload["policy_sha256"] == digest(policy), "policy_changed")
     require(_hex(payload["source_sha"], 40) and _hex(payload["source_tree"], 40), "source_sha")
+    cluster = payload["database_cluster_id"]
+    require(isinstance(cluster, str) and re.fullmatch(r"[1-9][0-9]{0,19}", cluster)
+            and int(cluster) < 2**64, "database_cluster_id")
     for key in ("package_sha256", "runtime_sha256", "evidence_sha256", "policy_sha256", "nonce"):
         require(_hex(payload[key], 64), "digest_or_nonce")
     images = payload["images"]
@@ -175,6 +185,9 @@ def verify(envelope, signature, policy, expected_context, bundle, artifacts, *, 
     require(type(now) is int and type(issued) is int and type(expires) is int
             and issued <= now < expires and 0 < expires - issued <= policy["max_age_seconds"],
             "authorization_time")
+    runtime_expires = payload["runtime_expires_at"]
+    require(type(runtime_expires) is int and expires <= runtime_expires
+            <= issued + policy["max_runtime_seconds"], "runtime_authorization_time")
     validate_evidence(bundle, artifacts, payload)
     require(isinstance(signature, bytes) and 0 < len(signature) <= 8192, "signature_missing")
     trusted_tmp = _trusted_directory(Path("/tmp"), owner_uid=0)
@@ -196,7 +209,8 @@ def verify(envelope, signature, policy, expected_context, bundle, artifacts, *, 
             require(result.returncode == 0, "owner_signature_invalid")
         except (OSError, subprocess.TimeoutExpired):
             raise AuthorizationRejected("owner_signature_unavailable") from None
-    return VerifiedAuthorization(hashlib.sha256(envelope).hexdigest(), payload["nonce"], expires)
+    return VerifiedAuthorization(hashlib.sha256(envelope).hexdigest(), payload["nonce"],
+                                 expires, runtime_expires)
 
 
 def _trusted_directory(path, *, owner_uid=0, private=False):
@@ -238,7 +252,7 @@ def protected_json(path, *, owner_uid=0):
 
 
 def reserve_nonce(authorization, state_directory, *, owner_uid=0, now=None):
-    """Future trusted adapter only: reserve before FIRST effect; never undo.
+    """Native trusted adapter only: reserve before FIRST effect; never undo.
 
     A process crash, partial write or uncertain operation burns this nonce.
     Ordinary runtime package checks must not call this operation primitive.
@@ -278,7 +292,7 @@ def _input(path, limit=MAX_BYTES):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Inactive proposal; verify-only, no release effects")
+    parser = argparse.ArgumentParser(description="Verify-only; no release effects")
     for name in ("envelope", "signature", "evidence", "artifacts"):
         parser.add_argument("--" + name, required=True)
     args = parser.parse_args()
@@ -293,7 +307,7 @@ def main():
         require(_hex(sha, 64), "review_artifact_name")
         artifacts[sha] = _input(Path(args.artifacts) / (sha + ".txt"))
     verify(envelope, _input(args.signature, 8192), policy, context, bundle, artifacts)
-    print(json.dumps({"status": "VERIFIED_PROPOSAL_ONLY", "deployment_performed": False,
+    print(json.dumps({"status": "VERIFIED_ONLY", "deployment_performed": False,
                       "publication_performed": False, "nonce_reserved": False}))
 
 

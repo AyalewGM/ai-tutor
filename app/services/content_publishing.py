@@ -15,6 +15,7 @@ from pathlib import Path
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.content_models import ProblemContentMetadata
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
@@ -81,6 +82,8 @@ RUNTIME_FILES = (
     "app/identity.py", "app/diagnostic_api.py",
     "app/api.py", "scripts/ops/publish_content.py", "scripts/ops/content_learner_probe.py",
     "deploy/staging/publish_content.py", ".github/workflows/content-publisher.yml",
+    "app/services/development_content_authorization.py",
+    "scripts/ops/development_release_authorization.py", "deploy/staging/development_release.py",
 )
 
 
@@ -208,6 +211,28 @@ def validate(manifest, *, require_approvals=True):
     return digest(payload)
 
 
+def authorize_package(manifest, db=None):
+    """Default six-role policy, or explicit protected development-native permission.
+
+    Only the fixed read-only native mounts select development authorization.
+    Structural validation is never itself permission to publish or select content.
+    """
+    from app.services import development_content_authorization as development
+
+    try:
+        if not development.configured():
+            return validate(manifest)
+        package_digest = validate(manifest, require_approvals=False)
+        if (manifest["activation"] != "staging" or manifest["review_evidence"] != []
+            or manifest["standards_provenance"].get("acceptance") != PARTIAL_PRACTICE_ACCEPTANCE):
+            raise PublicationBlocked("Development package is not accepted bounded staging practice")
+        return development.authorize(manifest, package_digest, runtime_digest(), db)
+    except PublicationBlocked:
+        raise
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, SQLAlchemyError):
+        raise PublicationBlocked("Protected development package authorization failed") from None
+
+
 def candidates(manifest):
     from scripts.author_ontario_linear_depth import create_candidate
 
@@ -243,8 +268,8 @@ def resolve_skill(db, manifest):
     return row
 
 
-def expected_problem(manifest, mode, item, skill_id):
-    package_digest = validate(manifest)
+def expected_problem(manifest, mode, item, skill_id, db=None):
+    package_digest = authorize_package(manifest, db)
     return {
         "id": uuid.uuid5(uuid.NAMESPACE_URL, f"mihur:{package_digest}:{item['variant_id']}"),
         "primary_skill_id": skill_id, "problem_type": "PUBLISHED_RATIONAL", "difficulty": 3,
@@ -259,7 +284,7 @@ def expected_problem(manifest, mode, item, skill_id):
 
 def publish(db, manifest):
     """Caller owns transaction and deployment preflight. Insert only; never overwrite."""
-    validate(manifest)
+    authorize_package(manifest, db)
     skill, canonical_skill = resolve_skill(db, manifest)
     family = db.scalar(select(ProblemFamily).where(ProblemFamily.code == FAMILY))
     if family is None:
@@ -270,7 +295,7 @@ def publish(db, manifest):
           or family.generator_key != GENERATOR):
         raise PublicationBlocked("Canonical family registration conflict")
     for mode, item in candidates(manifest):
-        values = expected_problem(manifest, mode, item, skill.id)
+        values = expected_problem(manifest, mode, item, skill.id, db)
         problem = db.get(Problem, values["id"])
         if problem is not None:
             if any(getattr(problem, k) != v for k, v in values.items()):
@@ -301,7 +326,7 @@ def permitted(db, problem, mode):
         return True
     try:
         manifest = problem.solution["manifest"]
-        validate(manifest)
+        authorize_package(manifest, db)
         skill, canonical_skill = resolve_skill(db, manifest)
         family = db.scalar(select(ProblemFamily).where(ProblemFamily.code == FAMILY))
         if (family is None or not family.active or family.canonical_skill_id != canonical_skill.id
@@ -316,7 +341,7 @@ def permitted(db, problem, mode):
             return False
         for candidate_mode, item in candidates(manifest):
             if candidate_mode == mode and item["variant_id"] == problem.solution["variant_id"]:
-                expected = expected_problem(manifest, mode, item, skill.id)
+                expected = expected_problem(manifest, mode, item, skill.id, db)
                 return all(getattr(problem, k) == v for k, v in expected.items())
     except (PublicationBlocked, KeyError, TypeError, AttributeError, OSError):
         return False

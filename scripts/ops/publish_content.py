@@ -6,7 +6,16 @@ import sys
 from sqlalchemy import text
 
 from app.core.database import SessionLocal
-from app.services.content_publishing import ROOT, candidates, publish, report, rollback, validate
+from app.services import development_content_authorization as development
+from app.services.content_publishing import (
+    ROOT,
+    authorize_package,
+    candidates,
+    publish,
+    report,
+    rollback,
+    validate,
+)
 
 MANIFEST = ROOT / "content_packages/mth1w-signed-two-step-v1.json"
 
@@ -16,10 +25,14 @@ def main():
     parser.add_argument("action", choices=["dry-run", "publish", "rollback", "report"])
     args = parser.parse_args()
     manifest = json.loads(MANIFEST.read_text())
-    package_digest = validate(manifest, require_approvals=args.action == "publish")
+    package_digest = validate(manifest, require_approvals=False)
+    if args.action == "publish" and not development.configured():
+        # Preserve the default six-signature rejection before receipt/DB access.
+        package_digest = validate(manifest)
     if args.action == "dry-run":
         try:
-            validate(manifest)
+            with SessionLocal() as db:
+                authorize_package(manifest, db)
             authorization = "APPROVED"
         except ValueError as exc:
             authorization = str(exc)
