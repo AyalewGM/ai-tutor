@@ -1203,6 +1203,7 @@ def respond(
         )
     )
     is_extension = bool(content_meta and content_meta.extension_eligible)
+    is_published = problem.source_type == "PUBLISHED"
     if is_extension:
         # Optional stretch tier: tagged EXTENSION so mastery gating, progress
         # counters, and evidence queries exclude it.
@@ -1309,50 +1310,53 @@ def respond(
     db.add(attempt)
     db.flush()
 
-    gate_evidence = load_mastery_gate_evidence(
-        db,
-        student_id=session.student_id,
-        skill_id=active_skill_id,
-    )
-    gate_decision = evaluate_mastery_gate(
-        mastery_score=progress.mastery_score,
-        mastery_threshold=skill.mastery_threshold,
-        independent_correct_count=gate_evidence.independent_correct_count,
-        strong_help_seen=gate_evidence.strong_help_seen,
-        independent_successes_after_strong_help=(
-            gate_evidence.independent_successes_after_strong_help
-        ),
-    )
+    if is_published:
+        transition = Transition(state_at_attempt, "PRACTICE_FEEDBACK")
+    else:
+        gate_evidence = load_mastery_gate_evidence(
+            db,
+            student_id=session.student_id,
+            skill_id=active_skill_id,
+        )
+        gate_decision = evaluate_mastery_gate(
+            mastery_score=progress.mastery_score,
+            mastery_threshold=skill.mastery_threshold,
+            independent_correct_count=gate_evidence.independent_correct_count,
+            strong_help_seen=gate_evidence.strong_help_seen,
+            independent_successes_after_strong_help=(
+                gate_evidence.independent_successes_after_strong_help
+            ),
+        )
 
-    independent_successes = (
-        db.scalar(
-            select(func.count(Attempt.id))
-            .join(Problem, Problem.id == Attempt.problem_id)
-            .where(
-                Attempt.session_id == session.id,
-                Problem.primary_skill_id == active_skill_id,
-                # Published answers remain feedback-only even when correct.
-                Problem.source_type != "PUBLISHED",
-                Attempt.is_correct.is_(True),
-                Attempt.assistance_level == 0,
-                Attempt.state_at_attempt != TutorState.EXTENSION,
+        independent_successes = (
+            db.scalar(
+                select(func.count(Attempt.id))
+                .join(Problem, Problem.id == Attempt.problem_id)
+                .where(
+                    Attempt.session_id == session.id,
+                    Problem.primary_skill_id == active_skill_id,
+                    # Published answers remain feedback-only even when correct.
+                    Problem.source_type != "PUBLISHED",
+                    Attempt.is_correct.is_(True),
+                    Attempt.assistance_level == 0,
+                    Attempt.state_at_attempt != TutorState.EXTENSION,
+                )
+            )
+            or 0
+        )
+        transition = determine_next_action(
+            StateContext(
+                state=state_at_attempt,
+                correct=evidence.evaluation.correct,
+                assistance_level=effective_assistance_level,
+                misconception_count=evidence.misconception_count,
+                consecutive_independent_successes=int(independent_successes),
+                mastery_gate_eligible=gate_decision.eligible,
             )
         )
-        or 0
-    )
-    transition = determine_next_action(
-        StateContext(
-            state=state_at_attempt,
-            correct=evidence.evaluation.correct,
-            assistance_level=effective_assistance_level,
-            misconception_count=evidence.misconception_count,
-            consecutive_independent_successes=int(independent_successes),
-            mastery_gate_eligible=gate_decision.eligible,
-        )
-    )
     engine_action = transition.action
 
-    if not is_extension:
+    if not is_extension and not is_published:
         db.add(
             MasteryEvent(
                 student_id=session.student_id,
@@ -1376,7 +1380,7 @@ def respond(
             )
         )
 
-    if state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
+    if not is_published and state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
         db.add(
             MasteryEvent(
                 student_id=session.student_id,
@@ -1403,7 +1407,9 @@ def respond(
         )
 
     review_outcome = None
-    if session.remediation_reason == REVIEW_REASON:
+    if is_published:
+        pass
+    elif session.remediation_reason == REVIEW_REASON:
         transition, review_outcome = apply_review_policy(
             db,
             session=session,
@@ -1425,7 +1431,7 @@ def respond(
     review_scheduled_payload: dict[str, object] | None = None
     passed_mastery_check = False
     gap_fixed = False
-    if state_at_attempt == TutorState.MASTERY_CHECK:
+    if not is_published and state_at_attempt == TutorState.MASTERY_CHECK:
         passed_mastery_check = (
             transition.action == "MARK_MASTERED"
             and evidence.evaluation.correct
@@ -1467,7 +1473,7 @@ def respond(
                 gap_fixed = True
                 transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
-    if not is_extension:
+    if not is_extension and not is_published:
         # Extension attempts never move the session state machine or the
         # difficulty ladder — the optional tier is progression-neutral.
         session.current_state = transition.state
@@ -1489,7 +1495,8 @@ def respond(
         independent_assessment_active=assessment_guard.blocked,
     )
     issue_jit_hint = (
-        not evidence.evaluation.correct
+        not is_published
+        and not evidence.evaluation.correct
         and evidence.misconception is not None
         and jit_decision.allowed
         and (session.active_skill_id or session.primary_skill_id) == active_skill_id
@@ -1512,6 +1519,7 @@ def respond(
         next_problem = None
         if (
             not is_extension
+            and not is_published
             and evidence.evaluation.correct is False
             and problem.primary_skill_id == next_skill_id
         ):
@@ -1527,7 +1535,7 @@ def respond(
                 else None,
                 current_difficulty=next_progress.current_difficulty,
                 state=transition.state,
-                correct=None if is_extension else evidence.evaluation.correct,
+                correct=None if is_extension or is_published else evidence.evaluation.correct,
                 session_id=session.id,
                 offer_extension=is_extension,
             )
@@ -1545,6 +1553,13 @@ def respond(
         answer_leak_blocked = False
         generation_source = "assessment_blocked"
         generation_model: str | None = None
+    elif is_published:
+        message = ("Correct. This is practice feedback; it does not count toward mastery."
+                   if evidence.evaluation.correct else
+                   "That answer is not correct. This is practice feedback; it does not count toward mastery.")
+        answer_leak_blocked = False
+        generation_source = "published_practice_feedback"
+        generation_model = None
     else:
         tutor_context = _tutor_context(
             db,
@@ -1584,7 +1599,7 @@ def respond(
         generation_source = generation.source
         generation_model = generation.model
         answer_leak_blocked = True
-    if not assessment_guard.blocked and not evidence.evaluation.correct:
+    if not is_published and not assessment_guard.blocked and not evidence.evaluation.correct:
         block = visualization.chat_cpa_block(visualization.visualization_for(problem))
         if block and "```json:cpa" not in message:
             message = f"{message}\n\n{block}"
@@ -1612,8 +1627,8 @@ def respond(
                 else None
             ),
             "effective_assistance_level": effective_assistance_level,
-            "mastery_gate_eligible": gate_decision.eligible,
-            "mastery_gate_reason": gate_decision.reason,
+            "mastery_gate_eligible": False if is_published else gate_decision.eligible,
+            "mastery_gate_reason": "PUBLISHED_FEEDBACK_ONLY" if is_published else gate_decision.reason,
             "curriculum_id": str(scope.curriculum_id),
             "curriculum_enrollment_id": (str(scope.enrollment_id) if scope.enrollment_id else None),
         },
@@ -1671,7 +1686,7 @@ def respond(
     db.commit()
 
     _publish_adaptive_event(
-        event_type="mastery.evidence_recorded",
+        event_type="practice.feedback_recorded" if is_published else "mastery.evidence_recorded",
         session=session,
         curriculum_id=scope.curriculum_id,
         skill_id=active_skill_id,
@@ -1679,7 +1694,7 @@ def respond(
             "correct": evidence.evaluation.correct,
             "assistance_level": effective_assistance_level,
             "state": state_at_attempt.value,
-            "mastery_gate_eligible": gate_decision.eligible,
+            "mastery_gate_eligible": False if is_published else gate_decision.eligible,
         },
     )
     if review_outcome is not None:
@@ -1702,7 +1717,7 @@ def respond(
             skill_id=active_skill_id,
             payload=review_scheduled_payload,
         )
-    if not assessment_guard.blocked:
+    if not is_published and not assessment_guard.blocked:
         _publish_adaptive_event(
             event_type="model.generation_completed",
             session=session,
