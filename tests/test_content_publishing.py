@@ -57,14 +57,10 @@ def _uuid(*_args, **_kwargs):
 @pytest.fixture
 def signed(monkeypatch):
     manifest = json.loads(MANIFEST.read_text())
-    # Synthetic signers exercise only the publisher mechanism. The checked-in
-    # Ontario mapping remains PROVISIONAL_NOT_ACCEPTED and cannot activate.
+    # Synthetic signers exercise only the real bounded-practice contract. The
+    # checked-in Ontario mapping remains provisional, pending and unsigned.
     synthetic_source = copy.deepcopy(publisher.STANDARDS_PROVENANCE)
-    synthetic_source["acceptance"] = "ACCEPTED"
-    synthetic_source["disposition"] = "ACCEPTED"
-    synthetic_source["coverage_credit"] = True
-    synthetic_source["production_taxonomy_activation"] = True
-    monkeypatch.setattr(publisher, "STANDARDS_PROVENANCE", synthetic_source)
+    synthetic_source["acceptance"] = publisher.PARTIAL_PRACTICE_ACCEPTANCE
     manifest["standards_provenance"] = synthetic_source
     manifest["activation"] = "staging"
     manifest["seed_count"] = 4
@@ -72,7 +68,8 @@ def signed(monkeypatch):
     keys = {role: {"principal": f"synthetic-reviewer-{role}", "roles": [role],
                    "public_key": base64.b64encode(key.public_key().public_bytes(
                        Encoding.Raw, PublicFormat.Raw)).decode()} for role, key in private.items()}
-    policy = {"keys": keys, "authors": {manifest["generator_sha256"]: manifest["author_principals"]}}
+    policy = {"keys": keys, "authors": {manifest["generator_sha256"]: manifest["author_principals"]},
+              "runtime_authors": {manifest["runtime_sha256"]: manifest["author_principals"]}}
     monkeypatch.delenv("MIHUR_CONTENT_REVIEW_POLICY_FILE", raising=False)
     monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
     payload = {k: v for k, v in manifest.items() if k != "review_evidence"}
@@ -141,7 +138,7 @@ def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):
     manifest, policy = signed
     assert publisher.validate(manifest)
     pending = json.loads(MANIFEST.read_text())
-    pending["standards_provenance"] = publisher.STANDARDS_PROVENANCE
+    pending["standards_provenance"] = copy.deepcopy(manifest["standards_provenance"])
     with pytest.raises(publisher.PublicationBlocked, match="pending"):
         publisher.validate(pending)
     for field, value in [
@@ -174,10 +171,10 @@ def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
     assert report["learner_selectable"] == {"diagnostic": 4, "guided": 4, "independent": 4}
     rows = db.scalars(select(Problem)).all()
     provenance = db.scalars(select(ProblemContentMetadata)).all()
-    assert all(meta.provenance_json["standards"] == publisher.STANDARDS_PROVENANCE
+    assert all(meta.provenance_json["standards"] == manifest["standards_provenance"]
                for meta in provenance)
     assert all(row.solution["manifest"]["standards_provenance"]
-               == publisher.STANDARDS_PROVENANCE for row in rows)
+               == manifest["standards_provenance"] for row in rows)
     ids = {p.id for p in rows}
     assert len({p.solution["task_fingerprint"] for p in rows}) == 12
     skill = db.scalar(select(Skill))
@@ -214,7 +211,9 @@ def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
         publisher.publish(db, manifest)
 
 
-def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed, monkeypatch):
+@pytest.mark.parametrize("practice_state", [TutorState.GUIDED_PRACTICE, TutorState.INDEPENDENT_PRACTICE])
+@pytest.mark.parametrize("correct_answer", [True, False])
+def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed, monkeypatch, practice_state, correct_answer):
     from sqlalchemy.orm import sessionmaker
     for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
                    "app.middleware.geo_restriction"):
@@ -239,17 +238,62 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             from scripts.ops.content_learner_probe import assert_public
             assert_public(body)
             session_id = body["session_id"]
-            problem_id = body["problem"]["id"]
+            practice_session = db.get(TutorSession, __import__("uuid").UUID(session_id))
+            practice_session.current_state = practice_state
+            practice_progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
+            practice_progress.mastery_score = 1
+            practice_progress.independent_correct_count = 10
+            db.commit()
+            def unexpected_mastery(*args, **kwargs):
+                raise AssertionError("published practice called a mastery/progression policy")
+            for policy_name in ("load_mastery_gate_evidence", "evaluate_mastery_gate", "apply_focus_policy", "apply_review_policy"):
+                monkeypatch.setattr("app.adaptive_response_api." + policy_name, unexpected_mastery)
+            practice_problem = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                current_difficulty=3, state=practice_state, student_id=student.id)
+            problem_id = str(practice_problem.id)
+            issued_turn = db.scalar(select(TutorTurn).where(TutorTurn.session_id == practice_session.id, TutorTurn.role == "TUTOR").order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()))
+            issued_turn.problem_id = practice_problem.id
+            db.commit()
+            ordinary = Problem(primary_skill_id=skill.id, problem_type="EQUATION_LINEAR_ONE_VARIABLE",
+                difficulty=3, prompt="Synthetic ordinary baseline", canonical_answer="1", source_type="CURATED")
+            db.add(ordinary)
+            db.flush()
+            db.add(Attempt(session_id=practice_session.id, student_id=student.id,
+                problem_id=ordinary.id, student_answer="1", is_correct=True,
+                assistance_level=1, state_at_attempt=TutorState.GUIDED_PRACTICE))
+            db.commit()
+            from app.services.awards import learner_progress
+            before_growth = learner_progress(db, student.id)
+            assert before_growth["xp"] > 0
+            before_progress = (practice_progress.mastery_score, practice_progress.confidence_score,
+                practice_progress.attempt_count, practice_progress.independent_correct_count,
+                practice_progress.current_difficulty, practice_progress.status)
+
             problem = db.get(Problem, __import__("uuid").UUID(problem_id))
+            before_mastery_events = db.scalar(select(func.count(MasteryEvent.id)))
+            before_state = db.get(TutorSession, __import__("uuid").UUID(session_id)).current_state
             response = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
-                "problem_id": problem_id, "answer": problem.canonical_answer})
+                "problem_id": problem_id, "answer": problem.canonical_answer if correct_answer else "999999"})
             assert response.status_code == 200, response.text
-            assert response.json()["evaluation"]["correct"] is True
+            assert response.json()["evaluation"]["correct"] is correct_answer
+            assert db.scalar(select(func.count(MasteryEvent.id))) == before_mastery_events
+            assert response.json()["state"] == before_state.value
+            assert response.json()["tutor"]["action"] == "PRACTICE_FEEDBACK"
+            assert "does not count toward mastery" in response.json()["tutor"]["message"]
             assert response.json()["xp_earned"] == 0
             assert response.json()["new_awards"] == []
+            for field in ("xp", "level", "xp_today"):
+                assert response.json()["growth"][field] == before_growth[field]
+            reloaded = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+            assert reloaded.status_code == 200, reloaded.text
+            for field in ("xp", "level", "xp_today"):
+                assert reloaded.json()["growth"][field] == before_growth[field]
             assert response.json()["tutor"]["message"]
             assert_public(response.json())
-            assert db.scalar(select(func.count(Attempt.id))) == 1
+            assert db.scalar(select(func.count(Attempt.id))) == 2
+            assert (practice_progress.mastery_score, practice_progress.confidence_score,
+                practice_progress.attempt_count, practice_progress.independent_correct_count,
+                practice_progress.current_difficulty, practice_progress.status) == before_progress
             # Scoring feedback must not become independent mastery via the
             # separate persisted-attempt evidence loader.
             from app.services.mastery_gate_evidence import load_mastery_gate_evidence
@@ -283,7 +327,7 @@ def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed
             if response.json()["next_problem"] is not None:
                 assert_public(response.json()["next_problem"])
             progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
-            assert progress.independent_correct_count == 0
+            assert progress.independent_correct_count == 10
             assert progress.independent_attempt_count == 0
             assert progress.attempt_count == 0
             # Reseeding cannot change existing history or materialized variant identities.
@@ -845,6 +889,43 @@ def test_authenticated_published_step_and_photo_assistance_fail_without_history(
             problem = db.get(Problem, uuid.UUID(problem_id))
             assert problem.source_type == "PUBLISHED"
             before = history_snapshot()
+            workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+            assert workspace.status_code == 200, workspace.text
+            assert workspace.json()["allowed_actions"] == ["SUBMIT_ANSWER"]
+            assert workspace.json()["problem"]["supports_steps"] is False
+            from app.services.problem_selection import _eligibility_column
+            fixture_session = db.get(TutorSession, uuid.UUID(session_id))
+            original_state = fixture_session.current_state
+            issued_turn = db.scalar(select(TutorTurn).where(TutorTurn.session_id == fixture_session.id,
+                TutorTurn.role == "TUTOR").order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()))
+            for state in TutorState:
+                column = _eligibility_column(state)
+                if column is not None and column.key != "mastery_eligible":
+                    candidate = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                        current_difficulty=3, state=state, student_id=student.id)
+                    fixture_session.current_state = state
+                    issued_turn.problem_id = candidate.id
+                    db.commit()
+                    projected = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+                    assert projected.status_code == 200, (state, projected.text)
+                    assert projected.json()["allowed_actions"] == ["SUBMIT_ANSWER"]
+                else:
+                    fixture_session.current_state = state
+                    db.commit()
+                    assert client.get(f"/api/v1/learner-workspace/sessions/{session_id}").status_code == 409
+            fixture_session.current_state = original_state
+            issued_turn.problem_id = problem.id
+            db.commit()
+            with monkeypatch.context() as revoked:
+                revoked.setenv("MIHUR_CONTENT_REVIEW_POLICY", "{}")
+                assert client.get(f"/api/v1/learner-workspace/sessions/{session_id}").status_code == 409
+            assert history_snapshot() == before
+            monkeypatch.setattr("app.hint_api.ai_generate", forbidden_support)
+            for reason in ("HINT", "I_DONT_UNDERSTAND"):
+                hinted = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+                    json={"problem_id": problem_id, "reason": reason})
+                assert hinted.status_code == 409, hinted.text
+                assert history_snapshot() == before
             with monkeypatch.context() as patch:
                 patch.setattr(
                     adaptive_response_api.stepwork, "problem_supports_steps",
@@ -1003,3 +1084,147 @@ def test_actual_provisional_ontario_mapping_is_never_authorized():
     manifest["activation"] = "staging"
     with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
         publisher.validate(manifest)
+
+
+def test_signed_partial_practice_is_not_coverage_taxonomy_or_mastery(signed):
+    manifest, _ = signed
+    assert publisher.validate(manifest)
+    source = manifest["standards_provenance"]
+    assert source["acceptance"] == "ACCEPTED_PARTIAL_PRACTICE"
+    assert source["disposition"] == "PARTIAL_NON_EXHAUSTIVE"
+    assert source["coverage_credit"] is False
+    assert source["production_taxonomy_activation"] is False
+    assert source["not_mapped"] == [{"standard_id": "MTH1W.C1.4", "disposition": "NOT_MAPPED"}]
+    assert "mastery" not in manifest["modes"]
+
+
+@pytest.mark.parametrize("field,value", [
+    ("acceptance", "ACCEPTED"), ("disposition", "ACCEPTED"),
+    ("coverage_credit", True), ("coverage_credit", 0),
+    ("production_taxonomy_activation", True), ("production_taxonomy_activation", 0),
+    ("exclusions", []), ("not_mapped", []), ("standard_id", "MTH1W.C1.4"),
+])
+def test_partial_practice_never_widens_immutable_standards_scope(signed, field, value):
+    manifest, _ = signed
+    changed = copy.deepcopy(manifest)
+    changed["standards_provenance"][field] = value
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(changed, require_approvals=False)
+
+
+def test_partial_practice_requires_all_six_signed_manifest_gates(signed):
+    manifest, _ = signed
+    for role in publisher.ROLES:
+        missing = copy.deepcopy(manifest)
+        missing["review_evidence"] = [item for item in missing["review_evidence"] if item["role"] != role]
+        with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
+            publisher.validate(missing)
+    unsigned = copy.deepcopy(manifest)
+    unsigned["review_evidence"] = []
+    with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
+        publisher.validate(unsigned)
+
+
+def test_default_package_remains_provisional_pending_unsigned():
+    manifest = json.loads(MANIFEST.read_text())
+    assert manifest["standards_provenance"] == publisher.STANDARDS_PROVENANCE
+    assert manifest["activation"] == "pending"
+    assert manifest["review_evidence"] == []
+    with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
+        publisher.validate(manifest)
+
+
+def test_one_principal_cannot_supply_six_independent_roles(signed, monkeypatch):
+    manifest, policy = signed
+    for key in policy["keys"].values():
+        key["principal"] = "synthetic-shared-nonauthor"
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    with pytest.raises(publisher.PublicationBlocked, match="duplicate review"):
+        publisher.validate(manifest)
+
+
+@pytest.mark.parametrize("alias_keys", [False, True])
+def test_one_signing_key_cannot_impersonate_independent_reviewers(signed, monkeypatch, alias_keys):
+    manifest, policy = signed
+    shared = Ed25519PrivateKey.generate()
+    public = base64.b64encode(shared.public_key().public_bytes(Encoding.Raw, PublicFormat.Raw)).decode()
+    policy["keys"] = ({role: {"principal": f"synthetic-distinct-{role}", "roles": [role],
+                              "public_key": public} for role in publisher.ROLES} if alias_keys else {
+        "shared": {"principal": "synthetic-shared-nonauthor", "roles": sorted(publisher.ROLES),
+                   "public_key": public}})
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    payload = {key: value for key, value in manifest.items() if key != "review_evidence"}
+    url = "https://github.com/AyalewGM/ai-tutor/issues/462#synthetic-test-only"
+    manifest["review_evidence"] = [{
+        "role": role, "key_id": role if alias_keys else "shared", "evidence_url": url,
+        "signature": base64.b64encode(shared.sign(publisher.canonical({
+            "manifest": payload, "role": role, "evidence_url": url}))).decode(),
+    } for role in publisher.ROLES]
+    with pytest.raises(publisher.PublicationBlocked, match="duplicate review"):
+        publisher.validate(manifest)
+
+
+@pytest.mark.parametrize("change", ["missing", "changed", "reviewer"])
+def test_runtime_author_provenance_fails_closed(signed, monkeypatch, change):
+    manifest, policy = signed
+    if change == "missing":
+        policy.pop("runtime_authors")
+    elif change == "changed":
+        policy["runtime_authors"] = {"0" * 64: manifest["author_principals"]}
+    else:
+        policy["runtime_authors"][manifest["runtime_sha256"]] = [
+            policy["keys"][next(iter(publisher.ROLES))]["principal"]]
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(manifest)
+
+
+def test_published_history_cannot_earn_deferred_answer_badges(db):
+    from datetime import datetime, timedelta
+
+    from app.services import awards
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic reward isolation", grade_level="9")
+    db.add(student)
+    db.flush()
+    session = TutorSession(student_id=student.id, primary_skill_id=skill.id,
+        curriculum_id=skill.curriculum_id, current_state=TutorState.GUIDED_PRACTICE)
+    db.add(session)
+    db.flush()
+    old = datetime.now(UTC) - timedelta(days=8)
+    for index in range(10):
+        other_skill = Skill(curriculum_id=skill.curriculum_id, code=f"SYNTHETIC.REWARD.{index}", name="Synthetic only")
+        db.add(other_skill)
+        db.flush()
+        problem = Problem(primary_skill_id=other_skill.id, problem_type="SYNTHETIC",
+            difficulty=3, prompt="Synthetic published history", canonical_answer="1", source_type="PUBLISHED")
+        db.add(problem)
+        db.flush()
+        for attempt_index in range(3):
+            db.add(Attempt(session_id=session.id, student_id=student.id, problem_id=problem.id,
+                student_answer="1", is_correct=True, assistance_level=0,
+                state_at_attempt=TutorState.GUIDED_PRACTICE, created_at=old, attempt_number=attempt_index + 1))
+    db.flush()
+    assert awards._consecutive_correct(db, student.id) == 0
+    assert awards._answered_count(db, student.id) == 0
+    assert awards._distinct_skills_practiced(db, student.id) == 0
+    assert awards._clean_session_run(db, session.id) == 0
+    assert awards._days_since_previous_attempt(db, student.id) is None
+    assert awards.learner_progress(db, student.id)["xp"] == 0
+    ordinary = Problem(primary_skill_id=skill.id, problem_type="SYNTHETIC", difficulty=3,
+        prompt="Synthetic ordinary answer", canonical_answer="1", source_type="CURATED")
+    db.add(ordinary)
+    db.flush()
+    db.add(Attempt(session_id=session.id, student_id=student.id, problem_id=ordinary.id,
+        student_answer="1", is_correct=True, assistance_level=0,
+        state_at_attempt=TutorState.GUIDED_PRACTICE))
+    db.flush()
+    earned = awards.evaluate_awards(db, student_id=student.id, session_id=session.id,
+        active_skill_id=skill.id, correct=True, engine_action=None,
+        mastery_passed=False, review_passed=False, gap_fixed=False)
+    assert {award.badge_code for award in earned} == {"FIRST_CORRECT"}
+    assert awards._answered_count(db, student.id) == 1
+    assert awards._distinct_skills_practiced(db, student.id) == 1
+    assert awards._clean_session_run(db, session.id) == 1
+    assert awards._days_since_previous_attempt(db, student.id) is None
+    assert awards.learner_progress(db, student.id)["xp"] == (awards.attempt_xp(True, 0, 3) + awards.BADGE_XP["FIRST_CORRECT"])
