@@ -58,7 +58,7 @@ def _uuid(*_args, **_kwargs):
 def signed(monkeypatch):
     manifest = json.loads(MANIFEST.read_text())
     # Synthetic signers exercise only the real bounded-practice contract. The
-    # checked-in Ontario mapping remains provisional, pending and unsigned.
+    # checked-in staging candidate remains unsigned and grants no authority.
     synthetic_source = copy.deepcopy(publisher.STANDARDS_PROVENANCE)
     synthetic_source["acceptance"] = publisher.PARTIAL_PRACTICE_ACCEPTANCE
     manifest["standards_provenance"] = synthetic_source
@@ -138,6 +138,7 @@ def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):
     manifest, policy = signed
     assert publisher.validate(manifest)
     pending = json.loads(MANIFEST.read_text())
+    pending["activation"] = "pending"
     pending["standards_provenance"] = copy.deepcopy(manifest["standards_provenance"])
     with pytest.raises(publisher.PublicationBlocked, match="pending"):
         publisher.validate(pending)
@@ -1078,9 +1079,9 @@ def test_real_exhausted_guided_source_does_not_block_newer_owned_recovery(
     assert error.value.status_code == 409
 
 
-def test_actual_provisional_ontario_mapping_is_never_authorized():
+def test_provisional_ontario_mapping_is_never_authorized():
     manifest = json.loads(MANIFEST.read_text())
-    assert manifest["standards_provenance"]["acceptance"] == "PROVISIONAL_NOT_ACCEPTED"
+    manifest["standards_provenance"]["acceptance"] = "PROVISIONAL_NOT_ACCEPTED"
     manifest["activation"] = "staging"
     with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
         publisher.validate(manifest)
@@ -1125,13 +1126,20 @@ def test_partial_practice_requires_all_six_signed_manifest_gates(signed):
         publisher.validate(unsigned)
 
 
-def test_default_package_remains_provisional_pending_unsigned():
+def test_default_staging_candidate_remains_unsigned_and_requires_authorization(signed):
     manifest = json.loads(MANIFEST.read_text())
-    assert manifest["standards_provenance"] == publisher.STANDARDS_PROVENANCE
-    assert manifest["activation"] == "pending"
+    assert manifest["standards_provenance"] == {
+        **publisher.STANDARDS_PROVENANCE, "acceptance": publisher.PARTIAL_PRACTICE_ACCEPTANCE,
+    }
+    assert manifest["activation"] == "staging"
     assert manifest["review_evidence"] == []
-    with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
+    # Valid six-role fixture is a positive control; source disposition alone is
+    # still insufficient under the unchanged production/default validator.
+    assert publisher.validate(signed[0])
+    with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
         publisher.validate(manifest)
+    with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
+        publisher.authorize_package(manifest)
 
 
 def test_one_principal_cannot_supply_six_independent_roles(signed, monkeypatch):

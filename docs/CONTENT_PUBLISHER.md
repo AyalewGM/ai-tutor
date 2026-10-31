@@ -2,7 +2,7 @@
 
 Parent: #462. Scope: one signed two-step rational equation family from merged
 #489, mapped to existing `MATH.EE.EQUATION.TWO` / `MTH1W.C.ALG.EQ2`.
-The manifest pins the squash-merged source commit `ddcebf22dff79247bd9b108fd4c650a4fac1c4c3`; its generator bytes match the independently reviewed #489 head `4b2c878d94c5992a1ce657ff4541f3554ab01e14`. This avoids requiring an unmerged branch head to be a main ancestor. The initial manifest is **pending**. Nothing in this PR grants student release.
+The manifest pins the squash-merged source commit `ddcebf22dff79247bd9b108fd4c650a4fac1c4c3`; its generator bytes match the independently reviewed #489 head `4b2c878d94c5992a1ce657ff4541f3554ab01e14`. This avoids requiring an unmerged branch head to be a main ancestor. The initial manifest was **pending**; the current source-only candidate disposition is described below. Neither disposition metadata nor this PR grants student release.
 Merged #472 data and #495 inverse operations remain inactive follow-on adapters;
 #494/#496 provide the reused exact-rational scorer and trust-boundary contracts.
 
@@ -11,21 +11,30 @@ Merged #472 data and #495 inverse operations remain inactive follow-on adapters;
 The signed manifest preserves the exact independent #489 Standards decision rather
 than treating a generic `standards` signature as full Ontario coverage. It binds
 the official Ontario source record, `MTH1W.C1.5` printed pages 118–119,
-`PARTIAL_NON_EXHAUSTIVE / PROVISIONAL_NOT_ACCEPTED`, the excluded context-
+`PARTIAL_NON_EXHAUSTIVE` with only bounded partial-practice acceptance, the excluded context-
 creation, interpretation and learner-verification evidence, and `MTH1W.C1.4
 NOT_MAPPED`. Both `coverage_credit` and `production_taxonomy_activation` are
 false. Validation rejects any missing or widened field, and the identical block is
 stored with each published Problem's package manifest and metadata provenance.
 
-The checked-in package remains provisional, pending and unsigned. It cannot be
-published. After an independent bounded source-fit decision, a separately signed
-manifest may set only `standards_provenance.acceptance` to
-`ACCEPTED_PARTIAL_PRACTICE`. Its disposition remains `PARTIAL_NON_EXHAUSTIVE`,
-coverage credit and production taxonomy activation remain false, and every source
-locator, inclusion, exclusion and `C1.4 NOT_MAPPED` field stays exact. This permits
-only the existing diagnostic/guided/independent practice modes after all six
-independent signatures and staging release authorization pass; no mastery evidence,
-full-expectation coverage or production taxonomy activation follows from it.
+The checked-in source candidate carries `activation: staging` and
+`standards_provenance.acceptance: ACCEPTED_PARTIAL_PRACTICE`, but remains unsigned
+with empty `review_evidence`. These values are prerequisites for a reviewed
+release, not operational activation or owner authorization. Fresh exact-SHA and
+package-digest Standards/Pedagogy decisions must confirm the bounded disposition;
+prior source reviews are supporting evidence, not fabricated current approvals.
+Its disposition remains `PARTIAL_NON_EXHAUSTIVE`; coverage credit and production
+taxonomy activation remain false, and every source locator, inclusion, exclusion
+and `C1.4 NOT_MAPPED` field stays exact. Generator, modes, seed count and questions
+are unchanged.
+
+The production/default path still rejects this unsigned candidate until all six
+signatures pass. The explicit development-only path separately requires genuine
+Codex technical evidence and an exact detached owner authorization, protected
+native admission and a valid runtime grant, as described in
+[solo-owner governance](DEVELOPMENT_SOLO_OWNER_GOVERNANCE.md). Without that grant it
+also denies. No mastery evidence, full-expectation coverage, production taxonomy
+activation or deployed student availability follows from a source disposition.
 
 A Standards signature attests this bounded source-fit disposition only. It does
 not convert provisional correspondence into accepted coverage. Full `ACCEPTED`
@@ -35,6 +44,10 @@ Staging policy and release authority remain Architecture/Engineering responsibil
 
 
 ## One command after release setup
+
+This section describes the unchanged default six-signature operator path, not the
+explicit development-owner path. The unsigned source candidate is not sufficient
+authority for either entrypoint.
 
 From the verified deployed checkout on the dedicated staging VPS:
 
@@ -57,8 +70,8 @@ A pure, database-free preview also works before provisioning the host:
 python -m scripts.ops.publish_content dry-run
 ```
 
-The workflow's dry-run uses a hosted runner. Preview explicitly reports pending
-approvals and never treats a structurally valid manifest as authorization.
+The workflow's dry-run uses a hosted runner. Preview explicitly reports outstanding
+authorization and never treats a structurally valid manifest as authorization.
 
 ## One-time review trust configuration
 
@@ -202,8 +215,10 @@ The scorer is one of the 14 source files in `RUNTIME_FILES`. Its source change
 requires the pending package runtime pin to change from `97f7b01c21bea33942c9ef91e2bb2047cd8b86b4731ed591d108c083ee564373` to `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455`.
 The pin was recomputed from that existing inventory using SHA-256 of file bytes and
 the existing sorted compact JSON digest format, without importing product modules.
-The package remains pending with empty review evidence; no signatures, approvals,
-activation, content identities, or learner records were added or changed.
+At that remediation the package remained pending with empty review evidence; no
+signatures, approvals, activation, content identities or learner records were
+added or changed. The current source-only candidate disposition above does not
+change deployed records or supply release authority.
 
 
 ### Persisted transfer feedback after reload (PR #501 remediation)
@@ -216,8 +231,10 @@ Malformed, mismatched, or duplicate results fail closed. This grants no XP,
 independent evidence, mastery credit, or publication authority.
 
 Because `app/adaptive_response_api.py` is in the existing runtime inventory, the
-pending unsigned package pin changes from `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455` to `fafcf9db918e4b665adb92a9c2482176f6f36b0551d2516425c22d947192e270`.
+then-pending unsigned package pin changed from `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455` to `fafcf9db918e4b665adb92a9c2482176f6f36b0551d2516425c22d947192e270`.
 The digest was computed from source-file bytes without importing product code;
-review evidence remains empty and activation remains pending.
+review evidence remained empty and activation remained pending at that
+remediation. The current source-only staging disposition remains unsigned and
+requires the independent review and exact owner grant described above.
 
 The signed author list must exactly match the union of generator and runtime authors in the deployment-owned policy. Missing runtime provenance fails closed; runtime contributors cannot approve their own release. Published answer feedback records an Attempt but does not advance mastery, focus, review, difficulty, or mastery events.

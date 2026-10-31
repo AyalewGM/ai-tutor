@@ -14,7 +14,7 @@
     "independent"
   ],
   "scorer": "EXACT_VARIABLE_RATIONAL_V1",
-  "activation": "pending",
+  "activation": "staging",
   "seed_count": 12,
   "author_principals": [
     "mihur-content-author"
@@ -34,7 +34,7 @@
       119
     ],
     "disposition": "PARTIAL_NON_EXHAUSTIVE",
-    "acceptance": "PROVISIONAL_NOT_ACCEPTED",
+    "acceptance": "ACCEPTED_PARTIAL_PRACTICE",
     "coverage_credit": false,
     "production_taxonomy_activation": false,
     "inclusions": [
