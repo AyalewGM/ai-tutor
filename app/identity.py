@@ -76,7 +76,13 @@ def require_parent_owns_session(
     """Authorize a tutor session through its server-side learner relationship."""
     if session is None or session.status != "ACTIVE":
         raise HTTPException(status_code=404, detail="Active tutor session not found")
-    require_parent_owns_student(parent, db.get(Student, session.student_id))
+    try:
+        require_parent_owns_student(parent, db.get(Student, session.student_id))
+    except HTTPException as exc:
+        if exc.status_code != 404:
+            raise
+        # Session lookup must not reveal whether an inaccessible ID exists.
+        raise HTTPException(status_code=404, detail="Active tutor session not found") from exc
     return session
 
 
