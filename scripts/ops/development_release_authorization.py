@@ -191,7 +191,8 @@ def verify(envelope, signature, policy, expected_context, bundle, artifacts, *, 
                 ["/usr/bin/ssh-keygen", "-Y", "verify", "-f", str(allowed),
                  "-I", f"owner-{OWNER_ID}", "-n", NAMESPACE, "-s", str(sig)],
                 input=envelope, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                timeout=10, env={"PATH": "/usr/bin:/bin", "HOME": str(directory), "LANG": "C"})
+                check=False, timeout=10,
+                env={"PATH": "/usr/bin:/bin", "HOME": str(directory), "LANG": "C"})
             require(result.returncode == 0, "owner_signature_invalid")
         except (OSError, subprocess.TimeoutExpired):
             raise AuthorizationRejected("owner_signature_unavailable") from None

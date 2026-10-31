@@ -77,13 +77,15 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
 
     def test_attacker_tmpdir_is_not_used_for_signature_verification(self):
         implementation = tempfile.TemporaryDirectory
-        with patch.dict(os.environ, {"TMPDIR": "/attacker-controlled-nonexistent"}):
-            with patch.object(auth.tempfile, "TemporaryDirectory", wraps=implementation) as scratch:
-                self.verify()
-                calls = [call for call in scratch.call_args_list
-                         if call.kwargs.get("prefix") == "mihur-owner-verify-"]
-                self.assertEqual(len(calls), 1)
-                self.assertEqual(calls[0].kwargs["dir"], "/tmp")
+        with (
+            patch.dict(os.environ, {"TMPDIR": "/attacker-controlled-nonexistent"}),
+            patch.object(auth.tempfile, "TemporaryDirectory", wraps=implementation) as scratch,
+        ):
+            self.verify()
+            calls = [call for call in scratch.call_args_list
+                     if call.kwargs.get("prefix") == "mihur-owner-verify-"]
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(calls[0].kwargs["dir"], "/tmp")
 
     def test_missing_invalid_wrong_namespace_and_tampered_signature_rejected(self):
         for signature in (b"", b"not a signature", self.sign(namespace="production")[1]):
@@ -187,9 +189,11 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
     def test_existing_production_validator_rejects_development_authorization(self):
         from app.services.content_publishing import PublicationBlocked, validate
 
-        with patch.dict(os.environ, {"APP_ENV": "development", "MIHUR_CONTENT_REVIEW_POLICY": "{}"}):
-            with self.assertRaises(PublicationBlocked):
-                validate(self.payload)
+        with (
+            patch.dict(os.environ, {"APP_ENV": "development", "MIHUR_CONTENT_REVIEW_POLICY": "{}"}),
+            self.assertRaises(PublicationBlocked),
+        ):
+            validate(self.payload)
 
     def test_nonce_replay_and_expiry_rejected_and_reservation_persists(self):
         result = self.verify()
@@ -224,9 +228,11 @@ class DevelopmentOwnerAuthorizationTests(unittest.TestCase):
     def test_uncertain_fsync_failure_never_releases_nonce(self):
         result = self.verify()
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
-            with patch.object(auth.os, "fsync", side_effect=OSError("fixture interruption")):
-                with self.assertRaises(OSError):
-                    auth.reserve_nonce(result, directory, owner_uid=os.getuid(), now=1500)
+            with (
+                patch.object(auth.os, "fsync", side_effect=OSError("fixture interruption")),
+                self.assertRaises(OSError),
+            ):
+                auth.reserve_nonce(result, directory, owner_uid=os.getuid(), now=1500)
             with self.assertRaisesRegex(auth.AuthorizationRejected, "already_reserved"):
                 auth.reserve_nonce(result, directory, owner_uid=os.getuid(), now=1500)
 
