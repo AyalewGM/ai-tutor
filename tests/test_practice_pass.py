@@ -46,3 +46,43 @@ def test_learner_access_cannot_cross_to_sibling():
     with pytest.raises(HTTPException) as exc:
         require_learning_owns_student(access, sibling)
     assert exc.value.status_code == 404
+
+
+@pytest.mark.parametrize("case", ["missing", "foreign", "inactive", "ended", "sibling"])
+def test_session_denials_do_not_disclose_session_existence(case):
+    from types import SimpleNamespace
+
+    from app.identity import require_learning_owns_session
+    from app.models import TutorSession
+
+    owner = uuid.uuid4()
+    parent = ParentProfile(id=uuid.uuid4(), user_id=owner)
+    own = Student(id=uuid.uuid4(), parent_id=owner, first_name="SyntheticQA", grade_level="9", active=True)
+    target = Student(id=uuid.uuid4(), parent_id=owner, first_name="SyntheticQA2", grade_level="9", active=True)
+    if case == "foreign":
+        target.parent_id = uuid.uuid4()
+    if case == "inactive":
+        target.active = False
+    session = TutorSession(id=uuid.uuid4(), student_id=target.id, status="ENDED" if case == "ended" else "ACTIVE")
+    db = SimpleNamespace(get=lambda _model, _identifier: target)
+    access = LearningAccess(parent=parent, learner_id=own.id if case == "sibling" else None)
+    with pytest.raises(HTTPException) as exc:
+        require_learning_owns_session(db, access, None if case == "missing" else session)
+    assert exc.value.status_code == 404
+    assert exc.value.detail == "Active tutor session not found"
+
+
+def test_session_owner_and_bound_learner_retain_access():
+    from types import SimpleNamespace
+
+    from app.identity import require_learning_owns_session
+    from app.models import TutorSession
+
+    owner = uuid.uuid4()
+    parent = ParentProfile(id=uuid.uuid4(), user_id=owner)
+    student = Student(id=uuid.uuid4(), parent_id=owner, first_name="SyntheticQA", grade_level="9", active=True)
+    session = TutorSession(id=uuid.uuid4(), student_id=student.id, status="ACTIVE")
+    db = SimpleNamespace(get=lambda _model, _identifier: student)
+    for learner_id in (None, student.id):
+        access = LearningAccess(parent=parent, learner_id=learner_id)
+        assert require_learning_owns_session(db, access, session) is session

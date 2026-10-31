@@ -1,5 +1,6 @@
 """Staging-only guarded commands. No remote Docker context or arbitrary Compose args."""
 
+import hashlib
 import json
 import os
 import re
@@ -81,6 +82,39 @@ def valid_edge_network(network, proxy_ids):
     )
 
 
+def valid_development_owner_mount(mount, service):
+    """Only the explicit fixed development profile may expose public owner proofs.
+
+    These read-only public files are not a root-capability boundary themselves.
+    The native owner gate verifies signatures, target identity and protected state.
+    """
+    if service != "tutor-api" or mount.get("RW") is not False:
+        return False
+    pairs = {
+        ("/etc/mihur-staging/development-owner", "/run/mihur/development-owner"),
+        ("/etc/machine-id", "/run/mihur/host-machine-id"),
+    }
+    if (mount.get("Source"), mount.get("Destination")) not in pairs:
+        return False
+    directory = Path("/etc/mihur-staging/development-owner")
+    info = directory.lstat()
+    require(stat.S_ISDIR(info.st_mode) and info.st_uid == 0
+            and stat.S_IMODE(info.st_mode) == 0o755, "Untrusted development owner directory")
+    policy_path = directory / "policy.json"
+    policy_info = policy_path.lstat()
+    require(stat.S_ISREG(policy_info.st_mode) and policy_info.st_uid == 0
+            and policy_info.st_nlink == 1 and stat.S_IMODE(policy_info.st_mode) == 0o644,
+            "Untrusted development owner public policy")
+    policy = json.loads(policy_path.read_text())
+    machine = Path("/etc/machine-id").read_text().strip()
+    return (policy.get("schema") == "MIHUR_DEVELOPMENT_OWNER_POLICY_V1"
+            and policy.get("environment") == "development"
+            and policy.get("application_url") == "https://dev.mihureducation.com"
+            and policy.get("database") == "mihur_staging"
+            and policy.get("host_sha256") == hashlib.sha256(machine.encode()).hexdigest()
+            and policy.get("revoked") is False)
+
+
 def inventory():
     proxy_ids = set()
     ids = run(DOCKER + ["ps", "-aq"]).split()
@@ -108,10 +142,21 @@ def inventory():
                         "Unexpected container volume",
                     )
                 else:
+                    service = labels.get("com.docker.compose.service")
+                    caddy = (
+                        service == "proxy"
+                        and mount.get("Source") == str(CONFIG.parent / "Caddyfile")
+                        and mount.get("Destination") == "/etc/caddy/Caddyfile"
+                    )
+                    policy = (
+                        service in {"tutor-api", "migrate"}
+                        and mount.get("Source") == "/etc/mihur-staging/content-review-policy.json"
+                        and mount.get("Destination") == "/run/mihur/content-review-policy.json"
+                    )
                     require(
                         mount["Type"] == "bind"
-                        and mount["Source"] == str(CONFIG.parent / "Caddyfile")
-                        and not mount["RW"],
+                        and mount.get("RW") is False
+                        and (caddy or policy or valid_development_owner_mount(mount, service)),
                         "Unexpected bind mount",
                     )
     names = run(DOCKER + ["volume", "ls", "-q"]).split()

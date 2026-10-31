@@ -1,0 +1,7 @@
+# Explicit operator-only overlay. Never used by production or default Compose.
+# Only the fixed signed development gate selects this file.
+services:
+  tutor-api:
+    volumes:
+      - /etc/mihur-staging/development-owner:/run/mihur/development-owner:ro
+      - /etc/machine-id:/run/mihur/host-machine-id:ro

@@ -1,0 +1,64 @@
+{
+  "schema": "MIHUR_CONTENT_PACKAGE_V1",
+  "package_id": "mth1w-signed-two-step-v1",
+  "family_id": "TWO_STEP_SIGNED_RATIONAL",
+  "content_revision": "ddcebf22dff79247bd9b108fd4c650a4fac1c4c3",
+  "generator_sha256": "544f02a9235b2fbd17cc5497ceefbe2bf10fe7498cfd3a3174c14f1881fef5a1",
+  "canonical_skill": "MATH.EE.EQUATION.TWO",
+  "curriculum": "MTH1W",
+  "curriculum_version": "2021",
+  "local_skill": "MTH1W.C.ALG.EQ2",
+  "modes": [
+    "diagnostic",
+    "guided",
+    "independent"
+  ],
+  "scorer": "EXACT_VARIABLE_RATIONAL_V1",
+  "activation": "pending",
+  "seed_count": 12,
+  "author_principals": [
+    "mihur-content-author"
+  ],
+  "review_evidence": [],
+  "runtime_sha256": "7bc559ddee0efcad385143fce6675e43acf99fb92786c227d74f742af6b76729",
+  "standards_provenance": {
+    "authority": "Ontario Ministry of Education",
+    "document_title": "The Ontario Curriculum: Mathematics, Grade 9, De-streamed (MTH1W), 2021",
+    "document_version": "Course issued 2021-06-09; teacher supports completed 2022-05-03; PDF copyright 2022",
+    "official_course_url": "https://www.dcp.edu.gov.on.ca/en/curriculum/secondary-mathematics/courses/mth1w/c/c1",
+    "official_pdf_url": "https://assets-us-01.kc-usercontent.com/fbd574c4-da36-0066-a0c5-849ffb2de96e/73cd68ae-6f54-46e4-85c6-73103f44875e/The%20Ontario%20Curriculum%20-%20Mathematics%20Grade%209%20De-streamed%20Course%202021_with%20Teacher%20Supports_v2.pdf",
+    "access_date": "2026-10-25",
+    "standard_id": "MTH1W.C1.5",
+    "printed_pages": [
+      118,
+      119
+    ],
+    "disposition": "PARTIAL_NON_EXHAUSTIVE",
+    "acceptance": "PROVISIONAL_NOT_ACCEPTED",
+    "coverage_credit": false,
+    "production_taxonomy_activation": false,
+    "inclusions": [
+      "signed two-step linear equations",
+      "exact rational solutions"
+    ],
+    "exclusions": [
+      "learner creation of equations from varied contexts",
+      "contextual interpretation of solutions",
+      "learner-performed solution verification",
+      "MTH1W.C1.4 simplification coverage"
+    ],
+    "not_mapped": [
+      {
+        "standard_id": "MTH1W.C1.4",
+        "disposition": "NOT_MAPPED"
+      }
+    ],
+    "adaptation_rationale": "Official wording was consulted only to verify the expectation identifier and mathematical boundary; all package tasks and wording are original.",
+    "source_review": {
+      "url": "https://github.com/AyalewGM/ai-tutor/pull/489#issuecomment-6401201029",
+      "reviewed_head": "b632d15febb623d90092527d9197dba7d726d7dc",
+      "candidate_document_blob": "28bbe00dd7a5aa6bee780e01edf0d90ff92d4111",
+      "generator_blob": "2b31031e20a114d1d37d2b9af465993243b2a836"
+    }
+  }
+}

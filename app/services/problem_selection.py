@@ -24,6 +24,7 @@ def select_next_problem(
     student_id: uuid.UUID | None = None,
     session_id: uuid.UUID | None = None,
     offer_extension: bool = False,
+    allow_published: bool = True,
 ) -> Problem | None:
     """Pick the next problem for a skill.
 
@@ -53,6 +54,8 @@ def select_next_problem(
         )
         .where(Problem.primary_skill_id == skill_id)
     )
+    if not allow_published:
+        stmt = stmt.where(Problem.source_type != "PUBLISHED")
     if offer_extension:
         # Optional stretch tier only: hardest first, no gating semantics.
         stmt = stmt.where(ProblemContentMetadata.extension_eligible.is_(True))
@@ -84,16 +87,15 @@ def select_next_problem(
     unseen_stmt = stmt
     if attempted_ids:
         unseen_stmt = unseen_stmt.where(Problem.id.not_in(attempted_ids))
-    problem = db.scalar(
-        _ordered(
-            unseen_stmt,
-            target_difficulty,
-            avoid_family=last_family,
-            hardest_first=offer_extension,
-        ).limit(1)
-    )
-    if problem is not None:
-        return problem
+    from app.services.content_publishing import permitted
+
+    mode = eligibility_column.key.removesuffix("_eligible") if eligibility_column is not None else "extension"
+    for problem in db.scalars(_ordered(
+        unseen_stmt, target_difficulty, avoid_family=last_family,
+        hardest_first=offer_extension,
+    )):
+        if permitted(db, problem, mode):
+            return problem
 
     # Exhausted authored pools generate a deterministic variant.  A stable
     # selection key makes a retry before an Attempt write idempotent, while the

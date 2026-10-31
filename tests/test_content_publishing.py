@@ -1,0 +1,1230 @@
+"""Synthetic author tests. These are never independent release authorization."""
+import base64
+import copy
+import json
+import os
+import uuid
+from datetime import UTC
+from fractions import Fraction
+
+import pytest
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+from fastapi import HTTPException
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine, func, select, text
+from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.orm import Session
+from sqlalchemy.pool import StaticPool
+
+from app.api import _problem_out
+from app.content_models import ProblemContentMetadata
+from app.core.database import Base, get_db
+from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
+from app.diagnostic_models import DiagnosticAttempt
+from app.hint_models import HintEvent
+from app.main import app
+from app.models import (
+    Attempt,
+    Curriculum,
+    MasteryEvent,
+    Problem,
+    Skill,
+    Student,
+    StudentSkill,
+    TutorSession,
+    TutorState,
+    TutorTurn,
+)
+from app.services import content_publishing as publisher
+from app.services.fraction_assessment_registry import AssessmentMode
+from app.services.problem_selection import select_next_problem
+from scripts.ops.publish_content import MANIFEST
+from tests.auth_helpers import authenticate_parent_for_student
+
+
+@compiles(JSONB, "sqlite")
+def _json(*_args, **_kwargs):
+    return "JSON"
+
+
+@compiles(UUID, "sqlite")
+def _uuid(*_args, **_kwargs):
+    return "CHAR(36)"
+
+
+@pytest.fixture
+def signed(monkeypatch):
+    manifest = json.loads(MANIFEST.read_text())
+    # Synthetic signers exercise only the real bounded-practice contract. The
+    # checked-in Ontario mapping remains provisional, pending and unsigned.
+    synthetic_source = copy.deepcopy(publisher.STANDARDS_PROVENANCE)
+    synthetic_source["acceptance"] = publisher.PARTIAL_PRACTICE_ACCEPTANCE
+    manifest["standards_provenance"] = synthetic_source
+    manifest["activation"] = "staging"
+    manifest["seed_count"] = 4
+    private = {role: Ed25519PrivateKey.generate() for role in publisher.ROLES}
+    keys = {role: {"principal": f"synthetic-reviewer-{role}", "roles": [role],
+                   "public_key": base64.b64encode(key.public_key().public_bytes(
+                       Encoding.Raw, PublicFormat.Raw)).decode()} for role, key in private.items()}
+    policy = {"keys": keys, "authors": {manifest["generator_sha256"]: manifest["author_principals"]},
+              "runtime_authors": {manifest["runtime_sha256"]: manifest["author_principals"]}}
+    monkeypatch.delenv("MIHUR_CONTENT_REVIEW_POLICY_FILE", raising=False)
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    payload = {k: v for k, v in manifest.items() if k != "review_evidence"}
+    for role, key in private.items():
+        url = "https://github.com/AyalewGM/ai-tutor/issues/462#synthetic-test-only"
+        manifest["review_evidence"].append({"role": role, "key_id": role, "evidence_url": url,
+            "signature": base64.b64encode(key.sign(publisher.canonical({
+                "manifest": payload, "role": role, "evidence_url": url}))).decode()})
+    return manifest, policy
+
+
+@pytest.fixture
+def db():
+    pg_url = os.environ.get("MIHUR_PUBLISHER_TEST_DATABASE_URL")
+    admin, schema, original_types = None, None, {}
+    if pg_url:
+        schema = "publisher_test_" + uuid.uuid4().hex
+        admin = create_engine(pg_url)
+        with admin.begin() as connection:
+            connection.execute(text(f'CREATE SCHEMA "{schema}"'))
+        engine = create_engine(pg_url, connect_args={"options": f"-csearch_path={schema}"})
+    else:
+        engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+        from sqlalchemy import DateTime, event
+        from sqlalchemy.types import TypeDecorator
+
+        class SQLiteUTC(TypeDecorator):
+            impl = DateTime
+            cache_ok = True
+
+            def process_result_value(self, value, _dialect):
+                return value.replace(tzinfo=UTC) if value is not None and value.tzinfo is None else value
+
+        for table in Base.metadata.tables.values():
+            for column in table.columns:
+                if isinstance(column.type, DateTime):
+                    original_types[column] = column.type
+                    column.type = SQLiteUTC(timezone=True)
+
+        @event.listens_for(engine, "connect")
+        def sqlite_functions(connection, _record):
+            connection.create_function("timezone", 2, lambda _zone, value: value)
+
+    Base.metadata.create_all(engine)
+    with Session(engine, expire_on_commit=False) as session:
+        curriculum = Curriculum(code="MTH1W", name="Synthetic Ontario", version="2021", active=True)
+        session.add(curriculum)
+        session.flush()
+        skill = Skill(curriculum_id=curriculum.id, code="MTH1W.C.ALG.EQ2", name="Two step equations")
+        canonical = CanonicalSkill(code="MATH.EE.EQUATION.TWO", name="Two step", subject="MATHEMATICS")
+        session.add_all([skill, canonical])
+        session.flush()
+        session.add(CurriculumSkillMapping(skill_id=skill.id, canonical_skill_id=canonical.id))
+        session.commit()
+        yield session
+    for column, original_type in original_types.items():
+        column.type = original_type
+    engine.dispose()
+    if admin is not None:
+        with admin.begin() as connection:
+            connection.execute(text(f'DROP SCHEMA "{schema}" CASCADE'))
+        admin.dispose()
+
+
+def test_pending_and_forged_approvals_fail_closed(signed, monkeypatch):
+    manifest, policy = signed
+    assert publisher.validate(manifest)
+    pending = json.loads(MANIFEST.read_text())
+    pending["standards_provenance"] = copy.deepcopy(manifest["standards_provenance"])
+    with pytest.raises(publisher.PublicationBlocked, match="pending"):
+        publisher.validate(pending)
+    for field, value in [
+        ("seed_count", 5), ("local_skill", "OTHER"), ("content_revision", "a" * 40),
+        ("standards_provenance", {}),
+    ]:
+        forged = copy.deepcopy(manifest)
+        forged[field] = value
+        with pytest.raises(publisher.PublicationBlocked):
+            publisher.validate(forged)
+    forged = copy.deepcopy(manifest)
+    forged["review_evidence"][0]["signature"] = "AAAA"
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(forged)
+    role = manifest["review_evidence"][0]["key_id"]
+    policy["keys"][role]["principal"] = manifest["author_principals"][0]
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    with pytest.raises(publisher.PublicationBlocked, match="author-owned"):
+        publisher.validate(manifest)
+    manifest["author_principals"] = ["fake-author"]
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(manifest)
+
+
+def test_insert_only_reseed_mode_isolation_rollback_and_tampering(db, signed):
+    manifest, _ = signed
+    report = publisher.publish(db, manifest)
+    db.commit()
+    assert report["stored"] == report["authorized"] == 12
+    assert report["learner_selectable"] == {"diagnostic": 4, "guided": 4, "independent": 4}
+    rows = db.scalars(select(Problem)).all()
+    provenance = db.scalars(select(ProblemContentMetadata)).all()
+    assert all(meta.provenance_json["standards"] == manifest["standards_provenance"]
+               for meta in provenance)
+    assert all(row.solution["manifest"]["standards_provenance"]
+               == manifest["standards_provenance"] for row in rows)
+    ids = {p.id for p in rows}
+    assert len({p.solution["task_fingerprint"] for p in rows}) == 12
+    skill = db.scalar(select(Skill))
+    assert select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+        current_difficulty=3, state=TutorState.DIAGNOSE, allow_published=False) is None
+    family = db.scalar(select(ProblemFamily))
+    family.active = False
+    assert not publisher.permitted(db, rows[0], rows[0].solution["mode"])
+    family.active = True
+    assert publisher.publish(db, manifest) == report
+    assert {p.id for p in db.scalars(select(Problem))} == ids
+    problem = rows[0]
+    mode = AssessmentMode(problem.solution["mode"])
+    expected = Fraction(problem.canonical_answer.split("=")[1])
+    alternate = f"x={expected.numerator * 3}/{expected.denominator * 3}"
+    result = publisher.score_published(db, problem, alternate, mode, assisted=False)
+    assert result.correct
+    assert result.independent_evidence_eligible is False
+    assert not publisher.score_published(db, problem, "x=99999999", mode, assisted=False).correct
+    assert not publisher.score_published(db, problem, alternate, mode, assisted=True).independent_evidence_eligible
+    other = AssessmentMode.GUIDED if mode != AssessmentMode.GUIDED else AssessmentMode.INDEPENDENT
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.score_published(db, problem, alternate, other, assisted=False)
+    public = _problem_out(problem).model_dump(mode="json")
+    assert not {"canonical_answer", "solution", "manifest"}.intersection(public)
+    problem.canonical_answer = "x=99999999"
+    assert not publisher.permitted(db, problem, mode.value)
+    db.rollback()
+    assert publisher.rollback(db, report["package_digest"]) == 12
+    db.commit()
+    assert db.scalar(select(func.count(Problem.id))) == 12
+    assert publisher.report(db, manifest)["authorized"] == 0
+    with pytest.raises(publisher.PublicationBlocked, match="disabled"):
+        publisher.publish(db, manifest)
+
+
+@pytest.mark.parametrize("practice_state", [TutorState.GUIDED_PRACTICE, TutorState.INDEPENDENT_PRACTICE])
+@pytest.mark.parametrize("correct_answer", [True, False])
+def test_real_selector_and_authenticated_response_feedback_and_replay(db, signed, monkeypatch, practice_state, correct_answer):
+    from sqlalchemy.orm import sessionmaker
+    for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
+                   "app.middleware.geo_restriction"):
+        monkeypatch.setattr(module + ".SessionLocal", sessionmaker(bind=db.get_bind()))
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9")
+    db.add(student)
+    db.flush()
+    db.add(StudentSkill(student_id=student.id, skill_id=skill.id, current_difficulty=3))
+    db.commit()
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        with TestClient(app) as client:
+            authenticate_parent_for_student(client, db, student)
+            start = client.post("/api/v1/adaptive-tutor/sessions", json={
+                "student_id": str(student.id), "skill_id": str(skill.id)})
+            assert start.status_code == 200, start.text
+            body = start.json()
+            from scripts.ops.content_learner_probe import assert_public
+            assert_public(body)
+            session_id = body["session_id"]
+            practice_session = db.get(TutorSession, __import__("uuid").UUID(session_id))
+            practice_session.current_state = practice_state
+            practice_progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
+            practice_progress.mastery_score = 1
+            practice_progress.independent_correct_count = 10
+            db.commit()
+            def unexpected_mastery(*args, **kwargs):
+                raise AssertionError("published practice called a mastery/progression policy")
+            for policy_name in ("load_mastery_gate_evidence", "evaluate_mastery_gate", "apply_focus_policy", "apply_review_policy"):
+                monkeypatch.setattr("app.adaptive_response_api." + policy_name, unexpected_mastery)
+            practice_problem = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                current_difficulty=3, state=practice_state, student_id=student.id)
+            problem_id = str(practice_problem.id)
+            issued_turn = db.scalar(select(TutorTurn).where(TutorTurn.session_id == practice_session.id, TutorTurn.role == "TUTOR").order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()))
+            issued_turn.problem_id = practice_problem.id
+            db.commit()
+            ordinary = Problem(primary_skill_id=skill.id, problem_type="EQUATION_LINEAR_ONE_VARIABLE",
+                difficulty=3, prompt="Synthetic ordinary baseline", canonical_answer="1", source_type="CURATED")
+            db.add(ordinary)
+            db.flush()
+            db.add(Attempt(session_id=practice_session.id, student_id=student.id,
+                problem_id=ordinary.id, student_answer="1", is_correct=True,
+                assistance_level=1, state_at_attempt=TutorState.GUIDED_PRACTICE))
+            db.commit()
+            from app.services.awards import learner_progress
+            before_growth = learner_progress(db, student.id)
+            assert before_growth["xp"] > 0
+            before_progress = (practice_progress.mastery_score, practice_progress.confidence_score,
+                practice_progress.attempt_count, practice_progress.independent_correct_count,
+                practice_progress.current_difficulty, practice_progress.status)
+
+            problem = db.get(Problem, __import__("uuid").UUID(problem_id))
+            before_mastery_events = db.scalar(select(func.count(MasteryEvent.id)))
+            before_state = db.get(TutorSession, __import__("uuid").UUID(session_id)).current_state
+            response = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
+                "problem_id": problem_id, "answer": problem.canonical_answer if correct_answer else "999999"})
+            assert response.status_code == 200, response.text
+            assert response.json()["evaluation"]["correct"] is correct_answer
+            assert db.scalar(select(func.count(MasteryEvent.id))) == before_mastery_events
+            assert response.json()["state"] == before_state.value
+            assert response.json()["tutor"]["action"] == "PRACTICE_FEEDBACK"
+            assert "does not count toward mastery" in response.json()["tutor"]["message"]
+            assert response.json()["xp_earned"] == 0
+            assert response.json()["new_awards"] == []
+            for field in ("xp", "level", "xp_today"):
+                assert response.json()["growth"][field] == before_growth[field]
+            reloaded = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+            assert reloaded.status_code == 200, reloaded.text
+            for field in ("xp", "level", "xp_today"):
+                assert reloaded.json()["growth"][field] == before_growth[field]
+            assert response.json()["tutor"]["message"]
+            assert_public(response.json())
+            assert db.scalar(select(func.count(Attempt.id))) == 2
+            assert (practice_progress.mastery_score, practice_progress.confidence_score,
+                practice_progress.attempt_count, practice_progress.independent_correct_count,
+                practice_progress.current_difficulty, practice_progress.status) == before_progress
+            # Scoring feedback must not become independent mastery via the
+            # separate persisted-attempt evidence loader.
+            from app.services.mastery_gate_evidence import load_mastery_gate_evidence
+
+            gate_evidence = load_mastery_gate_evidence(
+                db, student_id=student.id, skill_id=skill.id,
+            )
+            assert gate_evidence.independent_correct_count == 0
+            assert gate_evidence.strong_help_seen is False
+            replay = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
+                "problem_id": problem_id, "answer": problem.canonical_answer})
+            assert replay.status_code == 409
+            legacy = client.post(f"/api/v1/tutor/sessions/{session_id}/respond", json={
+                "problem_id": problem_id, "answer": problem.canonical_answer})
+            assert legacy.status_code in {404, 409}
+            next_problem = select_next_problem(db, skill_id=skill.id,
+                current_problem_id=problem.id, current_difficulty=3, state=TutorState.DIAGNOSE,
+                student_id=student.id)
+            assert next_problem is not None and next_problem.id != problem.id
+            # Separate mode pools remain disjoint after an actual persisted attempt.
+            guided = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                current_difficulty=3, state=TutorState.GUIDED_PRACTICE, student_id=student.id)
+            independent = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                current_difficulty=3, state=TutorState.INDEPENDENT_PRACTICE, student_id=student.id)
+            assert guided.solution["mode"] == "guided"
+            assert independent.solution["mode"] == "independent"
+            # The publisher is feedback-only. A correct response is not
+            # evidence of completed diagnosis, repair, or fresh transfer.
+            # Do not invent a next task when the authenticated state machine
+            # withholds one pending the reviewed learner journey.
+            if response.json()["next_problem"] is not None:
+                assert_public(response.json()["next_problem"])
+            progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
+            assert progress.independent_correct_count == 10
+            assert progress.independent_attempt_count == 0
+            assert progress.attempt_count == 0
+            # Reseeding cannot change existing history or materialized variant identities.
+            history = db.scalars(select(Attempt.id)).all()
+            publisher.publish(db, manifest)
+            assert db.scalars(select(Attempt.id)).all() == history
+            assert db.scalar(select(func.count(TutorSession.id))) == 1
+    finally:
+        app.dependency_overrides.clear()
+
+
+@pytest.mark.parametrize("confirm,transfer_correct", [(False, False), (True, False), (True, True)])
+def test_authenticated_published_reasoning_requires_stored_answer_and_oracle_choice(
+    db, signed, monkeypatch, confirm, transfer_correct,
+):
+    """A client's choice cannot invent a misconception or grant mastery."""
+    from sqlalchemy.orm import sessionmaker
+
+    from app.models import TutorTurn
+    from app.services.fraction_assessment_registry import score_fraction
+
+    for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
+                   "app.middleware.geo_restriction"):
+        monkeypatch.setattr(module + ".SessionLocal", sessionmaker(bind=db.get_bind()))
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9")
+    db.add(student)
+    db.flush()
+    db.add(StudentSkill(student_id=student.id, skill_id=skill.id, current_difficulty=3))
+    db.commit()
+    app.dependency_overrides[get_db] = lambda: db
+    try:
+        with TestClient(app) as client:
+            authenticate_parent_for_student(client, db, student)
+            start = client.post("/api/v1/adaptive-tutor/sessions", json={
+                "student_id": str(student.id), "skill_id": str(skill.id),
+            })
+            assert start.status_code == 200, start.text
+            session_id = start.json()["session_id"]
+            problem = db.get(Problem, uuid.UUID(start.json()["problem"]["id"]))
+            item = next(
+                candidate for mode, candidate in publisher.candidates(manifest)
+                if mode == problem.solution["mode"]
+                and candidate["variant_id"] == problem.solution["variant_id"]
+            )
+            signal = item["diagnostic_contract_for_author_review"]["signals"][0]
+            answer = signal["candidate_response"]
+            assert not score_fraction(answer, problem.canonical_answer, variable="x")
+            path = f"/api/v1/adaptive-tutor/sessions/{session_id}/published-reasoning"
+            assert client.get(path, params={"problem_id": str(problem.id)}).status_code == 409
+            first = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/respond", json={
+                "problem_id": str(problem.id), "answer": answer,
+            })
+            assert first.status_code == 200, first.text
+            assert first.json()["evaluation"]["correct"] is False
+            probe_response = client.get(path, params={"problem_id": str(problem.id)})
+            assert probe_response.status_code == 200, probe_response.text
+            probe = probe_response.json()
+            assert probe["stage"] == "CONFIRM_REASONING"
+            assert "misconception_code" not in json.dumps(probe)
+            assert "canonical_answer" not in json.dumps(probe)
+            assert probe["independent_evidence_eligible"] is False
+            wrong_choice = next(
+                c["id"] for c in probe["choices"]
+                if c["id"] != signal["confirmation_evidence_choice_for_author_review"]
+            )
+            choice_id = (
+                signal["confirmation_evidence_choice_for_author_review"]
+                if confirm else wrong_choice
+            )
+            result = client.post(path, json={
+                "problem_id": str(problem.id), "choice_id": choice_id,
+            })
+            assert result.status_code == 200, result.text
+            assert result.json()["independent_evidence_eligible"] is False
+            if confirm:
+                assert result.json()["stage"] == "SOCRATIC_REPAIR"
+                assert "misconception_code" not in json.dumps(result.json())
+                assert "canonical_answer" not in json.dumps(result.json())
+                from app.services.published_reasoning_probe import server_guided_retest
+
+                private_retest = server_guided_retest(
+                    problem, misconception_code=signal["misconception_code"],
+                )
+                # A correct answer cannot bypass both mathematical repair steps.
+                guided_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest"
+                )
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                repair_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-repair"
+                )
+                coeffs = item["equation_coefficients"]
+                first_value = Fraction(coeffs["lhs_x"]) - Fraction(coeffs["rhs_x"])
+                second_value = (
+                    Fraction(coeffs["rhs_constant"]) - Fraction(coeffs["lhs_constant"])
+                )
+                from app.services.published_reasoning_probe import server_targeted_repair
+
+                targeted = server_targeted_repair(
+                    signal["misconception_code"],
+                    task_fingerprint=problem.solution["task_fingerprint"],
+                )
+                assert result.json()["repair_check"] == targeted["prompt"]
+                assert result.json()["repair_choices"] == list(targeted["choices"])
+                assert {choice["id"] for choice in result.json()["repair_choices"]} == {
+                    "OPTION_1", "OPTION_2", "OPTION_3",
+                }
+                wrong_option = next(
+                    choice["id"] for choice in targeted["choices"]
+                    if choice["id"] != targeted["expected"]
+                )
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": wrong_option,
+                }).json()["stage"] == "SOCRATIC_REPAIR_RETRY"
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": targeted["expected"],
+                }).json()["stage"] == "SOCRATIC_REPAIR"
+                # A wrong equality transformation remains non-credit and does
+                # not expose or issue a guided item.
+                wrong_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": str(first_value + 1),
+                })
+                assert wrong_repair.status_code == 200
+                assert wrong_repair.json()["stage"] == "SOCRATIC_REPAIR_RETRY"
+                assert wrong_repair.json()["correct"] is False
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                first_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": f"{first_value.numerator * 2}/{first_value.denominator * 2}",
+                })
+                assert first_repair.status_code == 200, first_repair.text
+                assert first_repair.json()["stage"] == "SOCRATIC_REPAIR"
+                assert first_repair.json()["correct"] is True
+                assert client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                }).status_code == 409
+                second_repair = client.post(repair_path, json={
+                    "problem_id": str(problem.id),
+                    "response": str(second_value),
+                })
+                assert second_repair.status_code == 200, second_repair.text
+                assert second_repair.json()["stage"] == "GUIDED_RETEST"
+                assert second_repair.json()["correct"] is True
+                assert second_repair.json()["mastery_eligible"] is False
+                public_retest = second_repair.json()["guided_retest_task"]
+                assert client.post(repair_path, json={
+                    "problem_id": str(problem.id), "response": str(second_value),
+                }).status_code == 409
+                assert public_retest["variant_id"] == private_retest["variant_id"]
+                assert private_retest["task_fingerprint"] != problem.solution["task_fingerprint"]
+                assert public_retest["mode"] == "GUIDED"
+                recovery_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-recovery"
+                )
+                recovered = client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                )
+                discovery_path = f"{recovery_path}/current"
+                discovered = client.get(discovery_path)
+                assert discovered.status_code == 200, discovered.text
+                assert discovered.json()["problem_id"] == str(problem.id)
+                assert discovered.json()["stage"] == "GUIDED_RETEST"
+                assert discovered.json()["guided_retest_task"] == public_retest
+                assert "canonical_answer" not in json.dumps(discovered.json())
+                assert recovered.status_code == 200, recovered.text
+                assert recovered.json()["stage"] == "GUIDED_RETEST"
+                assert recovered.json()["guided_retest_task"] == public_retest
+                assert recovered.json()["independent_evidence_eligible"] is False
+                assert "canonical_answer" not in json.dumps(recovered.json())
+                # Revoking a previously issued family's authorization must
+                # reject an authenticated retest without changing any history.
+                family = db.scalar(select(ProblemFamily))
+                family.active = False
+                db.commit()
+                history_before = {
+                    model.__name__: db.scalar(select(func.count(model.id)))
+                    for model in (
+                        Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+                    )
+                }
+                progress_before = db.get(
+                    StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+                )
+                counters_before = (
+                    progress_before.attempt_count,
+                    progress_before.correct_count,
+                    progress_before.independent_attempt_count,
+                    progress_before.independent_correct_count,
+                    progress_before.mastery_score,
+                    progress_before.confidence_score,
+                )
+                revoked = client.post(guided_path, json={
+                    "problem_id": str(problem.id),
+                    "answer": private_retest["canonical_answer"],
+                })
+                assert revoked.status_code == 409, revoked.text
+                assert client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                assert client.get(discovery_path).status_code == 409
+                assert {
+                    model.__name__: db.scalar(select(func.count(model.id)))
+                    for model in (
+                        Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+                    )
+                } == history_before
+                progress_after = db.get(
+                    StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+                )
+                assert (
+                    progress_after.attempt_count,
+                    progress_after.correct_count,
+                    progress_after.independent_attempt_count,
+                    progress_after.independent_correct_count,
+                    progress_after.mastery_score,
+                    progress_after.confidence_score,
+                ) == counters_before
+                # Restoring test-only authority permits the normal journey.
+                # The rejected request must not consume the already-issued task.
+                family.active = True
+                db.commit()
+                # A plausible near-miss must not count as mathematical success;
+                # recovery must use a fresh server-issued variant.
+                wrong = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id), "answer": "x=99999999"},
+                )
+                assert wrong.status_code == 200, wrong.text
+                assert wrong.json()["stage"] == "GUIDED_RETEST_RETRY"
+                assert wrong.json()["correct"] is False
+                assert wrong.json()["independent_evidence_eligible"] is False
+                assert wrong.json()["mastery_eligible"] is False
+                fresh = wrong.json()["guided_retest_task"]
+                assert fresh["variant_id"] != public_retest["variant_id"]
+                recovery = server_guided_retest(
+                    problem, misconception_code=signal["misconception_code"],
+                    retry_index=1,
+                )
+                assert recovery["task_fingerprint"] != private_retest["task_fingerprint"]
+                assert recovery["task_fingerprint"] != problem.solution["task_fingerprint"]
+                assert fresh["variant_id"] == recovery["variant_id"]
+                exact = Fraction(recovery["canonical_answer"].split("=")[1])
+                equivalent = f"x={exact.numerator * 2}/{exact.denominator * 2}"
+                verify = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id),
+                          "answer": equivalent},
+                )
+                assert verify.status_code == 200, verify.text
+                assert verify.json()["stage"] == "READY_FOR_TRANSFER_CONFIRMATION"
+                assert verify.json()["correct"] is True
+                assert verify.json()["independent_evidence_eligible"] is False
+                assert verify.json()["mastery_eligible"] is False
+                from scripts.author_ontario_linear_depth import create_unhinted_transfer
+
+                transfer = create_unhinted_transfer(recovery)
+                transfer_path = (
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-transfer"
+                )
+                # Muse D1: a corrupted guided result must block both
+                # independent issuance and scoring, even after issuance.
+                guided_result = next(t for t in db.scalars(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.problem_id == problem.id,
+                    TutorTurn.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT",
+                )) if t.metadata_json.get("correct") is True)
+                guided_original = dict(guided_result.metadata_json)
+                guided_result.metadata_json = {
+                    **guided_original, "task_fingerprint": "tampered",
+                }
+                db.commit()
+                counts_before = (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                )
+                assert client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                assert (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                ) == counts_before
+                guided_result.metadata_json = guided_original
+                db.commit()
+                started = client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                )
+                assert started.status_code == 200, started.text
+                guided_result.metadata_json = {
+                    **guided_original, "task_fingerprint": "tampered",
+                }
+                db.commit()
+                assert client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"]},
+                ).status_code == 409
+                assert (
+                    db.scalar(select(func.count(Attempt.id))),
+                    db.scalar(select(func.count(TutorTurn.id))),
+                    db.scalar(select(func.count(MasteryEvent.id))),
+                ) == (
+                    counts_before[0], counts_before[1] + 1, counts_before[2],
+                )
+                guided_result.metadata_json = guided_original
+                db.commit()
+                assert started.json()["stage"] == "INDEPENDENT_EXIT"
+                assert started.json()["hints_allowed"] is False
+                assert started.json()["mastery_eligible"] is False
+                assert started.json()["independent_evidence_eligible"] is False
+                assert started.json()["independent_task"] == transfer["learner_task"]
+                recovered_transfer = client.get(
+                    recovery_path, params={"problem_id": str(problem.id)},
+                )
+                assert recovered_transfer.status_code == 200, recovered_transfer.text
+                assert recovered_transfer.json()["independent_task"] == started.json()["independent_task"]
+                transfer_issue = db.scalar(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED",
+                ))
+                original_transfer_meta = dict(transfer_issue.metadata_json)
+                transfer_issue.metadata_json = {**original_transfer_meta, "target_fingerprint": "tampered"}
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                transfer_issue.metadata_json = original_transfer_meta
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
+                assert "canonical_answer" not in json.dumps(started.json())
+                assert client.post(
+                    f"{transfer_path}/start", params={"problem_id": str(problem.id)},
+                ).status_code == 409
+                result = client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"] if transfer_correct else "x=99999999"},
+                )
+                assert result.status_code == 200, result.text
+                assert result.json()["correct"] is transfer_correct
+                assert result.json()["xp_earned"] == 0
+                assert result.json()["mastery_eligible"] is False
+                assert result.json()["independent_evidence_eligible"] is False
+                # Both direct reload and discovery retain only validated outcomes.
+                reloaded = client.get(recovery_path, params={"problem_id": str(problem.id)})
+                assert reloaded.status_code == 200, reloaded.text
+                assert reloaded.json()["stage"] == "TRANSFER_FEEDBACK_ONLY"
+                assert reloaded.json()["correct"] is transfer_correct
+                assert reloaded.json()["xp_earned"] == 0
+                assert reloaded.json()["mastery_eligible"] is False
+                assert reloaded.json()["independent_evidence_eligible"] is False
+                discovered = client.get(discovery_path)
+                assert discovered.status_code == 200, discovered.text
+                assert discovered.json()["stage"] == ("TRANSFER_FEEDBACK_ONLY" if transfer_correct else "NONE")
+                if transfer_correct:
+                    assert discovered.json()["correct"] is True
+                persisted = db.scalar(select(TutorTurn).where(
+                    TutorTurn.session_id == uuid.UUID(session_id),
+                    TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_RESULT",
+                ))
+                original_result = dict(persisted.metadata_json)
+                for corrupt in ({**original_result, "correct": "true"},
+                                {**original_result, "target_fingerprint": "tampered"},
+                                {**original_result, "hints_allowed": True}, None):
+                    persisted.metadata_json = corrupt
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                    assert client.get(discovery_path).status_code == 409
+                persisted.metadata_json = original_result
+                original_attempt_id = persisted.attempt_id
+                persisted.attempt_id = None
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                persisted.attempt_id = original_attempt_id
+                db.commit()
+                duplicate = TutorTurn(
+                    session_id=persisted.session_id, problem_id=persisted.problem_id,
+                    attempt_id=persisted.attempt_id, role=persisted.role,
+                    state=persisted.state, pedagogical_action=persisted.pedagogical_action,
+                    message="Synthetic duplicate outcome", metadata_json=original_result,
+                )
+                db.add(duplicate)
+                db.commit()
+                assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                db.delete(duplicate)
+                db.commit()
+                if transfer_correct:
+                    # Separate verification is a fresh, single-use task and remains
+                    # explicitly disconnected from independent/mastery credit.
+                    from app.services.published_reasoning_probe import server_distinct_mastery_task
+
+                    private_mastery = server_distinct_mastery_task(
+                        problem, misconception_code=signal["misconception_code"],
+                        guided_retry_index=1,
+                    )
+                    assert private_mastery["private_target_fingerprint_for_review"] not in {
+                        problem.solution["task_fingerprint"],
+                        recovery["task_fingerprint"],
+                        transfer["private_target_fingerprint_for_review"],
+                    }
+                    mastery_path = (
+                        f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery"
+                    )
+                    started_mastery = client.post(
+                        f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                    )
+                    assert started_mastery.status_code == 200, started_mastery.text
+                    assert started_mastery.json()["verification_task"] == private_mastery["learner_task"]
+                    recovered_mastery = client.get(
+                        recovery_path, params={"problem_id": str(problem.id)},
+                    )
+                    assert recovered_mastery.status_code == 200, recovered_mastery.text
+                    assert recovered_mastery.json()["verification_task"] == started_mastery.json()["verification_task"]
+                    mastery_issue = db.scalar(select(TutorTurn).where(
+                        TutorTurn.session_id == uuid.UUID(session_id),
+                        TutorTurn.pedagogical_action == "PUBLISHED_MASTERY_ISSUED",
+                    ))
+                    original_mastery_meta = dict(mastery_issue.metadata_json)
+                    mastery_issue.metadata_json = {**original_mastery_meta, "variant_id": "tampered"}
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 409
+                    mastery_issue.metadata_json = original_mastery_meta
+                    db.commit()
+                    assert client.get(recovery_path, params={"problem_id": str(problem.id)}).status_code == 200
+                    assert started_mastery.json()["hints_allowed"] is False
+                    assert started_mastery.json()["mastery_eligible"] is False
+                    assert started_mastery.json()["independent_evidence_eligible"] is False
+                    assert "canonical_answer" not in json.dumps(started_mastery.json())
+                    assert client.post(
+                        f"{mastery_path}/start", params={"problem_id": str(problem.id)},
+                    ).status_code == 409
+                    answer_mastery = client.post(
+                        f"{mastery_path}/respond",
+                        json={"problem_id": str(problem.id),
+                              "answer": private_mastery["private_exact_oracle_for_review"]},
+                    )
+                    assert answer_mastery.status_code == 200, answer_mastery.text
+                    assert answer_mastery.json()["correct"] is True
+                    # A completed source must not remain a recovery candidate on reload.
+                    completed_discovery = client.get(discovery_path)
+                    assert completed_discovery.status_code == 200, completed_discovery.text
+                    assert completed_discovery.json()["stage"] == "NONE"
+                    assert completed_discovery.json()["independent_evidence_eligible"] is False
+                    assert answer_mastery.json()["xp_earned"] == 0
+                    assert answer_mastery.json()["mastery_eligible"] is False
+                    assert client.post(
+                        f"{mastery_path}/respond",
+                        json={"problem_id": str(problem.id),
+                              "answer": private_mastery["private_exact_oracle_for_review"]},
+                    ).status_code == 409
+                else:
+                    assert client.post(
+                        f"/api/v1/adaptive-tutor/sessions/{session_id}/published-mastery/start",
+                        params={"problem_id": str(problem.id)},
+                    ).status_code == 409
+                assert client.post(
+                    f"{transfer_path}/respond",
+                    json={"problem_id": str(problem.id),
+                          "answer": transfer["private_exact_oracle_for_review"]},
+                ).status_code == 409
+                assert client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/published-guided-retest",
+                    json={"problem_id": str(problem.id),
+                          "answer": private_retest["canonical_answer"]},
+                ).status_code == 409
+                assert db.scalar(select(func.count(TutorTurn.id)).where(
+                    TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+                )) == 1
+            else:
+                assert result.json()["stage"] == "PRACTICE_RETRY"
+                assert db.scalar(select(func.count(TutorTurn.id)).where(
+                    TutorTurn.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED",
+                )) == 0
+            # Even a second, now-correct choice cannot brute-force the probe.
+            assert client.post(path, json={
+                "problem_id": str(problem.id),
+                "choice_id": signal["confirmation_evidence_choice_for_author_review"],
+            }).status_code == 409
+            progress = db.get(StudentSkill, {"student_id": student.id, "skill_id": skill.id})
+            assert progress.independent_correct_count == 0
+            assert progress.independent_attempt_count == 0
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_authenticated_published_step_and_photo_assistance_fail_without_history(
+    db, signed, monkeypatch,
+):
+    """Synthetic HTTP denial: unreviewed support must not grade, scan, or write evidence."""
+    from sqlalchemy.orm import sessionmaker
+
+    from app import adaptive_response_api
+
+    for module in ("app.auth", "app.adaptive_response_api", "app.diagnostic_api",
+                   "app.middleware.geo_restriction"):
+        monkeypatch.setattr(module + ".SessionLocal", sessionmaker(bind=db.get_bind()))
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(
+        curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9",
+    )
+    db.add(student)
+    db.flush()
+    db.add(StudentSkill(student_id=student.id, skill_id=skill.id, current_difficulty=3))
+    db.commit()
+
+    def history_snapshot():
+        progress = db.get(
+            StudentSkill, {"student_id": student.id, "skill_id": skill.id},
+        )
+        return (
+            *(db.scalar(select(func.count(model.id))) for model in (
+                Attempt, DiagnosticAttempt, HintEvent, MasteryEvent, TutorTurn,
+            )),
+            progress.attempt_count,
+            progress.correct_count,
+            progress.independent_attempt_count,
+            progress.independent_correct_count,
+            progress.mastery_score,
+            progress.confidence_score,
+        )
+
+    def forbidden_support(*_args, **_kwargs):
+        raise AssertionError("published unreviewed step assistance was invoked")
+
+    class ForbiddenOcr:
+        def scan(self, *_args, **_kwargs):
+            raise AssertionError("published photo OCR was invoked")
+
+    app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[adaptive_response_api.photo_ocr.get_ocr_provider] = ForbiddenOcr
+    try:
+        with TestClient(app) as client:
+            authenticate_parent_for_student(client, db, student)
+            start = client.post("/api/v1/adaptive-tutor/sessions", json={
+                "student_id": str(student.id), "skill_id": str(skill.id),
+            })
+            assert start.status_code == 200, start.text
+            session_id = start.json()["session_id"]
+            problem_id = start.json()["problem"]["id"]
+            problem = db.get(Problem, uuid.UUID(problem_id))
+            assert problem.source_type == "PUBLISHED"
+            before = history_snapshot()
+            workspace = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+            assert workspace.status_code == 200, workspace.text
+            assert workspace.json()["allowed_actions"] == ["SUBMIT_ANSWER"]
+            assert workspace.json()["problem"]["supports_steps"] is False
+            from app.services.problem_selection import _eligibility_column
+            fixture_session = db.get(TutorSession, uuid.UUID(session_id))
+            original_state = fixture_session.current_state
+            issued_turn = db.scalar(select(TutorTurn).where(TutorTurn.session_id == fixture_session.id,
+                TutorTurn.role == "TUTOR").order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()))
+            for state in TutorState:
+                column = _eligibility_column(state)
+                if column is not None and column.key != "mastery_eligible":
+                    candidate = select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+                        current_difficulty=3, state=state, student_id=student.id)
+                    fixture_session.current_state = state
+                    issued_turn.problem_id = candidate.id
+                    db.commit()
+                    projected = client.get(f"/api/v1/learner-workspace/sessions/{session_id}")
+                    assert projected.status_code == 200, (state, projected.text)
+                    assert projected.json()["allowed_actions"] == ["SUBMIT_ANSWER"]
+                else:
+                    fixture_session.current_state = state
+                    db.commit()
+                    assert client.get(f"/api/v1/learner-workspace/sessions/{session_id}").status_code == 409
+            fixture_session.current_state = original_state
+            issued_turn.problem_id = problem.id
+            db.commit()
+            with monkeypatch.context() as revoked:
+                revoked.setenv("MIHUR_CONTENT_REVIEW_POLICY", "{}")
+                assert client.get(f"/api/v1/learner-workspace/sessions/{session_id}").status_code == 409
+            assert history_snapshot() == before
+            monkeypatch.setattr("app.hint_api.ai_generate", forbidden_support)
+            for reason in ("HINT", "I_DONT_UNDERSTAND"):
+                hinted = client.post(f"/api/v1/adaptive-tutor/sessions/{session_id}/hint",
+                    json={"problem_id": problem_id, "reason": reason})
+                assert hinted.status_code == 409, hinted.text
+                assert history_snapshot() == before
+            with monkeypatch.context() as patch:
+                patch.setattr(
+                    adaptive_response_api.stepwork, "problem_supports_steps",
+                    forbidden_support,
+                )
+                typed = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/work-step",
+                    json={"problem_id": problem_id, "line": "x=1"},
+                )
+                assert typed.status_code == 409, typed.text
+                assert "not yet authorized" in typed.json()["detail"]
+                assert history_snapshot() == before
+
+                photo = client.post(
+                    f"/api/v1/adaptive-tutor/sessions/{session_id}/work-photo/scan",
+                    data={"problem_id": problem_id},
+                    files={"file": ("synthetic.jpg", b"not-an-image", "image/jpeg")},
+                )
+                assert photo.status_code == 409, photo.text
+                assert "not yet authorized" in photo.json()["detail"]
+                assert history_snapshot() == before
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_revoked_authority_and_tampered_runtime_deny_selection(db, signed, monkeypatch):
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", "{}")
+    assert publisher.report(db, manifest)["authorized"] == 0
+    assert select_next_problem(db, skill_id=skill.id, current_problem_id=None,
+        current_difficulty=3, state=TutorState.GUIDED_PRACTICE) is None
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.publish(db, manifest)
+    changed = copy.deepcopy(manifest)
+    changed["runtime_sha256"] = "0" * 64
+    with pytest.raises(publisher.PublicationBlocked, match="Runtime contract"):
+        publisher.validate(changed)
+
+
+def test_real_exhausted_guided_source_does_not_block_newer_owned_recovery(
+    db, signed, monkeypatch,
+):
+    """Actual ORM projector: verified exhausted old source is terminal, not ambiguous."""
+    from app import adaptive_response_api as api
+    from app.services.published_reasoning_probe import server_guided_retest
+
+    manifest, _ = signed
+    publisher.publish(db, manifest)
+    db.commit()
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic QA", grade_level="9")
+    db.add(student)
+    db.flush()
+    session = TutorSession(
+        student_id=student.id, primary_skill_id=skill.id,
+        active_skill_id=skill.id, curriculum_id=skill.curriculum_id,
+        current_state=TutorState.GUIDED_PRACTICE, status="ACTIVE",
+    )
+    db.add(session)
+    db.flush()
+    rows = [row for row in db.scalars(select(Problem)).all()
+            if row.solution.get("mode") == "guided"]
+    old, newer = rows[:2]
+    assert old.id != newer.id
+    monkeypatch.setattr(api, "require_learning_owns_session", lambda db, access, s: s)
+    monkeypatch.setattr(api, "require_session_scope", lambda db, s: object())
+    monkeypatch.setattr(api, "require_skill_in_scope", lambda *args, **kwargs: None)
+
+    def add_source(problem, *, exhausted):
+        source = next(item for mode, item in publisher.candidates(manifest)
+                      if mode == "guided"
+                      and item["variant_id"] == problem.solution["variant_id"])
+        code = source["diagnostic_contract_for_author_review"]["signals"][0]["misconception_code"]
+        attempt = Attempt(
+            session_id=session.id, student_id=student.id, problem_id=problem.id,
+            student_answer="x=999", is_correct=False,
+            state_at_attempt=TutorState.GUIDED_PRACTICE,
+        )
+        db.add(attempt)
+        db.flush()
+        db.add(TutorTurn(
+            session_id=session.id, role="STUDENT", problem_id=problem.id,
+            attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_REASONING_CONFIRMED",
+            message="synthetic confirmation",
+            metadata_json={"misconception_code": code, "independent_evidence_eligible": False},
+        ))
+        for index in range(3 if exhausted else 1):
+            task = server_guided_retest(
+                problem, misconception_code=code, retry_index=index,
+            )
+            db.add(TutorTurn(
+                session_id=session.id, role="SYSTEM", problem_id=problem.id,
+                attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+                pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+                message="synthetic issue",
+                metadata_json={
+                    "variant_id": task["variant_id"],
+                    "task_fingerprint": task["task_fingerprint"],
+                    "source_fingerprint": problem.solution["task_fingerprint"],
+                    "independent_evidence_eligible": False,
+                },
+            ))
+            if exhausted:
+                db.add(TutorTurn(
+                    session_id=session.id, role="STUDENT", problem_id=problem.id,
+                    attempt_id=attempt.id, state=TutorState.GUIDED_PRACTICE,
+                    pedagogical_action="PUBLISHED_GUIDED_RETEST_RESULT",
+                    message="synthetic wrong response",
+                    metadata_json={
+                        "variant_id": task["variant_id"],
+                        "task_fingerprint": task["task_fingerprint"],
+                        "correct": False, "assisted": True,
+                        "independent_evidence_eligible": False,
+                    },
+                ))
+        db.flush()
+        return attempt
+
+    add_source(old, exhausted=True)
+    add_source(newer, exhausted=False)
+    db.commit()
+    before_counts = (db.scalar(select(func.count(Attempt.id))),
+                     db.scalar(select(func.count(TutorTurn.id))),
+                     db.scalar(select(func.count(MasteryEvent.id))))
+    old_state = api.published_recovery_state(
+        session.id, problem_id=old.id, access=object(), db=db,
+    )
+    assert old_state["stage"] == "GUIDED_RETEST_EXHAUSTED"
+    discovered = api.discover_published_recovery(session.id, access=object(), db=db)
+    assert discovered["problem_id"] == newer.id
+    assert discovered["stage"] == "GUIDED_RETEST"
+    assert discovered["mastery_eligible"] is False
+    assert (db.scalar(select(func.count(Attempt.id))),
+            db.scalar(select(func.count(TutorTurn.id))),
+            db.scalar(select(func.count(MasteryEvent.id)))) == before_counts
+    # Tamper with one recorded exhausted issuance. It must never become a
+    # silently filtered terminal lesson.
+    first = db.scalar(select(TutorTurn).where(
+        TutorTurn.problem_id == old.id,
+        TutorTurn.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED",
+    ).order_by(TutorTurn.created_at, TutorTurn.id))
+    first.metadata_json = {**first.metadata_json, "task_fingerprint": "tampered"}
+    db.commit()
+    with pytest.raises(HTTPException) as error:
+        api.discover_published_recovery(session.id, access=object(), db=db)
+    assert error.value.status_code == 409
+
+
+def test_actual_provisional_ontario_mapping_is_never_authorized():
+    manifest = json.loads(MANIFEST.read_text())
+    assert manifest["standards_provenance"]["acceptance"] == "PROVISIONAL_NOT_ACCEPTED"
+    manifest["activation"] = "staging"
+    with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
+        publisher.validate(manifest)
+
+
+def test_signed_partial_practice_is_not_coverage_taxonomy_or_mastery(signed):
+    manifest, _ = signed
+    assert publisher.validate(manifest)
+    source = manifest["standards_provenance"]
+    assert source["acceptance"] == "ACCEPTED_PARTIAL_PRACTICE"
+    assert source["disposition"] == "PARTIAL_NON_EXHAUSTIVE"
+    assert source["coverage_credit"] is False
+    assert source["production_taxonomy_activation"] is False
+    assert source["not_mapped"] == [{"standard_id": "MTH1W.C1.4", "disposition": "NOT_MAPPED"}]
+    assert "mastery" not in manifest["modes"]
+
+
+@pytest.mark.parametrize("field,value", [
+    ("acceptance", "ACCEPTED"), ("disposition", "ACCEPTED"),
+    ("coverage_credit", True), ("coverage_credit", 0),
+    ("production_taxonomy_activation", True), ("production_taxonomy_activation", 0),
+    ("exclusions", []), ("not_mapped", []), ("standard_id", "MTH1W.C1.4"),
+])
+def test_partial_practice_never_widens_immutable_standards_scope(signed, field, value):
+    manifest, _ = signed
+    changed = copy.deepcopy(manifest)
+    changed["standards_provenance"][field] = value
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(changed, require_approvals=False)
+
+
+def test_partial_practice_requires_all_six_signed_manifest_gates(signed):
+    manifest, _ = signed
+    for role in publisher.ROLES:
+        missing = copy.deepcopy(manifest)
+        missing["review_evidence"] = [item for item in missing["review_evidence"] if item["role"] != role]
+        with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
+            publisher.validate(missing)
+    unsigned = copy.deepcopy(manifest)
+    unsigned["review_evidence"] = []
+    with pytest.raises(publisher.PublicationBlocked, match="Missing independent gates"):
+        publisher.validate(unsigned)
+
+
+def test_default_package_remains_provisional_pending_unsigned():
+    manifest = json.loads(MANIFEST.read_text())
+    assert manifest["standards_provenance"] == publisher.STANDARDS_PROVENANCE
+    assert manifest["activation"] == "pending"
+    assert manifest["review_evidence"] == []
+    with pytest.raises(publisher.PublicationBlocked, match="not independently accepted"):
+        publisher.validate(manifest)
+
+
+def test_one_principal_cannot_supply_six_independent_roles(signed, monkeypatch):
+    manifest, policy = signed
+    for key in policy["keys"].values():
+        key["principal"] = "synthetic-shared-nonauthor"
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    with pytest.raises(publisher.PublicationBlocked, match="duplicate review"):
+        publisher.validate(manifest)
+
+
+@pytest.mark.parametrize("alias_keys", [False, True])
+def test_one_signing_key_cannot_impersonate_independent_reviewers(signed, monkeypatch, alias_keys):
+    manifest, policy = signed
+    shared = Ed25519PrivateKey.generate()
+    public = base64.b64encode(shared.public_key().public_bytes(Encoding.Raw, PublicFormat.Raw)).decode()
+    policy["keys"] = ({role: {"principal": f"synthetic-distinct-{role}", "roles": [role],
+                              "public_key": public} for role in publisher.ROLES} if alias_keys else {
+        "shared": {"principal": "synthetic-shared-nonauthor", "roles": sorted(publisher.ROLES),
+                   "public_key": public}})
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    payload = {key: value for key, value in manifest.items() if key != "review_evidence"}
+    url = "https://github.com/AyalewGM/ai-tutor/issues/462#synthetic-test-only"
+    manifest["review_evidence"] = [{
+        "role": role, "key_id": role if alias_keys else "shared", "evidence_url": url,
+        "signature": base64.b64encode(shared.sign(publisher.canonical({
+            "manifest": payload, "role": role, "evidence_url": url}))).decode(),
+    } for role in publisher.ROLES]
+    with pytest.raises(publisher.PublicationBlocked, match="duplicate review"):
+        publisher.validate(manifest)
+
+
+@pytest.mark.parametrize("change", ["missing", "changed", "reviewer"])
+def test_runtime_author_provenance_fails_closed(signed, monkeypatch, change):
+    manifest, policy = signed
+    if change == "missing":
+        policy.pop("runtime_authors")
+    elif change == "changed":
+        policy["runtime_authors"] = {"0" * 64: manifest["author_principals"]}
+    else:
+        policy["runtime_authors"][manifest["runtime_sha256"]] = [
+            policy["keys"][next(iter(publisher.ROLES))]["principal"]]
+    monkeypatch.setenv("MIHUR_CONTENT_REVIEW_POLICY", json.dumps(policy))
+    with pytest.raises(publisher.PublicationBlocked):
+        publisher.validate(manifest)
+
+
+def test_published_history_cannot_earn_deferred_answer_badges(db):
+    from datetime import datetime, timedelta
+
+    from app.services import awards
+    skill = db.scalar(select(Skill))
+    student = Student(curriculum_id=skill.curriculum_id, first_name="Synthetic reward isolation", grade_level="9")
+    db.add(student)
+    db.flush()
+    session = TutorSession(student_id=student.id, primary_skill_id=skill.id,
+        curriculum_id=skill.curriculum_id, current_state=TutorState.GUIDED_PRACTICE)
+    db.add(session)
+    db.flush()
+    old = datetime.now(UTC) - timedelta(days=8)
+    for index in range(10):
+        other_skill = Skill(curriculum_id=skill.curriculum_id, code=f"SYNTHETIC.REWARD.{index}", name="Synthetic only")
+        db.add(other_skill)
+        db.flush()
+        problem = Problem(primary_skill_id=other_skill.id, problem_type="SYNTHETIC",
+            difficulty=3, prompt="Synthetic published history", canonical_answer="1", source_type="PUBLISHED")
+        db.add(problem)
+        db.flush()
+        for attempt_index in range(3):
+            db.add(Attempt(session_id=session.id, student_id=student.id, problem_id=problem.id,
+                student_answer="1", is_correct=True, assistance_level=0,
+                state_at_attempt=TutorState.GUIDED_PRACTICE, created_at=old, attempt_number=attempt_index + 1))
+    db.flush()
+    assert awards._consecutive_correct(db, student.id) == 0
+    assert awards._answered_count(db, student.id) == 0
+    assert awards._distinct_skills_practiced(db, student.id) == 0
+    assert awards._clean_session_run(db, session.id) == 0
+    assert awards._days_since_previous_attempt(db, student.id) is None
+    assert awards.learner_progress(db, student.id)["xp"] == 0
+    ordinary = Problem(primary_skill_id=skill.id, problem_type="SYNTHETIC", difficulty=3,
+        prompt="Synthetic ordinary answer", canonical_answer="1", source_type="CURATED")
+    db.add(ordinary)
+    db.flush()
+    db.add(Attempt(session_id=session.id, student_id=student.id, problem_id=ordinary.id,
+        student_answer="1", is_correct=True, assistance_level=0,
+        state_at_attempt=TutorState.GUIDED_PRACTICE))
+    db.flush()
+    earned = awards.evaluate_awards(db, student_id=student.id, session_id=session.id,
+        active_skill_id=skill.id, correct=True, engine_action=None,
+        mastery_passed=False, review_passed=False, gap_fixed=False)
+    assert {award.badge_code for award in earned} == {"FIRST_CORRECT"}
+    assert awards._answered_count(db, student.id) == 1
+    assert awards._distinct_skills_practiced(db, student.id) == 1
+    assert awards._clean_session_run(db, session.id) == 1
+    assert awards._days_since_previous_attempt(db, student.id) is None
+    assert awards.learner_progress(db, student.id)["xp"] == (awards.attempt_xp(True, 0, 3) + awards.BADGE_XP["FIRST_CORRECT"])
