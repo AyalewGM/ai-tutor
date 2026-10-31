@@ -53,3 +53,41 @@ def test_pure_scorer_does_not_create_or_change_history() -> None:
     for _ in range(10):
         assert score_fraction("9/12", str(expected))
     assert before == (expected.numerator, expected.denominator)
+
+
+def test_adversarial_raw_inputs_are_bounded_before_parsing() -> None:
+    # Exercise both CodeQL trigger shapes and both trust positions. No timing
+    # threshold is needed: over-budget input must never reach either parser.
+    from unittest.mock import patch
+
+    for raw in ("0" * 100_000 + "!", "A=" + " " * 100_000 + "!",
+                "A" + " " * 100_000 + "=1", " " * 100_000 + "1"):
+        for variable in (None, "A"):
+            expected = "1" if variable is None else "A=1"
+            with patch("app.services.fraction_assessment_registry._fraction") as rational, \
+                    patch("app.services.fraction_assessment_registry._variable_value") as assigned:
+                assert not score_fraction(raw, expected, variable=variable)
+                assert not score_fraction(expected, raw, variable=variable)
+                rational.assert_not_called()
+                assigned.assert_not_called()
+
+
+def test_bounded_near_misses_and_variable_delimiters() -> None:
+    for invalid in ("0" * 63 + "!", "1/" + "0" * 61 + "!", "+", "-", "1/", "1/++2", "²", "1 2"):
+        assert not score_fraction(invalid, "1")
+    for invalid in ("A=" + " " * 61, "AA=1", "A==1", "A=1=1", "Å=1", "A=\n1\n2"):
+        assert not score_fraction(invalid, "A=1", variable="A")
+    assert score_fraction("A\t=\t-6/-8", "a=3/4", variable="a")
+    assert score_fraction("1" * 64, "1" * 64)
+    assert not score_fraction("1" * 65, "1" * 65)
+
+
+def test_signed_denominators_and_decimal_digit_semantics() -> None:
+    for candidate, expected in (("-6/-8", "3/4"), ("+6/-8", "-3/4"),
+                                ("6/+8", "3/4"), ("-0/-8", "0"),
+                                ("٦/-٨", "-3/4")):
+        assert score_fraction(candidate, expected)
+        assert score_fraction("A=" + candidate, "a=" + expected, variable="A")
+    for invalid in ("1/+0", "1/-0", "1/٠", "1/²"):
+        assert not score_fraction(invalid, "1")
+        assert not score_fraction("A=" + invalid, "A=1", variable="A")
