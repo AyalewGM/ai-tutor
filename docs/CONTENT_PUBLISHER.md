@@ -17,11 +17,21 @@ NOT_MAPPED`. Both `coverage_credit` and `production_taxonomy_activation` are
 false. Validation rejects any missing or widened field, and the identical block is
 stored with each published Problem's package manifest and metadata provenance.
 
-A Standards signature attests this bounded source/mapping disposition only. It
-does not convert provisional correspondence into accepted coverage. Any later
-coverage claim, production taxonomy change, or source revision requires a new
-manifest, fresh independent Standards review and new signatures. Staging policy
-and release authority remain Architecture/Engineering responsibilities.
+The checked-in package remains provisional, pending and unsigned. It cannot be
+published. After an independent bounded source-fit decision, a separately signed
+manifest may set only `standards_provenance.acceptance` to
+`ACCEPTED_PARTIAL_PRACTICE`. Its disposition remains `PARTIAL_NON_EXHAUSTIVE`,
+coverage credit and production taxonomy activation remain false, and every source
+locator, inclusion, exclusion and `C1.4 NOT_MAPPED` field stays exact. This permits
+only the existing diagnostic/guided/independent practice modes after all six
+independent signatures and staging release authorization pass; no mastery evidence,
+full-expectation coverage or production taxonomy activation follows from it.
+
+A Standards signature attests this bounded source-fit disposition only. It does
+not convert provisional correspondence into accepted coverage. Full `ACCEPTED`
+coverage, changed exclusions, activation flags, new modes or source revisions are
+rejected by this slice and require a separate reviewed contract and fresh signatures.
+Staging policy and release authority remain Architecture/Engineering responsibilities.
 
 
 ## One command after release setup
@@ -64,6 +74,7 @@ Policy shape (public keys only):
 ```json
 {
   "authors": {"<generator_sha256>": ["mihur-content-author"]},
+  "runtime_authors": {"<runtime_sha256>": ["mihur-runtime-author"]},
   "keys": {
     "math-review-key-1": {
       "principal": "independent-mathematics-reviewer",
@@ -79,7 +90,9 @@ before provisioning this policy. The author list is checked against the external
 policy, so an author cannot escape separation by editing the manifest. Assign
 trusted principals for `math`, `pedagogy`, `standards`, `security`, `qa`, and
 `release`. Never provision an author as an independent reviewer of their work.
-Key removal immediately denies subsequent selection and scoring.
+Each independent role must use a distinct authorized principal and distinct public
+signing key; aliases of one key cannot impersonate multiple reviewers. Key removal
+immediately denies subsequent selection and scoring.
 
 Before reviewers sign, set manifest activation to `staging`. Keep the reviewed
 content SHA, generator SHA-256, runtime contract SHA-256, family, skill mapping,
@@ -206,3 +219,5 @@ Because `app/adaptive_response_api.py` is in the existing runtime inventory, the
 pending unsigned package pin changes from `3877ca04d084e449aa09e9d50f547baec4b75f14f350ddf6ca35b5699c10d455` to `fafcf9db918e4b665adb92a9c2482176f6f36b0551d2516425c22d947192e270`.
 The digest was computed from source-file bytes without importing product code;
 review evidence remains empty and activation remains pending.
+
+The signed author list must exactly match the union of generator and runtime authors in the deployment-owned policy. Missing runtime provenance fails closed; runtime contributors cannot approve their own release. Published answer feedback records an Attempt but does not advance mastery, focus, review, difficulty, or mastery events.
