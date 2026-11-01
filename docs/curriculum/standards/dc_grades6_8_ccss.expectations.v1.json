@@ -252,15 +252,15 @@
   },
   "reconciliation": {
     "official_expectation_count": 81,
-    "repository_existing_expectation_rows": 33,
-    "unmapped_expectations": 48,
+    "repository_existing_expectation_rows": 34,
+    "unmapped_expectations": 47,
     "existing_seed_rows_by_grade": {
       "6": 5,
       "7": 5,
       "8": 5
     },
     "seed_rows_without_clear_expectation": [],
-    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.1, 8.NS.A.2, 8.EE.A.2, 8.EE.A.3, and 8.SP.A.3 each have separate located but unaccepted candidates; no Grade 8 standards mapping is accepted."
+    "warning": "Existing DC6.*/DC7.* seed rows predate the reviewed-taxonomy gate and may be broad composites. Grade 8 8.NS.A.1, 8.NS.A.2, 8.EE.A.1, 8.EE.A.2, 8.EE.A.3, and 8.SP.A.3 each have separate located but unaccepted candidates; no Grade 8 standards mapping is accepted."
   },
   "safety": {
     "activation": "FORBIDDEN",
