@@ -1,0 +1,10 @@
+# Selected by guarded preflight only when the real public review policy exists.
+services:
+  tutor-api:
+    volumes:
+      - type: bind
+        source: /etc/mihur-staging/content-review-policy.json
+        target: /run/mihur/content-review-policy.json
+        read_only: true
+        bind:
+          create_host_path: false

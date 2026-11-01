@@ -26,6 +26,21 @@ DOCKER = ["docker", "--host", "unix:///var/run/docker.sock"]
 COMPOSE = DOCKER + ["compose", "--project-name", PROJECT, "--env-file", str(ENV), "-f", str(CONFIG)]
 
 
+def configure_review_policy():
+    """Missing public policy must not block app startup or create a directory."""
+    policy = Path("/etc/mihur-staging/content-review-policy.json")
+    overlay = str(CONFIG.parent / "compose.content-review.yml")
+    try:
+        info = policy.lstat()
+    except FileNotFoundError:
+        return
+    require(stat.S_ISREG(info.st_mode) and info.st_uid == 0
+            and stat.S_IMODE(info.st_mode) == 0o644,
+            "Public review policy must be root-owned regular file, mode 0644")
+    if overlay not in COMPOSE:
+        COMPOSE.extend(["-f", overlay])
+
+
 def run(args, capture=True):
     return subprocess.run(
         args, env=CLEAN, check=True, text=True, stdout=subprocess.PIPE if capture else None
@@ -240,6 +255,7 @@ def preflight():
     if not running:
         listeners = run(["ss", "-H", "-ltn"])
         require(not re.search(r":8443\s", listeners), "Port 8443 already occupied")
+    configure_review_policy()
     run(COMPOSE + ["config", "--quiet"])
     print("Preflight PASS: host attestation + local Docker inventory; not runtime acceptance.")
 

@@ -23,3 +23,6 @@ jobs:
             export "STAGING_${name}_IMAGE=example/image@sha256:$(printf 'b%.0s' {1..64})"
           done
           docker compose -f deploy/staging/compose.yml config --quiet
+          docker compose -f deploy/staging/compose.yml -f deploy/staging/compose.content-review.yml config --quiet
+          docker compose -f deploy/staging/compose.yml -f deploy/staging/compose.development-owner.yml config --quiet
+          docker compose -f deploy/staging/compose.yml -f deploy/staging/compose.development-owner.yml -f deploy/staging/compose.content-review.yml config --quiet
