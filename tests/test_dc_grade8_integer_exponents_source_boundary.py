@@ -196,7 +196,7 @@ def test_dc_8_ee_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
         if row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
     }
     assert repository_existing == {
-        "8.NS.A.1", "8.NS.A.2", "8.EE.A.1", "8.EE.A.3", "8.SP.A.3",
+        "8.NS.A.1", "8.NS.A.2", "8.EE.A.1", "8.EE.A.2", "8.EE.A.3", "8.SP.A.3",
         *{
             row["expectation_id"]
             for row in expectations["expectations"]
