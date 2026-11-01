@@ -2,6 +2,12 @@ name: Build staging images
 
 on:
   workflow_dispatch:
+    inputs:
+      development_source_sha:
+        description: Explicit development candidate SHA (empty retains main-only builds)
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: read
@@ -12,7 +18,12 @@ concurrency:
 
 jobs:
   publish:
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.repository == 'AyalewGM/ai-tutor' &&
+      ((inputs.development_source_sha == '' && github.ref == 'refs/heads/main') ||
+       (inputs.development_source_sha != '' && inputs.development_source_sha == github.sha &&
+        (github.ref == 'refs/heads/feat/content-publisher-mth1w' ||
+         github.ref == 'refs/heads/proposal/dev-solo-owner-governance')))
     runs-on: ubuntu-latest
     timeout-minutes: 45
     environment: staging-images
@@ -23,6 +34,9 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       RELEASE_SHA: ${{ github.sha }}
+      DEVELOPMENT_SOURCE_SHA: ${{ inputs.development_source_sha }}
+      RELEASE_REF: ${{ github.ref }}
+      RELEASE_BRANCH: ${{ github.ref_name }}
       REPOSITORY: ${{ github.repository }}
       REGISTRY_USER: ${{ github.actor }}
       PRIVATE_PACKAGES_CONFIRMED: ${{ vars.STAGING_GHCR_PRIVATE_CONFIRMED }}
@@ -31,22 +45,124 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test "$REPOSITORY" = AyalewGM/ai-tutor
+          [[ "$RELEASE_SHA" =~ ^[a-f0-9]{40}$ ]]
           test "$PRIVATE_PACKAGES_CONFIRMED" = true || {
             echo 'Configure private packages and the staging-images environment first.' >&2
             exit 1
           }
-          for workflow in ci.yml security.yml; do
-            gh api "repos/$REPOSITORY/actions/workflows/$workflow/runs?head_sha=$RELEASE_SHA&event=push&per_page=100" > "$RUNNER_TEMP/checks.json"
+          if test -z "$DEVELOPMENT_SOURCE_SHA"; then
+            test "$RELEASE_REF" = refs/heads/main
+            for workflow in ci.yml security.yml; do
+              gh api --hostname github.com "repos/$REPOSITORY/actions/workflows/$workflow/runs?head_sha=$RELEASE_SHA&event=push&per_page=100" > "$RUNNER_TEMP/checks.json"
+              jq -e --arg sha "$RELEASE_SHA" '
+                [.workflow_runs[] | select(.head_sha == $sha and .head_branch == "main")]
+                | sort_by(.run_number) | last
+                | .status == "completed" and .conclusion == "success"
+              ' "$RUNNER_TEMP/checks.json" > /dev/null
+            done
+          else
+            test "$DEVELOPMENT_SOURCE_SHA" = "$RELEASE_SHA"
+            case "$RELEASE_REF" in
+              refs/heads/feat/content-publisher-mth1w|refs/heads/proposal/dev-solo-owner-governance) ;;
+              *) exit 1 ;;
+            esac
+            # No candidate code executes before these trusted producer checks.
+            gh api --hostname github.com "repos/$REPOSITORY/commits/$RELEASE_SHA/check-runs?per_page=100" > "$RUNNER_TEMP/checks.json"
             jq -e --arg sha "$RELEASE_SHA" '
-              [.workflow_runs[] | select(.head_sha == $sha and .head_branch == "main")]
-              | sort_by(.run_number) | last
-              | .status == "completed" and .conclusion == "success"
-            ' "$RUNNER_TEMP/checks.json" > /dev/null
-          done
+              .total_count <= 100 and
+              ([.check_runs[] | select(.head_sha == $sha)] as $runs |
+               [["test",15368],["containers",15368],["Semgrep SAST",15368],
+                ["Trivy dependencies and secrets",15368],["CodeQL",57789]] |
+               all(.[]; . as $required |
+                 [$runs[] | select(.name == $required[0] and .app.id == $required[1])]
+                 | max_by(.id) | .status == "completed" and .conclusion == "success"))
+            ' "$RUNNER_TEMP/checks.json" >/dev/null
+            for workflow in ci security; do
+              case "$workflow" in
+                ci) names='["test","containers"]'; workflow_id=356891953 ;;
+                security) names='["Semgrep SAST","Trivy dependencies and secrets"]'; workflow_id=371762802 ;;
+              esac
+              run_id=$(jq -er --argjson names "$names" --arg sha "$RELEASE_SHA" '
+                .check_runs as $runs |
+                [$names[] as $name |
+                 [$runs[] | select(.name == $name and .app.id == 15368 and .head_sha == $sha)]
+                 | max_by(.id) | .details_url
+                 | if test("^https://github.com/AyalewGM/ai-tutor/actions/runs/[1-9][0-9]*/job/[1-9][0-9]*$")
+                   then capture("^https://github.com/AyalewGM/ai-tutor/actions/runs/(?<run>[1-9][0-9]*)/job/[1-9][0-9]*$") | .run
+                   else error("untrusted workflow run URL") end]
+                | unique | if length == 1 then .[0] else error("mixed workflow runs") end
+              ' "$RUNNER_TEMP/checks.json")
+              gh api --hostname github.com "repos/$REPOSITORY/actions/runs/$run_id" > "$RUNNER_TEMP/workflow.json"
+              jq -e --argjson id "$workflow_id" --argjson run "$run_id" --arg path ".github/workflows/$workflow.yml" --arg sha "$RELEASE_SHA" --arg branch "$RELEASE_BRANCH" '
+                .id == $run and .workflow_id == $id and .path == $path and .event == "pull_request" and
+                .head_sha == $sha and .head_branch == $branch and
+                .repository.id == 1367979340 and .head_repository.id == 1367979340 and
+                .status == "completed" and .conclusion == "success"
+              ' "$RUNNER_TEMP/workflow.json" >/dev/null
+            done
+          fi
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+          fetch-depth: ${{ inputs.development_source_sha != '' && '0' || '1' }}
+      - name: Bind development artifacts to the current tested PR tree
+        if: inputs.development_source_sha != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -S -B - <<'PY'
+          import importlib.util
+          import json
+          import os
+          import re
+          import subprocess
+          import tempfile
+          from pathlib import Path
+          source = os.environ['RELEASE_SHA']
+          root = Path.cwd()
+          git_home = tempfile.TemporaryDirectory(prefix='development-image-git-')
+          git_env = {'PATH': '/usr/bin:/bin', 'HOME': git_home.name,
+                     'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null',
+                     'GIT_CONFIG_SYSTEM': '/dev/null', 'GIT_NO_LAZY_FETCH': '1',
+                     'GIT_TERMINAL_PROMPT': '0', 'GIT_OPTIONAL_LOCKS': '0'}
+          def runner_git(directory, *args):
+              allowed = args in {('rev-parse', 'HEAD'), ('rev-parse', 'HEAD^{tree}'),
+                                 ('status', '--porcelain', '--untracked-files=all')}
+              allowed = allowed or (len(args) == 4 and args[:2] == ('merge-base', '--is-ancestor')
+                                    and re.fullmatch(r'[a-f0-9]{40}', args[2]) is not None
+                                    and args[3] == source)
+              if Path(directory).resolve() != root or not allowed:
+                  raise SystemExit('Unexpected development Git operation')
+              return subprocess.run(['/usr/bin/git', '-c', 'core.hooksPath=/dev/null',
+                                     '-c', 'core.fsmonitor=false', '-c', 'protocol.allow=never',
+                                     '-c', 'remote.origin.promisor=false', *args], cwd=root,
+                                    env=git_env, check=True, capture_output=True, text=True).stdout.strip()
+          actual = runner_git(root, 'rev-parse', 'HEAD')
+          if actual != source:
+              raise SystemExit('Development checkout differs from requested source')
+          spec = importlib.util.spec_from_file_location('development_image_source_gate', root / 'deploy/staging/development_release.py')
+          gate = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(gate)
+          allowed = re.compile(r'(?:|commits/[a-f0-9]{40}(?:/check-runs\?per_page=100&page=[1-9][0-9]?|/pulls\?per_page=100)?|pulls/[1-9][0-9]*|git/ref/heads/[A-Za-z0-9%._/-]+|actions/runs/[1-9][0-9]*)')
+          def api(suffix):
+              if not allowed.fullmatch(suffix):
+                  raise SystemExit('Unexpected development evidence endpoint')
+              result = subprocess.run(['gh', 'api', '--hostname', 'github.com', 'repos/AyalewGM/ai-tutor' + ('/' + suffix if suffix else '')], check=True, capture_output=True, text=True)
+              return json.loads(result.stdout)
+          gate.github = api
+          gate.git = runner_git
+          tree = gate.git(root, 'rev-parse', 'HEAD^{tree}')
+          proof = gate.verify_checks(source, tree, root)
+          def verify_clean_checkout():
+              if (runner_git(root, 'rev-parse', 'HEAD') != source
+                      or runner_git(root, 'rev-parse', 'HEAD^{tree}') != tree
+                      or runner_git(root, 'status', '--porcelain', '--untracked-files=all')):
+                  raise SystemExit('Development source changed during verification')
+          verify_clean_checkout()
+          print(json.dumps({'development_build_only': True, 'release_authorized': False, 'source': proof}, sort_keys=True))
+          PY
       - name: Build and publish immutable release references
         shell: bash
         run: |

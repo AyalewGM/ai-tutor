@@ -129,6 +129,34 @@ jobs:
           MIHUR_PUBLISHER_TEST_DATABASE_URL: ${{ env.DATABASE_URL }}
         run: python -m pytest tests/test_content_publishing.py -q
 
+      - name: Development owner rejection regressions (must execute, no skips)
+        run: |
+          python -m pytest tests/test_development_release_authorization.py tests/test_development_content_authorization.py tests/test_development_owner_operator.py tests/test_development_image_workflow.py -q --junitxml="$RUNNER_TEMP/development-owner-rejections.xml"
+          python - <<'PYCODE'
+          import os
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          root = ET.parse(Path(os.environ['RUNNER_TEMP']) / 'development-owner-rejections.xml').getroot()
+          suites = [root] if root.tag == 'testsuite' else list(root.iter('testsuite'))
+          assert sum(int(s.get('tests', 0)) for s in suites) > 0
+          assert all(int(s.get(key, 0)) == 0 for s in suites for key in ('skipped', 'failures', 'errors'))
+          PYCODE
+
+      - name: Development owner PostgreSQL identity regression (must execute, no skips)
+        env:
+          MIHUR_DEV_AUTH_PG_ADMIN_URL: postgresql+psycopg://postgres@localhost:5432/postgres
+        run: |
+          python -m pytest tests/test_development_authorization_postgresql.py -q --junitxml="$RUNNER_TEMP/development-owner-pg.xml"
+          python - <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          root = ET.parse(Path(os.environ['RUNNER_TEMP']) / 'development-owner-pg.xml').getroot()
+          suites = [root] if root.tag == 'testsuite' else list(root.iter('testsuite'))
+          assert sum(int(s.get('tests', 0)) for s in suites) == 5
+          assert all(int(s.get(key, 0)) == 0 for s in suites for key in ('skipped', 'failures', 'errors'))
+          PY
+
       - name: Gate 4 committed revision regression (must execute, no skips)
         env:
           TEST_DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ai_tutor

@@ -122,6 +122,14 @@ def audit_curriculum_isolation(
             raise ContentValidationError(
                 "Prerequisite edge crosses jurisdiction boundaries"
             )
+        if skill_curriculum.authority_id != prereq_curriculum.authority_id:
+            raise ContentValidationError(
+                "Prerequisite edge crosses authority boundaries"
+            )
+        if skill_curriculum.version != prereq_curriculum.version:
+            raise ContentValidationError(
+                "Prerequisite edge crosses curriculum version boundaries"
+            )
 
     # Metadata is also inspected globally so a forged metadata.curriculum_id
     # cannot disguise a problem whose primary skill belongs to this curriculum.

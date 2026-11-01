@@ -168,7 +168,8 @@ def _already_awarded(
 def _consecutive_correct(db: Session, student_id: uuid.UUID) -> int:
     attempts = db.scalars(
         select(Attempt.is_correct)
-        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+        .join(Problem, Attempt.problem_id == Problem.id)
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None), Problem.source_type.is_distinct_from("PUBLISHED"))
         .order_by(Attempt.created_at.desc(), Attempt.id.desc())
         .limit(10)
     ).all()
@@ -211,9 +212,9 @@ def practice_streak_days(db: Session, student_id: uuid.UUID) -> int:
 def _answered_count(db: Session, student_id: uuid.UUID) -> int:
     return (
         db.scalar(
-            select(func.count(Attempt.id)).where(
+            select(func.count(Attempt.id)).join(Problem, Attempt.problem_id == Problem.id).where(
                 Attempt.student_id == student_id,
-                Attempt.is_correct.isnot(None),
+                Attempt.is_correct.isnot(None), Problem.source_type.is_distinct_from("PUBLISHED"),
             )
         )
         or 0
@@ -228,7 +229,7 @@ def _distinct_skills_practiced(db: Session, student_id: uuid.UUID) -> int:
             .join(Problem, Attempt.problem_id == Problem.id)
             .where(
                 Attempt.student_id == student_id,
-                Attempt.is_correct.isnot(None),
+                Attempt.is_correct.isnot(None), Problem.source_type.is_distinct_from("PUBLISHED"),
             )
         )
         or 0
@@ -241,9 +242,9 @@ def _clean_session_run(db: Session, session_id: uuid.UUID) -> int:
         select(
             func.count(Attempt.id),
             func.count(Attempt.id).filter(Attempt.is_correct.is_(False)),
-        ).where(
+        ).join(Problem, Attempt.problem_id == Problem.id).where(
             Attempt.session_id == session_id,
-            Attempt.is_correct.isnot(None),
+            Attempt.is_correct.isnot(None), Problem.source_type.is_distinct_from("PUBLISHED"),
         )
     ).one()
     return int(answered) if not wrong else 0
@@ -266,7 +267,8 @@ def _days_since_previous_attempt(db: Session, student_id: uuid.UUID) -> float | 
     """Gap in days between the current (latest) attempt and the one before it."""
     previous_at = db.scalar(
         select(Attempt.created_at)
-        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+        .join(Problem, Attempt.problem_id == Problem.id)
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None), Problem.source_type.is_distinct_from("PUBLISHED"))
         .order_by(Attempt.created_at.desc(), Attempt.id.desc())
         .offset(1)
         .limit(1)
@@ -537,7 +539,8 @@ def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
     rows = db.execute(
         select(Attempt.is_correct, Attempt.assistance_level, Problem.difficulty)
         .join(Problem, Attempt.problem_id == Problem.id)
-        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None))
+        .where(Attempt.student_id == student_id, Attempt.is_correct.isnot(None),
+               Problem.source_type.is_distinct_from("PUBLISHED"))
     ).all()
     xp = sum(attempt_xp(bool(ok), int(assistance or 0), int(diff or 1))
              for ok, assistance, diff in rows)
@@ -554,6 +557,7 @@ def learner_progress(db: Session, student_id: uuid.UUID) -> dict:
         .where(
             Attempt.student_id == student_id,
             Attempt.is_correct.isnot(None),
+            Problem.source_type.is_distinct_from("PUBLISHED"),
             Attempt.created_at >= today_start,
         )
     ).all()

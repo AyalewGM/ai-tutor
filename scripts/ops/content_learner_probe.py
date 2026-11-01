@@ -13,7 +13,7 @@ from app.auth import SESSION_COOKIE, create_session
 from app.core.database import SessionLocal
 from app.models import Attempt, Problem, Student, StudentSkill, User
 from app.parent_models import ParentProfile
-from app.services.content_publishing import resolve_skill, validate
+from app.services.content_publishing import authorize_package, resolve_skill
 from scripts.ops.publish_content import MANIFEST
 
 
@@ -31,8 +31,8 @@ def assert_public(payload):
 
 def probe():
     manifest = json.loads(MANIFEST.read_text())
-    package_digest = validate(manifest)
     with SessionLocal.begin() as db:
+        package_digest = authorize_package(manifest, db)
         assert db.scalar(text("select current_database()")) == "mihur_staging"
         skill, _ = resolve_skill(db, manifest)
         skill_id, curriculum_id = skill.id, skill.curriculum_id

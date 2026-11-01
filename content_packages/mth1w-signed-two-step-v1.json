@@ -14,13 +14,13 @@
     "independent"
   ],
   "scorer": "EXACT_VARIABLE_RATIONAL_V1",
-  "activation": "pending",
+  "activation": "staging",
   "seed_count": 12,
   "author_principals": [
     "mihur-content-author"
   ],
   "review_evidence": [],
-  "runtime_sha256": "fafcf9db918e4b665adb92a9c2482176f6f36b0551d2516425c22d947192e270",
+  "runtime_sha256": "3604b5a1f3e15b558a2bc51dc2d0c50f70c21975103c99d75aeb615bc234f5c8",
   "standards_provenance": {
     "authority": "Ontario Ministry of Education",
     "document_title": "The Ontario Curriculum: Mathematics, Grade 9, De-streamed (MTH1W), 2021",
@@ -34,7 +34,7 @@
       119
     ],
     "disposition": "PARTIAL_NON_EXHAUSTIVE",
-    "acceptance": "PROVISIONAL_NOT_ACCEPTED",
+    "acceptance": "ACCEPTED_PARTIAL_PRACTICE",
     "coverage_credit": false,
     "production_taxonomy_activation": false,
     "inclusions": [

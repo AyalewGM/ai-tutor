@@ -52,8 +52,18 @@ def test_provenance_pins_measured_audit_and_stays_fail_closed() -> None:
     assert package["build_once_map_many"]["new_canonical_identity"] is False
     assert package["build_once_map_many"]["local_mapping_changes"] == []
     assert package["standards_provenance"]["mapping_approval"] == "NOT_ASSESSED"
-    assert package["independent_gates"]["mathematics"].startswith("ACCEPTED_AT_")
-    assert package["independent_gates"]["pedagogy"].endswith("PENDING_REREVIEW")
+    assert (
+        package["independent_gates"]["mathematics"]
+        == "ACCEPTED_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_REVIEW_6250407492"
+    )
+    assert (
+        package["independent_gates"]["pedagogy"]
+        == "ACCEPTED_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_REVIEW_6250594953"
+    )
+    assert (
+        package["independent_gates"]["ci_appsec"]
+        == "SUCCESS_AT_9f1df2964d60cb9f09ac6a109081bb426b70f495_CI_2193_APPSEC_1558"
+    )
 
 
 @pytest.mark.parametrize("mode", module.MODES)

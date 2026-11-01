@@ -15,6 +15,7 @@ from pathlib import Path
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.content_models import ProblemContentMetadata
 from app.curriculum_models import CanonicalSkill, CurriculumSkillMapping, ProblemFamily
@@ -27,6 +28,7 @@ SCORER = "EXACT_VARIABLE_RATIONAL_V1"
 FAMILY = "TWO_STEP_SIGNED_RATIONAL"
 GENERATOR = "scripts/author_ontario_linear_depth.py"
 ROLES = frozenset({"math", "pedagogy", "standards", "security", "qa", "release"})
+PARTIAL_PRACTICE_ACCEPTANCE = "ACCEPTED_PARTIAL_PRACTICE"
 STANDARDS_PROVENANCE = {
     "authority": "Ontario Ministry of Education",
     "document_title": "The Ontario Curriculum: Mathematics, Grade 9, De-streamed (MTH1W), 2021",
@@ -75,10 +77,13 @@ ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_FILES = (
     "app/services/content_publishing.py", "app/services/fraction_assessment_registry.py",
     "app/services/fraction_scoring_handoff.py", "app/services/attempt_evidence.py",
-    "app/services/problem_selection.py", "app/services/published_reasoning_probe.py",
-    "app/adaptive_response_api.py", "app/identity.py", "app/diagnostic_api.py",
+    "app/services/awards.py", "app/services/problem_selection.py", "app/services/published_reasoning_probe.py",
+    "app/adaptive_response_api.py", "app/hint_api.py", "app/workspace_api.py",
+    "app/identity.py", "app/diagnostic_api.py",
     "app/api.py", "scripts/ops/publish_content.py", "scripts/ops/content_learner_probe.py",
     "deploy/staging/publish_content.py", ".github/workflows/content-publisher.yml",
+    "app/services/development_content_authorization.py",
+    "scripts/ops/development_release_authorization.py", "deploy/staging/development_release.py",
 )
 
 
@@ -99,6 +104,23 @@ def digest(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
+def _bounded_standards_provenance(provenance):
+    """Source fit for practice is distinct from full expectation/coverage approval.
+
+    The accepted partial disposition is still inside the six-role signed manifest;
+    this function grants no authority to an unsigned or provisional package.
+    """
+    return (
+        isinstance(provenance, dict)
+        and provenance in (
+            STANDARDS_PROVENANCE,
+            {**STANDARDS_PROVENANCE, "acceptance": PARTIAL_PRACTICE_ACCEPTANCE},
+        )
+        and provenance.get("coverage_credit") is False
+        and provenance.get("production_taxonomy_activation") is False
+    )
+
+
 def validate(manifest, *, require_approvals=True):
     required = {
         "schema", "package_id", "family_id", "content_revision", "generator_sha256",
@@ -114,7 +136,7 @@ def validate(manifest, *, require_approvals=True):
         or manifest["curriculum"] != "MTH1W" or manifest["curriculum_version"] != "2021"
         or manifest["local_skill"] != "MTH1W.C.ALG.EQ2" or manifest["scorer"] != SCORER
         or manifest["package_id"] != "mth1w-signed-two-step-v1"
-        or manifest["standards_provenance"] != STANDARDS_PROVENANCE
+        or not _bounded_standards_provenance(manifest["standards_provenance"])
         or manifest["activation"] not in {"pending", "staging"}
         or not isinstance(manifest["modes"], list) or not manifest["modes"]
         or not all(isinstance(m, str) for m in manifest["modes"])
@@ -139,13 +161,8 @@ def validate(manifest, *, require_approvals=True):
     payload = {k: v for k, v in manifest.items() if k != "review_evidence"}
     if not require_approvals:
         return digest(payload)
-    if (
-        manifest["standards_provenance"].get("acceptance") != "ACCEPTED"
-        or manifest["standards_provenance"].get("disposition") != "ACCEPTED"
-        or manifest["standards_provenance"].get("coverage_credit") is not True
-        or manifest["standards_provenance"].get("production_taxonomy_activation") is not True
-    ):
-        raise PublicationBlocked("Official standards mapping not independently accepted")
+    if manifest["standards_provenance"].get("acceptance") != PARTIAL_PRACTICE_ACCEPTANCE:
+        raise PublicationBlocked("Bounded practice standards disposition not independently accepted")
     if manifest["activation"] != "staging":
         raise PublicationBlocked("Package pending; staging authorization required")
     try:
@@ -153,33 +170,67 @@ def validate(manifest, *, require_approvals=True):
         policy = json.loads(Path(policy_path).read_text()) if policy_path else json.loads(
             os.environ.get("MIHUR_CONTENT_REVIEW_POLICY", "{}"))
         keys = policy["keys"]
-        if set(manifest["author_principals"]) != set(policy["authors"][manifest["generator_sha256"]]):
+        generator_authors = policy["authors"][manifest["generator_sha256"]]
+        runtime_authors = policy["runtime_authors"][manifest["runtime_sha256"]]
+        if not all(isinstance(values, list) and values and
+                   all(isinstance(principal, str) and principal for principal in values)
+                   for values in (generator_authors, runtime_authors)):
+            raise ValueError("Invalid author provenance")
+        if set(manifest["author_principals"]) != set(generator_authors) | set(runtime_authors):
             raise PublicationBlocked("Authors must match deployment-owned provenance policy")
     except (ValueError, KeyError, OSError, TypeError) as exc:
         raise PublicationBlocked("Invalid deployment review-key configuration") from exc
-    covered = set()
+    covered, reviewer_principals, reviewer_keys = set(), set(), set()
     for evidence in manifest["review_evidence"]:
         try:
             if set(evidence) != {"role", "key_id", "evidence_url", "signature"}:
                 raise ValueError
             role = evidence["role"]
             key = keys[evidence["key_id"]]
+            principal = key["principal"]
+            public_key = base64.b64decode(key["public_key"], validate=True)
             if (
                 role not in ROLES or role in covered or role not in key["roles"]
-                or key["principal"] in manifest["author_principals"]
+                or not isinstance(principal, str) or not principal
+                or principal in manifest["author_principals"]
+                or principal in reviewer_principals or public_key in reviewer_keys
                 or not evidence["evidence_url"].startswith("https://github.com/AyalewGM/ai-tutor/")
             ):
                 raise ValueError
             message = canonical({"manifest": payload, "role": role,
                                  "evidence_url": evidence["evidence_url"]})
-            Ed25519PublicKey.from_public_bytes(base64.b64decode(key["public_key"], validate=True))\
+            Ed25519PublicKey.from_public_bytes(public_key)\
                 .verify(base64.b64decode(evidence["signature"], validate=True), message)
             covered.add(role)
+            reviewer_principals.add(principal)
+            reviewer_keys.add(public_key)
         except (KeyError, ValueError, TypeError, InvalidSignature) as exc:
             raise PublicationBlocked("Invalid, untrusted, author-owned or duplicate review") from exc
     if covered != ROLES:
         raise PublicationBlocked("Missing independent gates: " + ", ".join(sorted(ROLES - covered)))
     return digest(payload)
+
+
+def authorize_package(manifest, db=None):
+    """Default six-role policy, or explicit protected development-native permission.
+
+    Only the fixed read-only native mounts select development authorization.
+    Structural validation is never itself permission to publish or select content.
+    """
+    from app.services import development_content_authorization as development
+
+    try:
+        if not development.configured():
+            return validate(manifest)
+        package_digest = validate(manifest, require_approvals=False)
+        if (manifest["activation"] != "staging" or manifest["review_evidence"] != []
+            or manifest["standards_provenance"].get("acceptance") != PARTIAL_PRACTICE_ACCEPTANCE):
+            raise PublicationBlocked("Development package is not accepted bounded staging practice")
+        return development.authorize(manifest, package_digest, runtime_digest(), db)
+    except PublicationBlocked:
+        raise
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, SQLAlchemyError):
+        raise PublicationBlocked("Protected development package authorization failed") from None
 
 
 def candidates(manifest):
@@ -217,8 +268,8 @@ def resolve_skill(db, manifest):
     return row
 
 
-def expected_problem(manifest, mode, item, skill_id):
-    package_digest = validate(manifest)
+def expected_problem(manifest, mode, item, skill_id, db=None):
+    package_digest = authorize_package(manifest, db)
     return {
         "id": uuid.uuid5(uuid.NAMESPACE_URL, f"mihur:{package_digest}:{item['variant_id']}"),
         "primary_skill_id": skill_id, "problem_type": "PUBLISHED_RATIONAL", "difficulty": 3,
@@ -233,7 +284,7 @@ def expected_problem(manifest, mode, item, skill_id):
 
 def publish(db, manifest):
     """Caller owns transaction and deployment preflight. Insert only; never overwrite."""
-    validate(manifest)
+    authorize_package(manifest, db)
     skill, canonical_skill = resolve_skill(db, manifest)
     family = db.scalar(select(ProblemFamily).where(ProblemFamily.code == FAMILY))
     if family is None:
@@ -244,7 +295,7 @@ def publish(db, manifest):
           or family.generator_key != GENERATOR):
         raise PublicationBlocked("Canonical family registration conflict")
     for mode, item in candidates(manifest):
-        values = expected_problem(manifest, mode, item, skill.id)
+        values = expected_problem(manifest, mode, item, skill.id, db)
         problem = db.get(Problem, values["id"])
         if problem is not None:
             if any(getattr(problem, k) != v for k, v in values.items()):
@@ -275,7 +326,7 @@ def permitted(db, problem, mode):
         return True
     try:
         manifest = problem.solution["manifest"]
-        validate(manifest)
+        authorize_package(manifest, db)
         skill, canonical_skill = resolve_skill(db, manifest)
         family = db.scalar(select(ProblemFamily).where(ProblemFamily.code == FAMILY))
         if (family is None or not family.active or family.canonical_skill_id != canonical_skill.id
@@ -290,7 +341,7 @@ def permitted(db, problem, mode):
             return False
         for candidate_mode, item in candidates(manifest):
             if candidate_mode == mode and item["variant_id"] == problem.solution["variant_id"]:
-                expected = expected_problem(manifest, mode, item, skill.id)
+                expected = expected_problem(manifest, mode, item, skill.id, db)
                 return all(getattr(problem, k) == v for k, v in expected.items())
     except (PublicationBlocked, KeyError, TypeError, AttributeError, OSError):
         return False

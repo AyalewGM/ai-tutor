@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "status": "AUTHOR_SOURCE_AND_CANDIDATE_SCOPE_PENDING_INDEPENDENT_REVIEW",
+  "control_issues": [
+    377,
+    446
+  ],
+  "author_pr": 513,
+  "jurisdiction": "DC",
+  "track": "GRADE_8",
+  "expectation_id": "8.EE.A.4",
+  "publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+  "document_title": "Common Core State Standards for Mathematics",
+  "document_version": "2010",
+  "source_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+  "source_printed_page": 54,
+  "source_pdf_zero_based_page_index": 53,
+  "official_subpart_ids": [],
+  "dc_adoption_authority": "District of Columbia State Board of Education",
+  "dc_adoption_date": "2010-07-21",
+  "dc_adoption_source_url": "https://osse.dc.gov/sites/default/files/dc/sites/osse/release_content/attachments/DC%20ESEA%20Flexibility%20Waiver%20Final%20v2_0.pdf",
+  "access_date": "2026-10-27",
+  "license_and_adaptation_rationale": "This artifact records a locator, identifiers, source facts, original editorial paraphrase, and independently inspectable repository evidence only. It copies no source example, task, diagram, worksheet, answer key, or protected instructional expression and authorizes no adaptation of third-party materials.",
+  "author_mathematical_scope": "Operate on quantities written in scientific notation, including mixed decimal-and-scientific-notation problems; select suitably scaled units for extremely large or small measurements; and interpret scientific-notation output produced by technology.",
+  "required_material_conditions": [
+    "operations on scientific-notation quantities",
+    "problems mixing decimal notation and scientific notation",
+    "scientific notation used together with appropriately scaled measurement units",
+    "both very large and very small quantities",
+    "interpretation of technology-generated scientific notation"
+  ],
+  "candidate_selection_rule": "Include only registered canonical families whose learner-facing contract explicitly presents scientific notation and performs or prepares an operation required by 8.EE.A.4. Generic exponent, place-value, decimal, estimation, or arithmetic families do not qualify merely because they can support the mathematics. Unregistered draft target labels are evidence of proposed work, not canonical candidates.",
+  "registered_candidate_relations": [
+    {
+      "canonical_family_id": "MATH.SCI.MULTIPLY",
+      "relation": "PARTIAL_NON_EXHAUSTIVE",
+      "evidence_paths": [
+        "app/domains/advanced_number.py",
+        "app/canonical_problem_families.py"
+      ],
+      "evidence_blob_shas": [
+        "2b4648eaf66836cdbf6aab1a14a280b5375fbedb",
+        "144fcb79627905a909da9c5cc78dee9ab249c193"
+      ],
+      "bounded_evidence": "Registered family multiplies positive-power scientific-notation forms and normalizes the product.",
+      "no_coverage_credit_for": [
+        "mixed decimal and scientific notation operands",
+        "addition, subtraction, or division",
+        "negative-power forms for very small quantities",
+        "measurement-unit selection",
+        "technology-generated notation interpretation"
+      ]
+    },
+    {
+      "canonical_family_id": "MATH.SCI.CONVERT",
+      "relation": "NO_COVERAGE_CLAIM_PREREQUISITE_ONLY",
+      "evidence_paths": [
+        "app/domains/advanced_number.py",
+        "app/canonical_problem_families.py"
+      ],
+      "evidence_blob_shas": [
+        "2b4648eaf66836cdbf6aab1a14a280b5375fbedb",
+        "144fcb79627905a909da9c5cc78dee9ab249c193"
+      ],
+      "bounded_evidence": "Registered family converts selected large whole numbers to normalized positive-power scientific notation.",
+      "no_coverage_credit_for": [
+        "performing operations on scientific-notation quantities",
+        "mixed decimal and scientific notation operands",
+        "negative-power forms for very small quantities",
+        "measurement-unit selection",
+        "technology-generated notation interpretation"
+      ]
+    }
+  ],
+  "excluded_repository_evidence": [
+    {
+      "path": "docs/curriculum/taxonomy_candidate_scope.algebra_boundaries.v1.json",
+      "blob_sha": "b0cb54155dfe0cada414e5187ce3191ba66ff4f7",
+      "labels": [
+        "MATH.SCIENTIFIC_NOTATION.CONVERT_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.MULTIPLY_NORMALIZE",
+        "MATH.SCIENTIFIC_NOTATION.DIVIDE_NORMALIZE"
+      ],
+      "reason": "These are proposed draft targets and are not registered canonical problem-family identities on current main. They cannot establish existing coverage or approved correspondence."
+    },
+    {
+      "path": "app/services/draft_exact_algebra_assessment.py",
+      "blob_sha": "9d91a495c53eb189201f0144ba2b9c56b18045c3",
+      "labels": [
+        "generic exponent, place-value, and decimal helpers"
+      ],
+      "reason": "The tested selection rule excludes families without a learner-facing scientific-notation contract; mathematical prerequisites are not standards coverage."
+    }
+  ],
+  "coordination": {
+    "based_on_main_sha": "cce36cebb9711d5f7a6116c3df2896b2f05dd326",
+    "accepted_predecessor_pr": 512,
+    "accepted_predecessor_head_sha": "676442d8494dd16525d02b9e86d4a0ea6325f39e",
+    "predecessor_scope": "DC 8.EE.A.3",
+    "integration_boundary": "PR #512 has an independent bounded acceptance at its exact head and edits the same consolidated DC inventories. This isolated author slice must not overwrite, supersede, or invalidate that accepted head. After #512 lands, a separate current-main integration may reconcile 8.EE.A.4 into the consolidated inventory only after fresh exact-SHA review."
+  },
+  "independent_source_fidelity": "PENDING",
+  "canonical_equivalence": "UNVERIFIED",
+  "generator_coverage": "UNVERIFIED",
+  "assessment_coverage": "UNVERIFIED",
+  "mastery_credit": "FORBIDDEN",
+  "runtime_activation": false,
+  "question_family_authoring": "OUT_OF_SCOPE_CURRICULUM_ALGEBRA_OWNED"
+}

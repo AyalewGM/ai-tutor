@@ -272,12 +272,21 @@ def test_other_family_cannot_read_hint_or_respond_to_session() -> None:
         json={"problem_id": str(problem_id), "answer": "synthetic", "assistance_level": 0},
     )
 
-    assert workspace.status_code == 404
-    assert hint.status_code == 404
-    assert respond.status_code == 404
-    assert workspace.json()["detail"] == "Learner not found"
-    assert hint.json()["detail"] == "Learner not found"
-    assert respond.json()["detail"] == "Learner not found"
+    missing_id = uuid.uuid4()
+    missing_workspace = client.get(f"/api/v1/learner-workspace/sessions/{missing_id}")
+    missing_hint = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{missing_id}/hint",
+        json={"problem_id": str(problem_id)},
+    )
+    missing_respond = client.post(
+        f"/api/v1/adaptive-tutor/sessions/{missing_id}/respond",
+        json={"problem_id": str(problem_id), "answer": "synthetic", "assistance_level": 0},
+    )
+    for denied, missing in (
+        (workspace, missing_workspace), (hint, missing_hint), (respond, missing_respond)
+    ):
+        assert denied.status_code == missing.status_code == 404
+        assert denied.json() == missing.json() == {"detail": "Active tutor session not found"}
 
 
 def test_daily_goal_patch_and_progress() -> None:
