@@ -27,6 +27,7 @@ import { InteractiveFractionBars, fractionComparisonTarget } from "../mve/Intera
 import { InteractiveFractionAddition } from "../mve/InteractiveFractionAddition";
 import LevelCrest from "../components/LevelCrest";
 import MathKeypad from "../components/MathKeypad";
+import ExactRationalEntry from "../components/ExactRationalEntry";
 import ScratchPad from "../components/ScratchPad";
 import SmartScoreBadge from "../components/SmartScoreBadge";
 import StepWork from "../components/StepWork";
@@ -1197,6 +1198,15 @@ export default function Workspace() {
                             autoComplete="off"
                           />
                         </div>
+                      ) : problemKind === "RATIONAL" || problemKind === "VARIABLE_VALUE" ? (
+                        <ExactRationalEntry
+                          ref={answerRef}
+                          answerKind={problemKind}
+                          value={answer}
+                          onValueChange={setAnswer}
+                          onKey={insertToken}
+                          disabled={!hasAction("SUBMIT_ANSWER") || !currentProblem}
+                        />
                       ) : (
                         <div className="space-y-2">
                           <Input

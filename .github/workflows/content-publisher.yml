@@ -1,0 +1,86 @@
+name: Mihur Content Publisher
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        type: choice
+        options: [dry-run, publish, rollback, report]
+        default: dry-run
+        required: true
+      release_sha:
+        description: Exact deployed main SHA
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: mihur-content-staging
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.check.outputs.sha }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ inputs.release_sha }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          test "$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)" = "$RELEASE_SHA"
+          for workflow in ci.yml security.yml; do
+            gh api "repos/$REPOSITORY/actions/workflows/$workflow/runs?head_sha=$RELEASE_SHA&event=push&per_page=100" > "$RUNNER_TEMP/checks.json"
+            jq -e --arg sha "$RELEASE_SHA" '
+              [.workflow_runs[] | select(.head_sha == $sha and .head_branch == "main")]
+              | sort_by(.run_number) | last
+              | .status == "completed" and .conclusion == "success"
+            ' "$RUNNER_TEMP/checks.json" >/dev/null
+          done
+          echo "sha=$RELEASE_SHA" >> "$GITHUB_OUTPUT"
+  preview:
+    needs: preflight
+    if: inputs.action == 'dry-run'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Verify preview checkout matches approved release SHA
+        env:
+          RELEASE_SHA: ${{ needs.preflight.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - run: python -m scripts.ops.publish_content dry-run | tee -a "$GITHUB_STEP_SUMMARY"
+  staging:
+    needs: preflight
+    if: inputs.action != 'dry-run' 
+    # Dedicated, restricted runner; never attach it to pull_request workflows.
+    runs-on: [self-hosted, mihur-staging-publisher]
+    environment: staging-content-publisher
+    timeout-minutes: 20
+    steps:
+      - name: Run fixed operator entrypoint on verified deployed checkout
+        env:
+          RELEASE_SHA: ${{ needs.preflight.outputs.sha }}
+          ACTION: ${{ inputs.action }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$ACTION" in dry-run|publish|rollback|report) ;; *) exit 1;; esac
+          [[ "$RELEASE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          cd /opt/mihur-staging
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          sudo -n python3 deploy/staging/publish_content.py "$ACTION" --sha "$RELEASE_SHA"

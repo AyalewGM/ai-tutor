@@ -2,7 +2,7 @@ name: AppSec Baseline
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/content-publisher-mth1w]
   push:
     branches: [main]
   workflow_dispatch:

@@ -32,6 +32,7 @@ from app.services.awards import (
     learner_progress,
     practice_streak_days,
 )
+from app.services.content_publishing import permitted
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
@@ -39,6 +40,7 @@ from app.services.curriculum_scope import (
 )
 from app.services.hint_policy import ASSESSMENT_STATES, select_hint
 from app.services.placement import recommend_next_skill
+from app.services.problem_selection import _eligibility_column
 from app.services.review_schedule import reviews_due
 from app.services.stepwork import problem_supports_steps
 from app.services.visualization import visualization_for
@@ -316,6 +318,14 @@ def get_learner_workspace(
     if problem is not None and problem.primary_skill_id != active_skill.id:
         raise HTTPException(409, "Persisted problem falls outside the active learning focus")
 
+    is_published = problem is not None and problem.source_type == "PUBLISHED"
+    allowed_actions = _allowed_actions(session.current_state)
+    if is_published:
+        mode_column = _eligibility_column(session.current_state)
+        if mode_column is None or not permitted(db, problem, mode_column.key.removesuffix("_eligible")):
+            raise HTTPException(409, "Published package unavailable for this learning mode")
+        allowed_actions = ["SUBMIT_ANSWER"]
+
     progress = db.get(
         StudentSkill,
         {"student_id": session.student_id, "skill_id": active_skill.id},
@@ -353,13 +363,13 @@ def get_learner_workspace(
                 answer_kind=problem.answer_kind,
                 choices=problem_choices_out(problem.choices),
                 problem_type=problem.problem_type,
-                supports_steps=problem_supports_steps(problem),
+                supports_steps=False if is_published else problem_supports_steps(problem),
             )
             if problem
             else None
         ),
         coaching_message=turn.message if turn else None,
-        allowed_actions=_allowed_actions(session.current_state),
+        allowed_actions=allowed_actions,
         evidence=WorkspaceEvidenceOut(
             mastery_score=float(progress.mastery_score) if progress else 0.0,
             confidence_score=float(progress.confidence_score) if progress else 0.0,

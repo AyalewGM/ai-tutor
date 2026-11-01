@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { randomUUID } = require('node:crypto');
 
 const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:3000';
 
@@ -100,7 +101,10 @@ test('synthetic family browser journey reaches tutoring and parent progress', as
   await outsiderPage.getByRole('button', { name: 'Create account' }).click();
   await expect(outsiderPage).toHaveURL(/\/learn/);
   await outsiderPage.goto(sessionUrl);
-  await expect(outsiderPage.getByRole('alert')).toContainText('Learner not found');
+  await expect(outsiderPage.getByRole('alert')).toContainText('Active tutor session not found');
+  const deniedAlert = await outsiderPage.getByRole('alert').textContent();
+  await outsiderPage.goto(`${baseURL}/learn/${randomUUID()}`);
+  await expect(outsiderPage.getByRole('alert')).toHaveText(deniedAlert);
 
   await outsider.close();
   await context.close();
