@@ -668,31 +668,74 @@ def execute_serialized(operator, envelope, signature, bundle, artifacts, *, exec
         os.close(directory)
 
 
+def public_inspection(operator):
+    """Collect only public metadata; never read release.env or Docker Config.Env."""
+    machine_hash = sha(owned_bytes(Path("/etc/machine-id"), modes=(0o444, 0o644)).strip())
+    require(machine_hash == operator.auth.HOST, "inspect_development_host_only")
+
+    def public_hex(value, length):
+        require(isinstance(value, str) and re.fullmatch(r"[a-f0-9]{" + str(length) + "}", value),
+                "inspection_public_digest")
+        return value
+
+    def public_images(images):
+        require(type(images) is dict and set(images) == set(IMAGE_NAMES), "inspection_image_fields")
+        result = {}
+        for key in IMAGE_NAMES:
+            value = images[key]
+            require(isinstance(value, str) and len(value) <= 256 and re.fullmatch(
+                r"[a-z0-9./_-]+@sha256:[a-f0-9]{64}", value), "inspection_public_image")
+            result[key] = value
+        return result
+
+    services = {"api": "tutor-api", "gateway": "llm-gateway", "frontend": "frontend",
+                "db": "db", "redis": "redis", "proxy": "proxy"}
+    images = {key: command(DOCKER + ["inspect", "--format", "{{.Config.Image}}",
+                                    "mihur-staging-" + service + "-1"]).decode().strip()
+              for key, service in services.items()}
+    identity = operator.database_identity()
+    require(identity.get("database") == "mihur_staging"
+            and identity.get("database_role") == "mihur_staging", "inspection_database_identity")
+    cluster = identity.get("database_cluster_id")
+    require(isinstance(cluster, str) and re.fullmatch(r"[1-9][0-9]{0,19}", cluster)
+            and int(cluster) < 2**64, "inspection_database_cluster")
+    # Construct a fixed response; never expand a native/configuration dictionary.
+    result = {"current": {"source_sha": public_hex(git(ROOT, "rev-parse", "HEAD"), 40),
+                          "images": public_images(images)},
+              "database": "mihur_staging", "database_role": "mihur_staging",
+              "database_cluster_id": cluster, "host_sha256": machine_hash,
+              "release_actions_performed": False}
+    try:
+        candidate = operator.auth.protected_json(CANDIDATE)
+    except FileNotFoundError:
+        result["candidate"] = {"status": "NOT_PREPARED"}
+    else:
+        require(set(candidate) == {"source_sha", "images"}, "candidate_fields")
+        preview = operator.source_context(CANDIDATE_ROOT)
+        require(preview["source_sha"] == candidate["source_sha"], "candidate_source_changed")
+        operator.images(candidate["images"], preview["source_sha"], running=False)
+        result["candidate"] = {
+            "source_sha": public_hex(preview.get("source_sha"), 40),
+            "source_tree": public_hex(preview.get("source_tree"), 40),
+            "package_sha256": public_hex(preview.get("package_sha256"), 64),
+            "runtime_sha256": public_hex(preview.get("runtime_sha256"), 64),
+            "images": public_images(candidate["images"])}
+    return result
+
+
+def public_operation_status(*, execute):
+    # Native operation results can contain private context. Discard them entirely.
+    return {"status": "EXECUTED_SIGNED_DEVELOPMENT_PLAN" if execute else "CHECKED_NO_EFFECTS",
+            "release_actions_performed": execute}
+
+
 def ssh_request(operator):
     """A forced command ignores SSH_ORIGINAL_COMMAND and accepts no filesystem paths."""
     request = operator.auth.strict_json(sys.stdin.buffer.read(operator.auth.MAX_BYTES + 1))
     mode = request.get("mode")
     if mode == "inspect":
         require(set(request) == {"mode"}, "inspect_fields")
-        machine_hash = sha(owned_bytes(Path("/etc/machine-id"), modes=(0o444, 0o644)).strip())
-        require(machine_hash == operator.auth.HOST, "inspect_development_host_only")
-        cfg = operator.control.values(owned_bytes(ENV).decode())
-        result = {"current": {"source_sha": git(ROOT, "rev-parse", "HEAD"),
-                              "images": {key: cfg[field] for key, field in IMAGE_NAMES.items()}},
-                  **operator.database_identity(),
-                  "host_sha256": machine_hash,
-                  "release_actions_performed": False}
-        try:
-            candidate = operator.auth.protected_json(CANDIDATE)
-        except FileNotFoundError:
-            result["candidate"] = {"status": "NOT_PREPARED"}
-        else:
-            require(set(candidate) == {"source_sha", "images"}, "candidate_fields")
-            preview = operator.source_context(CANDIDATE_ROOT)
-            require(preview["source_sha"] == candidate["source_sha"], "candidate_source_changed")
-            operator.images(candidate["images"], preview["source_sha"], running=False)
-            result["candidate"] = {**preview, "images": candidate["images"]}
-        return result
+        return public_inspection(operator)
     require(mode in {"check", "execute-plan"} and set(request) == {
         "mode", "envelope", "signature", "evidence", "artifacts"}, "ssh_request_fields")
     require(type(request["artifacts"]) is dict and len(request["artifacts"]) == 5,
@@ -711,8 +754,9 @@ def ssh_request(operator):
     for digest, value in request["artifacts"].items():
         require(re.fullmatch(r"[a-f0-9]{64}", digest), "ssh_artifact_name")
         artifacts[digest] = decoded(value, operator.auth.MAX_BYTES)
-    return execute_serialized(operator, envelope, signature, request["evidence"], artifacts,
-                              execute=mode == "execute-plan")
+    execute_serialized(operator, envelope, signature, request["evidence"], artifacts,
+                       execute=mode == "execute-plan")
+    return public_operation_status(execute=mode == "execute-plan")
 
 
 def main():
@@ -740,9 +784,9 @@ def main():
         digest = review.get("artifact_sha256") if type(review) is dict else None
         require(isinstance(digest, str) and re.fullmatch(r"[a-f0-9]{64}", digest), "artifact_name")
         artifacts[digest] = auth._input(Path(args.artifacts) / (digest + ".txt"))
-    result = execute_serialized(operator, envelope, auth._input(args.signature, 8192),
-                                bundle, artifacts, execute=args.mode == "execute-plan")
-    print(json.dumps(result))
+    execute_serialized(operator, envelope, auth._input(args.signature, 8192),
+                       bundle, artifacts, execute=args.mode == "execute-plan")
+    print(json.dumps(public_operation_status(execute=args.mode == "execute-plan")))
 
 
 if __name__ == "__main__":

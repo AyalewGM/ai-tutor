@@ -329,7 +329,7 @@ def test_ssh_protocol_ignores_original_command_and_passes_only_bounded_public_by
     with patch.dict(os.environ, {"SSH_ORIGINAL_COMMAND": "arbitrary shell"}), patch.object(
             gate.sys, "stdin", SimpleNamespace(buffer=io.BytesIO(gate.canonical(request)))), patch.object(
             gate, "execute_serialized", return_value={"status": "fixture_check"}) as execute:
-        assert gate.ssh_request(operator) == {"status": "fixture_check"}
+        assert gate.ssh_request(operator) == {"status": "CHECKED_NO_EFFECTS", "release_actions_performed": False}
         assert execute.call_args.args[1:3] == (b"FIXTURE_JSON", b"FIXTURE_SIG")
         assert execute.call_args.kwargs == {"execute": False}
 
@@ -432,3 +432,97 @@ def test_git_metadata_rejects_indirection_and_agent_writable_entries(tmp_path, m
     (metadata / "config").chmod(0o666)
     with pytest.raises(gate.Rejected, match="untrusted_git_metadata"):
         gate._git_metadata(root, owner_uid=os.getuid())
+
+
+@pytest.fixture
+def public_inspection_fixture(setup, monkeypatch):
+    operator, _payload, _context, _events = setup
+    secret = "QA_SECRET_SENTINEL_DO_NOT_PRINT"
+    machine = b"0123456789abcdef0123456789abcdef"
+    source = "a" * 40
+    reference = "example.invalid/public@sha256:" + "b" * 64
+    images = {key: reference for key in gate.IMAGE_NAMES}
+    operator.auth.HOST = gate.sha(machine)
+    operator.control.values = Mock(return_value={"STAGING_DB_PASSWORD": secret})
+    operator.auth.protected_json = Mock(return_value={"source_sha": source, "images": images})
+    operator.source_context = Mock(return_value={
+        "source_sha": source, "source_tree": "c" * 40, "package_sha256": "d" * 64,
+        "runtime_sha256": "e" * 64, "private_native_context": secret})
+    operator.database_identity = Mock(return_value={
+        "database": "mihur_staging", "database_role": "mihur_staging",
+        "database_cluster_id": "12345", "private_native_context": secret})
+    operator.images = Mock()
+    def public_file(path, **_kwargs):
+        assert path != gate.ENV, "Public inspection must never read secret-bearing release.env"
+        assert path == Path("/etc/machine-id")
+        return machine
+    monkeypatch.setattr(gate, "owned_bytes", public_file)
+    monkeypatch.setattr(gate, "git", Mock(return_value=source))
+    monkeypatch.setattr(gate, "command", Mock(return_value=reference.encode()))
+    return operator, secret, images
+
+
+def test_inspection_stdout_uses_only_explicit_public_fields(public_inspection_fixture, monkeypatch, capsys):
+    operator, secret, images = public_inspection_fixture
+    monkeypatch.setattr(gate, "load_trusted", lambda: ({}, operator.auth, operator.control))
+    monkeypatch.setattr(gate, "Operator", lambda *_args: operator)
+    monkeypatch.setattr(gate.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(gate.sys, "argv", ["development_release.py", "ssh-request"])
+    monkeypatch.setattr(gate.sys, "stdin", SimpleNamespace(buffer=io.BytesIO(b'{"mode":"inspect"}')))
+    with patch.dict(os.environ):
+        gate.main()
+    output = capsys.readouterr().out
+    assert secret not in output
+    value = json.loads(output)
+    assert set(value) == {"current", "database", "database_role", "database_cluster_id",
+                          "host_sha256", "release_actions_performed", "candidate"}
+    assert value["current"] == {"source_sha": "a" * 40, "images": images}
+    assert value["candidate"] == {"source_sha": "a" * 40, "source_tree": "c" * 40,
+        "package_sha256": "d" * 64, "runtime_sha256": "e" * 64, "images": images}
+    assert value["database"] == value["database_role"] == "mihur_staging"
+    assert value["database_cluster_id"] == "12345"
+    operator.control.values.assert_not_called()
+    assert gate.command.call_count == 6
+    assert all(call.args[0][3:6] == ["inspect", "--format", "{{.Config.Image}}"]
+               for call in gate.command.call_args_list)
+
+
+@pytest.mark.parametrize("mode", ["check", "execute-plan"])
+def test_ssh_stdout_discards_opaque_native_results(setup, monkeypatch, capsys, mode):
+    operator, _payload, _context, _events = setup
+    secret = "QA_NATIVE_SECRET_SENTINEL_DO_NOT_PRINT"
+    request = {"mode": mode, "envelope": base64.b64encode(b"FIXTURE_JSON").decode(),
+               "signature": base64.b64encode(b"FIXTURE_SIG").decode(), "evidence": {},
+               "artifacts": {hashlib.sha256(str(i).encode()).hexdigest(): base64.b64encode(
+                   b"FIXTURE_REVIEW").decode() for i in range(5)}}
+    monkeypatch.setattr(gate, "execute_serialized", Mock(return_value={
+        "status": secret, "source_sha": secret, "private_configuration": secret}))
+    monkeypatch.setattr(gate, "load_trusted", lambda: ({}, operator.auth, operator.control))
+    monkeypatch.setattr(gate, "Operator", lambda *_args: operator)
+    monkeypatch.setattr(gate.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(gate.sys, "argv", ["development_release.py", "ssh-request"])
+    monkeypatch.setattr(gate.sys, "stdin", SimpleNamespace(buffer=io.BytesIO(gate.canonical(request))))
+    with patch.dict(os.environ):
+        gate.main()
+    output = capsys.readouterr().out
+    assert secret not in output
+    assert json.loads(output) == {
+        "status": "EXECUTED_SIGNED_DEVELOPMENT_PLAN" if mode == "execute-plan" else "CHECKED_NO_EFFECTS",
+        "release_actions_performed": mode == "execute-plan"}
+
+
+def test_console_stdout_discards_opaque_native_result(setup, monkeypatch, capsys):
+    operator, _payload, _context, _events = setup
+    secret = "QA_CONSOLE_SECRET_SENTINEL_DO_NOT_PRINT"
+    operator.auth._input = lambda *_args: b'{"reviews":[]}'
+    monkeypatch.setattr(gate, "execute_serialized", Mock(return_value={"private_configuration": secret}))
+    monkeypatch.setattr(gate, "load_trusted", lambda: ({}, operator.auth, operator.control))
+    monkeypatch.setattr(gate, "Operator", lambda *_args: operator)
+    monkeypatch.setattr(gate.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(gate.sys, "argv", ["development_release.py", "check", "--envelope", "public.json",
+        "--signature", "public.sig", "--evidence", "public-evidence.json", "--artifacts", "public-reviews"])
+    with patch.dict(os.environ):
+        gate.main()
+    output = capsys.readouterr().out
+    assert secret not in output
+    assert json.loads(output) == {"status": "CHECKED_NO_EFFECTS", "release_actions_performed": False}
