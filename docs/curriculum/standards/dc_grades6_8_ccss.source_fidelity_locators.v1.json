@@ -4,7 +4,7 @@
   "status": "AUTHOR_SOURCE_LOCATORS_REVIEW_REQUIRED",
   "as_of": "2026-10-12",
   "authority": "DC OSSE adoption; NGA/CCSSO CCSS Mathematics 2010 text",
-  "source_text_host_note": "The official CCSSO/NGA PDF is the controlling text locator for corrected 8.NS.A.1, 8.NS.A.2, 8.EE.A.3, 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and 8.SP.A.3 rows. Remaining thecorestandards.org row locators are an unofficial republication and stay pending bounded correction.",
+  "source_text_host_note": "The official CCSSO/NGA PDF is the controlling text locator for corrected 8.NS.A.1, 8.NS.A.2, 8.EE.A.2, 8.EE.A.3, 8.G.A.1–5, 8.G.B.6–8, 8.G.C.9, and 8.SP.A.3 rows. Remaining thecorestandards.org row locators are an unofficial republication and stay pending bounded correction.",
   "records": [
     {
       "expectation_id": "6.RP.A.1",
@@ -1800,42 +1800,207 @@
       "grade": 8,
       "domain": "EE",
       "cluster": "A",
-      "source_publication": "CCSS Mathematics 2010",
-      "adopting_authority": "DC OSSE",
-      "original_publisher": "NGA Center for Best Practices and CCSSO",
-      "official_adoption_url": "https://osse.dc.gov/page/common-core-state-standards-mathematics",
-      "source_text_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
-      "source_section_url": "https://www.thecorestandards.org/Math/Content/8/EE/",
-      "source_section": "Grade 8 / EE / A",
-      "source_locator_type": "WEB_DOMAIN_SECTION_AND_INDIVIDUAL_STANDARD_NO_PRINTED_PAGE",
-      "source_license": "CCSS 2010 copyright; site is unofficial republisher",
+      "source_publication": "Common Core State Standards for Mathematics",
+      "adopting_authority": "DC OSSE / DC State Board of Education",
+      "original_publisher": "National Governors Association Center for Best Practices and Council of Chief State School Officers",
+      "official_adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "source_section": "Grade 8 Expressions and Equations / 8.EE.A / printed page 54",
+      "source_locator_type": "OFFICIAL_CCSSO_NGA_PDF_PRINTED_PAGE",
+      "source_license": "CCSS ©2010 NGA/CCSSO; scope locator and original editorial paraphrase only, with no source example, task, diagram, protected wording, answer key, or source instructional expression copied or adapted.",
       "lettered_subpart_ids": [],
-      "scope_summary_editorial": "Use square root and cube root symbols to represent solutions to equations; evaluate square roots of small perfect squares and cube roots of small perfect cubes.",
-      "completeness_evidence": "PARENT_AND_PUBLISHED_SUBPART_LINKS_AUTHOR_RECONCILED",
+      "scope_summary_editorial": "Use square-root and cube-root symbols to represent applicable solutions of equations x² = p and x³ = p for positive rational p; evaluate square roots of small perfect squares and cube roots of small perfect cubes; know that √2 is irrational.",
+      "completeness_evidence": "OFFICIAL_PDF_PARENT_SCOPE_LOCATED_PENDING_INDEPENDENT_ACCEPTANCE",
       "independent_acceptance": "PENDING",
       "author_scope_review": {
-        "editorial_mathematical_scope": "Use square root and cube root symbols to represent solutions to equations; evaluate square roots of small perfect squares and cube roots of small perfect cubes.",
+        "editorial_mathematical_scope": "Use square-root and cube-root symbols to represent applicable solutions of equations x² = p and x³ = p for positive rational p; evaluate square roots of small perfect squares and cube roots of small perfect cubes; know that √2 is irrational.",
         "lettered_subpart_topics_editorial": [],
-        "source_authority_note": "OSSE adoption and 2010 NGA/CCSSO CCSS; individual text URL is unofficial republication",
-        "review_status": "AUTHOR_NOT_INDEPENDENTLY_VERIFIED",
+        "source_authority_note": "Official CCSSO/NGA 2010 publication, printed page 54; OSSE meeting notice and official ESEA record establish DC State Board approval on July 21, 2010.",
+        "review_status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE",
         "official_text_reproduced": false
       },
       "bounded_mathematical_scope_evidence": {
-        "evidence_type": "AUTHOR_EDITORIAL_PARAPHRASE_OF_2010_CCSS",
-        "source_text_url": "https://www.thecorestandards.org/Math/Content/8/EE/A/2/",
-        "source_section": "Grade 8 / EE / A",
+        "evidence_type": "AUTHOR_EDITORIAL_SCOPE_LOCATOR_FROM_OFFICIAL_2010_CCSS",
+        "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+        "source_publication": "NGA/CCSSO Common Core State Standards for Mathematics",
+        "source_version": "2010",
+        "source_printed_page": 54,
         "required_conditions": [
-          "For x²=p and x³=p, the parameter p is positive rational",
-          "Use square-root and cube-root notation for applicable equation solutions",
-          "Evaluate roots of small perfect squares and cubes",
-          "Recognize √2 as irrational"
+          "Use square-root notation to represent applicable solutions of x² = p for positive rational p.",
+          "Use cube-root notation to represent applicable solutions of x³ = p for positive rational p.",
+          "Evaluate square roots of small perfect squares.",
+          "Evaluate cube roots of small perfect cubes.",
+          "Know that √2 is irrational."
         ],
         "unlettered_standard": true,
         "short_summary_is_exhaustive": false,
         "scope_verification": "PENDING_INDEPENDENT_SOURCE_FIDELITY",
         "canonical_equivalence": "NOT_ESTABLISHED",
         "downstream_full_coverage_allowed": false
-      }
+      },
+      "source_version": "2010",
+      "source_printed_page": 54,
+      "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+      "adoption_date": "2010-07-21",
+      "adoption_record_urls": [
+        "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+      ],
+      "access_date": "2026-10-26",
+      "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "provisional_reuse_boundary": {
+        "candidate": "M8.NS.RAD",
+        "status": "PARTIAL_NON_EXHAUSTIVE",
+        "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+        "included_scope": [
+          "Evaluate √36 as 6 within a rational-versus-irrational classification item."
+        ],
+        "excluded_required_scope": [
+          "Represent square-equation solutions with square-root notation.",
+          "Represent cube-equation solutions with cube-root notation.",
+          "Evaluate cube roots of small perfect cubes.",
+          "Establish that √2 is irrational."
+        ],
+        "coverage_credit": false,
+        "mapping_activation": false,
+        "canonical_correspondence": "NOT_ESTABLISHED",
+        "union_inheritance_forbidden": true,
+        "validated_practice": false,
+        "assessment_ready": false,
+        "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+      },
+      "canonical_candidate_inventory": [
+        {
+          "candidate": "M8.NS.RAD",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Evaluate √36 as 6 within a rational-versus-irrational classification item."
+          ],
+          "excluded_required_scope": [
+            "Represent square-equation solutions with square-root notation.",
+            "Represent cube-equation solutions with cube-root notation.",
+            "Evaluate cube roots of small perfect cubes.",
+            "Establish that √2 is irrational."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "scripts/seed_grade8.py blob 013f88fff94217a770f91584557247b3ae44a0eb at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310"
+        },
+        {
+          "candidate": "MATH.ROOT.SQUARE",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Evaluate principal square roots of positive perfect-square integers.",
+            "Use inverse-operation reasoning to verify the evaluated root."
+          ],
+          "excluded_required_scope": [
+            "Represent the complete applicable solution relation for x² = p using square-root notation.",
+            "Represent cube-equation solutions with cube-root notation.",
+            "Evaluate cube roots of small perfect cubes.",
+            "Establish that √2 is irrational."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.ROOTS"
+        },
+        {
+          "candidate": "MATH.ROOT.CUBE",
+          "status": "PARTIAL_NON_EXHAUSTIVE",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Evaluate cube roots of positive perfect-cube integers.",
+            "Use repeated-factor reasoning to verify the evaluated cube root."
+          ],
+          "excluded_required_scope": [
+            "Represent square-equation solutions with square-root notation.",
+            "Represent applicable solutions of x³ = p using cube-root notation.",
+            "Evaluate square roots of small perfect squares.",
+            "Establish that √2 is irrational."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.ROOTS"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.CLASSIFY",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Classify selected non-perfect-square integer roots as irrational."
+          ],
+          "excluded_required_scope": [
+            "The generated family does not include the exact √2 fact.",
+            "Represent square- or cube-equation solutions with root notation.",
+            "Evaluate the required perfect square and perfect cube roots."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.NS.IRRATIONAL.APPROX",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Approximate selected irrational square roots to the nearest tenth."
+          ],
+          "excluded_required_scope": [
+            "Establish that √2 is irrational.",
+            "Represent square- or cube-equation solutions with root notation.",
+            "Evaluate the required perfect square and perfect cube roots."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/shared_gap_depth.py blob 6eae1d43aa7a7fe59031f194624841c44d3e28d5, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.IRRATIONAL"
+        },
+        {
+          "candidate": "MATH.EXP.EVALUATE",
+          "status": "NO_COVERAGE_CLAIM",
+          "acceptance_status": "PROVISIONAL_NOT_ACCEPTED",
+          "included_scope": [
+            "Evaluate positive integer powers in the forward direction."
+          ],
+          "excluded_required_scope": [
+            "Use root notation as the inverse operation to represent equation solutions.",
+            "Evaluate square roots or cube roots.",
+            "Establish that √2 is irrational."
+          ],
+          "coverage_credit": false,
+          "mapping_activation": false,
+          "canonical_correspondence": "NOT_ESTABLISHED",
+          "union_inheritance_forbidden": true,
+          "validated_practice": false,
+          "assessment_ready": false,
+          "evidence_source": "app/domains/advanced_number.py blob 2b4648eaf66836cdbf6aab1a14a280b5375fbedb, registered by app/canonical_problem_families.py blob 144fcb79627905a909da9c5cc78dee9ab249c193 at main 252caf0d7cba9f24ead2c96b6f0b0e97f9238310",
+          "canonical_parent": "MATH.NS.EXPONENTS"
+        }
+      ]
     },
     {
       "expectation_id": "8.EE.A.3",
@@ -3436,5 +3601,24 @@
       "MATH.MUL.ERROR.ADDITIVE"
     ],
     "status": "AUTHOR_CORRECTED_PENDING_INDEPENDENT_ACCEPTANCE"
+  },
+  "radicals_roots_slice_source": {
+    "expectation_ids": [
+      "8.EE.A.2"
+    ],
+    "source_text_url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+    "source_publication": "Common Core State Standards for Mathematics",
+    "source_version": "2010",
+    "source_printed_page": 54,
+    "adopting_authority": "DC OSSE / DC State Board of Education",
+    "adoption_url": "https://osse.dc.gov/release/dc-state-board-education-holds-regularly-scheduled-public-meeting-10",
+    "adoption_date": "2010-07-21",
+    "access_date": "2026-10-26",
+    "license_adaptation": "Scope locator and original editorial paraphrase only; no source example, task, diagram, protected wording, answer key, or source instructional expression is copied or adapted.",
+    "adoption_record_urls": [
+      "https://osse.dc.gov/sites/default/files/dc/sites/osse/publication/attachments/Final%20Approved%20ESEA%20Waiver.pdf"
+    ],
+    "adoption_press_release_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+    "mapping_evidence_status": "SIX_REPOSITORY_CANDIDATES_LOCATED_PROVISIONAL_NOT_ACCEPTED_NO_COVERAGE_CREDIT"
   }
 }
