@@ -9,6 +9,7 @@ x-common: &common
   security_opt: [no-new-privileges:true]
 x-api-env: &api-env
   DATABASE_URL: postgresql+psycopg://mihur_staging:${STAGING_DB_PASSWORD:?required}@db:5432/mihur_staging
+  MFA_ENCRYPTION_KEY: ${MFA_ENCRYPTION_KEY:?preserve existing staging Fernet key}
   MIHUR_CONTENT_REVIEW_POLICY_FILE: /run/mihur/content-review-policy.json
   AI_PROVIDER: gateway
   LLM_GATEWAY_URL: http://llm-gateway:8001

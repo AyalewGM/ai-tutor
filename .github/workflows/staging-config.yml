@@ -18,6 +18,7 @@ jobs:
         shell: bash
         run: |
           export STAGING_DB_PASSWORD=$(printf 'a%.0s' {1..64})
+          export MFA_ENCRYPTION_KEY=$(python -c "import base64; print(base64.urlsafe_b64encode(bytes(range(32))).decode())")
           for name in API GATEWAY FRONTEND DB REDIS PROXY; do
             export "STAGING_${name}_IMAGE=example/image@sha256:$(printf 'b%.0s' {1..64})"
           done

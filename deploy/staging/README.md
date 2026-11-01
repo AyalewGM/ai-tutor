@@ -220,3 +220,34 @@ docker system prune or restore over the current database. Production remains out
 
 PR preparation is not release approval. Publish meaningful transitions in #302/#278,
 attach execution evidence to #298, and link independent acceptance in #301.
+
+## Upgrading a host with a local MFA workaround
+
+`MFA_ENCRYPTION_KEY` is now a required canonical Fernet key in the root-only
+release manifest and is explicitly injected into API/migration containers. Preserve
+its exact existing value: generating a replacement can make stored MFA secrets
+unreadable. The guard validates encoding without printing the key. For first-time
+setup only, generate a Fernet key securely on the host; never commit it.
+
+Before replacing a locally modified compose.yml, retain it and release.env in a
+root-only backup directory outside Git. Review the local diff on the trusted VPS
+console (it may contain secrets); preserve all intentional settings, not just MFA.
+Only then restore the tracked Compose file and move untracked backup files outside
+the checkout. Never reset unrelated local work or bypass clean-checkout validation.
+
+A rebuilt release containing this fix is required; old image/release SHA manifests
+must not be relabeled as the new release. Preserve the database password and MFA
+key when updating the manifest. Preserve host Caddy configuration and data volumes.
+
+For the owner-reported 0038 database, release dc3e32b adds the forward migration
+0039_board_clear_receipts. Back up and verify recovery before migration, stop
+application writers, then run the guarded migration before starting the new API.
+Do not rerun curriculum seeds or automatically downgrade/restore over the database.
+This source inspection is not an executed migration or restore validation.
+
+The configured /etc/mihur-staging/content-review-policy.json must be provisioned
+through the reviewed content authorization process. It contains reviewer public
+keys and generator/runtime author provenance. Do not fabricate reviewer identities,
+copy test fixtures or install a dummy policy merely to make a mount succeed.
+Missing policy remains a separate deployment prerequisite; this MFA change does
+not authorize content publication or replace owner-signing enrollment.
