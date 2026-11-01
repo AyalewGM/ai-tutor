@@ -1,5 +1,6 @@
 """Safety regression tests; no Docker or VPS required."""
 
+import base64
 import importlib.util
 import json
 import unittest
@@ -15,7 +16,8 @@ spec.loader.exec_module(control)
 
 def valid_env():
     return "\n".join(
-        ["STAGING_DB_PASSWORD=" + "a" * 64, "STAGING_RELEASE_SHA=" + "b" * 40]
+        ["STAGING_DB_PASSWORD=" + "a" * 64, "STAGING_RELEASE_SHA=" + "b" * 40,
+         "MFA_ENCRYPTION_KEY=" + base64.urlsafe_b64encode(bytes(range(32))).decode()]
         + [
             f"STAGING_{name}_IMAGE=example/image@sha256:" + "c" * 64
             for name in ("API", "GATEWAY", "FRONTEND", "DB", "REDIS", "PROXY")
@@ -25,7 +27,20 @@ def valid_env():
 
 class Guards(unittest.TestCase):
     def test_valid_digest_manifest(self):
-        self.assertEqual(len(control.values(valid_env())), 8)
+        self.assertEqual(len(control.values(valid_env())), 9)
+
+    def test_mfa_key_is_preserved_and_invalid_keys_fail_without_disclosure(self):
+        original = base64.urlsafe_b64encode(bytes(range(32))).decode()
+        self.assertEqual(control.values(valid_env())["MFA_ENCRYPTION_KEY"], original)
+        for bad in ("", "secret-not-a-key", original[:-1],
+                    base64.urlsafe_b64encode(b"short").decode()):
+            with self.assertRaises(RuntimeError) as raised:
+                control.values(valid_env().replace(original, bad))
+            if bad:
+                self.assertNotIn(bad, str(raised.exception))
+        with self.assertRaises(RuntimeError):
+            control.values("\n".join(line for line in valid_env().splitlines()
+                                    if not line.startswith("MFA_ENCRYPTION_KEY=")))
 
     def test_rejects_tags_and_external_database_override(self):
         for text in (

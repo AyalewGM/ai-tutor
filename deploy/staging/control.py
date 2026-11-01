@@ -1,5 +1,7 @@
 """Staging-only guarded commands. No remote Docker context or arbitrary Compose args."""
 
+import base64
+import binascii
 import hashlib
 import json
 import os
@@ -51,7 +53,7 @@ def values(text):
         key, value = line.split("=", 1)
         require(key not in result, "Duplicate environment key")
         result[key] = value
-    expected = {"STAGING_DB_PASSWORD", "STAGING_RELEASE_SHA"} | {
+    expected = {"STAGING_DB_PASSWORD", "STAGING_RELEASE_SHA", "MFA_ENCRYPTION_KEY"} | {
         f"STAGING_{name}_IMAGE" for name in ("API", "GATEWAY", "FRONTEND", "DB", "REDIS", "PROXY")
     }
     require(set(result) == expected, "Unexpected or missing environment keys")
@@ -59,6 +61,13 @@ def values(text):
         re.fullmatch(r"[a-f0-9]{64}", result["STAGING_DB_PASSWORD"]),
         "Password must be 64 random hex characters",
     )
+    key = result["MFA_ENCRYPTION_KEY"]
+    try:
+        decoded = base64.b64decode(key, altchars=b"-_", validate=True)
+        valid_key = len(decoded) == 32 and base64.urlsafe_b64encode(decoded).decode() == key
+    except (ValueError, binascii.Error):
+        valid_key = False
+    require(valid_key, "MFA_ENCRYPTION_KEY must be a canonical Fernet key; preserve existing key")
     require(re.fullmatch(r"[a-f0-9]{40}", result["STAGING_RELEASE_SHA"]), "Invalid SHA")
     for key, value in result.items():
         if key.endswith("_IMAGE"):
