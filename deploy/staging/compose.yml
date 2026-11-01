@@ -69,7 +69,6 @@ services:
     profiles: [tools]
     mem_limit: 448m
     cpus: 0.75
-    volumes: [/etc/mihur-staging/content-review-policy.json:/run/mihur/content-review-policy.json:ro]
     environment: *api-env
     command: [alembic, upgrade, head]
     depends_on:
@@ -79,7 +78,6 @@ services:
     image: ${STAGING_API_IMAGE:?digest required}
     mem_limit: 448m
     cpus: 0.75
-    volumes: [/etc/mihur-staging/content-review-policy.json:/run/mihur/content-review-policy.json:ro]
     environment: *api-env
     command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, "8000", --workers, "1"]
     depends_on:

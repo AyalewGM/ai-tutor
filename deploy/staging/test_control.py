@@ -223,5 +223,29 @@ class Guards(unittest.TestCase):
             preflight.assert_not_called()
 
 
+class OptionalReviewPolicy(unittest.TestCase):
+    def test_missing_policy_does_not_add_mount(self):
+        with patch.object(control, "COMPOSE", []), patch.object(Path, "lstat", side_effect=FileNotFoundError):
+            control.configure_review_policy()
+            self.assertEqual(control.COMPOSE, [])
+
+    def test_real_public_policy_selects_overlay_once(self):
+        from types import SimpleNamespace
+        info = SimpleNamespace(st_mode=0o100644, st_uid=0)
+        with patch.object(control, "COMPOSE", []), patch.object(Path, "lstat", return_value=info):
+            control.configure_review_policy()
+            control.configure_review_policy()
+            self.assertEqual(control.COMPOSE, ["-f", str(control.CONFIG.parent / "compose.content-review.yml")])
+
+    def test_invalid_policy_cannot_enable_mount(self):
+        from types import SimpleNamespace
+        for mode, uid in [(0o040644, 0), (0o120644, 0), (0o100666, 0), (0o100644, 1000)]:
+            with self.subTest(mode=mode, uid=uid), patch.object(control, "COMPOSE", []), patch.object(
+                    Path, "lstat", return_value=SimpleNamespace(st_mode=mode, st_uid=uid)):
+                with self.assertRaises(RuntimeError):
+                    control.configure_review_policy()
+                self.assertEqual(control.COMPOSE, [])
+
+
 if __name__ == "__main__":
     unittest.main()

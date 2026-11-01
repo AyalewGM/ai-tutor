@@ -213,3 +213,28 @@ a fresh owner-signed continuation/rollback and repeat mandatory preflight.
 Successful command execution is not independent Muse acceptance or verified
 Ontario student availability. The actual approved-package learner journey and
 all applicable privacy/consent holds remain separate release requirements.
+
+### Merged main releases and application-only startup
+
+The native verifier accepts the exact current `main` head after its required
+checks pass. It verifies the commit tree, pinned check producers, pinned CI and
+AppSec workflow IDs and paths, successful `push` runs for this repository and
+`main`, and re-reads the main ref before accepting the evidence. PR/workflow-dispatch
+runs cannot substitute for main push evidence. The existing open-PR verification
+path remains available with its tested merge-tree and current-base checks.
+
+The standalone application no longer requires the legacy content review policy
+mount. Guarded preflight selects `compose.content-review.yml` only if the real
+root-owned mode-0644 policy file exists. The migration service never needs that
+policy. Missing authorization still blocks content publication; this change
+neither supplies reviewer identities nor bypasses the native owner signature,
+independent review, backup/restore, host enrollment, or expiry checks.
+
+Already-installed fixed verifiers do not update themselves. After this change is
+reviewed and merged, build images for the new exact release, verify the installed
+operator file hashes against that reviewed source, and update the operator pins
+and their digest in the owner policy through the owner console. Any existing
+signed grant is bound to its old context: collect new evidence and sign the new
+exact context. Preserve the MFA key, database password, volumes, and recovery
+access. Do not use a policy fixture to unblock deployment, seed content as part
+of an application update, or claim deployment from successful local tests.

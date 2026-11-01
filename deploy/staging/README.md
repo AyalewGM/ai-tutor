@@ -249,5 +249,10 @@ The configured /etc/mihur-staging/content-review-policy.json must be provisioned
 through the reviewed content authorization process. It contains reviewer public
 keys and generator/runtime author provenance. Do not fabricate reviewer identities,
 copy test fixtures or install a dummy policy merely to make a mount succeed.
-Missing policy remains a separate deployment prerequisite; this MFA change does
-not authorize content publication or replace owner-signing enrollment.
+Application-only deployment does not require this policy. Guarded preflight adds
+`compose.content-review.yml` only when the root-owned mode-0644 regular policy
+file exists; migrations never mount it. An invalid file blocks preflight. The
+base API retains the policy path, so absent authorization fails closed at
+publication. This does not authorize content publication or replace owner-signing
+enrollment. Do not invoke the content publisher until real review evidence and
+authorization are available.

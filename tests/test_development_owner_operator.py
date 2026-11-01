@@ -289,7 +289,7 @@ def test_source_or_current_ref_drift_during_evidence_collection_rejects(changed)
                     value["head"]["ref"] = "changed/source"
                 elif changed == "base_ref":
                     value["base"]["ref"] = "changed/base"
-        if path.startswith("git/ref/heads/"):
+        if path == "git/ref/heads/feature%2Fbase":
             reads["base"] += 1
             if reads["base"] == 2 and changed == "base_commit":
                 value = {"object": {"sha": "f" * 40}}
@@ -526,3 +526,60 @@ def test_console_stdout_discards_opaque_native_result(setup, monkeypatch, capsys
     output = capsys.readouterr().out
     assert secret not in output
     assert json.loads(output) == {"status": "CHECKED_NO_EFFECTS", "release_actions_performed": False}
+
+
+def main_ci_fixture():
+    source, tree, _base, _pr, rows, original = ci_fixture()
+    for run in original.runs.values():
+        run.update(event="push", head_branch="main", pull_requests=[])
+    for row in rows:
+        row["pull_requests"] = []
+    def api(path):
+        if path == "git/ref/heads/main":
+            return {"object": {"sha": source}}
+        if path == "commits/" + source:
+            return {"sha": source, "commit": {"tree": {"sha": tree}}}
+        return original(path)
+    return source, tree, rows, original.runs, api
+
+
+def test_current_main_accepts_exact_push_checks_without_open_pr():
+    source, tree, _rows, _runs, api = main_ci_fixture()
+    with patch.object(gate, "github", side_effect=api):
+        assert gate.verify_checks(source, tree, Path("/fixture")) == {
+            "head_sha": source, "tested_tree": tree, "branch": "main", "event": "push"}
+
+
+@pytest.mark.parametrize("field,value", [
+    ("event", "pull_request"), ("event", "workflow_dispatch"),
+    ("head_sha", "f" * 40), ("head_branch", "other"),
+    ("workflow_id", 123), ("path", ".github/workflows/untrusted.yml"),
+    ("repository", {"id": 123}), ("head_repository", {"id": 123}),
+    ("status", "in_progress"), ("conclusion", "failure"),
+])
+def test_main_rejects_untrusted_or_incomplete_workflow(field, value):
+    source, tree, _rows, runs, api = main_ci_fixture()
+    runs[100][field] = value
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("change", ["tree", "ref", "newer_failure", "missing_check", "producer"])
+def test_main_rejects_drift_and_invalid_checks(change):
+    source, tree, rows, _runs, original = main_ci_fixture()
+    if change == "newer_failure":
+        rows.append({**rows[0], "id": 999, "conclusion": "failure"})
+    if change == "missing_check":
+        rows.pop()
+    if change == "producer":
+        rows[0]["app"] = {"id": 123}
+    reads = 0
+    def api(path):
+        nonlocal reads
+        if path == "git/ref/heads/main":
+            reads += 1
+            if change == "ref" and reads == 2:
+                return {"object": {"sha": "f" * 40}}
+        return original(path)
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, "f" * 40 if change == "tree" else tree, Path("/fixture"))

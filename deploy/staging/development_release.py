@@ -237,26 +237,34 @@ def github(suffix):
 def verify_checks(source_sha, source_tree, root):
     repo = github("")
     require(repo["id"] == 1367979340 and repo["owner"]["id"] == 22088298, "repository_identity")
-    pulls = github(f"commits/{source_sha}/pulls?per_page=100")
-    candidates = [pr for pr in pulls if pr.get("state") == "open"
-                  and pr.get("head", {}).get("sha") == source_sha
-                  and pr["head"].get("repo", {}).get("id") == 1367979340
-                  and pr.get("base", {}).get("repo", {}).get("id") == 1367979340]
-    require(len(candidates) == 1, "unique_current_pull_request_required")
-    pr = github("pulls/" + str(candidates[0]["number"]))
-    base_ref, merge_sha = pr["base"]["ref"], pr.get("merge_commit_sha", "")
-    require(pr["state"] == "open" and pr["head"]["sha"] == source_sha
-            and re.fullmatch(r"[A-Za-z0-9._/-]+", base_ref)
-            and re.fullmatch(r"[a-f0-9]{40}", merge_sha), "pull_request_binding")
-    reference = "git/ref/heads/" + urllib.parse.quote(base_ref, safe="")
-    # base.sha in normalized PR snapshots can describe creation history: read the ref.
-    base_sha = github(reference)["object"]["sha"]
-    require(re.fullmatch(r"[a-f0-9]{40}", base_sha), "current_base_sha")
-    git(root, "merge-base", "--is-ancestor", base_sha, source_sha)
-    merged = github("commits/" + merge_sha)
-    require(merged["sha"] == merge_sha and merged["commit"]["tree"]["sha"] == source_tree
-            and [parent["sha"] for parent in merged["parents"]] == [base_sha, source_sha],
-            "tested_merge_tree_differs_from_release")
+    reference = "git/ref/heads/main"
+    is_main = github(reference)["object"]["sha"] == source_sha
+    pr = None
+    if is_main:
+        commit = github("commits/" + source_sha)
+        require(commit["sha"] == source_sha and commit["commit"]["tree"]["sha"] == source_tree,
+                "main_tree_differs_from_release")
+    else:
+        pulls = github(f"commits/{source_sha}/pulls?per_page=100")
+        candidates = [pr for pr in pulls if pr.get("state") == "open"
+                      and pr.get("head", {}).get("sha") == source_sha
+                      and pr["head"].get("repo", {}).get("id") == 1367979340
+                      and pr.get("base", {}).get("repo", {}).get("id") == 1367979340]
+        require(len(candidates) == 1, "unique_current_pull_request_required")
+        pr = github("pulls/" + str(candidates[0]["number"]))
+        base_ref, merge_sha = pr["base"]["ref"], pr.get("merge_commit_sha", "")
+        require(pr["state"] == "open" and pr["head"]["sha"] == source_sha
+                and re.fullmatch(r"[A-Za-z0-9._/-]+", base_ref)
+                and re.fullmatch(r"[a-f0-9]{40}", merge_sha), "pull_request_binding")
+        reference = "git/ref/heads/" + urllib.parse.quote(base_ref, safe="")
+        # base.sha in normalized PR snapshots can describe creation history: read the ref.
+        base_sha = github(reference)["object"]["sha"]
+        require(re.fullmatch(r"[a-f0-9]{40}", base_sha), "current_base_sha")
+        git(root, "merge-base", "--is-ancestor", base_sha, source_sha)
+        merged = github("commits/" + merge_sha)
+        require(merged["sha"] == merge_sha and merged["commit"]["tree"]["sha"] == source_tree
+                and [parent["sha"] for parent in merged["parents"]] == [base_sha, source_sha],
+                "tested_merge_tree_differs_from_release")
     rows = []
     for page in range(1, 11):
         value = github(f"commits/{source_sha}/check-runs?per_page=100&page={page}")
@@ -287,17 +295,20 @@ def verify_checks(source_sha, source_tree, root):
             run = run_metadata[run_id]
             workflow_id, workflow_path = CHECK_WORKFLOWS[name]
             require(run.get("id") == run_id and run.get("workflow_id") == workflow_id
-                    and run.get("path") == workflow_path and run.get("event") == "pull_request"
+                    and run.get("path") == workflow_path and run.get("event") == ("push" if is_main else "pull_request")
                     and run.get("head_sha") == source_sha
-                    and run.get("head_branch") == pr["head"]["ref"]
+                    and run.get("head_branch") == ("main" if is_main else pr["head"]["ref"])
                     and run.get("head_repository", {}).get("id") == 1367979340
                     and run.get("repository", {}).get("id") == 1367979340
                     and run.get("status") == "completed" and run.get("conclusion") == "success"
-                    and any(item.get("number") == pr["number"] for item in run.get("pull_requests", [])),
+                    and (is_main or any(item.get("number") == pr["number"] for item in run.get("pull_requests", []))),
                     "check_workflow_run_not_approved")
-        if name in {"test", "containers"}:
+        if not is_main and name in {"test", "containers"}:
             require(any(item.get("number") == pr["number"] for item in latest.get("pull_requests", [])),
                     "ci_check_not_bound_to_selected_pull_request")
+    if is_main:
+        require(github(reference)["object"]["sha"] == source_sha, "main_changed_during_check")
+        return {"head_sha": source_sha, "tested_tree": source_tree, "branch": "main", "event": "push"}
     fresh = github("pulls/" + str(pr["number"]))
     require(fresh["head"]["sha"] == source_sha and fresh["head"]["ref"] == pr["head"]["ref"]
             and fresh["merge_commit_sha"] == merge_sha
