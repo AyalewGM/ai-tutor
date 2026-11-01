@@ -81,7 +81,7 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
 
     assert len(existing) == 33
     for row in rows:
-        if row["expectation_id"] in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.1", "8.EE.A.3", "8.SP.A.3"}:
+        if row["expectation_id"] in {"8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.EE.A.3", "8.SP.A.3"}:
             assert row["repository_existing_crosswalks"] == []
             expected_candidates = {
                 "8.NS.A.1": [
@@ -94,16 +94,13 @@ def test_repository_existing_rows_are_narrow_and_unverified() -> None:
                     "MATH.DEC.FRACTION.HUNDREDTHS",
                 ],
                 "8.NS.A.2": ["M8.NS.RAD", "MATH.NS.IRRATIONAL.APPROX"],
-                "8.EE.A.1": [
+                "8.EE.A.2": [
+                    "M8.NS.RAD",
+                    "MATH.ROOT.SQUARE",
+                    "MATH.ROOT.CUBE",
+                    "MATH.NS.IRRATIONAL.CLASSIFY",
+                    "MATH.NS.IRRATIONAL.APPROX",
                     "MATH.EXP.EVALUATE",
-                    "MATH.EXP.PRODUCT",
-                    "MATH.EXP.QUOTIENT",
-                    "MATH.EXP.POWER",
-                    "MATH.SCI.CONVERT",
-                    "MATH.SCI.MULTIPLY",
-                    "MATH.DEC.POWER10",
-                    "MATH.PV.POWERS_TEN",
-                    "MATH.PV.REASON.TEN_TIMES",
                 ],
                 "8.EE.A.3": [
                     "MATH.SCI.CONVERT",
@@ -157,7 +154,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
     assert [row["expectation_id"] for row in existing] == [
         "8.NS.A.1",
         "8.NS.A.2",
-        "8.EE.A.1",
+        "8.EE.A.2",
         "8.EE.A.3",
         "8.SP.A.3",
     ]
@@ -167,7 +164,7 @@ def test_grade8_repository_candidates_remain_unaccepted() -> None:
         row["proposed_mapping_status"] == "NO_REPOSITORY_SPECIFIC_MAPPING_FOUND"
         for row in grade8
         if row["expectation_id"] not in {
-            "8.NS.A.1", "8.NS.A.2", "8.EE.A.1", "8.EE.A.3", "8.SP.A.3"
+            "8.NS.A.1", "8.NS.A.2", "8.EE.A.2", "8.EE.A.3", "8.SP.A.3"
         }
     )
     # No geometry seed exists for DC at any grade.

@@ -204,11 +204,14 @@ def test_dc_8_ee_a_1_manifest_pin_and_pr_provenance_are_total() -> None:
             and row["proposed_mapping_status"] == "REPOSITORY_EXISTING_UNVERIFIED"
         },
     }
-    assert manifest["pr"] == 510
-    assert manifest["ref"] == "refs/pull/510/head"
-    assert manifest["blob_sha"] == "c3c61c7b4d584cdacd79a0bc492dfffb1e05f626"
-    assert all(row["source_pr"] == "#510" for row in dc_rows)
+    # Keep #509's accepted baseline; #510 revises 8.EE.A.1 only.
+    assert manifest["pr"] == 509
+    assert manifest["ref"] == "refs/pull/509/head"
+    assert all(row["source_pr"] == "#509" for row in dc_rows)
     assert {row["source_blob_sha"] for row in dc_rows} == {manifest["blob_sha"]}
+    scoped = next(row for row in dc_rows if row["expectation_id"] == "8.EE.A.1")
+    assert scoped["slice_author_pr"] == "#510"
+    assert scoped["slice_author_blob_sha"] == "c3c61c7b4d584cdacd79a0bc492dfffb1e05f626"
     assert next(
         row for row in dc_rows if row["expectation_id"] == "8.EE.A.1"
     )["source_url"] == OFFICIAL_PDF

@@ -54,6 +54,9 @@ def request_hint(
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
 
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published practice hints are not yet authorized")
+
     highest = (
         db.scalar(
             select(func.max(HintEvent.level)).where(

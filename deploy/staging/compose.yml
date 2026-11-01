@@ -9,6 +9,7 @@ x-common: &common
   security_opt: [no-new-privileges:true]
 x-api-env: &api-env
   DATABASE_URL: postgresql+psycopg://mihur_staging:${STAGING_DB_PASSWORD:?required}@db:5432/mihur_staging
+  MIHUR_CONTENT_REVIEW_POLICY_FILE: /run/mihur/content-review-policy.json
   AI_PROVIDER: gateway
   LLM_GATEWAY_URL: http://llm-gateway:8001
   REDIS_URL: redis://redis:6379/0
@@ -67,6 +68,7 @@ services:
     profiles: [tools]
     mem_limit: 448m
     cpus: 0.75
+    volumes: [/etc/mihur-staging/content-review-policy.json:/run/mihur/content-review-policy.json:ro]
     environment: *api-env
     command: [alembic, upgrade, head]
     depends_on:
@@ -76,6 +78,7 @@ services:
     image: ${STAGING_API_IMAGE:?digest required}
     mem_limit: 448m
     cpus: 0.75
+    volumes: [/etc/mihur-staging/content-review-policy.json:/run/mihur/content-review-policy.json:ro]
     environment: *api-env
     command: [uvicorn, app.main:app, --host, 0.0.0.0, --port, "8000", --workers, "1"]
     depends_on:

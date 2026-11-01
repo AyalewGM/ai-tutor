@@ -46,6 +46,10 @@ def load_mastery_gate_evidence(
             .where(
                 Attempt.student_id == student_id,
                 Problem.primary_skill_id == skill_id,
+                # PUBLISHED items have no authenticated issuance/assistance/
+                # transfer proof yet. Their attempts may be retained for
+                # feedback but must never count toward mastery or recovery.
+                Problem.source_type != "PUBLISHED",
                 # Optional stretch tier is evidence-isolated: it must not
                 # move the strong-help recovery baseline either.
                 Attempt.state_at_attempt != TutorState.EXTENSION,

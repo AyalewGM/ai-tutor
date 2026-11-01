@@ -38,9 +38,12 @@ function GuidedDistributiveActivity({
   const id = useId();
   const [stepId, setStepId] = useState("identify");
   const [prediction, setPrediction] = useState<"positive" | "negative" | "zero" | "">("");
+  const [predictionLocked, setPredictionLocked] = useState(false);
   const [coefficient, setCoefficient] = useState("");
   const [term, setTerm] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [checkedCorrect, setCheckedCorrect] = useState(false);
+  const [explanation, setExplanation] = useState("");
 
   const onStepChange = useCallback((step: AnimationStep) => {
     setStepId(step.id);
@@ -65,6 +68,7 @@ function GuidedDistributiveActivity({
     const variableCoefficient = Number(coefficient.trim());
     const constantTerm = Number(term.trim());
     const result = checkDistributiveCoefficients(lesson, variableCoefficient, constantTerm);
+    setCheckedCorrect(result.correct);
     onMathEvent?.({
       schema_version: 1,
       type: "DISTRIBUTIVE_COEFFICIENTS_CHECKED",
@@ -93,20 +97,56 @@ function GuidedDistributiveActivity({
         {(["positive", "negative", "zero"] as const).map((sign) => (
           <button key={sign} type="button"
             className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            disabled={predictionLocked}
             aria-pressed={prediction === sign}
             onClick={() => setPrediction(sign)}>{sign[0].toUpperCase() + sign.slice(1)}</button>
         ))}
       </div>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" disabled={!prediction || predictionLocked}
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50"
+          onClick={() => setPredictionLocked(true)}>Lock my prediction and explore</button>
+        {predictionLocked && <button type="button"
+          className="rounded border px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          onClick={() => {
+            setPredictionLocked(false);
+            setPrediction("");
+            setStepId("identify");
+            setCoefficient("");
+            setTerm("");
+            setFeedback("");
+            setCheckedCorrect(false);
+            setExplanation("");
+          }}>Try a new prediction</button>}
+      </div>
       <p role="status" aria-live="polite" aria-atomic="true">
-        {prediction ? prediction === constantProductSign
-          ? "Your sign prediction is consistent with the multiplication sign rules."
-          : "Recheck the signs and whether either factor is zero."
-          : "Choose a sign prediction before stepping through the model."}
+        {predictionLocked
+          ? prediction === constantProductSign
+            ? "Your sign prediction agrees with the multiplication sign rules."
+            : "Recheck the signs and whether either factor is zero as you explore the model."
+          : prediction
+            ? "Sign selected. Lock your prediction before revealing the guided steps."
+            : "Choose a sign prediction before stepping through the model."}
       </p>
       <p aria-label="Current mathematical expression" className="text-lg font-medium">{expression}</p>
-      <PedagogicalAnimation spec={lesson.animation} autoPlay={false} onStepChange={onStepChange} />
-      {stepIndex >= 1 && <ProblemVisual spec={lesson.factor > 0 && lesson.constant >= 0
+      {predictionLocked ? (
+        <PedagogicalAnimation spec={lesson.animation} autoPlay={false} onStepChange={onStepChange} />
+      ) : (
+        <p>The worked steps and model stay hidden until you lock a prediction.</p>
+      )}
+      {predictionLocked && stepIndex >= 1 && <ProblemVisual spec={lesson.factor > 0 && lesson.constant >= 0
         ? lesson.areaModel : lesson.algebraTiles} />}
+      {predictionLocked && stepIndex >= 2 && <div className="space-y-2">
+        <label className="block" htmlFor={`${id}-explanation`}>
+          Explain why the outside factor must multiply both terms.
+        </label>
+        <textarea id={`${id}-explanation`} rows={2} maxLength={500}
+          className="w-full rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          value={explanation} onChange={(event) => setExplanation(event.target.value)} />
+        <p className="text-sm">This guided reflection is ungraded and is not saved as mastery evidence.</p>
+      </div>}
+      {predictionLocked && stepIndex >= 2 && (
+      <>
       <form onSubmit={check} className="space-y-2">
         <fieldset className="space-y-2">
           <legend className="font-medium">Try the expanded expression</legend>
@@ -114,12 +154,12 @@ function GuidedDistributiveActivity({
           <input id={`${id}-coefficient`}
             className="rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             inputMode="numeric" type="text" aria-describedby={`${id}-feedback`}
-            value={coefficient} onChange={(event) => { setCoefficient(event.target.value); setFeedback(""); }} />
+            value={coefficient} onChange={(event) => { setCoefficient(event.target.value); setFeedback(""); setCheckedCorrect(false); }} />
           <label className="block" htmlFor={`${id}-constant`}>Constant term</label>
           <input id={`${id}-constant`}
             className="rounded border p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             inputMode="numeric" type="text" aria-describedby={`${id}-feedback`}
-            value={term} onChange={(event) => { setTerm(event.target.value); setFeedback(""); }} />
+            value={term} onChange={(event) => { setTerm(event.target.value); setFeedback(""); setCheckedCorrect(false); }} />
         </fieldset>
         <button type="submit"
           className="rounded bg-primary px-3 py-2 text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
@@ -127,6 +167,12 @@ function GuidedDistributiveActivity({
         </button>
       </form>
       <p id={`${id}-feedback`} role="status" aria-live="polite" aria-atomic="true">{feedback}</p>
+      </>
+      )}
+      {predictionLocked && checkedCorrect && <p role="status">
+        Guided work checked. For an unseen independent task, leave this lesson and use an existing
+        authorized assessment. The worked steps and hints do not transfer into independent mode.
+      </p>}
     </section>
   );
 }

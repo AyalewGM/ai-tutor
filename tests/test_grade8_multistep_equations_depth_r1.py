@@ -1,0 +1,729 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+MODULE_PATH = (
+    Path(__file__).parents[1]
+    / "docs/curriculum/drafts/canonical-grade8-multistep-equations-depth-r1/generator.py"
+)
+PACKAGE_PATH = (
+    Path(__file__).parents[1]
+    / "docs/curriculum/drafts/canonical-grade8-multistep-equations-depth-r1/package.json"
+)
+SPEC = importlib.util.spec_from_file_location("grade8_multistep_depth_r1", MODULE_PATH)
+assert SPEC and SPEC.loader
+generator = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = generator
+SPEC.loader.exec_module(generator)
+
+
+def _fraction(text: str) -> Fraction:
+    return Fraction(text.removeprefix("x="))
+
+
+def test_all_families_modes_and_seed_bands_are_deterministic_and_unique():
+    seen_ids: set[str] = set()
+    for family in generator.FAMILIES:
+        family_fingerprints: set[str] = set()
+        for mode in generator.MODES:
+            for seed in generator.PRIMARY_SEEDS:
+                first = generator.create_variant(family, seed=seed, mode=mode)
+                second = generator.create_variant(family, seed=seed, mode=mode)
+                assert first == second
+                assert first.variant_id not in seen_ids
+                seen_ids.add(first.variant_id)
+                assert first.task_fingerprint not in family_fingerprints
+                family_fingerprints.add(first.task_fingerprint)
+                assert first.canonical_skill_code == generator.CANONICAL_SKILL
+                assert first.mode == mode
+        assert len(family_fingerprints) == 64
+
+
+def test_exact_affine_oracles_and_solution_classes():
+    checked = 0
+    for family in generator.FAMILIES[:-2]:
+        for mode in generator.MODES:
+            for seed in generator.PRIMARY_SEEDS:
+                variant = generator.create_variant(family, seed=seed, mode=mode)
+                a, b, c, d = map(Fraction, variant.oracle["coefficients"])
+                solution_class = variant.oracle["solution_class"]
+                if solution_class == "UNIQUE":
+                    x = _fraction(variant.canonical_answer)
+                    assert a * x + b == c * x + d
+                    assert variant.oracle["substitution_left"] == variant.oracle["substitution_right"]
+                    assert variant.response_is_correct(f"x={x.numerator * 3}/{x.denominator * 3}")
+                elif solution_class == "ALL_REAL":
+                    assert a == c and b == d
+                    assert variant.response_is_correct("all_real")
+                else:
+                    assert solution_class == "NO_SOLUTION"
+                    assert a == c and b != d
+                    assert variant.response_is_correct("no_solution")
+                checked += 1
+    assert checked == 10 * 4 * 16
+
+
+def test_error_analysis_and_solution_class_compare_oracles():
+    for seed in generator.PRIMARY_SEEDS:
+        error = generator.create_variant(
+            "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=seed, mode="independent"
+        )
+        assert error.canonical_answer.startswith("STEP_1|x=")
+        assert error.response_is_correct(error.canonical_answer.lower())
+        compare = generator.create_variant(
+            "SOLUTION_CLASS_COMPARE", seed=seed, mode="mastery"
+        )
+        assert compare.response_is_correct("a=one|b=all_real|c=no_solution")
+        assert compare.oracle["solution_classes"] == ["ONE", "ALL_REAL", "NO_SOLUTION"]
+
+
+def test_first_invalid_step_accepts_equivalent_fractions_in_every_mode():
+    # Independent Math counterexample: seed 1 is 3(x+4)+3=14, x=-1/3.
+    reproduced = generator.create_variant(
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=1, mode="diagnostic"
+    )
+    assert reproduced.canonical_answer == "STEP_1|x=-1/3"
+    assert reproduced.response_is_correct("STEP_1|x=-2/6")
+    for mode in generator.MODES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(
+                "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=seed, mode=mode
+            )
+            step, solution = variant.canonical_answer.split("|", 1)
+            exact = Fraction(solution.removeprefix("x="))
+            scaled = f"{2 * exact.numerator}/{2 * exact.denominator}"
+            assert variant.response_is_correct(f" {step.lower()} | X = {scaled} ")
+            assert variant.response_is_correct(variant.canonical_answer)
+            for wrong in (
+                f"STEP_2|x={scaled}",
+                f"NO_ERROR|x={scaled}",
+                f"{step}|x={_fraction(solution) + 1}",
+                f"{step}|x=1/0",
+                f"{step}|x=not-a-number",
+                f"{step}|x=",
+                f"{step}|{scaled}",
+                f"{step}|x={scaled}|extra",
+                f"|x={scaled}",
+            ):
+                assert not variant.response_is_correct(wrong), (mode, seed, wrong)
+
+
+def test_first_invalid_step_guided_probe_normalizes_composite_wrong_answers():
+    for seed in generator.PRIMARY_SEEDS:
+        variant = generator.create_variant(
+            "ERROR_ANALYSIS_FIRST_INVALID_STEP", seed=seed, mode="guided"
+        )
+        for signal in variant.misconception_signals:
+            step, solution = signal["candidate_response"].split("|", 1)
+            exact = Fraction(solution.removeprefix("x="))
+            scaled = f"{3 * exact.numerator}/{3 * exact.denominator}"
+            observed = f"{step.lower()}|x={scaled}"
+            matched = variant.guided_repair(observed, signal["reasoning_choice"])
+            assert matched["status"] == "TARGETED_REPAIR"
+            assert matched["misconception_code"] == signal["code"]
+            mismatched = variant.guided_repair(observed, "OTHER")
+            assert mismatched["status"] == "NEUTRAL_RETRY"
+            assert variant.guided_repair(f"{step}|x=1/0", signal["reasoning_choice"])[
+                "status"
+            ] == "NEUTRAL_RETRY"
+
+
+def test_guided_diagnosis_requires_matching_answer_and_reasoning_probe():
+    routes = 0
+    for family in generator.FAMILIES:
+        for seed in range(16):
+            guided = generator.create_variant(family, seed=seed, mode="guided")
+            assert guided.guided_repair("not a value", None)["status"] == "NEUTRAL_RETRY"
+            for signal in guided.misconception_signals:
+                uncorroborated = guided.guided_repair(signal["candidate_response"], "OTHER")
+                assert uncorroborated == {
+                    "status": "NEUTRAL_RETRY",
+                    "reason": "EVIDENCE_NOT_CORROBORATED",
+                }
+                repair = guided.guided_repair(
+                    signal["candidate_response"], signal["reasoning_choice"]
+                )
+                assert repair["status"] == "TARGETED_REPAIR"
+                assert repair["misconception_code"] == signal["code"]
+                assert len(repair["questions"]) == 2
+                assert repair["worked_answer_revealed"] is False
+                assert repair["mastery_credit"] is False
+                routes += 1
+    assert routes >= 384
+
+
+def test_every_misconception_code_has_distinct_targeted_repair_content():
+    repair_by_code = {}
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(family, seed=seed, mode="guided")
+            for signal in variant.misconception_signals:
+                repair = variant.guided_repair(
+                    signal["candidate_response"], signal["reasoning_choice"]
+                )
+                assert repair["status"] == "TARGETED_REPAIR"
+                signature = (tuple(repair["questions"]), repair["explanation"])
+                if signal["code"] in repair_by_code:
+                    assert repair_by_code[signal["code"]] == signature
+                repair_by_code[signal["code"]] = signature
+                assert repair["worked_answer_revealed"] is False
+
+    assert set(repair_by_code) == set(generator.MISCONCEPTION_REPAIRS)
+    assert len(set(repair_by_code.values())) == len(repair_by_code)
+
+
+def test_support_is_unavailable_outside_guided_mode():
+    for mode in ("diagnostic", "independent", "mastery"):
+        for family in generator.FAMILIES:
+            variant = generator.create_variant(family, seed=7, mode=mode)
+            signal = variant.misconception_signals[0]
+            assert variant.guided_repair(
+                signal["candidate_response"], signal["reasoning_choice"]
+            ) == {"status": "SUPPORT_NOT_AVAILABLE"}
+
+
+def test_public_payload_is_mode_isolated_accessible_and_leakage_safe():
+    forbidden = (
+        "canonical_answer",
+        "oracle",
+        "misconception",
+        "socratic",
+        "guided_explanation",
+    )
+    for family in generator.FAMILIES:
+        for mode in generator.MODES:
+            variant = generator.create_variant(family, seed=11, mode=mode)
+            payload = variant.public_payload()
+            flattened = repr(payload).lower()
+            assert all(term not in flattened for term in forbidden)
+            assert set(payload["interaction_requirements"]) == {
+                "keyboard",
+                "screen_reader",
+                "focus",
+                "non_color",
+                "reduced_motion",
+                "exact_input",
+            }
+            assert payload["runtime_activation"] is False
+            assert payload["mastery_credit"] is False
+            if mode == "guided":
+                assert payload["stage"] == "OBSERVE"
+                assert "prompt" not in payload
+                assert "first_step_choices" not in payload
+                assert payload["guided_session_required"] is True
+            else:
+                assert payload["response_fields"] == ["answer"]
+                assert payload["guided_support_available"] is False
+                assert "first_step_choices" not in payload
+                assert "representation_sequence" not in payload
+
+def test_unhinted_transfer_changes_family_structure_task_and_answer():
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            source = generator.create_variant(family, seed=seed, mode="guided")
+            transfer = generator.create_unhinted_transfer(source)
+            assert transfer.mode == "independent"
+            assert transfer.family_code != source.family_code
+            assert transfer.structure_code != source.structure_code
+            assert transfer.task_fingerprint != source.task_fingerprint
+            assert transfer.canonical_answer != source.canonical_answer
+            assert transfer.public_payload()["mastery_credit"] is False
+
+
+def test_contextual_domains_hold_for_every_mode_seed_and_transfer():
+    contextual_variants = 0
+    for mode in generator.MODES:
+        for seed in generator.PRIMARY_SEEDS:
+            perimeter = generator.create_variant("PERIMETER_MODEL", seed=seed, mode=mode)
+            perimeter_domain = perimeter.oracle["context_domain"]
+            assert perimeter_domain["kind"] == "RECTANGLE_DIMENSIONS"
+            assert Fraction(perimeter_domain["length"]) > 0
+            assert Fraction(perimeter_domain["width"]) > 0
+            assert Fraction(perimeter_domain["perimeter"]) > 0
+            assert perimeter_domain["strictly_positive"] is True
+
+            plans = generator.create_variant("COMPETING_PLANS_MODEL", seed=seed, mode=mode)
+            plan_domain = plans.oracle["context_domain"]
+            uses = Fraction(plan_domain["use_count"])
+            assert plan_domain["kind"] == "DISCRETE_USE_COUNT"
+            assert uses >= 0 and uses.denominator == 1
+            assert Fraction(plan_domain["plan_a_fixed"]) >= 0
+            assert Fraction(plan_domain["plan_b_fixed"]) >= 0
+            assert plan_domain["nonnegative_integers"] is True
+            contextual_variants += 2
+    assert contextual_variants == 128
+
+    checked_transfers = 0
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            source = generator.create_variant(family, seed=seed, mode="guided")
+            transfer = generator.create_unhinted_transfer(source)
+            if transfer.family_code == "PERIMETER_MODEL":
+                domain = transfer.oracle["context_domain"]
+                assert Fraction(domain["length"]) > 0
+                assert Fraction(domain["width"]) > 0
+                assert Fraction(domain["perimeter"]) > 0
+            elif transfer.family_code == "COMPETING_PLANS_MODEL":
+                domain = transfer.oracle["context_domain"]
+                uses = Fraction(domain["use_count"])
+                assert uses >= 0 and uses.denominator == 1
+                assert Fraction(domain["plan_a_fixed"]) >= 0
+                assert Fraction(domain["plan_b_fixed"]) >= 0
+            checked_transfers += 1
+    assert checked_transfers == 192
+
+
+def test_pack_is_bounded_runtime_disabled_and_idempotent():
+    first = generator.create_pack(seeds_per_family_mode=8)
+    second = generator.create_pack(seeds_per_family_mode=8)
+    assert first == second
+    assert first["status"] == "DRAFT_UNVERIFIED"
+    assert first["runtime_activation"] is False
+    assert first["family_count"] == 12
+    assert len(first["variants"]) == 12 * 4 * 8
+
+
+def test_invalid_inputs_fail_closed():
+    for bad_seed in (-1, 16, 1_000_002, 1_000_019, "1", True):
+        try:
+            generator.create_variant(generator.FAMILIES[0], seed=bad_seed, mode="guided")
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"seed should fail closed: {bad_seed!r}")
+    for bad_count in (0, 17, True, 1.5):
+        try:
+            generator.create_pack(seeds_per_family_mode=bad_count)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"count should fail closed: {bad_count!r}")
+
+
+def _task_bound_stage_evidence(variant):
+    contract = generator._task_stage_contract(variant)
+    next_step = {
+        **{
+            name: str(value)
+            for name, value in contract["manipulation_numeric"].items()
+        },
+        **contract["manipulation_choices"],
+    }
+    explanation = {
+        **{
+            name: str(value)
+            for name, value in contract["explanation_numeric"].items()
+        },
+        **contract["explanation_choices"],
+    }
+    return contract, next_step, explanation
+
+
+def _advance_to_practice(variant):
+    state = generator.start_guided_learning(variant)
+    assert state.stage == "OBSERVE"
+    skipped = generator.advance_guided_learning(state, {"first_step_id": "PRESERVE_EQUALITY"})
+    assert skipped.stage == "OBSERVE"
+    state = generator.advance_guided_learning(
+        state, {"observation_choice": "STRUCTURE_NOTICED"}
+    )
+    assert state.stage == "PREDICT"
+    wrong = generator.advance_guided_learning(
+        state, {"first_step_id": "CHANGE_ONE_SIDE"}
+    )
+    assert wrong.stage == "PREDICT"
+    state = generator.advance_guided_learning(
+        state, {"first_step_id": "PRESERVE_EQUALITY"}
+    )
+    assert state.stage == "MANIPULATE"
+    contract, next_step, explanation = _task_bound_stage_evidence(variant)
+    generic_only = generator.advance_guided_learning(
+        state,
+        {
+            "action_choice": contract["action_id"],
+        },
+    )
+    assert generic_only.stage == "MANIPULATE"
+    assert generic_only.feedback_code == "EQUIVALENT_NEXT_STEP_REQUIRED"
+    incomplete_step = dict(next_step)
+    incomplete_step.pop(next(iter(incomplete_step)))
+    incomplete = generator.advance_guided_learning(
+        state,
+        {
+            "action_choice": contract["action_id"],
+            "next_step": incomplete_step,
+        },
+    )
+    assert incomplete.stage == "MANIPULATE"
+    state = generator.advance_guided_learning(
+        state,
+        {
+            "action_choice": contract["action_id"],
+            "next_step": next_step,
+        },
+    )
+    assert state.stage == "EXPLAIN"
+    unsupported = generator.advance_guided_learning(
+        state,
+        {
+            "reasoning_choice": contract["reason_distractor_id"],
+            "explanation_evidence": explanation,
+        },
+    )
+    assert unsupported.stage == "EXPLAIN"
+    unsupported_evidence = generator.advance_guided_learning(
+        state, {"reasoning_choice": contract["reason_id"]}
+    )
+    assert unsupported_evidence.stage == "EXPLAIN"
+    assert (
+        unsupported_evidence.feedback_code
+        == "TASK_SPECIFIC_EXPLANATION_EVIDENCE_REQUIRED"
+    )
+    state = generator.advance_guided_learning(
+        state,
+        {
+            "reasoning_choice": contract["reason_id"],
+            "explanation_evidence": explanation,
+        },
+    )
+    assert state.stage == "PRACTICE"
+    return state
+
+
+def test_all_families_require_task_bound_manipulation_and_explanation_evidence():
+    checked = 0
+    for family in generator.FAMILIES:
+        for seed in generator.PRIMARY_SEEDS:
+            variant = generator.create_variant(family, seed=seed, mode="guided")
+            contract, next_step, explanation = _task_bound_stage_evidence(variant)
+            manipulate = generator.LearningState(source=variant, stage="MANIPULATE")
+            generic = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "operation_choice": "PRESERVE_EQUALITY",
+                    "applied_to": ["LEFT_COMPLETE_SIDE", "RIGHT_COMPLETE_SIDE"],
+                },
+            )
+            assert generic.stage == "MANIPULATE"
+            assert generic.feedback_code == "TASK_BOUND_ACTION_REQUIRED"
+
+            bad_step = dict(next_step)
+            numeric_field = next(iter(contract["manipulation_numeric"]))
+            bad_step[numeric_field] = str(
+                contract["manipulation_numeric"][numeric_field] + 1
+            )
+            wrong = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "action_choice": contract["action_id"],
+                    "next_step": bad_step,
+                },
+            )
+            assert wrong.stage == "MANIPULATE"
+            assert wrong.feedback_code == "EQUIVALENT_NEXT_STEP_REQUIRED"
+
+            explain = generator.advance_guided_learning(
+                manipulate,
+                {
+                    "action_choice": contract["action_id"],
+                    "next_step": next_step,
+                },
+            )
+            assert explain.stage == "EXPLAIN"
+            payload = generator.learning_stage_payload(explain)
+            assert "claim_choices" not in payload
+            assert "expected" not in repr(payload).lower()
+            assert {field["name"] for field in payload["explanation_fields"]} == (
+                set(contract["explanation_numeric"])
+                | set(contract["explanation_choices"])
+            )
+
+            generic_reason = generator.advance_guided_learning(
+                explain, {"claim_choice": "SAME_OPERATION_BOTH_COMPLETE_SIDES"}
+            )
+            assert generic_reason.stage == "EXPLAIN"
+            assert generic_reason.feedback_code == "TASK_SPECIFIC_REASON_REQUIRED"
+
+            incomplete_explanation = dict(explanation)
+            incomplete_explanation.pop(next(iter(incomplete_explanation)))
+            missing = generator.advance_guided_learning(
+                explain,
+                {
+                    "reasoning_choice": contract["reason_id"],
+                    "explanation_evidence": incomplete_explanation,
+                },
+            )
+            assert missing.stage == "EXPLAIN"
+            assert (
+                missing.feedback_code
+                == "TASK_SPECIFIC_EXPLANATION_EVIDENCE_REQUIRED"
+            )
+
+            practice = generator.advance_guided_learning(
+                explain,
+                {
+                    "reasoning_choice": contract["reason_id"],
+                    "explanation_evidence": explanation,
+                },
+            )
+            assert practice.stage == "PRACTICE"
+            checked += 1
+    assert checked == len(generator.FAMILIES) * len(generator.PRIMARY_SEEDS)
+
+
+def test_guided_learning_flow_requires_math_evidence_transfer_binding_and_verification():
+    variant = generator.create_variant(
+        "VARIABLES_BOTH_SIDES", seed=6, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    signal = variant.misconception_signals[0]
+    state = generator.advance_guided_learning(
+        state, {"answer": signal["candidate_response"]}
+    )
+    assert state.stage == "DIAGNOSE"
+    unsupported = generator.advance_guided_learning(
+        state, {"reasoning_choice": "OTHER"}
+    )
+    assert unsupported.stage == "DIAGNOSE"
+    assert unsupported.feedback_code == "DIAGNOSIS_NOT_CORROBORATED"
+    state = generator.advance_guided_learning(
+        state, {"reasoning_choice": signal["reasoning_choice"]}
+    )
+    assert state.stage == "DIAGNOSE"
+    assert state.diagnosis_route == signal["code"]
+    state = generator.advance_guided_learning(
+        state, {"corrected_response": variant.canonical_answer}
+    )
+    assert state.stage == "TRANSFER"
+    transfer = state.transfer_variant
+    assert transfer is not None
+    fabricated = generator.advance_guided_learning(
+        state,
+        {"variant_id": "fabricated", "answer": transfer.canonical_answer},
+    )
+    assert fabricated.stage == "TRANSFER"
+    state = generator.advance_guided_learning(
+        state,
+        {"variant_id": transfer.variant_id, "answer": transfer.canonical_answer},
+    )
+    assert state.stage == "VERIFY"
+    invalid = generator.advance_guided_learning(
+        state,
+        {
+            "answer": variant.canonical_answer,
+            "substitution_left": "5/2",
+            "substitution_right": "5/2",
+        },
+    )
+    assert invalid.stage == "VERIFY"
+    state = generator.advance_guided_learning(
+        state,
+        {
+            "answer": variant.canonical_answer,
+            "substitution_left": variant.oracle["substitution_left"],
+            "substitution_right": variant.oracle["substitution_right"],
+        },
+    )
+    assert state.complete is True
+    assert state.stage == generator.COMPLETE_STAGE
+
+
+def test_targeted_repair_is_a_separate_observable_state_before_correction():
+    variant = generator.create_variant(
+        "VARIABLES_BOTH_SIDES", seed=6, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    signal = variant.misconception_signals[0]
+    state = generator.advance_guided_learning(
+        state, {"answer": signal["candidate_response"]}
+    )
+    assert state.stage == "DIAGNOSE"
+
+    bypass = generator.advance_guided_learning(
+        state,
+        {
+            "reasoning_choice": signal["reasoning_choice"],
+            "corrected_response": variant.canonical_answer,
+        },
+    )
+    assert bypass.stage == "DIAGNOSE"
+    assert bypass.diagnosis_route == signal["code"]
+    assert (
+        bypass.feedback_code
+        == "TARGETED_REPAIR_MUST_BE_VIEWED_BEFORE_CORRECTION"
+    )
+    payload = generator.learning_stage_payload(bypass)
+    expected = variant.guided_repair(
+        signal["candidate_response"], signal["reasoning_choice"]
+    )
+    assert payload["repair"]["misconception_code"] == signal["code"]
+    assert payload["repair"]["questions"] == expected["questions"]
+    assert payload["repair"]["explanation"] == expected["explanation"]
+    assert payload["repair"]["worked_answer_revealed"] is False
+
+    repaired = generator.advance_guided_learning(
+        bypass, {"corrected_response": variant.canonical_answer}
+    )
+    assert repaired.stage == "TRANSFER"
+    assert repaired.transfer_variant is not None
+
+
+def test_correct_guided_practice_bypasses_repair_but_not_unhinted_transfer():
+    variant = generator.create_variant(
+        "FRACTIONAL_COEFFICIENTS", seed=4, mode="guided"
+    )
+    state = _advance_to_practice(variant)
+    state = generator.advance_guided_learning(
+        state, {"answer": variant.canonical_answer}
+    )
+    assert state.stage == "DIAGNOSE"
+    assert "reasoning_choices" not in generator.learning_stage_payload(state)
+    blocked = generator.advance_guided_learning(
+        state, {"readiness_choice": "NOT_READY"}
+    )
+    assert blocked.stage == "DIAGNOSE"
+    state = generator.advance_guided_learning(
+        state, {"readiness_choice": "READY_UNHINTED"}
+    )
+    assert state.stage == "TRANSFER"
+    transfer_payload = generator.learning_stage_payload(state)["transfer"]
+    assert transfer_payload["mode"] == "independent"
+    assert "first_step_choices" not in transfer_payload
+    assert "representation_sequence" not in transfer_payload
+
+def test_maryland_lettered_subparts_are_separate_partial_provisional_relations():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    maryland = {
+        row["standard_id"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "Maryland State Department of Education"
+    }
+    assert set(maryland) == {"8.AT.B.3a", "8.AT.B.3b"}
+    for row in maryland.values():
+        assert row["mapping_status"] == "PROVISIONAL_NOT_ACCEPTED"
+        assert row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+
+    assert set(maryland["8.AT.B.3a"]["family_codes"]) == {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    assert set(maryland["8.AT.B.3b"]["family_codes"]) == set(generator.FAMILIES) - {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    excluded_3a = " ".join(maryland["8.AT.B.3a"]["excluded_from_coverage_credit"])
+    assert "construction of examples" in excluded_3a
+    assert "x = a, a = a, or a = b" in excluded_3a
+    assert package["runtime_activation"] is False
+
+def test_dc_lettered_subparts_are_separate_partial_provisional_relations():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    dc = {
+        row["standard_id"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "CCSSO/NGA"
+    }
+    assert set(dc) == {"8.EE.C.7a", "8.EE.C.7b"}
+    for row in dc.values():
+        assert row["mapping_status"] == "DC_PROVISIONAL_NOT_ACCEPTED"
+        assert row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+        assert row["page"] == "printed page 54"
+        assert row["version_date"].startswith("2010 publication")
+        assert row["adoption_date"] == "2010-07-28"
+        assert row["adoption_url"].startswith("https://osse.dc.gov/")
+
+    class_families = {
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE",
+    }
+    assert set(dc["8.EE.C.7a"]["family_codes"]) == class_families
+    assert set(dc["8.EE.C.7b"]["family_codes"]) == set(generator.FAMILIES) - class_families
+    assert set(dc["8.EE.C.7a"]["family_codes"]).isdisjoint(
+        dc["8.EE.C.7b"]["family_codes"]
+    )
+    excluded_7a = " ".join(dc["8.EE.C.7a"]["excluded_from_coverage_credit"])
+    assert "construction of examples" in excluded_7a
+    assert "successive transformation" in excluded_7a
+    assert "x = a, a = a, or a = b" in excluded_7a
+    assert package["runtime_activation"] is False
+
+def test_virginia_lettered_clauses_are_source_bounded_and_fail_closed():
+    package = json.loads(PACKAGE_PATH.read_text(encoding="utf-8"))
+    virginia = {
+        row["knowledge_skill_clause"]: row
+        for row in package["source_provenance"]
+        if row["publisher"] == "Virginia Department of Education"
+    }
+    assert set(virginia) == set("abcdefg")
+    for clause, row in virginia.items():
+        assert row["standard_id"] == "8.PFA.4"
+        assert row["clause_locator"] == f"8.PFA.4({clause})"
+        assert row["mapping_status"] == "VIRGINIA_PROVISIONAL_NOT_ACCEPTED"
+        assert row["page"] == "printed page 64"
+        assert row["url"].startswith(
+            "https://www.doe.virginia.gov/home/showpublisheddocument/"
+        )
+        assert row["version_date"].startswith(
+            "Virginia Board of Education approved August 31, 2023"
+        )
+        verification = row["verification_sources"]
+        assert {source["url"] for source in verification} == {
+            "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+            "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+        }
+        assert {source["page"] for source in verification} == {
+            "printed page 1",
+            "printed page 101",
+        }
+        assert all(
+            source["publisher"] == "Virginia Department of Education"
+            and source["access_date"] == "2026-10-25"
+            and "does not replace" in source["verification_role"]
+            for source in verification
+        )
+        assert "controlling 2023 Grade 8 SOL" in row["source_authentication_note"]
+        assert "VIRGINIA_PROVISIONAL_NOT_ACCEPTED" in row["source_authentication_note"]
+
+    assert {
+        clause
+        for clause, row in virginia.items()
+        if row["coverage_relation"] == "NO_COVERAGE_CLAIM"
+    } == {"a", "c", "d", "f"}
+    assert {
+        clause
+        for clause, row in virginia.items()
+        if row["coverage_relation"] == "PARTIAL_NON_EXHAUSTIVE"
+    } == {"b", "e", "g"}
+
+    solver_families = {
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP",
+    }
+    assert set(virginia["b"]["family_codes"]) == solver_families
+    assert set(virginia["e"]["family_codes"]) == {
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+    }
+    assert set(virginia["g"]["family_codes"]) == solver_families
+    for clause in ("a", "c", "d", "f"):
+        assert virginia[clause]["family_codes"] == []
+
+    excluded_b = " ".join(virginia["b"]["excluded_from_coverage_credit"])
+    assert "NESTED_GROUPS" in excluded_b
+    assert "up-to-four-step" in excluded_b
+    assert "SOLUTION_CLASS_COMPARE" in excluded_b
+    assert package["runtime_activation"] is False
+

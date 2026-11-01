@@ -1,8 +1,10 @@
 import uuid
 from decimal import Decimal
+from fractions import Fraction
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -46,12 +48,14 @@ from app.services.awards import (
     learner_progress,
     level_for_xp,
 )
+from app.services.content_publishing import permitted
 from app.services.curriculum_scope import (
     CurriculumScopeError,
     require_session_scope,
     require_skill_in_scope,
 )
 from app.services.focus_controller import apply_focus_policy
+from app.services.fraction_assessment_registry import AssessmentMode
 from app.services.hint_policy import assistance_level_for_hint, hint_constraint, select_hint
 from app.services.learning_assessment import (
     ASSESSMENT_BLOCK_MESSAGE,
@@ -60,7 +64,16 @@ from app.services.learning_assessment import (
 from app.services.mastery_gate import evaluate_mastery_gate
 from app.services.mastery_gate_evidence import load_mastery_gate_evidence
 from app.services.problem_generation import regenerate_variant
-from app.services.problem_selection import select_next_problem
+from app.services.problem_selection import _eligibility_column, select_next_problem
+from app.services.published_reasoning_probe import (
+    PublishedProbeUnavailable,
+    resolve_published_reasoning_probe,
+    server_distinct_mastery_task,
+    server_guided_retest,
+    server_repair_coefficients,
+    server_targeted_repair,
+    server_unhinted_transfer,
+)
 from app.services.review_schedule import (
     REVIEW_PASSED,
     REVIEW_REASON,
@@ -99,6 +112,1050 @@ def _publish_adaptive_event(
     )
 
 
+@router.get("/sessions/{session_id}/published-recovery/current")
+def discover_published_recovery(
+    session_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Find a recoverable published task from this authenticated learner session.
+
+    No browser-provided problem identity, no cross-session fallback, and no
+    automatic selection among multiple unfinished questions. The downstream
+    recovery endpoint independently checks issuer identity and live authority.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    active_skill_id = session.active_skill_id or session.primary_skill_id
+    try:
+        scope = require_session_scope(db, session)
+        require_skill_in_scope(db, skill_id=active_skill_id, scope=scope)
+    except CurriculumScopeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    ids = list(db.scalars(
+        select(Attempt.problem_id)
+        .join(Problem, Problem.id == Attempt.problem_id)
+        .where(
+            Attempt.session_id == session.id,
+            Attempt.student_id == session.student_id,
+            Attempt.is_correct.is_(False),
+            Problem.source_type == "PUBLISHED",
+            Problem.primary_skill_id == active_skill_id,
+        )
+        .distinct()
+        .limit(101)
+    ))
+    if len(ids) > 100:
+        raise HTTPException(409, "Published recovery history requires review")
+    # Completed or terminal journeys are no longer recovery candidates.
+    # Never select by recency when two genuinely unfinished tasks exist.
+    unfinished = []
+    for problem_id in ids:
+        state = published_recovery_state(
+            session_id=session_id, problem_id=problem_id, access=access, db=db,
+        )
+        if state["stage"] in {"COMPLETE_FEEDBACK_ONLY", "GUIDED_RETEST_EXHAUSTED"}:
+            continue
+        # A finished transfer (including unsuccessful feedback-only transfer)
+        # cannot be silently restarted as if it were a new independent task.
+        if state["stage"] == "TRANSFER_FEEDBACK_ONLY":
+            transfer_results = list(db.scalars(select(TutorTurn).where(
+                TutorTurn.session_id == session.id,
+                TutorTurn.problem_id == problem_id,
+                TutorTurn.pedagogical_action == "PUBLISHED_TRANSFER_RESULT",
+            ).limit(2)))
+            if (
+                len(transfer_results) != 1
+                or not isinstance(transfer_results[0].metadata_json, dict)
+                or type(transfer_results[0].metadata_json.get("correct")) is not bool
+            ):
+                raise HTTPException(409, "Published transfer completion proof invalid")
+            if transfer_results[0].metadata_json["correct"] is False:
+                continue
+        unfinished.append((problem_id, state))
+        if len(unfinished) > 1:
+            raise HTTPException(409, "Ambiguous published recovery history")
+    if not unfinished:
+        return {
+            "stage": "NONE", "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        }
+    problem_id, state = unfinished[0]
+    return {"problem_id": problem_id, **state}
+
+
+@router.get("/sessions/{session_id}/published-recovery")
+def published_recovery_state(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Read-only recovery of a server-issued published journey after UI reload.
+
+    Never trusts a browser stage, returns private oracles, or revives a revoked
+    publication. Unrecognized or inconsistent histories fail closed.
+    """
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    problem = db.get(Problem, problem_id)
+    if (
+        problem is None or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+        or not isinstance(problem.solution, dict)
+    ):
+        raise HTTPException(409, "Published recovery unavailable")
+    mode = problem.solution.get("mode")
+    if mode not in {"diagnostic", "guided"} or not permitted(db, problem, mode):
+        raise HTTPException(409, "Published recovery authorization unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.like("PUBLISHED_%"),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    if not turns:
+        try:
+            probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+        except PublishedProbeUnavailable as exc:
+            raise HTTPException(409, "No recoverable published journey") from exc
+        return {
+            "stage": "CONFIRM_REASONING", "problem_id": problem_id,
+            "prompt": probe.prompt, "choices": list(probe.choices),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    confirmations = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    if len(confirmations) != 1 or any(
+        t.attempt_id != confirmations[0].attempt_id for t in turns
+    ) or not isinstance(confirmations[0].metadata_json, dict):
+        raise HTTPException(409, "Published recovery proof invalid")
+    code = confirmations[0].metadata_json.get("misconception_code")
+    if not isinstance(code, str):
+        raise HTTPException(409, "Published recovery diagnosis invalid")
+    actions = [t.pedagogical_action for t in turns]
+    if "PUBLISHED_MASTERY_RESULT" in actions:
+        return {"stage": "COMPLETE_FEEDBACK_ONLY",
+                "independent_evidence_eligible": False, "mastery_eligible": False}
+    if "PUBLISHED_MASTERY_ISSUED" in actions:
+        mastery_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED"
+        ]
+        if len(mastery_issues) != 1 or (
+            mastery_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Mastery issuance history invalid")
+        try:
+            guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+            mastery = server_distinct_mastery_task(
+                problem, misconception_code=code, guided_retry_index=len(guided_results) - 1,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Mastery recovery unavailable") from exc
+        proof = mastery_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != mastery["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != mastery["private_target_fingerprint_for_review"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+            proof.get("mastery_eligible") is not False,
+        )):
+            raise HTTPException(409, "Mastery issuance identity mismatch")
+        return {
+            "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+            "verification_task": mastery["learner_task"], "hints_allowed": False,
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if "PUBLISHED_TRANSFER_RESULT" in actions or "PUBLISHED_TRANSFER_ISSUED" in actions:
+        transfer_issues = [
+            t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"
+        ]
+        if len(transfer_issues) != 1 or (
+            transfer_issues[0].attempt_id != confirmations[0].attempt_id
+        ):
+            raise HTTPException(409, "Transfer issuance history invalid")
+        try:
+            guided_results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+            transfer = server_unhinted_transfer(
+                problem, misconception_code=code, guided_retry_index=len(guided_results) - 1,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Transfer recovery unavailable") from exc
+        proof = transfer_issues[0].metadata_json
+        if not isinstance(proof, dict) or any((
+            proof.get("variant_id") != transfer["learner_task"]["variant_id"],
+            proof.get("target_fingerprint") != transfer["private_target_fingerprint_for_review"],
+            proof.get("target_family") != transfer["target_family"],
+            proof.get("source_fingerprint") != problem.solution["task_fingerprint"],
+            proof.get("hints_allowed") is not False,
+            proof.get("independent_evidence_eligible") is not False,
+        )):
+            raise HTTPException(409, "Transfer issuance identity mismatch")
+        if "PUBLISHED_TRANSFER_RESULT" in actions:
+            results = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"]
+            guided_issues = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+            if (
+                len(results) != 1
+                or not 1 <= len(guided_results) <= 3
+                or len(guided_results) != len(guided_issues)
+                or any(not isinstance(t.metadata_json, dict) for t in guided_results)
+                or any(t.metadata_json.get("correct") is not False for t in guided_results[:-1])
+                or guided_results[-1].metadata_json.get("correct") is not True
+                or turns.index(results[0]) <= turns.index(transfer_issues[0])
+            ):
+                raise HTTPException(409, "Published transfer completion history invalid")
+            result = results[0].metadata_json
+            if not isinstance(result, dict) or any((
+                type(result.get("correct")) is not bool,
+                result.get("target_fingerprint") != transfer["private_target_fingerprint_for_review"],
+                result.get("hints_allowed") is not False,
+                result.get("independent_evidence_eligible") is not False,
+            )):
+                raise HTTPException(409, "Published transfer completion proof invalid")
+            return {
+                "stage": "TRANSFER_FEEDBACK_ONLY", "correct": result["correct"],
+                "hints_allowed": False, "xp_earned": 0,
+                "independent_evidence_eligible": False, "mastery_eligible": False,
+            }
+        return {
+            "stage": "INDEPENDENT_EXIT", "independent_task": transfer["learner_task"],
+            "hints_allowed": False, "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        }
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if len(issued) == len(results) + 1 and 1 <= len(issued) <= 3:
+        try:
+            guided = server_guided_retest(
+                problem, misconception_code=code, retry_index=len(results),
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Guided recovery unavailable") from exc
+        proof = issued[-1].metadata_json
+        if (
+            issued[-1].attempt_id != confirmations[0].attempt_id
+            or not isinstance(proof, dict)
+            or proof.get("variant_id") != guided["variant_id"]
+            or proof.get("task_fingerprint") != guided["task_fingerprint"]
+            or proof.get("source_fingerprint") != problem.solution["task_fingerprint"]
+            or proof.get("independent_evidence_eligible") is not False
+        ):
+            raise HTTPException(409, "Guided recovery issuance identity mismatch")
+        return {
+            "stage": "GUIDED_RETEST_RETRY" if results else "GUIDED_RETEST",
+            "guided_retest_task": {
+                "variant_id": guided["variant_id"], "mode": "GUIDED",
+                "prompt": guided["prompt"],
+            },
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if issued:
+        # A fully answered guided sequence is terminal only if each persisted
+        # task is exactly the server-issued deterministic variant. Otherwise a
+        # malformed history must remain a 409, never masquerade as completion.
+        if not (len(issued) == len(results) and 1 <= len(issued) <= 3):
+            raise HTTPException(409, "Guided recovery sequence invalid")
+        for index, (issue, result) in enumerate(zip(issued, results)):
+            try:
+                expected = server_guided_retest(
+                    problem, misconception_code=code, retry_index=index,
+                )
+            except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+                raise HTTPException(409, "Guided recovery source invalid") from exc
+            issuance = issue.metadata_json
+            outcome = result.metadata_json
+            if (
+                issue.attempt_id != confirmations[0].attempt_id
+                or result.attempt_id != confirmations[0].attempt_id
+                or not isinstance(issuance, dict)
+                or not isinstance(outcome, dict)
+                or issuance.get("variant_id") != expected["variant_id"]
+                or issuance.get("task_fingerprint") != expected["task_fingerprint"]
+                or issuance.get("source_fingerprint") != problem.solution["task_fingerprint"]
+                or issuance.get("independent_evidence_eligible") is not False
+                or outcome.get("variant_id") != expected["variant_id"]
+                or outcome.get("task_fingerprint") != expected["task_fingerprint"]
+                or outcome.get("independent_evidence_eligible") is not False
+                or type(outcome.get("correct")) is not bool
+                or (index < len(results) - 1 and outcome["correct"] is not False)
+            ):
+                raise HTTPException(409, "Guided recovery history identity mismatch")
+        if results[-1].metadata_json["correct"] is True:
+            return {"stage": "READY_FOR_TRANSFER_CONFIRMATION",
+                    "independent_evidence_eligible": False, "mastery_eligible": False}
+        if len(issued) == 3:
+            return {"stage": "GUIDED_RETEST_EXHAUSTED",
+                    "independent_evidence_eligible": False, "mastery_eligible": False}
+        raise HTTPException(409, "Guided recovery missing next issued retest")
+    repairs = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
+    if any(not isinstance(t.metadata_json, dict) for t in repairs):
+        raise HTTPException(409, "Repair recovery proof invalid")
+    passed = [t for t in repairs if t.metadata_json.get("correct") is True]
+    if len(passed) > 2 or any(
+        t.metadata_json.get("step") != index for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair recovery order invalid")
+    step = len(passed)
+    if step == 0:
+        targeted = server_targeted_repair(
+            code, task_fingerprint=problem.solution["task_fingerprint"],
+        )
+        return {
+            "stage": "SOCRATIC_REPAIR", "repair_check": targeted["prompt"],
+            "repair_choices": list(targeted["choices"]),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    return {
+        "stage": "SOCRATIC_REPAIR",
+        "repair_check": _published_repair_prompt(problem, step - 1),
+        "independent_evidence_eligible": False, "mastery_eligible": False,
+    }
+
+
+class PublishedReasoningIn(BaseModel):
+    problem_id: uuid.UUID
+    choice_id: str
+
+
+@router.get("/sessions/{session_id}/published-reasoning")
+def published_reasoning_probe(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Give a neutral probe derived from an authenticated, stored wrong answer."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    try:
+        probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
+    # Misconception codes and evidence-choice oracles are server-private.
+    return {"problem_id": problem_id, "stage": "CONFIRM_REASONING",
+            "prompt": probe.prompt, "choices": list(probe.choices),
+            "independent_evidence_eligible": False}
+
+
+@router.post("/sessions/{session_id}/published-reasoning")
+def submit_published_reasoning(
+    session_id: uuid.UUID,
+    payload: PublishedReasoningIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Confirm a misconception with a second reasoning probe; no mastery credit."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    try:
+        probe = resolve_published_reasoning_probe(db, session=session, problem=problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
+    allowed = {choice["id"] for choice in probe.choices}
+    if payload.choice_id not in allowed:
+        raise HTTPException(422, "Choose one of the presented reasoning options")
+    if payload.choice_id != probe.confirming_choice_id:
+        # Consume the reasoning choice without attributing a misconception.
+        # Otherwise a learner could brute-force the confirmation oracle.
+        db.add(TutorTurn(
+            session_id=session.id, role="STUDENT", problem_id=problem.id,
+            attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_REASONING_SUBMITTED",
+            message="Reasoning choice submitted",
+            metadata_json={"response_attempt_id": str(probe.attempt_id),
+                           "independent_evidence_eligible": False},
+        ))
+        db.commit()
+        return {
+            "stage": "PRACTICE_RETRY",
+            "neutral_prompt": "Your answer and reasoning do not confirm a specific error. Try the same operation on both complete sides.",
+            "independent_evidence_eligible": False,
+        }
+    try:
+        server_guided_retest(
+            problem, misconception_code=probe.misconception_code,
+        )
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, str(exc)) from exc
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=probe.attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_REASONING_CONFIRMED",
+        message="Reasoning choice submitted",
+        metadata_json={
+            "misconception_code": probe.misconception_code,
+            "confirmation_choice_id": payload.choice_id,
+            "response_attempt_id": str(probe.attempt_id),
+            "task_fingerprint": problem.solution["task_fingerprint"],
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "SOCRATIC_REPAIR",
+        "socratic_repair_questions": list(probe.repair_questions),
+        "repair_check": server_targeted_repair(
+            probe.misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )["prompt"],
+        "repair_choices": list(server_targeted_repair(
+            probe.misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )["choices"]),
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+    }
+
+
+def _published_repair_prompt(problem: Problem, step: int) -> str:
+    """Two mathematical equalities checked server-side, never a mere text response."""
+    try:
+        server_repair_coefficients(problem)
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, "Published repair coefficients unavailable") from exc
+    if step == 0:
+        return (
+            "Subtract the right-side x term from both complete sides. "
+            "What coefficient of x remains on the left? Enter an exact number."
+        )
+    return (
+        "Subtract the original left-side constant from both complete sides. "
+        "What constant remains on the right? Enter an exact number."
+    )
+
+
+class PublishedRepairIn(BaseModel):
+    problem_id: uuid.UUID
+    response: str
+
+
+@router.post("/sessions/{session_id}/published-repair")
+def submit_published_repair(
+    session_id: uuid.UUID,
+    payload: PublishedRepairIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Require two independently checked mathematical repair steps before retest."""
+    if not 0 < len(payload.response) <= 64:
+        raise HTTPException(422, "Enter an exact number")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if (
+        session.status != "ACTIVE" or problem is None
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Repair is unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_REPAIR_RESULT",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    checks = [t for t in turns if t.pedagogical_action == "PUBLISHED_REPAIR_RESULT"]
+    if len(confirmed) != 1 or any(
+        t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED" for t in turns
+    ) or any(
+        not isinstance(t.metadata_json, dict)
+        or t.attempt_id != confirmed[0].attempt_id
+        for t in checks
+    ):
+        raise HTTPException(409, "Repair stage is unavailable or complete")
+    passed = [t for t in checks if t.metadata_json["correct"] is True]
+    if len(passed) > 3 or any(
+        t.metadata_json.get("step") != index for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair proof is inconsistent")
+    step = len(passed)
+    if step >= 3:
+        raise HTTPException(409, "Repair already complete")
+    # Retry limits are per checked operation, not a global count. A learner
+    # may recover from one mistake in each of the three stages.
+    if any(
+        t.metadata_json.get("step") not in (0, 1, 2)
+        or t.metadata_json.get("correct") is not False
+        for t in checks if t not in passed
+    ) or any(
+        sum(t.metadata_json.get("step") == index for t in checks) > 3
+        for index in (0, 1, 2)
+    ) or sum(t.metadata_json.get("step") == step for t in checks) >= 3:
+        raise HTTPException(409, "Repair retry limit reached")
+    if any(
+        t.metadata_json.get("step") != index
+        for index, t in enumerate(passed)
+    ):
+        raise HTTPException(409, "Repair stage ordering invalid")
+    try:
+        misconception_code = confirmed[0].metadata_json["misconception_code"]
+        targeted = server_targeted_repair(
+            misconception_code,
+            task_fingerprint=problem.solution["task_fingerprint"],
+        )
+        coefficients = server_repair_coefficients(problem)
+        a = Fraction(coefficients["lhs_x"])
+        b = Fraction(coefficients["lhs_constant"])
+        c = Fraction(coefficients["rhs_x"])
+        d = Fraction(coefficients["rhs_constant"])
+        submitted = (
+            Fraction(payload.response.strip().replace(" ", ""))
+            if step > 0 else None
+        )
+    except PublishedProbeUnavailable as exc:
+        raise HTTPException(409, "Published repair source unavailable") from exc
+    except (KeyError, ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
+        raise HTTPException(422, "Enter a valid exact rational number") from exc
+    if step == 0:
+        allowed = {choice["id"] for choice in targeted["choices"]}
+        if payload.response not in allowed:
+            raise HTTPException(422, "Choose a presented reasoning option")
+        correct = payload.response == targeted["expected"]
+    else:
+        expected = a - c if step == 1 else d - b
+        correct = submitted == expected
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_REPAIR_RESULT",
+        message="Equality-preserving repair step answered",
+        metadata_json={
+            "step": step, "correct": correct, "independent_evidence_eligible": False,
+        },
+    ))
+    if not correct:
+        db.commit()
+        return {
+            "stage": "SOCRATIC_REPAIR_RETRY",
+            "correct": False,
+            "repair_check": (
+                targeted["prompt"] if step == 0
+                else _published_repair_prompt(problem, step - 1)
+            ),
+            "repair_choices": list(targeted["choices"]) if step == 0 else [],
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    if step < 2:
+        db.commit()
+        return {
+            "stage": "SOCRATIC_REPAIR",
+            "correct": True,
+            "repair_check": _published_repair_prompt(problem, step),
+            "independent_evidence_eligible": False, "mastery_eligible": False,
+        }
+    try:
+        retest = server_guided_retest(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Guided retest unavailable") from exc
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+        message="Fresh guided retest issued after verified repair",
+        metadata_json={
+            "variant_id": retest["variant_id"],
+            "task_fingerprint": retest["task_fingerprint"],
+            "source_fingerprint": problem.solution["task_fingerprint"],
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "GUIDED_RETEST",
+        "correct": True,
+        "guided_retest_task": {
+            "variant_id": retest["variant_id"], "mode": "GUIDED",
+            "prompt": retest["prompt"],
+        },
+        "independent_evidence_eligible": False, "mastery_eligible": False,
+    }
+
+
+class PublishedGuidedRetestIn(BaseModel):
+    problem_id: uuid.UUID
+    answer: str
+
+
+@router.post("/sessions/{session_id}/published-guided-retest")
+def submit_published_guided_retest(
+    session_id: uuid.UUID,
+    payload: PublishedGuidedRetestIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Verify the server-issued fresh guided task without mastery or rewards."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if (
+        session.status != "ACTIVE"
+        or problem is None
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Guided retest is unavailable")
+    # Revalidate release authorization after locking the owned session.
+    # An already-issued task must not survive family, signed-policy, or
+    # content-metadata revocation. Reject before scoring or any history write.
+    mode = problem.solution.get("mode") if isinstance(problem.solution, dict) else None
+    if mode not in {"diagnostic", "guided"} or not permitted(db, problem, mode):
+        raise HTTPException(409, "Published question authorization was revoked")
+    turns = db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())).all()
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    submitted = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if (
+        len(confirmed) != 1
+        or len(issued) != len(submitted) + 1
+        or len(issued) > 3
+        or any(
+            t.attempt_id != confirmed[0].attempt_id
+            for t in (*issued, *submitted)
+        )
+        or any(
+            not isinstance(t.metadata_json, dict)
+            for t in (*confirmed, *issued, *submitted)
+        )
+        or any(
+            t.metadata_json.get("correct") is not False
+            for t in submitted
+        )
+    ):
+        raise HTTPException(409, "Guided retest issuance or recovery proof is invalid")
+    retry_index = len(submitted)
+    try:
+        retest = server_guided_retest(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+            retry_index=retry_index,
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Guided retest proof unavailable") from exc
+    if (
+        issued[-1].metadata_json.get("variant_id") != retest["variant_id"]
+        or issued[-1].metadata_json.get("task_fingerprint") != retest["task_fingerprint"]
+        or issued[-1].metadata_json.get("source_fingerprint")
+        != problem.solution["task_fingerprint"]
+    ):
+        raise HTTPException(409, "Guided retest identity mismatch")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(payload.answer, retest["canonical_answer"], variable="x")
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=issued[-1].attempt_id, state=TutorState.GUIDED_PRACTICE,
+        pedagogical_action="PUBLISHED_GUIDED_RETEST_RESULT",
+        message=payload.answer,
+        metadata_json={
+            "variant_id": retest["variant_id"],
+            "task_fingerprint": retest["task_fingerprint"],
+            "correct": correct,
+            "assisted": True,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    next_task = None
+    if not correct and retry_index < 2:
+        try:
+            retry = server_guided_retest(
+                problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+                retry_index=retry_index + 1,
+            )
+        except PublishedProbeUnavailable as exc:
+            raise HTTPException(409, str(exc)) from exc
+        db.add(TutorTurn(
+            session_id=session.id, role="SYSTEM", problem_id=problem.id,
+            attempt_id=confirmed[0].attempt_id, state=TutorState.GUIDED_PRACTICE,
+            pedagogical_action="PUBLISHED_GUIDED_RETEST_ISSUED",
+            message="Fresh guided recovery task issued",
+            metadata_json={
+                "variant_id": retry["variant_id"],
+                "task_fingerprint": retry["task_fingerprint"],
+                "source_fingerprint": problem.solution["task_fingerprint"],
+                "independent_evidence_eligible": False,
+            },
+        ))
+        next_task = {
+            "variant_id": retry["variant_id"], "mode": "GUIDED",
+            "prompt": retry["prompt"],
+        }
+    db.commit()
+    return {
+        "stage": (
+            "READY_FOR_TRANSFER_CONFIRMATION" if correct else
+            "GUIDED_RETEST_RETRY" if next_task else "GUIDED_RETEST_EXHAUSTED"
+        ),
+        "correct": correct,
+        "guided_retest_task": next_task,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+    }
+
+
+class PublishedTransferIn(BaseModel):
+    problem_id: uuid.UUID
+    answer: str
+
+
+def _require_published_guided_result_integrity(
+    problem: Problem, confirmation: TutorTurn,
+    issued: list[TutorTurn], results: list[TutorTurn],
+) -> None:
+    """Bind each completed guided result to its exact server-issued task.
+
+    Shared by transfer issuance/scoring and separate verification. A plausible
+    final correct Boolean cannot rehabilitate a corrupted earlier response.
+    """
+    if (
+        len(issued) != len(results)
+        or not 1 <= len(issued) <= 3
+        or not isinstance(confirmation.metadata_json, dict)
+    ):
+        raise HTTPException(409, "Guided history incomplete or inconsistent")
+    code = confirmation.metadata_json.get("misconception_code")
+    if not isinstance(code, str):
+        raise HTTPException(409, "Guided diagnosis invalid")
+    for index, (issue, outcome) in enumerate(zip(issued, results)):
+        try:
+            expected = server_guided_retest(
+                problem, misconception_code=code, retry_index=index,
+            )
+        except (PublishedProbeUnavailable, ValueError, TypeError) as exc:
+            raise HTTPException(409, "Guided task identity unavailable") from exc
+        proof = issue.metadata_json
+        result = outcome.metadata_json
+        if (
+            issue.attempt_id != confirmation.attempt_id
+            or outcome.attempt_id != confirmation.attempt_id
+            or not isinstance(proof, dict)
+            or not isinstance(result, dict)
+            or proof.get("variant_id") != expected["variant_id"]
+            or proof.get("task_fingerprint") != expected["task_fingerprint"]
+            or proof.get("source_fingerprint") != problem.solution["task_fingerprint"]
+            or proof.get("independent_evidence_eligible") is not False
+            or result.get("variant_id") != expected["variant_id"]
+            or result.get("task_fingerprint") != expected["task_fingerprint"]
+            or result.get("independent_evidence_eligible") is not False
+            or result.get("assisted") is not True
+            or type(result.get("correct")) is not bool
+            or result["correct"] is not (index == len(results) - 1)
+        ):
+            raise HTTPException(409, "Guided result does not match issued task")
+
+
+def _published_transfer_proof(db: DbSession, session: TutorSession, problem: Problem):
+    """Server-only proof of a successful, fresh guided retest."""
+    if (
+        session.status != "ACTIVE" or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Transfer is unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+            "PUBLISHED_TRANSFER_ISSUED",
+            "PUBLISHED_TRANSFER_RESULT",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmed = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"]
+    results = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    if (
+        len(confirmed) != 1 or not issued or len(results) != len(issued)
+        or not 1 <= len(issued) <= 3
+        or any(t.attempt_id != confirmed[0].attempt_id for t in (*issued, *results))
+        or any(not isinstance(t.metadata_json, dict) for t in (*confirmed, *issued, *results))
+        or any(t.metadata_json.get("correct") is not False for t in results[:-1])
+        or results[-1].metadata_json.get("correct") is not True
+        or len([t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"])
+    ):
+        raise HTTPException(409, "Verified guided success is required before transfer")
+    _require_published_guided_result_integrity(problem, confirmed[0], issued, results)
+    try:
+        transfer = server_unhinted_transfer(
+            problem, misconception_code=confirmed[0].metadata_json["misconception_code"],
+            guided_retry_index=len(results) - 1,
+        )
+    except (PublishedProbeUnavailable, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Transfer generation unavailable") from exc
+    return transfer, confirmed[0], turns
+
+
+@router.post("/sessions/{session_id}/published-transfer/start")
+def start_published_transfer(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Issue a single new-family, unhinted transfer in the owned learner session."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    transfer, confirmed, turns = _published_transfer_proof(db, session, problem)
+    if any(t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED" for t in turns):
+        raise HTTPException(409, "Independent transfer already issued")
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.INDEPENDENT_PRACTICE,
+        pedagogical_action="PUBLISHED_TRANSFER_ISSUED",
+        message="Unhinted alternate-family task issued",
+        metadata_json={
+            "variant_id": transfer["learner_task"]["variant_id"],
+            "target_fingerprint": transfer["private_target_fingerprint_for_review"],
+            "source_fingerprint": problem.solution["task_fingerprint"],
+            "target_family": transfer["target_family"],
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "INDEPENDENT_EXIT",
+        "independent_task": transfer["learner_task"],
+        "hints_allowed": False,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+    }
+
+
+@router.post("/sessions/{session_id}/published-transfer/respond")
+def submit_published_transfer(
+    session_id: uuid.UUID,
+    payload: PublishedTransferIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Exact-oracle transfer feedback, strictly separate from mastery credit."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    transfer, confirmed, turns = _published_transfer_proof(db, session, problem)
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"]
+    if (
+        len(issued) != 1 or issued[0].attempt_id != confirmed.attempt_id
+        or not isinstance(issued[0].metadata_json, dict)
+        or issued[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+        or issued[0].metadata_json.get("variant_id")
+        != transfer["learner_task"]["variant_id"]
+        or issued[0].metadata_json.get("target_family") != transfer["target_family"]
+        or issued[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "Unhinted transfer issuance proof is invalid")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(
+        payload.answer, transfer["private_exact_oracle_for_review"], variable="x",
+    )
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.INDEPENDENT_PRACTICE,
+        pedagogical_action="PUBLISHED_TRANSFER_RESULT",
+        message="Independent task answered",
+        metadata_json={
+            "target_fingerprint": transfer["private_target_fingerprint_for_review"],
+            "correct": correct,
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "TRANSFER_FEEDBACK_ONLY",
+        "correct": correct,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
+    }
+
+
+def _published_verified_transfer(db: DbSession, session: TutorSession, problem: Problem):
+    """Require exactly one committed, correct unhinted transfer before verification."""
+    if (
+        session.status != "ACTIVE"
+        or problem.source_type != "PUBLISHED"
+        or problem.primary_skill_id not in {session.primary_skill_id, session.active_skill_id}
+    ):
+        raise HTTPException(409, "Separate verification unavailable")
+    turns = list(db.scalars(select(TutorTurn).where(
+        TutorTurn.session_id == session.id,
+        TutorTurn.problem_id == problem.id,
+        TutorTurn.pedagogical_action.in_((
+            "PUBLISHED_REASONING_CONFIRMED",
+            "PUBLISHED_GUIDED_RETEST_ISSUED",
+            "PUBLISHED_GUIDED_RETEST_RESULT",
+            "PUBLISHED_TRANSFER_ISSUED",
+            "PUBLISHED_TRANSFER_RESULT",
+            "PUBLISHED_MASTERY_ISSUED",
+            "PUBLISHED_MASTERY_RESULT",
+        )),
+    ).order_by(TutorTurn.created_at.asc(), TutorTurn.id.asc())))
+    confirmations = [t for t in turns if t.pedagogical_action == "PUBLISHED_REASONING_CONFIRMED"]
+    guided = [t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_RESULT"]
+    transfers = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_RESULT"]
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_TRANSFER_ISSUED"]
+    if (
+        len(confirmations) != 1 or not 1 <= len(guided) <= 3
+        or len(transfers) != 1 or len(issued) != 1
+        or any(not isinstance(t.metadata_json, dict) for t in turns)
+        or any(t.attempt_id != confirmations[0].attempt_id for t in turns)
+        or any(t.metadata_json.get("correct") is not False for t in guided[:-1])
+        or guided[-1].metadata_json.get("correct") is not True
+        or transfers[0].metadata_json.get("correct") is not True
+        or issued[0].metadata_json.get("hints_allowed") is not False
+        or transfers[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "A successful unhinted transfer is required")
+    guided_issues = [
+        t for t in turns if t.pedagogical_action == "PUBLISHED_GUIDED_RETEST_ISSUED"
+    ]
+    _require_published_guided_result_integrity(
+        problem, confirmations[0], guided_issues, guided,
+    )
+    try:
+        guided_index = len(guided) - 1
+        code = confirmations[0].metadata_json["misconception_code"]
+        transfer = server_unhinted_transfer(
+            problem, misconception_code=code, guided_retry_index=guided_index,
+        )
+        mastery = server_distinct_mastery_task(
+            problem, misconception_code=code, guided_retry_index=guided_index,
+        )
+    except (KeyError, TypeError, PublishedProbeUnavailable) as exc:
+        raise HTTPException(409, "Separate verification source invalid") from exc
+    if (
+        issued[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+        or transfers[0].metadata_json.get("target_fingerprint")
+        != transfer["private_target_fingerprint_for_review"]
+    ):
+        raise HTTPException(409, "Transfer identity does not match verified source")
+    return mastery, confirmations[0], turns
+
+
+@router.post("/sessions/{session_id}/published-mastery/start")
+def start_published_mastery(
+    session_id: uuid.UUID,
+    problem_id: uuid.UUID,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Issue fresh verification only after correct transfer; never authorize credit."""
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    mastery, confirmed, turns = _published_verified_transfer(db, session, problem)
+    if any(t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED" for t in turns):
+        raise HTTPException(409, "Separate verification already issued")
+    db.add(TutorTurn(
+        session_id=session.id, role="SYSTEM", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.MASTERY_CHECK,
+        pedagogical_action="PUBLISHED_MASTERY_ISSUED",
+        message="Separate no-hint verification task issued",
+        metadata_json={
+            "variant_id": mastery["learner_task"]["variant_id"],
+            "target_fingerprint": mastery["private_target_fingerprint_for_review"],
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+        "verification_task": mastery["learner_task"],
+        "hints_allowed": False,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
+    }
+
+
+@router.post("/sessions/{session_id}/published-mastery/respond")
+def submit_published_mastery(
+    session_id: uuid.UUID,
+    payload: PublishedTransferIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> dict[str, object]:
+    """Exact-oracle separate verification. No XP, progress or mastery writes."""
+    if not 0 < len(payload.answer) <= 64:
+        raise HTTPException(422, "Enter one exact rational answer")
+    session = require_learning_owns_session(db, access, db.get(TutorSession, session_id))
+    db.refresh(session, with_for_update=True)
+    problem = db.get(Problem, payload.problem_id)
+    if problem is None:
+        raise HTTPException(404, "Problem not found")
+    mastery, confirmed, turns = _published_verified_transfer(db, session, problem)
+    issued = [t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_ISSUED"]
+    answered = [t for t in turns if t.pedagogical_action == "PUBLISHED_MASTERY_RESULT"]
+    if (
+        len(issued) != 1 or answered
+        or issued[0].attempt_id != confirmed.attempt_id
+        or issued[0].metadata_json.get("target_fingerprint")
+        != mastery["private_target_fingerprint_for_review"]
+        or issued[0].metadata_json.get("variant_id")
+        != mastery["learner_task"]["variant_id"]
+        or issued[0].metadata_json.get("hints_allowed") is not False
+    ):
+        raise HTTPException(409, "Verification was not issued or was answered")
+    from app.services.fraction_assessment_registry import score_fraction
+
+    correct = score_fraction(
+        payload.answer, mastery["private_exact_oracle_for_review"], variable="x",
+    )
+    db.add(TutorTurn(
+        session_id=session.id, role="STUDENT", problem_id=problem.id,
+        attempt_id=confirmed.attempt_id, state=TutorState.MASTERY_CHECK,
+        pedagogical_action="PUBLISHED_MASTERY_RESULT",
+        message="Separate verification response recorded",
+        metadata_json={
+            "target_fingerprint": mastery["private_target_fingerprint_for_review"],
+            "correct": correct,
+            "hints_allowed": False,
+            "independent_evidence_eligible": False,
+            "mastery_eligible": False,
+        },
+    ))
+    db.commit()
+    return {
+        "stage": "MASTERY_VERIFICATION_FEEDBACK_ONLY",
+        "correct": correct,
+        "independent_evidence_eligible": False,
+        "mastery_eligible": False,
+        "xp_earned": 0,
+    }
+
+
 @router.post("/sessions/{session_id}/respond", response_model=RespondOut)
 def respond(
     session_id: uuid.UUID, payload: RespondIn, access: CurrentLearningAccess, db: DbSession
@@ -116,6 +1173,24 @@ def respond(
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not belong to active learning focus")
 
+    if problem.source_type == "PUBLISHED":
+        db.refresh(session, with_for_update=True)
+        issued_id = db.scalar(select(TutorTurn.problem_id).where(
+            TutorTurn.session_id == session.id, TutorTurn.role == "TUTOR",
+            TutorTurn.pedagogical_action != "WORK_STEP",
+        ).order_by(TutorTurn.created_at.desc(), TutorTurn.id.desc()).limit(1))
+        already_answered = db.scalar(select(Attempt.id).where(
+            Attempt.session_id == session.id, Attempt.problem_id == problem.id,
+        ).limit(1))
+        if issued_id != problem.id or already_answered is not None:
+            raise HTTPException(409, "Published item was not issued or has already been answered")
+
+    mode_column = _eligibility_column(session.current_state)
+    if problem.source_type == "PUBLISHED" and (
+        mode_column is None or not permitted(db, problem, mode_column.key.removesuffix("_eligible"))
+    ):
+        raise HTTPException(409, "Published package unavailable for this learning mode")
+
     student = db.get(Student, session.student_id)
     skill = db.get(Skill, active_skill_id)
     if student is None or skill is None:
@@ -128,6 +1203,7 @@ def respond(
         )
     )
     is_extension = bool(content_meta and content_meta.extension_eligible)
+    is_published = problem.source_type == "PUBLISHED"
     if is_extension:
         # Optional stretch tier: tagged EXTENSION so mastery gating, progress
         # counters, and evidence queries exclude it.
@@ -197,6 +1273,8 @@ def respond(
         problem_difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem.choices,
+        published_problem=problem,
+        assessment_mode=AssessmentMode(mode_column.key.removesuffix("_eligible")) if mode_column is not None else None,
         step_misconception_code=step_misconception_code,
         count_evidence=not is_extension,
     )
@@ -232,48 +1310,53 @@ def respond(
     db.add(attempt)
     db.flush()
 
-    gate_evidence = load_mastery_gate_evidence(
-        db,
-        student_id=session.student_id,
-        skill_id=active_skill_id,
-    )
-    gate_decision = evaluate_mastery_gate(
-        mastery_score=progress.mastery_score,
-        mastery_threshold=skill.mastery_threshold,
-        independent_correct_count=gate_evidence.independent_correct_count,
-        strong_help_seen=gate_evidence.strong_help_seen,
-        independent_successes_after_strong_help=(
-            gate_evidence.independent_successes_after_strong_help
-        ),
-    )
+    if is_published:
+        transition = Transition(state_at_attempt, "PRACTICE_FEEDBACK")
+    else:
+        gate_evidence = load_mastery_gate_evidence(
+            db,
+            student_id=session.student_id,
+            skill_id=active_skill_id,
+        )
+        gate_decision = evaluate_mastery_gate(
+            mastery_score=progress.mastery_score,
+            mastery_threshold=skill.mastery_threshold,
+            independent_correct_count=gate_evidence.independent_correct_count,
+            strong_help_seen=gate_evidence.strong_help_seen,
+            independent_successes_after_strong_help=(
+                gate_evidence.independent_successes_after_strong_help
+            ),
+        )
 
-    independent_successes = (
-        db.scalar(
-            select(func.count(Attempt.id))
-            .join(Problem, Problem.id == Attempt.problem_id)
-            .where(
-                Attempt.session_id == session.id,
-                Problem.primary_skill_id == active_skill_id,
-                Attempt.is_correct.is_(True),
-                Attempt.assistance_level == 0,
-                Attempt.state_at_attempt != TutorState.EXTENSION,
+        independent_successes = (
+            db.scalar(
+                select(func.count(Attempt.id))
+                .join(Problem, Problem.id == Attempt.problem_id)
+                .where(
+                    Attempt.session_id == session.id,
+                    Problem.primary_skill_id == active_skill_id,
+                    # Published answers remain feedback-only even when correct.
+                    Problem.source_type != "PUBLISHED",
+                    Attempt.is_correct.is_(True),
+                    Attempt.assistance_level == 0,
+                    Attempt.state_at_attempt != TutorState.EXTENSION,
+                )
+            )
+            or 0
+        )
+        transition = determine_next_action(
+            StateContext(
+                state=state_at_attempt,
+                correct=evidence.evaluation.correct,
+                assistance_level=effective_assistance_level,
+                misconception_count=evidence.misconception_count,
+                consecutive_independent_successes=int(independent_successes),
+                mastery_gate_eligible=gate_decision.eligible,
             )
         )
-        or 0
-    )
-    transition = determine_next_action(
-        StateContext(
-            state=state_at_attempt,
-            correct=evidence.evaluation.correct,
-            assistance_level=effective_assistance_level,
-            misconception_count=evidence.misconception_count,
-            consecutive_independent_successes=int(independent_successes),
-            mastery_gate_eligible=gate_decision.eligible,
-        )
-    )
     engine_action = transition.action
 
-    if not is_extension:
+    if not is_extension and not is_published:
         db.add(
             MasteryEvent(
                 student_id=session.student_id,
@@ -297,7 +1380,7 @@ def respond(
             )
         )
 
-    if state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
+    if not is_published and state_at_attempt in {TutorState.INDEPENDENT_PRACTICE, TutorState.MASTERY_CHECK}:
         db.add(
             MasteryEvent(
                 student_id=session.student_id,
@@ -324,7 +1407,9 @@ def respond(
         )
 
     review_outcome = None
-    if session.remediation_reason == REVIEW_REASON:
+    if is_published:
+        pass
+    elif session.remediation_reason == REVIEW_REASON:
         transition, review_outcome = apply_review_policy(
             db,
             session=session,
@@ -346,7 +1431,7 @@ def respond(
     review_scheduled_payload: dict[str, object] | None = None
     passed_mastery_check = False
     gap_fixed = False
-    if state_at_attempt == TutorState.MASTERY_CHECK:
+    if not is_published and state_at_attempt == TutorState.MASTERY_CHECK:
         passed_mastery_check = (
             transition.action == "MARK_MASTERED"
             and evidence.evaluation.correct
@@ -388,7 +1473,7 @@ def respond(
                 gap_fixed = True
                 transition = Transition(TutorState.GUIDED_PRACTICE, "RESUME_TARGET")
 
-    if not is_extension:
+    if not is_extension and not is_published:
         # Extension attempts never move the session state machine or the
         # difficulty ladder — the optional tier is progression-neutral.
         session.current_state = transition.state
@@ -410,7 +1495,8 @@ def respond(
         independent_assessment_active=assessment_guard.blocked,
     )
     issue_jit_hint = (
-        not evidence.evaluation.correct
+        not is_published
+        and not evidence.evaluation.correct
         and evidence.misconception is not None
         and jit_decision.allowed
         and (session.active_skill_id or session.primary_skill_id) == active_skill_id
@@ -433,6 +1519,7 @@ def respond(
         next_problem = None
         if (
             not is_extension
+            and not is_published
             and evidence.evaluation.correct is False
             and problem.primary_skill_id == next_skill_id
         ):
@@ -448,7 +1535,7 @@ def respond(
                 else None,
                 current_difficulty=next_progress.current_difficulty,
                 state=transition.state,
-                correct=None if is_extension else evidence.evaluation.correct,
+                correct=None if is_extension or is_published else evidence.evaluation.correct,
                 session_id=session.id,
                 offer_extension=is_extension,
             )
@@ -466,6 +1553,13 @@ def respond(
         answer_leak_blocked = False
         generation_source = "assessment_blocked"
         generation_model: str | None = None
+    elif is_published:
+        message = ("Correct. This is practice feedback; it does not count toward mastery."
+                   if evidence.evaluation.correct else
+                   "That answer is not correct. This is practice feedback; it does not count toward mastery.")
+        answer_leak_blocked = False
+        generation_source = "published_practice_feedback"
+        generation_model = None
     else:
         tutor_context = _tutor_context(
             db,
@@ -505,7 +1599,7 @@ def respond(
         generation_source = generation.source
         generation_model = generation.model
         answer_leak_blocked = True
-    if not assessment_guard.blocked and not evidence.evaluation.correct:
+    if not is_published and not assessment_guard.blocked and not evidence.evaluation.correct:
         block = visualization.chat_cpa_block(visualization.visualization_for(problem))
         if block and "```json:cpa" not in message:
             message = f"{message}\n\n{block}"
@@ -533,8 +1627,8 @@ def respond(
                 else None
             ),
             "effective_assistance_level": effective_assistance_level,
-            "mastery_gate_eligible": gate_decision.eligible,
-            "mastery_gate_reason": gate_decision.reason,
+            "mastery_gate_eligible": False if is_published else gate_decision.eligible,
+            "mastery_gate_reason": "PUBLISHED_FEEDBACK_ONLY" if is_published else gate_decision.reason,
             "curriculum_id": str(scope.curriculum_id),
             "curriculum_enrollment_id": (str(scope.enrollment_id) if scope.enrollment_id else None),
         },
@@ -559,7 +1653,9 @@ def respond(
             )
         )
 
-    new_awards = evaluate_awards(
+    # Until the published learner journey is independently verified, correct
+    # published responses are feedback, not reward or mastery evidence.
+    new_awards = [] if problem.source_type == "PUBLISHED" else evaluate_awards(
         db,
         student_id=session.student_id,
         session_id=session.id,
@@ -572,11 +1668,13 @@ def respond(
     )
     db.flush()
 
-    xp_earned = attempt_xp(
-        bool(evidence.evaluation.correct),
-        effective_assistance_level,
-        problem.difficulty,
-    ) + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards)
+    xp_earned = 0 if problem.source_type == "PUBLISHED" else (
+        attempt_xp(
+            bool(evidence.evaluation.correct),
+            effective_assistance_level,
+            problem.difficulty,
+        ) + sum(BADGE_XP.get(award.badge_code, 0) for award in new_awards)
+    )
     progress = learner_progress(db, session.student_id)
     level_now, _ = level_for_xp(progress["xp"])
     level_before, _ = level_for_xp(progress["xp"] - xp_earned)
@@ -588,7 +1686,7 @@ def respond(
     db.commit()
 
     _publish_adaptive_event(
-        event_type="mastery.evidence_recorded",
+        event_type="practice.feedback_recorded" if is_published else "mastery.evidence_recorded",
         session=session,
         curriculum_id=scope.curriculum_id,
         skill_id=active_skill_id,
@@ -596,7 +1694,7 @@ def respond(
             "correct": evidence.evaluation.correct,
             "assistance_level": effective_assistance_level,
             "state": state_at_attempt.value,
-            "mastery_gate_eligible": gate_decision.eligible,
+            "mastery_gate_eligible": False if is_published else gate_decision.eligible,
         },
     )
     if review_outcome is not None:
@@ -619,7 +1717,7 @@ def respond(
             skill_id=active_skill_id,
             payload=review_scheduled_payload,
         )
-    if not assessment_guard.blocked:
+    if not is_published and not assessment_guard.blocked:
         _publish_adaptive_event(
             event_type="model.generation_completed",
             session=session,
@@ -686,6 +1784,8 @@ def work_step(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published step assistance is not yet authorized")
     if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
     start = stepwork.starting_point(problem)
@@ -869,6 +1969,11 @@ async def work_photo_scan(
     active_skill_id = session.active_skill_id or session.primary_skill_id
     if problem is None or problem.primary_skill_id != active_skill_id:
         raise HTTPException(400, "Problem does not support step-by-step work")
+    # Published content must not accept OCR-derived work suggestions until the
+    # signed learning-journey and evidence-isolation contract is reviewed.
+    # This denial precedes image intake and does not modify learner history.
+    if problem.source_type == "PUBLISHED":
+        raise HTTPException(409, "Published step assistance is not yet authorized")
     if not stepwork.problem_supports_steps(problem):
         raise HTTPException(400, "Problem does not support step-by-step work")
     if file.content_type not in photo_ocr.ALLOWED_CONTENT_TYPES:

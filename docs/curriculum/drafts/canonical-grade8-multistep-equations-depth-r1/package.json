@@ -1,0 +1,495 @@
+{
+  "schema": "MIHUR_DRAFT_GRADE8_MULTISTEP_EQUATIONS_R1",
+  "status": "DRAFT_UNVERIFIED",
+  "runtime_activation": false,
+  "canonical_skill_code": "MATH.EE.EQUATION.MULTISTEP",
+  "canonical_identity_status": "REUSE_CANDIDATE_FROM_ACCEPTED_CROSSWALK__NOT_ACTIVATED",
+  "family_count": 12,
+  "modes": [
+    "diagnostic",
+    "guided",
+    "independent",
+    "mastery"
+  ],
+  "quality_contract": {
+    "build_once_map_many": true,
+    "coefficient_swaps_are_not_families": true,
+    "exact_fraction_oracles": true,
+    "multi_probe_guided_diagnosis": true,
+    "independent_transfer_changes_family": true,
+    "guided_success_counts_as_mastery": false,
+    "learner_history_changes": false,
+    "enforced_learning_stages": [
+      "OBSERVE",
+      "PREDICT",
+      "MANIPULATE",
+      "EXPLAIN",
+      "PRACTICE",
+      "DIAGNOSE",
+      "TRANSFER",
+      "VERIFY"
+    ],
+    "stage_specific_disclosure": true,
+    "independent_mastery_guided_scaffold_exposure": false,
+    "transfer_id_and_response_binding": true,
+    "original_equation_substitution_verification": true
+  },
+  "source_provenance": [
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
+      "page": "printed page 24",
+      "access_date": "2026-10-25",
+      "standard_id": "8.AT.B.3a",
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE"
+      ],
+      "coverage_boundary": "Only solution-class recognition, comparison, and justification evidence in the three listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "Learner construction of examples having one, infinitely many, or no solution",
+        "Complete justification by successively rewriting examples to x = a, a = a, or a = b for different rational constants",
+        "Any other 8.AT.B.3a qualifier not explicitly implemented by the three listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no MSDE example or protected expression is copied."
+    },
+    {
+      "publisher": "Maryland State Department of Education",
+      "url": "https://msde.maryland.gov/media/17821",
+      "title": "Grade 8 MCCRS Mathematics Companion Guide",
+      "version_date": "Version 1, February 2026; standards adopted July 29, 2025",
+      "page": "printed page 24",
+      "standard_id": "8.AT.B.3b",
+      "access_date": "2026-10-25",
+      "mapping_status": "PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no MSDE example or protected expression is copied.",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "NESTED_GROUPS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only solving, distribution, combining-like-terms, modeling, and error-analysis evidence in the nine listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The distinct 8.AT.B.3a solution-class requirement, which is recorded separately",
+        "Any 8.AT.B.3b qualifier not explicitly implemented by the nine listed families"
+      ]
+    },
+    {
+      "publisher": "Montgomery County Public Schools",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math/ms/",
+      "title": "Mathematics Middle School",
+      "version_date": "Current district listing; page has no effective school-year date",
+      "page": "Math 8 listing",
+      "standard_id": "NOT_A_STANDARDS_AUTHORITY",
+      "access_date": "2026-10-25",
+      "mapping_status": "TOPIC_SEQUENCE_RESEARCH_ONLY",
+      "adaptation_rationale": "Confirms the current listed Grade 8 curriculum only; no vendor content is copied or closely adapted."
+    },
+    {
+      "publisher": "Montgomery County Public Schools / Open Up Resources",
+      "url": "https://www.montgomeryschoolsmd.org/curriculum/math-support/middle/math8/",
+      "title": "Math 8 support — Unit 4 Linear Equations and Linear Systems",
+      "version_date": "Undated support page; underlying IM/Open Up material 2017–2019",
+      "page": "Unit 4",
+      "standard_id": "HISTORICAL_RESEARCH_ONLY",
+      "access_date": "2026-10-25",
+      "mapping_status": "NOT_CURRENT_ALIGNMENT_EVIDENCE",
+      "adaptation_rationale": "Only the abstract balance/equality progression is researched; no task, diagram, wording, video, or answer key is reproduced."
+    },
+    {
+      "publisher": "CCSSO/NGA",
+      "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "title": "Common Core State Standards for Mathematics",
+      "version_date": "2010 publication; DC State Board adopted July 28, 2010",
+      "page": "printed page 54",
+      "access_date": "2026-10-25",
+      "jurisdiction": "District of Columbia",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
+      "mapping_status": "DC_PROVISIONAL_NOT_ACCEPTED",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "standard_id": "8.EE.C.7a",
+      "family_codes": [
+        "IDENTITY_ALL_REAL",
+        "CONTRADICTION_NO_SOLUTION",
+        "SOLUTION_CLASS_COMPARE"
+      ],
+      "coverage_boundary": "Only solution-class recognition, comparison, and bounded justification evidence in the three listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "Learner construction of examples having one, infinitely many, or no solution",
+        "Complete successive transformation of a given equation to x = a, a = a, or a = b for different numbers",
+        "Any other 8.EE.C.7a qualifier not explicitly implemented by the three listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no CCSS example or protected assessment expression is copied."
+    },
+    {
+      "publisher": "CCSSO/NGA",
+      "url": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf",
+      "title": "Common Core State Standards for Mathematics",
+      "version_date": "2010 publication; DC State Board adopted July 28, 2010",
+      "page": "printed page 54",
+      "access_date": "2026-10-25",
+      "jurisdiction": "District of Columbia",
+      "jurisdiction_authority": "District of Columbia Office of the State Superintendent of Education / DC State Board of Education",
+      "adoption_url": "https://osse.dc.gov/release/state-board-education-votes-adopt-common-core-standards-english-language-arts-and",
+      "adoption_title": "The State Board of Education Votes to Adopt the Common Core Standards for English Language Arts and Mathematics for Grades K–12",
+      "adoption_date": "2010-07-28",
+      "mapping_status": "DC_PROVISIONAL_NOT_ACCEPTED",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "standard_id": "8.EE.C.7b",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "NESTED_GROUPS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only solving rational-coefficient linear equations, including distribution and collecting-like-terms evidence in the nine listed families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The distinct 8.EE.C.7a solution-class and example-construction requirement, which is recorded separately",
+        "Any 8.EE.C.7b qualifier not explicitly implemented by the nine listed families"
+      ],
+      "adaptation_rationale": "Scope locator only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no CCSS example or protected assessment expression is copied."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "a",
+      "clause_locator": "8.PFA.4(a)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: declarative representation metadata and generic side-selection tokens do not establish learner use of concrete materials or pictorial representations.",
+      "excluded_from_coverage_credit": [
+        "All twelve families until executable concrete/pictorial representation evidence is independently reviewed"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "b",
+      "clause_locator": "8.PFA.4(b)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only rational-coefficient solving, distribution, combining-like-terms, variables-on-both-sides, bounded contextual solving, and corrected-error evidence in the eight listed families. No claim is made beyond the source's up-to-four-step boundary.",
+      "excluded_from_coverage_credit": [
+        "NESTED_GROUPS until its transformations are independently shown to remain within the source's up-to-four-step boundary",
+        "IDENTITY_ALL_REAL, CONTRADICTION_NO_SOLUTION, and SOLUTION_CLASS_COMPARE because Grade 8 clause (b) does not state a solution-class demand",
+        "Any other 8.PFA.4(b) qualifier not explicitly demonstrated by the listed families"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "c",
+      "clause_locator": "8.PFA.4(c)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: current context families present an equation/problem to solve and do not require the learner to write the multistep equation from a verbal situation.",
+      "excluded_from_coverage_credit": [
+        "All twelve families"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "d",
+      "clause_locator": "8.PFA.4(d)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: no family requires the learner to create a verbal context from a supplied multistep equation.",
+      "excluded_from_coverage_credit": [
+        "All twelve families"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "e",
+      "clause_locator": "8.PFA.4(e)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL"
+      ],
+      "coverage_boundary": "Only solving original perimeter and competing-plan contexts in the two listed families; no full contextual-problem coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "The ten non-context families",
+        "Any contextual form not explicitly implemented by the two listed original families"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "f",
+      "clause_locator": "8.PFA.4(f)",
+      "coverage_relation": "NO_COVERAGE_CLAIM",
+      "family_codes": [],
+      "coverage_boundary": "No coverage credit: exact x-value responses alone do not demonstrate learner interpretation of an algebraic solution in its context.",
+      "excluded_from_coverage_credit": [
+        "All twelve families until an explicit context-and-units interpretation response is implemented and independently reviewed"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    },
+    {
+      "publisher": "Virginia Department of Education",
+      "url": "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638325419841200000",
+      "source_page_url": "https://www.doe.virginia.gov/teaching-learning-assessment/instruction/mathematics/standards-of-learning-for-mathematics",
+      "title": "Mathematics Standards of Learning for Virginia Public Schools — 2023 Grade 8",
+      "version_date": "Virginia Board of Education approved August 31, 2023; VDOE publication August 2023",
+      "page": "printed page 64",
+      "standard_id": "8.PFA.4",
+      "access_date": "2026-10-25",
+      "mapping_status": "VIRGINIA_PROVISIONAL_NOT_ACCEPTED",
+      "adaptation_rationale": "Scope locator and paraphrased demand categories only. All Mihur equations, contexts, wording, representations, distractors, and repairs are original; no VDOE standard wording, example, assessment item, or protected expression is reproduced, and VDOE's classroom-only reproduction permission is not relied upon.",
+      "knowledge_skill_clause": "g",
+      "clause_locator": "8.PFA.4(g)",
+      "coverage_relation": "PARTIAL_NON_EXHAUSTIVE",
+      "family_codes": [
+        "DISTRIBUTE_POSITIVE_ONE_SIDE",
+        "DISTRIBUTE_NEGATIVE_ONE_SIDE",
+        "COMBINE_LIKE_TERMS",
+        "VARIABLES_BOTH_SIDES",
+        "FRACTIONAL_COEFFICIENTS",
+        "PERIMETER_MODEL",
+        "COMPETING_PLANS_MODEL",
+        "ERROR_ANALYSIS_FIRST_INVALID_STEP"
+      ],
+      "coverage_boundary": "Only the explicit final original-equation substitution/reconstruction check in the eight listed within-boundary families; no full-standard coverage is claimed.",
+      "excluded_from_coverage_credit": [
+        "NESTED_GROUPS until its transformations are independently shown to remain within the source's up-to-four-step boundary",
+        "IDENTITY_ALL_REAL, CONTRADICTION_NO_SOLUTION, and SOLUTION_CLASS_COMPARE because they do not confirm a unique algebraic solution by substitution",
+        "Any confirmation method not explicitly implemented by the listed families"
+      ],
+      "verification_sources": [
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
+          "title": "Just in Time Quick Check — Standard of Learning 8.PFA.4",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 1",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording and scope; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        },
+        {
+          "publisher": "Virginia Department of Education",
+          "url": "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
+          "title": "Instructional Guide to the 2023 Mathematics Standards of Learning — Grade 8",
+          "version_date": "Virginia Department of Education 2025",
+          "page": "printed page 101",
+          "access_date": "2026-10-25",
+          "verification_role": "Current first-party corroboration of the complete 8.PFA.4(a–g) wording, the up-to-four-step boundary, rational coefficients, distribution/like terms, and the exclusion of no-solution and infinite-solution equations; it does not replace the controlling Board-approved 2023 Grade 8 SOL."
+        }
+      ],
+      "source_authentication_note": "The controlling 2023 Grade 8 SOL URL remains the authority. These later official VDOE publications independently corroborate the exact clause identity and scope while preserving VIRGINIA_PROVISIONAL_NOT_ACCEPTED and all fail-closed coverage boundaries."
+    }
+  ],
+  "gates": {
+    "independent_math": "PENDING",
+    "independent_pedagogy": "PENDING",
+    "standards_source_fidelity": "PENDING",
+    "assessment_backend": "PENDING",
+    "frontend_mve": "PENDING",
+    "muse_browser_qa": "PENDING",
+    "engineering_release": "PENDING"
+  }
+}

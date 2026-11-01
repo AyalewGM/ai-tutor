@@ -20,6 +20,7 @@ from app.identity import CurrentLearningAccess, require_learning_owns_student
 from app.models import MasteryEvent, Problem, Skill, Student, StudentSkill, TutorState
 from app.schemas import ProblemOut, problem_choices_out
 from app.services.attempt_evidence import record_evidence
+from app.services.content_publishing import permitted
 from app.services.curriculum_scope import (
     CurriculumScope,
     CurriculumScopeError,
@@ -27,6 +28,7 @@ from app.services.curriculum_scope import (
     resolve_student_curriculum_scope,
 )
 from app.services.diagnostic_controller import decide_next_probe
+from app.services.fraction_assessment_registry import AssessmentMode
 from app.services.problem_selection import select_next_problem
 from app.telemetry import TelemetryEnvelope, publish_telemetry_fail_open
 
@@ -207,6 +209,9 @@ def respond_to_diagnostic(
     if problem is None or problem.primary_skill_id != session.current_skill_id:
         raise HTTPException(400, "Problem does not belong to the current diagnostic skill")
 
+    if not permitted(db, problem, "diagnostic"):
+        raise HTTPException(409, "Published package unavailable for diagnostic use")
+
     progress = _student_skill(db, session.student_id, session.current_skill_id)
     evidence = record_evidence(
         db,
@@ -218,6 +223,8 @@ def respond_to_diagnostic(
         problem_difficulty=problem.difficulty,
         answer_kind=problem.answer_kind,
         choices=problem.choices,
+        published_problem=problem,
+        assessment_mode=AssessmentMode.DIAGNOSTIC,
     )
 
     session.question_count += 1

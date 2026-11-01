@@ -12,6 +12,10 @@ COPY app ./app
 COPY alembic ./alembic
 COPY alembic.ini ./
 COPY scripts ./scripts
+COPY content_packages ./content_packages
+COPY deploy/staging/publish_content.py ./deploy/staging/publish_content.py
+COPY deploy/staging/development_release.py ./deploy/staging/development_release.py
+COPY .github/workflows/content-publisher.yml ./.github/workflows/content-publisher.yml
 # Elementary curriculum packs are data files the loader seeds from at deploy
 # time (scripts/ops/seed_all_curricula.py -> docs/curriculum/packs).
 COPY docs/curriculum/packs ./docs/curriculum/packs

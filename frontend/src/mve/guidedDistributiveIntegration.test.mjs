@@ -68,7 +68,7 @@ test("independent assessment renders no guided explanation, worked answer, or co
   })), "");
 });
 
-test("guided state renders the real accessible player and separate worked example", () => {
+test("guided state hides animation, worked answer and response until a prediction is locked", () => {
   const { GuidedDistributivePractice } = guidedModule;
   const html = renderToStaticMarkup(React.createElement(GuidedDistributivePractice, {
     independentAssessment: false, factor: 5, constant: 3,
@@ -76,17 +76,16 @@ test("guided state renders the real accessible player and separate worked exampl
   assert.match(html, /Guided distributive property lesson/);
   assert.match(html, /5\(x \+ 3\)/);
   assert.match(html, /Worked example, separate from your current question/);
-  assert.match(html, /aria-label="Animation playback controls"/);
-  assert.match(html, /aria-label="Play animation"/);
-  assert.match(html, /<button type="button"/);
-  assert.match(html, /Previous step/);
-  assert.match(html, /Next step/);
-  assert.match(html, /Replay/);
+  assert.doesNotMatch(html, /aria-label="Animation playback controls"/);
+  assert.doesNotMatch(html, /aria-label="Play animation"/);
+  assert.doesNotMatch(html, /Coefficient of x/);
+  assert.doesNotMatch(html, /Constant term/);
+  assert.doesNotMatch(html, /Explain why the outside factor must multiply/);
+  assert.match(html, /The worked steps and model stay hidden/);
+  assert.match(html, /disabled=""[^>]*>Lock my prediction and explore/);
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /Observe and predict/);
   assert.match(html, /aria-pressed="false"/);
-  assert.match(html, /Coefficient of x/);
-  assert.match(html, /Constant term/);
 });
 
 test("negative distribution uses signed algebra tiles and keeps state lifecycle keyed to the lesson", () => {
@@ -150,7 +149,15 @@ test("actual handlers announce sign feedback and emit a bounded dropped-negative
     : [node, ...React.Children.toArray(node.props?.children).flatMap(nodes)];
 
   nodes(render()).find((node) => node.type === "button" && node.props.children === "Negative").props.onClick();
+  assert.match(nodes(render()).find((node) => node.props.role === "status").props.children, /Sign selected/);
+  assert.equal(nodes(render()).some((node) => node.type === playerModule.PedagogicalAnimation), false);
+  nodes(render()).find((node) => node.type === "button" && node.props.children === "Lock my prediction and explore").props.onClick();
   assert.match(nodes(render()).find((node) => node.props.role === "status").props.children, /Recheck/);
+  const playerNode = nodes(render()).find((node) => node.type === playerModule.PedagogicalAnimation);
+  assert.ok(playerNode, "real player mounts only after prediction lock");
+  playerNode.props.onStepChange({ id: "distribute_constant" });
+  assert.ok(nodes(render()).find((node) => node.props.id === "signed-distribution-explanation"),
+    "ungraded written explanation is keyboard-accessible after manipulation");
   nodes(render()).find((node) => node.props.id === "signed-distribution-coefficient").props.onChange({ target: { value: "2" } });
   nodes(render()).find((node) => node.props.id === "signed-distribution-constant").props.onChange({ target: { value: "-8" } });
   nodes(render()).find((node) => node.type === "form").props.onSubmit({ preventDefault() {} });
@@ -167,4 +174,18 @@ test("actual handlers announce sign feedback and emit a bounded dropped-negative
   });
   assert.equal(interactionModule.isMathInteractionEvent(emitted.at(-1)), true);
   assert.equal(interactionModule.isMathInteractionEvent({ ...emitted.at(-1), correct: true }), false);
+
+  // Correct guided work enables only an explicit transfer handoff, not mastery credit.
+  nodes(render()).find((node) => node.props.id === "signed-distribution-coefficient").props.onChange({ target: { value: "-2" } });
+  nodes(render()).find((node) => node.props.id === "signed-distribution-constant").props.onChange({ target: { value: "8" } });
+  nodes(render()).find((node) => node.type === "form").props.onSubmit({ preventDefault() {} });
+  assert.ok(nodes(render()).some((node) => typeof node.props.children === "string" &&
+    node.props.children.includes("authorized assessment")));
+  nodes(render()).find((node) => node.props.id === "signed-distribution-constant").props.onChange({ target: { value: "5" } });
+  assert.equal(nodes(render()).some((node) => typeof node.props.children === "string" &&
+    node.props.children.includes("authorized assessment")), false, "edits invalidate success");
+  nodes(render()).find((node) => node.type === "button" && node.props.children === "Try a new prediction").props.onClick();
+  assert.equal(nodes(render()).some((node) => node.type === playerModule.PedagogicalAnimation), false);
+  assert.equal(nodes(render()).some((node) => node.type === "form"), false);
+  assert.equal(nodes(render()).some((node) => node.props.id === "signed-distribution-explanation"), false);
 });
