@@ -261,7 +261,7 @@ def transition(db: sqlite3.Connection, item_id: str, status: str,
 
 def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
                now_epoch: int, ttl_seconds: int = 300,
-               max_attempts: int = 3) -> dict | None:
+               max_attempts: int | None = None) -> dict | None:
     """Atomically claim eligible queued work (offline SQLite prototype only).
 
     Lease token monotonically increases across retries; a stale worker cannot
@@ -270,13 +270,14 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
     if (not isinstance(owner, str) or not owner.strip() or len(owner) > 120
             or type(now_epoch) is not int or now_epoch < 0
             or type(ttl_seconds) is not int or not 30 <= ttl_seconds <= 3600
-            or type(max_attempts) is not int or not 1 <= max_attempts <= 20):
+            or (max_attempts is not None and (type(max_attempts) is not int
+                                              or not 1 <= max_attempts <= 20))):
         raise ValueError("invalid lease request")
     with _atomic(db):
         exhausted = db.execute("""SELECT w.id FROM work_items w
             JOIN worker_leases l ON l.work_id=w.id
             WHERE w.program_id=? AND w.status='QUEUED'
-              AND l.expires_at <= ? AND l.attempt_count >= ?""",
+              AND l.expires_at <= ? AND l.attempt_count >= COALESCE(?, l.max_attempts)""",
               (program_id, now_epoch, max_attempts)).fetchall()
         for (item_id,) in exhausted:
             db.execute("""UPDATE work_items SET status='BLOCKED_RETRY_EXHAUSTED',
@@ -287,16 +288,17 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
                 "BLOCKED_RETRY_EXHAUSTED", "offline-planner",
                 "prototype://retry-exhausted"))
         row = db.execute("""
-          SELECT w.id, l.fencing_token, l.attempt_count
+          SELECT w.id, l.fencing_token, l.attempt_count, l.max_attempts
           FROM work_items w LEFT JOIN worker_leases l ON l.work_id=w.id
           WHERE w.program_id=? AND w.status='QUEUED'
             AND (l.work_id IS NULL OR l.expires_at <= ?)
-            AND (l.work_id IS NULL OR l.attempt_count < ?)
+            AND (l.work_id IS NULL OR l.attempt_count < COALESCE(?, l.max_attempts))
           ORDER BY w.grade,w.course_code,w.expectation_code LIMIT 1
         """, (program_id, now_epoch, max_attempts)).fetchone()
         if row is None:
             return None
-        work_id, old_token, attempts = row
+        work_id, old_token, attempts, stored_budget = row
+        budget = max_attempts if max_attempts is not None else (stored_budget or 3)
         token = (old_token or 0) + 1
         db.execute("""
           INSERT INTO worker_leases(work_id,owner,fencing_token,expires_at,attempt_count,
@@ -307,7 +309,7 @@ def claim_next(db: sqlite3.Connection, program_id: str, owner: str,
             expires_at=excluded.expires_at, attempt_count=excluded.attempt_count,
             max_attempts=excluded.max_attempts
         """, (work_id, owner, token, now_epoch + ttl_seconds, (attempts or 0) + 1,
-              max_attempts))
+              budget))
         return {"work_id": work_id, "owner": owner, "fencing_token": token,
                 "expires_at": now_epoch + ttl_seconds, "attempt": (attempts or 0) + 1,
                 "worker_invoked": False, "execution_authorized": False,
