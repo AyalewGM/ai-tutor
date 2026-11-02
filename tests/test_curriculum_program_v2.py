@@ -303,3 +303,24 @@ def test_status_and_preview_use_each_leases_stored_retry_budget(tmp_path):
         assert next_task(db, program["program_id"], 130) is None
         with pytest.raises(ValueError):
             operator_status(db, program["program_id"], now_epoch=130, max_attempts=0)
+
+
+def test_claim_preview_and_status_agree_on_stored_retry_budget(tmp_path):
+    with connect(tmp_path / "mixed-budget.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        pid = program["program_id"]
+        for now in (100, 131, 162):
+            assert claim_next(db, pid, "w", now, ttl_seconds=30, max_attempts=5)
+        assert next_task(db, pid, 193) is not None
+        lease = claim_next(db, pid, "w", 193, ttl_seconds=30)
+        assert lease["attempt"] == 4
+        assert db.execute("SELECT max_attempts FROM worker_leases").fetchone()[0] == 5
+    with connect(tmp_path / "one-budget.db") as db:
+        program = register_goal(db, "Ontario mathematics Grades 9-12")
+        import_manifest(db, program["program_id"], sample_manifest())
+        pid = program["program_id"]
+        assert claim_next(db, pid, "w", 100, ttl_seconds=30, max_attempts=1)
+        assert next_task(db, pid, 130) is None
+        assert claim_next(db, pid, "w", 130) is None
+        assert operator_status(db, pid, now_epoch=130)["counts"]["BLOCKED_RETRY_EXHAUSTED"] == 1
