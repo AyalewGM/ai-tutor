@@ -739,7 +739,7 @@ def test_clear_my_writing_does_not_reerase_prior_erased_marks(family):
 
 
 def test_board_management_parent_rename_trash_restore_and_private_visibility(family):
-    client, factory, child, sibling, other_token, _ = family
+    client, factory, child, _sibling, other_token, _ = family
     path = create_board(client, child)
     board_id = path.rsplit("/", 1)[-1]
     renamed = client.post(path + "/rename", json={"name": "  Algebra evening  "})
@@ -779,7 +779,7 @@ def test_board_management_parent_rename_trash_restore_and_private_visibility(fam
 
 
 def test_parent_clear_entire_board_is_durable_idempotent_and_revision_locked(family):
-    client, factory, child, sibling, other_token, _ = family
+    client, factory, child, sibling, _other_token, _ = family
     path = create_board(client, child)
     sibling_path = create_board(client, sibling)
     parent_mark = mark()
