@@ -450,6 +450,11 @@ export default function LearnTogether() {
         .then(async (values) => {
           if (disposed) return;
           setBoards(values);
+          // A parent must still be able to recover a board after deleting
+          // their LAST active board. Learners cannot browse family Trash.
+          void api<Board[]>("/together/boards/trash")
+            .then((trash) => { if (!disposed) setTrashedBoards(trash); })
+            .catch(() => { if (!disposed) setTrashedBoards([]); });
           if (!values.length || values[0].author.startsWith("parent:")) {
             try {
               const values =
