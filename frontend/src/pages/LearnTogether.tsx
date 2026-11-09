@@ -107,6 +107,30 @@ export default function LearnTogether() {
   const ingest = useRef<(batch: Mark[]) => void>(() => {});
   const author = useRef("");
 
+  async function newBlankPage() {
+    if (!board || board.closed || !ready || uploading || pending.length ||
+        managingBoard || clearing) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = 1600;
+    canvas.height = 1000;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      setError("This browser cannot create a new page.");
+      return;
+    }
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.85),
+    );
+    if (!blob) {
+      setError("Unable to create a blank page.");
+      return;
+    }
+    await uploadPhoto(new File([blob], "blank-worksheet.jpg", { type: "image/jpeg" }),
+      crypto.randomUUID());
+  }
+
   // Board management uses parent-authorized server endpoints only; never
   // erase another participant's marks through client-side filtering.
   async function refreshBoardList() {
@@ -676,8 +700,8 @@ export default function LearnTogether() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-6xl p-4 space-y-4">
-        <h1 className="text-2xl font-bold">Learn Together</h1>
+      <main className="mx-auto max-w-[1600px] p-4 space-y-4">
+        <h1 className="text-3xl font-bold text-violet-950">Learn Together</h1>
         <p className="text-sm text-muted-foreground">
           A private family whiteboard. Work here is guided practice and does not
           earn independent mastery credit.
@@ -846,7 +870,7 @@ export default function LearnTogether() {
                 </button>
               </div>
             </section>}
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap gap-2 items-center rounded-xl border bg-white p-3 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
               <button
                 className={button}
                 aria-pressed={tool === "pen"}
@@ -915,7 +939,34 @@ export default function LearnTogether() {
                 </button>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <nav aria-label="Board pages" className="rounded-xl border bg-white p-3 shadow-sm space-y-2">
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
+                <button className={button} type="button" disabled={disabled || uploading || pages.length >= 10}
+                  onClick={() => void newBlankPage()}>+ New blank page</button>
+              </div>
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
+                  className={"min-w-32 rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
+                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
+                  <span className="block text-xs text-muted-foreground">Base page</span>
+                  <span className="font-medium">Blank page</span>
+                </button>
+                {pages.map((page, index) => (
+                  <button key={page.operation_id} type="button"
+                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
+                    className={"min-w-32 rounded-xl border p-2 text-left " +
+                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
+                    disabled={!ready || pending.length > 0}
+                    onClick={() => changePage(page.operation_id)}>
+                    <img className="mb-1 h-16 w-24 rounded border object-contain"
+                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
+                    <span className="font-medium">Page {index + 1}</span>
+                  </button>
+                ))}
+              </div>
+            </nav>
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3">
               <label>
                 Worksheet page{" "}
                 <select
