@@ -78,7 +78,7 @@ def authorized(db, cookies, board_id, *, lock=False):
     query = select(CollaborationBoard).where(CollaborationBoard.id == board_id)
     board = db.scalar(query.with_for_update() if lock else query)
     student = db.get(Student, board.student_id) if board else None
-    if not board or not student or not student.active or student.parent_id != board.owner_id:
+    if not board or board.deleted_at is not None or not student or not student.active or student.parent_id != board.owner_id:
         raise HTTPException(404, "Board not found")
     if (role == "parent" and subject != board.owner_id) or (
         role == "learner" and subject != board.student_id
@@ -90,6 +90,8 @@ def authorized(db, cookies, board_id, *, lock=False):
 def metadata(board, author):
     return {
         "id": str(board.id),
+        "name": board.name,
+        "deleted": board.deleted_at is not None,
         "student_id": str(board.student_id),
         "closed": board.closed,
         "revision": board.revision,
@@ -119,7 +121,8 @@ def list_boards(request: Request, db: Db):
     query = (
         select(CollaborationBoard)
         .join(Student, Student.id == CollaborationBoard.student_id)
-        .where(Student.active.is_(True), Student.parent_id == CollaborationBoard.owner_id)
+        .where(Student.active.is_(True), Student.parent_id == CollaborationBoard.owner_id,
+               CollaborationBoard.deleted_at.is_(None))
     )
     query = (
         query.where(CollaborationBoard.owner_id == subject)
@@ -130,6 +133,66 @@ def list_boards(request: Request, db: Db):
         metadata(b, f"{role}:{subject}")
         for b in db.scalars(query.order_by(CollaborationBoard.created_at.desc()).limit(50))
     ]
+
+
+@router.get("/boards/trash")
+def trashed_boards(request: Request, db: Db):
+    role, subject = identity(db, request.cookies)
+    if role != "parent":
+        raise HTTPException(403, "Only the parent can manage board trash")
+    return [
+        metadata(board, f"parent:{subject}")
+        for board in db.scalars(
+            select(CollaborationBoard)
+            .where(CollaborationBoard.owner_id == subject,
+                   CollaborationBoard.deleted_at.is_not(None))
+            .order_by(CollaborationBoard.created_at.desc()).limit(50)
+        )
+    ]
+
+
+def parent_board(db, cookies, board_id, *, allow_deleted=False):
+    role, subject = identity(db, cookies)
+    board = db.scalar(select(CollaborationBoard).where(
+        CollaborationBoard.id == board_id).with_for_update())
+    if (role != "parent" or not board or board.owner_id != subject
+            or (board.deleted_at is not None and not allow_deleted)):
+        raise HTTPException(404, "Board not found")
+    return board, f"parent:{subject}"
+
+
+class RenameBoard(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: str = Field(min_length=1, max_length=100)
+
+
+@router.post("/boards/{board_id}/rename")
+def rename_board(board_id: uuid.UUID, payload: RenameBoard, request: Request, db: Db):
+    board, author = parent_board(db, request.cookies, board_id)
+    title = payload.name.strip()
+    if not title:
+        raise HTTPException(422, "Board name required")
+    board.name = title
+    db.commit()
+    return metadata(board, author)
+
+
+@router.post("/boards/{board_id}/trash")
+def trash_board(board_id: uuid.UUID, request: Request, db: Db):
+    board, author = parent_board(db, request.cookies, board_id)
+    board.deleted_at = datetime.now(UTC)
+    db.commit()
+    return metadata(board, author)
+
+
+@router.post("/boards/{board_id}/restore")
+def restore_board(board_id: uuid.UUID, request: Request, db: Db):
+    board, author = parent_board(db, request.cookies, board_id, allow_deleted=True)
+    if board.deleted_at is None:
+        raise HTTPException(409, "Board is not in trash")
+    board.deleted_at = None
+    db.commit()
+    return metadata(board, author)
 
 
 @router.get("/boards/{board_id}")
@@ -363,6 +426,68 @@ def clear_my_writing(board_id: uuid.UUID, payload: ClearMyWriting, request: Requ
         "cleared_operation_ids": ids,
         "idempotent_replay": False,
     }
+
+
+class ClearWholeBoard(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    operation_id: uuid.UUID
+    expected_revision: int = Field(ge=0)
+
+
+@router.post("/boards/{board_id}/clear-board")
+def clear_entire_board(board_id: uuid.UUID, payload: ClearWholeBoard,
+                       request: Request, db: Db):
+    """Parent-only, revision-locked, durable erase events across every page.
+
+    Imported worksheet photos/pages are deliberately retained. Receipts make
+    identical retries safe and reject changed requests.
+    """
+    board, author = parent_board(db, request.cookies, board_id)
+    receipt_author = "all:" + author
+    receipt = db.scalar(select(BoardClearReceipt).where(
+        BoardClearReceipt.board_id == board_id,
+        BoardClearReceipt.operation_id == payload.operation_id,
+    ))
+    if receipt is not None:
+        if (receipt.author != receipt_author
+                or receipt.expected_revision != payload.expected_revision):
+            raise HTTPException(409, "IDEMPOTENCY_CONFLICT")
+        return {"result_revision": receipt.result_revision,
+                "cleared_count": len(receipt.target_ids), "idempotent_replay": True}
+    if board.closed:
+        raise HTTPException(409, "BOARD_CLOSED")
+    if board.revision != payload.expected_revision:
+        raise HTTPException(409, "STALE_BOARD_REVISION")
+    rows = list(db.scalars(select(BoardOperation).where(
+        BoardOperation.board_id == board_id).order_by(BoardOperation.revision)))
+    hidden = {str(row.payload.get("target")) for row in rows
+              if row.payload.get("kind") in {"erase", "undo"}}
+    targets = [row for row in rows
+               if row.payload.get("kind") in {"stroke", "text"}
+               and str(row.operation_id) not in hidden]
+    if board.revision + len(targets) > 10000:
+        raise HTTPException(409, "BOARD_FULL")
+    for index, target in enumerate(targets, start=1):
+        operation_id = uuid.uuid5(payload.operation_id, str(target.operation_id))
+        page_id = target.payload.get("page_id")
+        db.add(BoardOperation(
+            board_id=board_id, operation_id=operation_id,
+            revision=board.revision + index, author=author,
+            payload={"kind": "erase", "points": [], "text": "", "x": 40, "y": 60,
+                     "target": str(target.operation_id),
+                     **({"page_id": page_id} if page_id else {})},
+        ))
+    board.revision += len(targets)
+    db.add(BoardClearReceipt(
+        board_id=board_id, operation_id=payload.operation_id,
+        author=receipt_author, page_id=None,
+        expected_revision=payload.expected_revision,
+        result_revision=board.revision,
+        target_ids=[str(row.operation_id) for row in targets],
+    ))
+    db.commit()
+    return {"result_revision": board.revision, "cleared_count": len(targets),
+            "idempotent_replay": False}
 
 
 @router.post("/boards/{board_id}/photos")
