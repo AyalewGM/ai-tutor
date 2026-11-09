@@ -1,6 +1,7 @@
 """Recoverable board trash and a user-facing board title."""
 
 import sqlalchemy as sa
+
 from alembic import op
 
 revision = "0040_board_management"
