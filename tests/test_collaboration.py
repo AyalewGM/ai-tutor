@@ -834,3 +834,46 @@ def test_parent_clear_entire_board_is_durable_idempotent_and_revision_locked(fam
         assert len(db.scalars(select(BoardOperation)).all()) == 4
     # Both family authors' old ink stays in durable history, but is hidden
     # through ordered erase operations; no assessment/mastery data is touched.
+
+
+def test_board_management_denies_deactivated_or_reassigned_child(family):
+    client, factory, child, _sibling, other_token, _ = family
+    path = create_board(client, child)
+    assert client.post(path + "/trash").status_code == 200
+    with factory() as db:
+        student = db.get(Student, child)
+        student.active = False
+        db.commit()
+    assert client.get("/api/v1/together/boards/trash").json() == []
+    assert client.post(path + "/restore").status_code == 404
+    assert client.post(path + "/rename", json={"name": "Denied"}).status_code == 404
+    assert client.post(path + "/clear-board", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 0,
+    }).status_code == 404
+    with factory() as db:
+        student = db.get(Student, child)
+        student.active = True
+        other = db.scalar(select(User).where(User.email == "other@example.test"))
+        student.parent_id = other.id
+        db.commit()
+    # The former owner's cookie must not expose the child's board or Trash.
+    assert client.get("/api/v1/together/boards/trash").json() == []
+    assert client.post(path + "/restore").status_code == 404
+    client.cookies.set(SESSION_COOKIE, other_token)
+    # Reassignment does not transfer ownership of historical board content.
+    assert client.post(path + "/restore").status_code == 404
+
+
+def test_existing_live_socket_closes_after_board_trashed(family):
+    client, _factory, child, *_ = family
+    path = create_board(client, child)
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as socket:
+        assert "operations" in socket.receive_json()
+        assert client.post(path + "/trash").status_code == 200
+        socket.send_json({"kind": "pointer", "point": {"x": 15, "y": 20}})
+        with pytest.raises(WebSocketDisconnect) as error:
+            while True:
+                socket.receive_json()
+        assert error.value.code == 1008
