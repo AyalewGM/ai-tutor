@@ -144,7 +144,10 @@ def trashed_boards(request: Request, db: Db):
         metadata(board, f"parent:{subject}")
         for board in db.scalars(
             select(CollaborationBoard)
+            .join(Student, Student.id == CollaborationBoard.student_id)
             .where(CollaborationBoard.owner_id == subject,
+                   Student.parent_id == subject,
+                   Student.active.is_(True),
                    CollaborationBoard.deleted_at.is_not(None))
             .order_by(CollaborationBoard.created_at.desc()).limit(50)
         )
@@ -155,7 +158,9 @@ def parent_board(db, cookies, board_id, *, allow_deleted=False):
     role, subject = identity(db, cookies)
     board = db.scalar(select(CollaborationBoard).where(
         CollaborationBoard.id == board_id).with_for_update())
+    student = db.get(Student, board.student_id) if board else None
     if (role != "parent" or not board or board.owner_id != subject
+            or not student or not student.active or student.parent_id != subject
             or (board.deleted_at is not None and not allow_deleted)):
         raise HTTPException(404, "Board not found")
     return board, f"parent:{subject}"
@@ -603,6 +608,15 @@ async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
             }
             return operations(db, board_id, cursor), board.closed, author, pages
 
+    def recheck_live_access():
+        # Ephemeral messages are not durable board operations: authorization
+        # must be refreshed after trash, pass revocation or family deactivation.
+        with SessionLocal() as db:
+            board, author = authorized(db, socket.cookies, board_id)
+            if board.closed:
+                raise HTTPException(409, "Board closed")
+            return author
+
     async def send(message):
         async with send_lock:
             await asyncio.wait_for(socket.send_json(message), timeout=2)
@@ -656,12 +670,14 @@ async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
                     ):
                         raise ValueError("Live worksheet scope unavailable")
                     if channel:
-                        # Source/author are always supplied by the authenticated server.
+                        # A previously authorized socket must not rely on a cached
+                        # parent/learner identity after board trash or revocation.
+                        current_author = await asyncio.to_thread(recheck_live_access)
                         await channel.publish(
                             {
                                 **frame.model_dump(mode="json"),
                                 "source": source,
-                                "author": scope["author"],
+                                "author": current_author,
                             }
                         )
 
@@ -669,6 +685,7 @@ async def live_board(socket: WebSocket, board_id: uuid.UUID, after: int = 0):
                 while True:
                     event = await channel.receive()
                     if event and event.get("source") != source:
+                        await asyncio.to_thread(recheck_live_access)
                         await send({"ephemeral": event})
 
             tasks = [asyncio.create_task(replay()), asyncio.create_task(receive())]
