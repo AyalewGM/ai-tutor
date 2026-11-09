@@ -17,6 +17,8 @@ class CollaborationBoard(Base):
     )
     owner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
     revision: Mapped[int] = mapped_column(Integer, default=0)
+    name: Mapped[str] = mapped_column(String(100), default="Family whiteboard")
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     closed: Mapped[bool] = mapped_column(default=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)
