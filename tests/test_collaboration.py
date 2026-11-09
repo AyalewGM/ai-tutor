@@ -240,6 +240,11 @@ def test_migration_round_trip_and_learner_erasure_cascade():
     )
     migration = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(migration)
+    new_spec = importlib.util.spec_from_file_location(
+        "board_management_migration", "alembic/versions/0040_board_management.py"
+    )
+    new_migration = importlib.util.module_from_spec(new_spec)
+    new_spec.loader.exec_module(new_migration)
     engine = create_engine("sqlite://")
     with engine.begin() as connection:
         connection.exec_driver_sql("PRAGMA foreign_keys=ON")
@@ -250,6 +255,13 @@ def test_migration_round_trip_and_learner_erasure_cascade():
         connection.exec_driver_sql("INSERT INTO students VALUES (?)", (child_id.hex,))
         with Operations.context(MigrationContext.configure(connection)):
             migration.upgrade()
+            # Exercise the historical table before upgrading to the current ORM.
+            # The old 0036 table does not have name/deleted_at columns.
+            old_columns = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert "name" not in old_columns
+            new_migration.upgrade()
+            new_columns = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert {"name", "deleted_at"} <= new_columns
             connection.execute(
                 sa.insert(CollaborationBoard),
                 {"id": board_id, "student_id": child_id, "owner_id": user_id},
@@ -269,9 +281,13 @@ def test_migration_round_trip_and_learner_erasure_cascade():
                 connection.scalar(sa.select(sa.func.count()).select_from(CollaborationBoard)) == 0
             )
             assert connection.scalar(sa.select(sa.func.count()).select_from(BoardOperation)) == 0
+            new_migration.downgrade()
+            downgraded = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert "name" not in downgraded and "deleted_at" not in downgraded
             migration.downgrade()
             assert "collaboration_boards" not in sa.inspect(connection).get_table_names()
             migration.upgrade()
+            new_migration.upgrade()
     engine.dispose()
 
 
