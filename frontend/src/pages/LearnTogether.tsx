@@ -41,7 +41,8 @@ type Board = {
 const color = (author?: string) =>
   author?.startsWith("parent:") ? "#6d28d9" : "#0369a1";
 const button =
-  "rounded-lg border px-3 py-2 disabled:opacity-40 bg-white text-slate-900";
+  "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 shadow-sm transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40";
+const activeTool = "border-violet-400 bg-violet-100 text-violet-950";
 
 export default function LearnTogether() {
   const { boardId } = useParams();
@@ -700,12 +701,19 @@ export default function LearnTogether() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-[1600px] p-4 space-y-4">
-        <h1 className="text-3xl font-bold text-violet-950">Learn Together</h1>
-        <p className="text-sm text-muted-foreground">
-          A private family whiteboard. Work here is guided practice and does not
-          earn independent mastery credit.
-        </p>
+      <main className="mx-auto max-w-[1800px] space-y-3 bg-slate-50/60 p-3 sm:p-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-violet-950 sm:text-3xl">Learn Together</h1>
+            <p className="text-xs text-slate-600 sm:text-sm">
+              A private family whiteboard for homework and practice. Guided work does not earn independent mastery credit.
+            </p>
+          </div>
+          {boardId && <div role="status" className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
+            {liveAvailable ? "Connected · autosaving" : status}
+          </div>}
+        </div>
         {error && (
           <p role="alert" className="text-red-700">
             {error}
@@ -776,10 +784,11 @@ export default function LearnTogether() {
           </>
         ) : (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-white p-3 shadow-sm">
-              <div className="flex flex-wrap items-center gap-2">
-                <label className="font-semibold" htmlFor="board-picker">Open board</label>
-                <select id="board-picker" className={button} value={boardId}
+            <div className="relative rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm sm:p-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
+                <label className="sr-only" htmlFor="board-picker">Open board</label>
+                <select id="board-picker" className={`${button} w-full max-w-80 font-semibold sm:w-auto`} value={boardId}
                   disabled={managingBoard || pending.length > 0}
                   onChange={(event) => navigate("/together/" + event.target.value)}>
                   {!boards.some((item) => item.id === boardId) &&
@@ -788,34 +797,34 @@ export default function LearnTogether() {
                     <option key={item.id} value={item.id}>{item.name}</option>)}
                 </select>
                 {board?.author.startsWith("parent:") && (
-                  <button type="button" className="rounded-lg bg-violet-700 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                  <button type="button" className="inline-flex min-h-10 items-center rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:opacity-40"
                     disabled={managingBoard || pending.length > 0}
                     onClick={() => { setNewBoardOpen(true); setNewBoardChild(board.student_id); }}>
                     + New board
                   </button>
                 )}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Link to="/together" className={button}>All boards</Link>
                 {board?.author.startsWith("parent:") && (
                   <button type="button" className={button} aria-expanded={boardMenu}
                     onClick={() => setBoardMenu((value) => !value)}>
-                    Board actions
+                    Board actions <span aria-hidden="true">▾</span>
                   </button>
                 )}
               </div>
-            </div>
-            {boardMenu && board?.author.startsWith("parent:") && (
-              <div className="ml-auto max-w-md space-y-2 rounded-xl border bg-white p-4 shadow-md" role="group" aria-label="Board actions">
-                <button type="button" className={button}
+              </div>
+              {boardMenu && board?.author.startsWith("parent:") && (
+                <div className="absolute right-2 top-full z-30 mt-1 w-[min(21rem,calc(100vw-2rem))] space-y-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="group" aria-label="Board actions">
+                <button type="button" className={`${button} w-full justify-start`}
                   onClick={() => { setBoardTitle(board.name); setBoardAction("rename"); setBoardMenu(false); }}>
                   Rename board
                 </button>
-                <button type="button" className={button}
+                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
                   disabled={!canClear} onClick={() => { setBoardAction("clear"); setBoardMenu(false); }}>
                   Clear entire board
                 </button>
-                <button type="button" className="rounded-lg border border-red-600 px-3 py-2 text-red-700 disabled:opacity-40"
+                <button type="button" className={`${button} w-full justify-start border-red-200 bg-red-50 text-red-800`}
                   disabled={!canClear || !ready}
                   onClick={() => { setBoardAction("delete"); setBoardMenu(false); }}>
                   Delete board
@@ -824,8 +833,9 @@ export default function LearnTogether() {
                   Clearing removes all saved pen and text marks, including other participants' marks.
                   Imported worksheet pages stay. Deleted boards move to Trash for recovery.
                 </p>
-              </div>
-            )}
+                </div>
+              )}
+            </div>
             {newBoardOpen && <section className="rounded-xl border bg-violet-50 p-4 space-y-3"
               aria-label="Create new family board">
               <h2 className="font-semibold">New board</h2>
@@ -870,16 +880,47 @@ export default function LearnTogether() {
                 </button>
               </div>
             </section>}
-            <div className="flex flex-wrap gap-2 items-center rounded-xl border bg-white p-3 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
+            <div className="grid min-h-[65vh] items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
+              <aside className="min-w-0" aria-label="Page navigation">
+            <nav aria-label="Board pages" className="space-y-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
+                <button className={`${button} w-full`} type="button" disabled={disabled || uploading || pages.length >= 10}
+                  onClick={() => void newBlankPage()}>+ New blank page</button>
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
+                  className={"min-w-32 w-full rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
+                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
+                  <span className="block text-xs text-muted-foreground">Base page</span>
+                  <span className="font-medium">Blank page</span>
+                </button>
+                {pages.map((page, index) => (
+                  <button key={page.operation_id} type="button"
+                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
+                    className={"min-w-32 w-full rounded-xl border p-2 text-left lg:flex lg:items-center lg:gap-2 " +
+                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
+                    disabled={!ready || pending.length > 0}
+                    onClick={() => changePage(page.operation_id)}>
+                    <img className="mb-1 h-14 w-20 shrink-0 rounded border object-contain lg:mb-0"
+                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
+                    <span className="font-medium">Page {index + 1}</span>
+                  </button>
+                ))}
+              </div>
+            </nav>
+              </aside>
+              <section className="min-w-0 space-y-3" aria-label="Whiteboard editor">
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
               <button
-                className={button}
+                className={`${button} ${tool === "pen" ? activeTool : ""}`}
                 aria-pressed={tool === "pen"}
                 onClick={() => setTool("pen")}
               >
                 Pen
               </button>
               <button
-                className={button}
+                className={`${button} ${tool === "pointer" ? activeTool : ""}`}
                 disabled={disabled || !liveAvailable}
                 aria-pressed={tool === "pointer"}
                 onClick={() => setTool("pointer")}
@@ -887,12 +928,18 @@ export default function LearnTogether() {
                 Live pointer
               </button>
               <button
-                className={button}
+                className={`${button} ${tool === "text" ? activeTool : ""}`}
                 aria-pressed={tool === "text"}
                 onClick={() => setTool("text")}
               >
                 Type
               </button>
+              <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
+                disabled={disabled} aria-pressed={tool === "erase"}
+                onClick={() => setTool("erase")}>Eraser</button>
+              <button type="button" className={`${button} ${tool === "pan" ? activeTool : ""}`}
+                aria-pressed={tool === "pan"} onClick={() => setTool("pan")}>Move</button>
+              <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
               <button
                 className={button}
                 disabled={disabled || !lastOwn}
@@ -939,35 +986,9 @@ export default function LearnTogether() {
                 </button>
               )}
             </div>
-            <nav aria-label="Board pages" className="rounded-xl border bg-white p-3 shadow-sm space-y-2">
-              <div className="flex flex-wrap justify-between items-center gap-2">
-                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
-                <button className={button} type="button" disabled={disabled || uploading || pages.length >= 10}
-                  onClick={() => void newBlankPage()}>+ New blank page</button>
-              </div>
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
-                  className={"min-w-32 rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
-                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
-                  <span className="block text-xs text-muted-foreground">Base page</span>
-                  <span className="font-medium">Blank page</span>
-                </button>
-                {pages.map((page, index) => (
-                  <button key={page.operation_id} type="button"
-                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
-                    className={"min-w-32 rounded-xl border p-2 text-left " +
-                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
-                    disabled={!ready || pending.length > 0}
-                    onClick={() => changePage(page.operation_id)}>
-                    <img className="mb-1 h-16 w-24 rounded border object-contain"
-                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
-                    <span className="font-medium">Page {index + 1}</span>
-                  </button>
-                ))}
-              </div>
-            </nav>
-            <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3">
-              <label>
+
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+              <label className="sr-only">
                 Worksheet page{" "}
                 <select
                   aria-label="Worksheet page"
@@ -991,14 +1012,7 @@ export default function LearnTogether() {
               >
                 Import PDF
               </button>
-              <button
-                className={button}
-                disabled={disabled}
-                aria-pressed={tool === "erase"}
-                onClick={() => setTool("erase")}
-              >
-                Eraser (my marks)
-              </button>
+
               <button
                 type="button"
                 className={button}
@@ -1021,13 +1035,7 @@ export default function LearnTogether() {
                   }}
                 />
               </label>
-              <button
-                className={button}
-                aria-pressed={tool === "pan"}
-                onClick={() => setTool("pan")}
-              >
-                Move page
-              </button>
+
               <button
                 className={button}
                 aria-label="Zoom out"
@@ -1101,22 +1109,15 @@ export default function LearnTogether() {
                 Retry photo upload
               </button>
             )}
-            <p className="text-sm">
-              Photos are saved privately with this board. Use JPEG or PNG, up to
-              5 MB. Import a PDF page using the Import PDF button.
-            </p>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Supported worksheet files and privacy</summary>
+              Photos are private to this board. JPEG/PNG up to 5 MB; PDF imports one page at a time.
+            </details>
             {share && <p role="status">{share}</p>}
-            <p role="status" className="text-sm">
-              {status}
-              {pending.length
-                ? ` · ${pending.length} marks waiting to save`
-                : ""}
-            </p>
-            <p role="status" className="text-sm">
-              {liveAvailable
-                ? "Live pointer and handwriting connected"
-                : "Live previews unavailable; completed marks still save"}
-            </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600" role="status">
+              <span>{status}{pending.length ? ` · ${pending.length} marks waiting to save` : ""}</span>
+              <span>{liveAvailable ? "Live pointer and ink connected" : "Live previews unavailable; finished marks still save"}</span>
+            </div>
             {tool === "pointer" && (
               <p className="text-sm">
                 Move or tap the board to point. Keyboard: focus the board and
@@ -1156,16 +1157,16 @@ export default function LearnTogether() {
                 Add text to board
               </button>
             )}
-            <p className="text-sm">
-              Parent: purple · Child: blue. Scroll outside the board to move the
-              page. Rotate your device for more writing space.
-            </p>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Board controls and participant colors</summary>
+              Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
+            </details>
             <div
-              className="overflow-auto rounded-xl border bg-white"
+              className="overflow-auto rounded-2xl border border-slate-200 bg-white shadow-sm"
               tabIndex={0}
               role="region"
               aria-label="Whiteboard viewport"
-              style={{ maxHeight: "75vh" }}
+              style={{ height: "min(74vh, 780px)", minHeight: "430px" }}
               onPointerDown={(event) => {
                 if (tool !== "pan" || event.pointerType !== "mouse") return;
                 event.preventDefault();
@@ -1532,10 +1533,11 @@ export default function LearnTogether() {
                 ))}
               </ul>
             </details>
-            <p className="text-sm">
-              Before leaving, wait until all marks are saved. For conversation,
-              use your usual voice calling app.
+            <p className="text-xs text-slate-600">
+              Before leaving, confirm that all marks have saved. Use your usual calling app for conversation.
             </p>
+              </section>
+            </div>
           </>
         )}
       </main>
