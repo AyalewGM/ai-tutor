@@ -1,5 +1,20 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Eraser,
+  FileDown,
+  Hand,
+  ImagePlus,
+  Maximize,
+  Minimize,
+  MousePointer2,
+  Pen,
+  Redo2,
+  Type,
+  Undo2,
+} from "lucide-react";
 import { api, ApiError, post, postForm } from "../api";
 import { inkPath, previewPoints } from "../liveInk";
 import NavBar from "../components/NavBar";
@@ -43,6 +58,13 @@ const color = (author?: string) =>
 const button =
   "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 shadow-sm transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40";
 const activeTool = "border-violet-400 bg-violet-100 text-violet-950";
+
+function savedAgo(timestamp: number, now: number) {
+  const seconds = Math.max(0, Math.floor((now - timestamp) / 1000));
+  if (seconds < 15) return "Autosaved just now";
+  if (seconds < 60) return `Autosaved ${seconds}s ago`;
+  return `Autosaved ${Math.floor(seconds / 60)}m ago`;
+}
 
 export default function LearnTogether() {
   const { boardId } = useParams();
@@ -93,7 +115,11 @@ export default function LearnTogether() {
   const [share, setShare] = useState("");
   const [clearConfirm, setClearConfirm] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
+  const [now, setNow] = useState(Date.now());
+  const [fullscreen, setFullscreen] = useState(false);
   const photoInput = useRef<HTMLInputElement>(null);
+  const viewport = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const pointer = useRef<number | null>(null);
   const panStart = useRef<{
@@ -253,6 +279,15 @@ export default function LearnTogether() {
     });
   }
   useEffect(() => {
+    const tick = setInterval(() => setNow(Date.now()), 15000);
+    const onFullscreen = () => setFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onFullscreen);
+    return () => {
+      clearInterval(tick);
+      document.removeEventListener("fullscreenchange", onFullscreen);
+    };
+  }, []);
+  useEffect(() => {
     const timer = setInterval(
       () =>
         setPeers((old) =>
@@ -345,8 +380,10 @@ export default function LearnTogether() {
           ),
         ),
       );
+      const ownConfirmed = queue.current.some((m) => ids.has(m.operation_id));
       queue.current = queue.current.filter((m) => !ids.has(m.operation_id));
       persistQueue();
+      if (ownConfirmed) setLastSavedAt(Date.now());
       setPending([...queue.current]);
       const navigation = batch
         .filter((m) => (m.revision || 0) > previousRevision)
@@ -622,6 +659,7 @@ export default function LearnTogether() {
         ingest.current(batch);
       }
       uploadAttempt.current = null;
+      setLastSavedAt(Date.now());
       return true;
     } catch (err) {
       setError((err as Error).message);
@@ -654,6 +692,24 @@ export default function LearnTogether() {
   const ownVisibleCount = visible.filter(
     (m) => m.author === board?.author && (m.kind === "stroke" || m.kind === "text"),
   ).length;
+  const pageIndex = selectedPage
+    ? Math.max(0, pages.findIndex((p) => p.operation_id === selectedPage) + 1)
+    : 0;
+
+  function stepPage(direction: -1 | 1) {
+    const next = pageIndex + direction;
+    changePage(next === 0 ? "" : pages[next - 1].operation_id);
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    } else {
+      void viewport.current
+        ?.requestFullscreen()
+        .catch(() => setError("Full screen is not available in this browser."));
+    }
+  }
 
   async function clearMyWriting() {
     if (!boardId || !board || !canClear || ownVisibleCount === 0) return;
@@ -710,9 +766,16 @@ export default function LearnTogether() {
               A private family whiteboard for homework and practice. Guided work does not earn independent mastery credit.
             </p>
           </div>
-          {boardId && <div role="status" className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
-            {liveAvailable ? "Connected · autosaving" : status}
+          {boardId && <div className="flex flex-wrap items-center gap-2">
+            {lastSavedAt && (
+              <span role="status" className="text-xs text-slate-500">
+                {savedAgo(lastSavedAt, now)}
+              </span>
+            )}
+            <div role="status" className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
+              {liveAvailable ? "Connected · autosaving" : status}
+            </div>
           </div>}
         </div>
         {error && (
@@ -808,6 +871,14 @@ export default function LearnTogether() {
               <div className="flex flex-wrap items-center gap-2">
                 <Link to="/together" className={button}>All boards</Link>
               <button
+                type="button"
+                className={button}
+                disabled
+                title="Sharing controls are coming soon"
+              >
+                Share
+              </button>
+              <button
                 className={button}
                 onClick={async () => {
                   try {
@@ -820,7 +891,7 @@ export default function LearnTogether() {
                   }
                 }}
               >
-                Copy board link
+                Copy link
               </button>
                 {board?.author.startsWith("parent:") && (
                   <button type="button" className={button} aria-expanded={boardMenu}
@@ -836,15 +907,38 @@ export default function LearnTogether() {
                   onClick={() => { setBoardTitle(board.name); setBoardAction("rename"); setBoardMenu(false); }}>
                   Rename board
                 </button>
+                <button type="button" className={`${button} w-full justify-start`} disabled
+                  title="Board duplication is coming soon">
+                  Duplicate board
+                </button>
+                <button type="button" className={`${button} w-full justify-start`} disabled
+                  title="Board folders are coming soon">
+                  Move to folder…
+                </button>
+                <div className="border-t border-slate-200 pt-2 space-y-2">
+                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`} disabled
+                  title="Clearing a single page is coming soon">
+                  <span className="text-left">
+                    <span className="block font-medium">Clear page</span>
+                    <span className="block text-xs opacity-80">Erase everything on this page.</span>
+                  </span>
+                </button>
                 <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
                   disabled={!canClear} onClick={() => { setBoardAction("clear"); setBoardMenu(false); }}>
-                  Clear entire board
+                  <span className="text-left">
+                    <span className="block font-medium">Clear board</span>
+                    <span className="block text-xs opacity-80">Erase marks on all pages of this board.</span>
+                  </span>
                 </button>
                 <button type="button" className={`${button} w-full justify-start border-red-200 bg-red-50 text-red-800`}
                   disabled={!canClear || !ready}
                   onClick={() => { setBoardAction("delete"); setBoardMenu(false); }}>
-                  Delete board
+                  <span className="text-left">
+                    <span className="block font-medium">Delete board</span>
+                    <span className="block text-xs opacity-80">Remove this board from your account.</span>
+                  </span>
                 </button>
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Clearing removes all saved pen and text marks, including other participants' marks.
                   Imported worksheet pages stay. Deleted boards move to Trash for recovery.
@@ -871,6 +965,10 @@ export default function LearnTogether() {
                 </div>
               )}
             </div>
+            <p className="flex items-center gap-2 rounded-xl border border-violet-100 bg-violet-50 px-3 py-2 text-xs text-violet-900">
+              <span aria-hidden="true">✦</span>
+              <span><strong>Family board</strong> · A shared space for parents and kids to learn, practice, and do homework together.</span>
+            </p>
             {newBoardOpen && <section className="rounded-xl border bg-violet-50 p-4 space-y-3"
               aria-label="Create new family board">
               <h2 className="font-semibold">New board</h2>
@@ -921,7 +1019,7 @@ export default function LearnTogether() {
               <div className="flex flex-wrap justify-between items-center gap-2">
                 <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
                 <button className={`${button} w-full`} type="button" disabled={disabled || uploading || pages.length >= 10}
-                  onClick={() => void newBlankPage()}>+ New blank page</button>
+                  onClick={() => void newBlankPage()}>+ New page</button>
               </div>
               <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
                 <button type="button" aria-current={selectedPage === null ? "page" : undefined}
@@ -943,6 +1041,22 @@ export default function LearnTogether() {
                   </button>
                 ))}
               </div>
+              <details className="border-t border-slate-200 pt-2">
+                <summary className="cursor-pointer text-sm font-medium">Page actions</summary>
+                <div className="mt-2 space-y-2">
+                  <button type="button" className={`${button} w-full justify-start`} disabled
+                    title="Page duplication is coming soon">
+                    Duplicate page
+                  </button>
+                  <button type="button" className={`${button} w-full justify-start`} disabled
+                    title="Page deletion is coming soon">
+                    Delete page
+                  </button>
+                  <p className="text-xs text-slate-500">
+                    Page duplication and deletion are coming soon.
+                  </p>
+                </div>
+              </details>
             </nav>
               </aside>
               <section className="min-w-0 space-y-3" aria-label="Whiteboard editor">
@@ -952,7 +1066,17 @@ export default function LearnTogether() {
                 aria-pressed={tool === "pen"}
                 onClick={() => setTool("pen")}
               >
-                Pen
+                <Pen size={16} aria-hidden="true" /> Pen
+              </button>
+              <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
+                disabled={disabled} aria-label="Eraser (my marks)" aria-pressed={tool === "erase"}
+                onClick={() => setTool("erase")}><Eraser size={16} aria-hidden="true" /> Eraser</button>
+              <button
+                className={`${button} ${tool === "text" ? activeTool : ""}`}
+                aria-pressed={tool === "text"}
+                onClick={() => setTool("text")}
+              >
+                <Type size={16} aria-hidden="true" /> Type
               </button>
               <button
                 className={`${button} ${tool === "pointer" ? activeTool : ""}`}
@@ -960,24 +1084,15 @@ export default function LearnTogether() {
                 aria-pressed={tool === "pointer"}
                 onClick={() => setTool("pointer")}
               >
-                Live pointer
+                <MousePointer2 size={16} aria-hidden="true" /> Live pointer
               </button>
-              <button
-                className={`${button} ${tool === "text" ? activeTool : ""}`}
-                aria-pressed={tool === "text"}
-                onClick={() => setTool("text")}
-              >
-                Type
-              </button>
-              <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
-                disabled={disabled} aria-label="Eraser (my marks)" aria-pressed={tool === "erase"}
-                onClick={() => setTool("erase")}>Eraser</button>
               <button type="button" className={`${button} ${tool === "pan" ? activeTool : ""}`}
-                aria-pressed={tool === "pan"} aria-label="Move page" onClick={() => setTool("pan")}>Move</button>
+                aria-pressed={tool === "pan"} aria-label="Move page" onClick={() => setTool("pan")}><Hand size={16} aria-hidden="true" /> Move</button>
               <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
               <button
                 className={button}
                 disabled={disabled || !lastOwn}
+                aria-label="Undo my last mark"
                 onClick={() =>
                   enqueue({
                     operation_id: crypto.randomUUID(),
@@ -986,10 +1101,32 @@ export default function LearnTogether() {
                   })
                 }
               >
-                Undo my last mark
+                <Undo2 size={16} aria-hidden="true" /> Undo
               </button>
-
-
+              <button type="button" className={button} disabled
+                aria-label="Redo" title="Redo is not yet available">
+                <Redo2 size={16} aria-hidden="true" /> Redo
+              </button>
+              <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
+              <button
+                className={button}
+                disabled={disabled || uploading}
+                onClick={() => setShowPDF((value) => !value)}
+              >
+                <FileDown size={16} aria-hidden="true" /> Import PDF
+              </button>
+              <button type="button" className={button}
+                disabled={disabled || uploading} onClick={() => photoInput.current?.click()}>
+                <ImagePlus size={16} aria-hidden="true" /> Add homework photo
+              </button>
+              <input ref={photoInput} aria-label="Choose homework photo"
+                className="sr-only" type="file" accept="image/jpeg,image/png"
+                disabled={disabled || uploading}
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  if (file) void uploadPhoto(file, crypto.randomUUID());
+                  event.target.value = "";
+                }} />
             </div>
 
             <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
@@ -1011,53 +1148,12 @@ export default function LearnTogether() {
                 </select>
               </label>
               <button
-                className={button}
-                disabled={disabled || uploading}
-                onClick={() => setShowPDF((value) => !value)}
-              >
-                Import PDF
-              </button>
-
-              <button
                 type="button"
                 className={button}
                 disabled={!canClear || ownVisibleCount === 0}
                 onClick={() => setClearConfirm(true)}
               >
                 Clear My Writing
-              </button>
-              <button type="button" className={button}
-                disabled={disabled || uploading} onClick={() => photoInput.current?.click()}>
-                Add homework photo
-              </button>
-              <input ref={photoInput} aria-label="Choose homework photo"
-                className="sr-only" type="file" accept="image/jpeg,image/png"
-                disabled={disabled || uploading}
-                onChange={(event) => {
-                  const file = event.target.files?.[0];
-                  if (file) void uploadPhoto(file, crypto.randomUUID());
-                  event.target.value = "";
-                }} />
-
-              <button
-                className={button}
-                aria-label="Zoom out"
-                disabled={zoom <= 1}
-                onClick={() => setZoom((value) => Math.max(1, value - 0.5))}
-              >
-                −
-              </button>
-              <span aria-live="polite">{Math.round(zoom * 100)}%</span>
-              <button
-                className={button}
-                aria-label="Zoom in"
-                disabled={zoom >= 3}
-                onClick={() => setZoom((value) => Math.min(3, value + 0.5))}
-              >
-                +
-              </button>
-              <button className={button} onClick={() => setZoom(1)}>
-                Fit page
               </button>
             </div>
             {clearConfirm && (
@@ -1165,6 +1261,7 @@ export default function LearnTogether() {
               Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
             </details>
             <div
+              ref={viewport}
               className="overflow-auto rounded-2xl border border-slate-200 bg-white shadow-sm"
               tabIndex={0}
               role="region"
@@ -1505,6 +1602,65 @@ export default function LearnTogether() {
                   strokeLinecap="round"
                 />
               </svg>
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+              <div className="flex items-center gap-2" role="navigation" aria-label="Page position">
+                <button
+                  type="button"
+                  className={button}
+                  aria-label="Previous page"
+                  disabled={pageIndex <= 0 || !ready || pending.length > 0}
+                  onClick={() => stepPage(-1)}
+                >
+                  <ChevronLeft size={16} aria-hidden="true" />
+                </button>
+                <span aria-live="polite" className="min-w-24 text-center text-sm">
+                  Page {pageIndex + 1} of {pages.length + 1}
+                </span>
+                <button
+                  type="button"
+                  className={button}
+                  aria-label="Next page"
+                  disabled={pageIndex >= pages.length || !ready || pending.length > 0}
+                  onClick={() => stepPage(1)}
+                >
+                  <ChevronRight size={16} aria-hidden="true" />
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  className={button}
+                  aria-label="Zoom out"
+                  disabled={zoom <= 1}
+                  onClick={() => setZoom((value) => Math.max(1, value - 0.5))}
+                >
+                  −
+                </button>
+                <span aria-live="polite" className="min-w-12 text-center text-sm">
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  className={button}
+                  aria-label="Zoom in"
+                  disabled={zoom >= 3}
+                  onClick={() => setZoom((value) => Math.min(3, value + 0.5))}
+                >
+                  +
+                </button>
+                <button className={button} onClick={() => setZoom(1)}>
+                  Fit page
+                </button>
+                <button
+                  type="button"
+                  className={button}
+                  aria-label={fullscreen ? "Exit full screen" : "Full screen"}
+                  onClick={toggleFullscreen}
+                >
+                  {fullscreen
+                    ? <Minimize size={16} aria-hidden="true" />
+                    : <Maximize size={16} aria-hidden="true" />}
+                </button>
+              </div>
             </div>
             <details>
               <summary>Written work (accessible text)</summary>
