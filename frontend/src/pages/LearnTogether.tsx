@@ -806,6 +806,21 @@ export default function LearnTogether() {
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <Link to="/together" className={button}>All boards</Link>
+              <button
+                className={button}
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(location.href);
+                    setShare(
+                      "Link copied. Your child joins with their usual Mihur access.",
+                    );
+                  } catch {
+                    setShare(location.href);
+                  }
+                }}
+              >
+                Copy board link
+              </button>
                 {board?.author.startsWith("parent:") && (
                   <button type="button" className={button} aria-expanded={boardMenu}
                     onClick={() => setBoardMenu((value) => !value)}>
@@ -832,6 +847,25 @@ export default function LearnTogether() {
                 <p className="text-xs text-muted-foreground">
                   Clearing removes all saved pen and text marks, including other participants' marks.
                   Imported worksheet pages stay. Deleted boards move to Trash for recovery.
+                <div className="border-t border-slate-200 pt-2">
+              {board?.author.startsWith("parent:") && !board.closed && (
+                <button
+                  className={button}
+                  disabled={pending.length > 0 || uploading}
+                  onClick={async () => {
+                    try {
+                      setBoard(
+                        await post<Board>(`/together/boards/${boardId}/close`),
+                      );
+                    } catch (err) {
+                      setError((err as Error).message);
+                    }
+                  }}
+                >
+                  Close board
+                </button>
+              )}
+                </div>
                 </p>
                 </div>
               )}
@@ -935,10 +969,10 @@ export default function LearnTogether() {
                 Type
               </button>
               <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
-                disabled={disabled} aria-pressed={tool === "erase"}
+                disabled={disabled} aria-label="Eraser (my marks)" aria-pressed={tool === "erase"}
                 onClick={() => setTool("erase")}>Eraser</button>
               <button type="button" className={`${button} ${tool === "pan" ? activeTool : ""}`}
-                aria-pressed={tool === "pan"} onClick={() => setTool("pan")}>Move</button>
+                aria-pressed={tool === "pan"} aria-label="Move page" onClick={() => setTool("pan")}>Move</button>
               <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
               <button
                 className={button}
@@ -953,38 +987,8 @@ export default function LearnTogether() {
               >
                 Undo my last mark
               </button>
-              <button
-                className={button}
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(location.href);
-                    setShare(
-                      "Link copied. Your child joins with their usual Mihur access.",
-                    );
-                  } catch {
-                    setShare(location.href);
-                  }
-                }}
-              >
-                Copy board link
-              </button>
-              {board?.author.startsWith("parent:") && !board.closed && (
-                <button
-                  className={button}
-                  disabled={pending.length > 0 || uploading}
-                  onClick={async () => {
-                    try {
-                      setBoard(
-                        await post<Board>(`/together/boards/${boardId}/close`),
-                      );
-                    } catch (err) {
-                      setError((err as Error).message);
-                    }
-                  }}
-                >
-                  Close board
-                </button>
-              )}
+
+
             </div>
 
             <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
@@ -1116,7 +1120,7 @@ export default function LearnTogether() {
             {share && <p role="status">{share}</p>}
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600" role="status">
               <span>{status}{pending.length ? ` · ${pending.length} marks waiting to save` : ""}</span>
-              <span>{liveAvailable ? "Live pointer and ink connected" : "Live previews unavailable; finished marks still save"}</span>
+              <span>{liveAvailable ? "Live pointer and handwriting connected" : "Live previews unavailable; finished marks still save"}</span>
             </div>
             {tool === "pointer" && (
               <p className="text-sm">
