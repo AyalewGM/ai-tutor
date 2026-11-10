@@ -847,6 +847,7 @@ export default function LearnTogether() {
                 <p className="text-xs text-muted-foreground">
                   Clearing removes all saved pen and text marks, including other participants' marks.
                   Imported worksheet pages stay. Deleted boards move to Trash for recovery.
+                </p>
                 <div className="border-t border-slate-200 pt-2">
               {board?.author.startsWith("parent:") && !board.closed && (
                 <button
@@ -866,7 +867,6 @@ export default function LearnTogether() {
                 </button>
               )}
                 </div>
-                </p>
                 </div>
               )}
             </div>
