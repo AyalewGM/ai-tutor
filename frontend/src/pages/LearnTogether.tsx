@@ -74,7 +74,8 @@ export default function LearnTogether() {
   const [boardMenu, setBoardMenu] = useState(false);
   const [newBoardOpen, setNewBoardOpen] = useState(false);
   const [newBoardChild, setNewBoardChild] = useState("");
-  const [boardAction, setBoardAction] = useState<"clear" | "delete" | "rename" | null>(null);
+  const [boardAction, setBoardAction] = useState<"clear" | "delete" | "rename" | "clearpage" | null>(null);
+  const [boardActionPage, setBoardActionPage] = useState<string | null>(null);
   const [boardTitle, setBoardTitle] = useState("");
   const [managingBoard, setManagingBoard] = useState(false);
   const [children, setChildren] = useState<
@@ -190,7 +191,7 @@ export default function LearnTogether() {
   async function manageCurrentBoard() {
     if (!boardId || !board || !board.author.startsWith("parent:") ||
         !boardAction || managingBoard) return;
-    if (boardAction === "clear" && !canClear) return;
+    if ((boardAction === "clear" || boardAction === "clearpage") && !canClear) return;
     if (boardAction === "delete" && (!canClear || !ready)) return;
     setManagingBoard(true);
     setError("");
@@ -208,10 +209,12 @@ export default function LearnTogether() {
       } else {
         const pageRevision = revision.current;
         const result = await post<{ result_revision: number; cleared_count: number }>(
-          "/together/boards/" + boardId + "/clear-board", {
-            operation_id: crypto.randomUUID(),
-            expected_revision: pageRevision,
-          },
+          "/together/boards/" + boardId +
+            (boardAction === "clearpage" ? "/clear-page" : "/clear-board"), {
+              operation_id: crypto.randomUUID(),
+              expected_revision: pageRevision,
+              ...(boardAction === "clearpage" ? { page_id: boardActionPage } : {}),
+            },
         );
         let cursor = revision.current;
         while (cursor < result.result_revision) {
@@ -224,7 +227,8 @@ export default function LearnTogether() {
           if (next === cursor) throw new Error("Board update stalled. Refresh.");
           cursor = next;
         }
-        setStatus("Cleared " + result.cleared_count + " saved marks across all pages.");
+        setStatus("Cleared " + result.cleared_count + " saved marks " +
+          (boardAction === "clearpage" ? "on this page." : "across all pages."));
       }
       setBoardAction(null);
       setBoardMenu(false);
@@ -916,11 +920,12 @@ export default function LearnTogether() {
                   Move to folder…
                 </button>
                 <div className="border-t border-slate-200 pt-2 space-y-2">
-                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`} disabled
-                  title="Clearing a single page is coming soon">
+                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
+                  disabled={!canClear}
+                  onClick={() => { setBoardActionPage(selectedPage); setBoardAction("clearpage"); setBoardMenu(false); }}>
                   <span className="text-left">
                     <span className="block font-medium">Clear page</span>
-                    <span className="block text-xs opacity-80">Erase everything on this page.</span>
+                    <span className="block text-xs opacity-80">Erase marks on this page.</span>
                   </span>
                 </button>
                 <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
@@ -989,11 +994,17 @@ export default function LearnTogether() {
               role="group" aria-label="Confirm board action">
               <h2 className="font-semibold">
                 {boardAction === "clear" ? "Clear every page?" :
+                 boardAction === "clearpage" ? "Clear this page?" :
                  boardAction === "delete" ? "Move this board to Trash?" : "Rename this board"}
               </h2>
               {boardAction === "clear" && <p className="text-sm">
                 All pen and text marks by every participant will be cleared across this board.
                 Imported homework pages will remain. This bulk action cannot be undone.
+              </p>}
+              {boardAction === "clearpage" && <p className="text-sm">
+                All pen and text marks by every participant will be cleared
+                {boardActionPage ? " on the selected worksheet page" : " on the blank page"}.
+                The imported page image and all other pages will remain. This bulk action cannot be undone.
               </p>}
               {boardAction === "delete" && <p className="text-sm">
                 This board will disappear from family access but remain in the parent's Trash for restoration.
@@ -1009,6 +1020,7 @@ export default function LearnTogether() {
                   disabled={managingBoard || (boardAction === "rename" && !boardTitle.trim())}
                   onClick={() => void manageCurrentBoard()}>
                   {boardAction === "clear" ? "Clear all saved marks" :
+                   boardAction === "clearpage" ? "Clear this page" :
                    boardAction === "delete" ? "Move board to Trash" : "Save name"}
                 </button>
               </div>
