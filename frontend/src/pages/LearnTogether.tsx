@@ -1208,10 +1208,6 @@ export default function LearnTogether() {
                 Retry photo upload
               </button>
             )}
-            <details className="text-xs text-slate-600">
-              <summary className="cursor-pointer">Supported worksheet files and privacy</summary>
-              Photos are private to this board. JPEG/PNG up to 5 MB; PDF imports one page at a time.
-            </details>
             {share && <p role="status">{share}</p>}
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600" role="status">
               <span>{status}{pending.length ? ` · ${pending.length} marks waiting to save` : ""}</span>
@@ -1256,10 +1252,6 @@ export default function LearnTogether() {
                 Add text to board
               </button>
             )}
-            <details className="text-xs text-slate-600">
-              <summary className="cursor-pointer">Board controls and participant colors</summary>
-              Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
-            </details>
             <div
               ref={viewport}
               className="overflow-auto rounded-2xl border border-slate-200 bg-white shadow-sm"
@@ -1662,6 +1654,14 @@ export default function LearnTogether() {
                 </button>
               </div>
             </div>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Supported worksheet files and privacy</summary>
+              Photos are private to this board. JPEG/PNG up to 5 MB; PDF imports one page at a time.
+            </details>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Board controls and participant colors</summary>
+              Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
+            </details>
             <details>
               <summary>Written work (accessible text)</summary>
               <ul>
