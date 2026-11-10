@@ -836,6 +836,70 @@ def test_parent_clear_entire_board_is_durable_idempotent_and_revision_locked(fam
     # through ordered erase operations; no assessment/mastery data is touched.
 
 
+def test_parent_clear_single_page_scopes_erase_and_replays(family):
+    client, factory, child, _sibling, _other_token, _ = family
+    path = create_board(client, child)
+    page_id = str(uuid.uuid4())
+    assert upload(client, path, operation_id=page_id).status_code == 200
+    base_mark = mark()
+    assert client.post(path + "/operations", json=base_mark).status_code == 200
+    page_mark = mark(page_id=page_id)
+    assert client.post(path + "/operations", json=page_mark).status_code == 200
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    learner_page_mark = mark(kind="text", points=[], text="child work",
+                             page_id=page_id)
+    assert client.post(path + "/operations",
+                       json=learner_page_mark).status_code == 200
+    # Page clearing is parent-only, just like the whole-board variant.
+    assert client.post(path + "/clear-page", json={
+        "operation_id": str(uuid.uuid4()), "page_id": page_id,
+        "expected_revision": 4,
+    }).status_code == 404
+    client.cookies.delete("ai_tutor_learner")
+    assert client.post(path + "/clear-page", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 4,
+    }).status_code == 422
+    assert client.post(path + "/clear-page", json={
+        "operation_id": str(uuid.uuid4()), "page_id": str(uuid.uuid4()),
+        "expected_revision": 4,
+    }).status_code == 404
+    assert client.post(path + "/clear-page", json={
+        "operation_id": str(uuid.uuid4()), "page_id": page_id,
+        "expected_revision": 3,
+    }).status_code == 409
+    operation_id = str(uuid.uuid4())
+    request = {"operation_id": operation_id, "page_id": page_id,
+               "expected_revision": 4}
+    result = client.post(path + "/clear-page", json=request)
+    assert result.status_code == 200, result.text
+    assert result.json()["cleared_count"] == 2
+    assert result.json()["page_id"] == page_id
+    assert result.json()["result_revision"] == 6
+    replay = client.post(path + "/clear-page", json=request)
+    assert replay.status_code == 200
+    assert replay.json()["idempotent_replay"] is True
+    assert client.post(path + "/clear-page", json={
+        **request, "page_id": None,
+    }).status_code == 409
+    # Both authors' marks on the page are erased; the base page is untouched.
+    erases = [row for row in client.get(path + "/operations?after=4").json()
+              if row["kind"] == "erase"]
+    assert len(erases) == 2
+    assert {row["target"] for row in erases} == {
+        page_mark["operation_id"], learner_page_mark["operation_id"],
+    }
+    assert all(row["page_id"] == page_id for row in erases)
+    # The base page clears through the same endpoint with an explicit null.
+    base_request = {"operation_id": str(uuid.uuid4()), "page_id": None,
+                    "expected_revision": 6}
+    base_result = client.post(path + "/clear-page", json=base_request)
+    assert base_result.status_code == 200, base_result.text
+    assert base_result.json()["cleared_count"] == 1
+    assert base_result.json()["page_id"] is None
+    with factory() as db:
+        assert len(db.scalars(select(BoardClearReceipt)).all()) == 2
+
+
 def test_board_management_denies_deactivated_or_reassigned_child(family):
     client, factory, child, _sibling, other_token, _ = family
     path = create_board(client, child)

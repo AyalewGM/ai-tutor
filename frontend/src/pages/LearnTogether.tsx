@@ -1,5 +1,20 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Eraser,
+  FileDown,
+  Hand,
+  ImagePlus,
+  Maximize,
+  Minimize,
+  MousePointer2,
+  Pen,
+  Redo2,
+  Type,
+  Undo2,
+} from "lucide-react";
 import { api, ApiError, post, postForm } from "../api";
 import { inkPath, previewPoints } from "../liveInk";
 import NavBar from "../components/NavBar";
@@ -41,7 +56,15 @@ type Board = {
 const color = (author?: string) =>
   author?.startsWith("parent:") ? "#6d28d9" : "#0369a1";
 const button =
-  "rounded-lg border px-3 py-2 disabled:opacity-40 bg-white text-slate-900";
+  "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 shadow-sm transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40";
+const activeTool = "border-violet-400 bg-violet-100 text-violet-950";
+
+function savedAgo(timestamp: number, now: number) {
+  const seconds = Math.max(0, Math.floor((now - timestamp) / 1000));
+  if (seconds < 15) return "Autosaved just now";
+  if (seconds < 60) return `Autosaved ${seconds}s ago`;
+  return `Autosaved ${Math.floor(seconds / 60)}m ago`;
+}
 
 export default function LearnTogether() {
   const { boardId } = useParams();
@@ -51,7 +74,8 @@ export default function LearnTogether() {
   const [boardMenu, setBoardMenu] = useState(false);
   const [newBoardOpen, setNewBoardOpen] = useState(false);
   const [newBoardChild, setNewBoardChild] = useState("");
-  const [boardAction, setBoardAction] = useState<"clear" | "delete" | "rename" | null>(null);
+  const [boardAction, setBoardAction] = useState<"clear" | "delete" | "rename" | "clearpage" | null>(null);
+  const [boardActionPage, setBoardActionPage] = useState<string | null>(null);
   const [boardTitle, setBoardTitle] = useState("");
   const [managingBoard, setManagingBoard] = useState(false);
   const [children, setChildren] = useState<
@@ -92,6 +116,11 @@ export default function LearnTogether() {
   const [share, setShare] = useState("");
   const [clearConfirm, setClearConfirm] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
+  const [now, setNow] = useState(Date.now());
+  const [fullscreen, setFullscreen] = useState(false);
+  const photoInput = useRef<HTMLInputElement>(null);
+  const viewport = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const pointer = useRef<number | null>(null);
   const panStart = useRef<{
@@ -162,7 +191,7 @@ export default function LearnTogether() {
   async function manageCurrentBoard() {
     if (!boardId || !board || !board.author.startsWith("parent:") ||
         !boardAction || managingBoard) return;
-    if (boardAction === "clear" && !canClear) return;
+    if ((boardAction === "clear" || boardAction === "clearpage") && !canClear) return;
     if (boardAction === "delete" && (!canClear || !ready)) return;
     setManagingBoard(true);
     setError("");
@@ -180,10 +209,12 @@ export default function LearnTogether() {
       } else {
         const pageRevision = revision.current;
         const result = await post<{ result_revision: number; cleared_count: number }>(
-          "/together/boards/" + boardId + "/clear-board", {
-            operation_id: crypto.randomUUID(),
-            expected_revision: pageRevision,
-          },
+          "/together/boards/" + boardId +
+            (boardAction === "clearpage" ? "/clear-page" : "/clear-board"), {
+              operation_id: crypto.randomUUID(),
+              expected_revision: pageRevision,
+              ...(boardAction === "clearpage" ? { page_id: boardActionPage } : {}),
+            },
         );
         let cursor = revision.current;
         while (cursor < result.result_revision) {
@@ -196,7 +227,8 @@ export default function LearnTogether() {
           if (next === cursor) throw new Error("Board update stalled. Refresh.");
           cursor = next;
         }
-        setStatus("Cleared " + result.cleared_count + " saved marks across all pages.");
+        setStatus("Cleared " + result.cleared_count + " saved marks " +
+          (boardAction === "clearpage" ? "on this page." : "across all pages."));
       }
       setBoardAction(null);
       setBoardMenu(false);
@@ -250,6 +282,15 @@ export default function LearnTogether() {
       setPointerPosition(pointerVisible.current ? localPointer.current : null);
     });
   }
+  useEffect(() => {
+    const tick = setInterval(() => setNow(Date.now()), 15000);
+    const onFullscreen = () => setFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onFullscreen);
+    return () => {
+      clearInterval(tick);
+      document.removeEventListener("fullscreenchange", onFullscreen);
+    };
+  }, []);
   useEffect(() => {
     const timer = setInterval(
       () =>
@@ -343,8 +384,10 @@ export default function LearnTogether() {
           ),
         ),
       );
+      const ownConfirmed = queue.current.some((m) => ids.has(m.operation_id));
       queue.current = queue.current.filter((m) => !ids.has(m.operation_id));
       persistQueue();
+      if (ownConfirmed) setLastSavedAt(Date.now());
       setPending([...queue.current]);
       const navigation = batch
         .filter((m) => (m.revision || 0) > previousRevision)
@@ -620,6 +663,7 @@ export default function LearnTogether() {
         ingest.current(batch);
       }
       uploadAttempt.current = null;
+      setLastSavedAt(Date.now());
       return true;
     } catch (err) {
       setError((err as Error).message);
@@ -652,6 +696,24 @@ export default function LearnTogether() {
   const ownVisibleCount = visible.filter(
     (m) => m.author === board?.author && (m.kind === "stroke" || m.kind === "text"),
   ).length;
+  const pageIndex = selectedPage
+    ? Math.max(0, pages.findIndex((p) => p.operation_id === selectedPage) + 1)
+    : 0;
+
+  function stepPage(direction: -1 | 1) {
+    const next = pageIndex + direction;
+    changePage(next === 0 ? "" : pages[next - 1].operation_id);
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    } else {
+      void viewport.current
+        ?.requestFullscreen()
+        .catch(() => setError("Full screen is not available in this browser."));
+    }
+  }
 
   async function clearMyWriting() {
     if (!boardId || !board || !canClear || ownVisibleCount === 0) return;
@@ -700,12 +762,26 @@ export default function LearnTogether() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-[1600px] p-4 space-y-4">
-        <h1 className="text-3xl font-bold text-violet-950">Learn Together</h1>
-        <p className="text-sm text-muted-foreground">
-          A private family whiteboard. Work here is guided practice and does not
-          earn independent mastery credit.
-        </p>
+      <main className="mx-auto max-w-[1800px] space-y-3 bg-slate-50/60 p-3 sm:p-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-violet-950 sm:text-3xl">Learn Together</h1>
+            <p className="text-xs text-slate-600 sm:text-sm">
+              A private family whiteboard for homework and practice. Guided work does not earn independent mastery credit.
+            </p>
+          </div>
+          {boardId && <div className="flex flex-wrap items-center gap-2">
+            {lastSavedAt && (
+              <span role="status" className="text-xs text-slate-500">
+                {savedAgo(lastSavedAt, now)}
+              </span>
+            )}
+            <div role="status" className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
+              {liveAvailable ? "Connected · autosaving" : status}
+            </div>
+          </div>}
+        </div>
         {error && (
           <p role="alert" className="text-red-700">
             {error}
@@ -776,10 +852,11 @@ export default function LearnTogether() {
           </>
         ) : (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-white p-3 shadow-sm">
-              <div className="flex flex-wrap items-center gap-2">
-                <label className="font-semibold" htmlFor="board-picker">Open board</label>
-                <select id="board-picker" className={button} value={boardId}
+            <div className="relative rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm sm:p-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
+                <label className="sr-only" htmlFor="board-picker">Open board</label>
+                <select id="board-picker" className={`${button} w-full max-w-80 font-semibold sm:w-auto`} value={boardId}
                   disabled={managingBoard || pending.length > 0}
                   onChange={(event) => navigate("/together/" + event.target.value)}>
                   {!boards.some((item) => item.id === boardId) &&
@@ -788,44 +865,115 @@ export default function LearnTogether() {
                     <option key={item.id} value={item.id}>{item.name}</option>)}
                 </select>
                 {board?.author.startsWith("parent:") && (
-                  <button type="button" className="rounded-lg bg-violet-700 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                  <button type="button" className="inline-flex min-h-10 items-center rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:opacity-40"
                     disabled={managingBoard || pending.length > 0}
                     onClick={() => { setNewBoardOpen(true); setNewBoardChild(board.student_id); }}>
                     + New board
                   </button>
                 )}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Link to="/together" className={button}>All boards</Link>
+              <button
+                type="button"
+                className={button}
+                disabled
+                title="Sharing controls are coming soon"
+              >
+                Share
+              </button>
+              <button
+                className={button}
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(location.href);
+                    setShare(
+                      "Link copied. Your child joins with their usual Mihur access.",
+                    );
+                  } catch {
+                    setShare(location.href);
+                  }
+                }}
+              >
+                Copy link
+              </button>
                 {board?.author.startsWith("parent:") && (
                   <button type="button" className={button} aria-expanded={boardMenu}
                     onClick={() => setBoardMenu((value) => !value)}>
-                    Board actions
+                    Board actions <span aria-hidden="true">▾</span>
                   </button>
                 )}
               </div>
-            </div>
-            {boardMenu && board?.author.startsWith("parent:") && (
-              <div className="ml-auto max-w-md space-y-2 rounded-xl border bg-white p-4 shadow-md" role="group" aria-label="Board actions">
-                <button type="button" className={button}
+              </div>
+              {boardMenu && board?.author.startsWith("parent:") && (
+                <div className="absolute right-2 top-full z-30 mt-1 w-[min(21rem,calc(100vw-2rem))] space-y-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl" role="group" aria-label="Board actions">
+                <button type="button" className={`${button} w-full justify-start`}
                   onClick={() => { setBoardTitle(board.name); setBoardAction("rename"); setBoardMenu(false); }}>
                   Rename board
                 </button>
-                <button type="button" className={button}
-                  disabled={!canClear} onClick={() => { setBoardAction("clear"); setBoardMenu(false); }}>
-                  Clear entire board
+                <button type="button" className={`${button} w-full justify-start`} disabled
+                  title="Board duplication is coming soon">
+                  Duplicate board
                 </button>
-                <button type="button" className="rounded-lg border border-red-600 px-3 py-2 text-red-700 disabled:opacity-40"
+                <button type="button" className={`${button} w-full justify-start`} disabled
+                  title="Board folders are coming soon">
+                  Move to folder…
+                </button>
+                <div className="border-t border-slate-200 pt-2 space-y-2">
+                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
+                  disabled={!canClear}
+                  onClick={() => { setBoardActionPage(selectedPage); setBoardAction("clearpage"); setBoardMenu(false); }}>
+                  <span className="text-left">
+                    <span className="block font-medium">Clear page</span>
+                    <span className="block text-xs opacity-80">Erase marks on this page.</span>
+                  </span>
+                </button>
+                <button type="button" className={`${button} w-full justify-start border-red-100 bg-red-50 text-red-800`}
+                  disabled={!canClear} onClick={() => { setBoardAction("clear"); setBoardMenu(false); }}>
+                  <span className="text-left">
+                    <span className="block font-medium">Clear board</span>
+                    <span className="block text-xs opacity-80">Erase marks on all pages of this board.</span>
+                  </span>
+                </button>
+                <button type="button" className={`${button} w-full justify-start border-red-200 bg-red-50 text-red-800`}
                   disabled={!canClear || !ready}
                   onClick={() => { setBoardAction("delete"); setBoardMenu(false); }}>
-                  Delete board
+                  <span className="text-left">
+                    <span className="block font-medium">Delete board</span>
+                    <span className="block text-xs opacity-80">Remove this board from your account.</span>
+                  </span>
                 </button>
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Clearing removes all saved pen and text marks, including other participants' marks.
                   Imported worksheet pages stay. Deleted boards move to Trash for recovery.
                 </p>
-              </div>
-            )}
+                <div className="border-t border-slate-200 pt-2">
+              {board?.author.startsWith("parent:") && !board.closed && (
+                <button
+                  className={button}
+                  disabled={pending.length > 0 || uploading}
+                  onClick={async () => {
+                    try {
+                      setBoard(
+                        await post<Board>(`/together/boards/${boardId}/close`),
+                      );
+                    } catch (err) {
+                      setError((err as Error).message);
+                    }
+                  }}
+                >
+                  Close board
+                </button>
+              )}
+                </div>
+                </div>
+              )}
+            </div>
+            <p className="flex items-center gap-2 rounded-xl border border-violet-100 bg-violet-50 px-3 py-2 text-xs text-violet-900">
+              <span aria-hidden="true">✦</span>
+              <span><strong>Family board</strong> · A shared space for parents and kids to learn, practice, and do homework together.</span>
+            </p>
             {newBoardOpen && <section className="rounded-xl border bg-violet-50 p-4 space-y-3"
               aria-label="Create new family board">
               <h2 className="font-semibold">New board</h2>
@@ -846,11 +994,17 @@ export default function LearnTogether() {
               role="group" aria-label="Confirm board action">
               <h2 className="font-semibold">
                 {boardAction === "clear" ? "Clear every page?" :
+                 boardAction === "clearpage" ? "Clear this page?" :
                  boardAction === "delete" ? "Move this board to Trash?" : "Rename this board"}
               </h2>
               {boardAction === "clear" && <p className="text-sm">
                 All pen and text marks by every participant will be cleared across this board.
                 Imported homework pages will remain. This bulk action cannot be undone.
+              </p>}
+              {boardAction === "clearpage" && <p className="text-sm">
+                All pen and text marks by every participant will be cleared
+                {boardActionPage ? " on the selected worksheet page" : " on the blank page"}.
+                The imported page image and all other pages will remain. This bulk action cannot be undone.
               </p>}
               {boardAction === "delete" && <p className="text-sm">
                 This board will disappear from family access but remain in the parent's Trash for restoration.
@@ -866,36 +1020,91 @@ export default function LearnTogether() {
                   disabled={managingBoard || (boardAction === "rename" && !boardTitle.trim())}
                   onClick={() => void manageCurrentBoard()}>
                   {boardAction === "clear" ? "Clear all saved marks" :
+                   boardAction === "clearpage" ? "Clear this page" :
                    boardAction === "delete" ? "Move board to Trash" : "Save name"}
                 </button>
               </div>
             </section>}
-            <div className="flex flex-wrap gap-2 items-center rounded-xl border bg-white p-3 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
+            <div className="grid min-h-[65vh] items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
+              <aside className="min-w-0" aria-label="Page navigation">
+            <nav aria-label="Board pages" className="space-y-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
+                <button className={`${button} w-full`} type="button" disabled={disabled || uploading || pages.length >= 10}
+                  onClick={() => void newBlankPage()}>+ New page</button>
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
+                  className={"min-w-32 w-full rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
+                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
+                  <span className="block text-xs text-muted-foreground">Base page</span>
+                  <span className="font-medium">Blank page</span>
+                </button>
+                {pages.map((page, index) => (
+                  <button key={page.operation_id} type="button"
+                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
+                    className={"min-w-32 w-full rounded-xl border p-2 text-left lg:flex lg:items-center lg:gap-2 " +
+                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
+                    disabled={!ready || pending.length > 0}
+                    onClick={() => changePage(page.operation_id)}>
+                    <img className="mb-1 h-14 w-20 shrink-0 rounded border object-contain lg:mb-0"
+                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
+                    <span className="font-medium">Page {index + 1}</span>
+                  </button>
+                ))}
+              </div>
+              <details className="border-t border-slate-200 pt-2">
+                <summary className="cursor-pointer text-sm font-medium">Page actions</summary>
+                <div className="mt-2 space-y-2">
+                  <button type="button" className={`${button} w-full justify-start`} disabled
+                    title="Page duplication is coming soon">
+                    Duplicate page
+                  </button>
+                  <button type="button" className={`${button} w-full justify-start`} disabled
+                    title="Page deletion is coming soon">
+                    Delete page
+                  </button>
+                  <p className="text-xs text-slate-500">
+                    Page duplication and deletion are coming soon.
+                  </p>
+                </div>
+              </details>
+            </nav>
+              </aside>
+              <section className="min-w-0 space-y-3" aria-label="Whiteboard editor">
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
               <button
-                className={button}
+                className={`${button} ${tool === "pen" ? activeTool : ""}`}
                 aria-pressed={tool === "pen"}
                 onClick={() => setTool("pen")}
               >
-                Pen
+                <Pen size={16} aria-hidden="true" /> Pen
+              </button>
+              <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
+                disabled={disabled} aria-label="Eraser (my marks)" aria-pressed={tool === "erase"}
+                onClick={() => setTool("erase")}><Eraser size={16} aria-hidden="true" /> Eraser</button>
+              <button
+                className={`${button} ${tool === "text" ? activeTool : ""}`}
+                aria-pressed={tool === "text"}
+                onClick={() => setTool("text")}
+              >
+                <Type size={16} aria-hidden="true" /> Type
               </button>
               <button
-                className={button}
+                className={`${button} ${tool === "pointer" ? activeTool : ""}`}
                 disabled={disabled || !liveAvailable}
                 aria-pressed={tool === "pointer"}
                 onClick={() => setTool("pointer")}
               >
-                Live pointer
+                <MousePointer2 size={16} aria-hidden="true" /> Live pointer
               </button>
-              <button
-                className={button}
-                aria-pressed={tool === "text"}
-                onClick={() => setTool("text")}
-              >
-                Type
-              </button>
+              <button type="button" className={`${button} ${tool === "pan" ? activeTool : ""}`}
+                aria-pressed={tool === "pan"} aria-label="Move page" onClick={() => setTool("pan")}><Hand size={16} aria-hidden="true" /> Move</button>
+              <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
               <button
                 className={button}
                 disabled={disabled || !lastOwn}
+                aria-label="Undo my last mark"
                 onClick={() =>
                   enqueue({
                     operation_id: crypto.randomUUID(),
@@ -904,70 +1113,36 @@ export default function LearnTogether() {
                   })
                 }
               >
-                Undo my last mark
+                <Undo2 size={16} aria-hidden="true" /> Undo
               </button>
+              <button type="button" className={button} disabled
+                aria-label="Redo" title="Redo is not yet available">
+                <Redo2 size={16} aria-hidden="true" /> Redo
+              </button>
+              <span aria-hidden="true" className="mx-1 hidden h-7 w-px bg-slate-200 sm:block" />
               <button
                 className={button}
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(location.href);
-                    setShare(
-                      "Link copied. Your child joins with their usual Mihur access.",
-                    );
-                  } catch {
-                    setShare(location.href);
-                  }
-                }}
+                disabled={disabled || uploading}
+                onClick={() => setShowPDF((value) => !value)}
               >
-                Copy board link
+                <FileDown size={16} aria-hidden="true" /> Import PDF
               </button>
-              {board?.author.startsWith("parent:") && !board.closed && (
-                <button
-                  className={button}
-                  disabled={pending.length > 0 || uploading}
-                  onClick={async () => {
-                    try {
-                      setBoard(
-                        await post<Board>(`/together/boards/${boardId}/close`),
-                      );
-                    } catch (err) {
-                      setError((err as Error).message);
-                    }
-                  }}
-                >
-                  Close board
-                </button>
-              )}
+              <button type="button" className={button}
+                disabled={disabled || uploading} onClick={() => photoInput.current?.click()}>
+                <ImagePlus size={16} aria-hidden="true" /> Add homework photo
+              </button>
+              <input ref={photoInput} aria-label="Choose homework photo"
+                className="sr-only" type="file" accept="image/jpeg,image/png"
+                disabled={disabled || uploading}
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  if (file) void uploadPhoto(file, crypto.randomUUID());
+                  event.target.value = "";
+                }} />
             </div>
-            <nav aria-label="Board pages" className="rounded-xl border bg-white p-3 shadow-sm space-y-2">
-              <div className="flex flex-wrap justify-between items-center gap-2">
-                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
-                <button className={button} type="button" disabled={disabled || uploading || pages.length >= 10}
-                  onClick={() => void newBlankPage()}>+ New blank page</button>
-              </div>
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
-                  className={"min-w-32 rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
-                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
-                  <span className="block text-xs text-muted-foreground">Base page</span>
-                  <span className="font-medium">Blank page</span>
-                </button>
-                {pages.map((page, index) => (
-                  <button key={page.operation_id} type="button"
-                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
-                    className={"min-w-32 rounded-xl border p-2 text-left " +
-                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
-                    disabled={!ready || pending.length > 0}
-                    onClick={() => changePage(page.operation_id)}>
-                    <img className="mb-1 h-16 w-24 rounded border object-contain"
-                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
-                    <span className="font-medium">Page {index + 1}</span>
-                  </button>
-                ))}
-              </div>
-            </nav>
-            <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3">
-              <label>
+
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+              <label className="sr-only">
                 Worksheet page{" "}
                 <select
                   aria-label="Worksheet page"
@@ -985,68 +1160,12 @@ export default function LearnTogether() {
                 </select>
               </label>
               <button
-                className={button}
-                disabled={disabled || uploading}
-                onClick={() => setShowPDF((value) => !value)}
-              >
-                Import PDF
-              </button>
-              <button
-                className={button}
-                disabled={disabled}
-                aria-pressed={tool === "erase"}
-                onClick={() => setTool("erase")}
-              >
-                Eraser (my marks)
-              </button>
-              <button
                 type="button"
                 className={button}
                 disabled={!canClear || ownVisibleCount === 0}
                 onClick={() => setClearConfirm(true)}
               >
                 Clear My Writing
-              </button>
-              <label className={`${button} max-w-full`}>
-                Add homework photo
-                <input
-                  className="block max-w-full text-sm"
-                  type="file"
-                  accept="image/jpeg,image/png"
-                  disabled={disabled || uploading}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    if (file) void uploadPhoto(file, crypto.randomUUID());
-                    event.target.value = "";
-                  }}
-                />
-              </label>
-              <button
-                className={button}
-                aria-pressed={tool === "pan"}
-                onClick={() => setTool("pan")}
-              >
-                Move page
-              </button>
-              <button
-                className={button}
-                aria-label="Zoom out"
-                disabled={zoom <= 1}
-                onClick={() => setZoom((value) => Math.max(1, value - 0.5))}
-              >
-                −
-              </button>
-              <span aria-live="polite">{Math.round(zoom * 100)}%</span>
-              <button
-                className={button}
-                aria-label="Zoom in"
-                disabled={zoom >= 3}
-                onClick={() => setZoom((value) => Math.min(3, value + 0.5))}
-              >
-                +
-              </button>
-              <button className={button} onClick={() => setZoom(1)}>
-                Fit page
               </button>
             </div>
             {clearConfirm && (
@@ -1101,22 +1220,11 @@ export default function LearnTogether() {
                 Retry photo upload
               </button>
             )}
-            <p className="text-sm">
-              Photos are saved privately with this board. Use JPEG or PNG, up to
-              5 MB. Import a PDF page using the Import PDF button.
-            </p>
             {share && <p role="status">{share}</p>}
-            <p role="status" className="text-sm">
-              {status}
-              {pending.length
-                ? ` · ${pending.length} marks waiting to save`
-                : ""}
-            </p>
-            <p role="status" className="text-sm">
-              {liveAvailable
-                ? "Live pointer and handwriting connected"
-                : "Live previews unavailable; completed marks still save"}
-            </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600" role="status">
+              <span>{status}{pending.length ? ` · ${pending.length} marks waiting to save` : ""}</span>
+              <span>{liveAvailable ? "Live pointer and handwriting connected" : "Live previews unavailable; finished marks still save"}</span>
+            </div>
             {tool === "pointer" && (
               <p className="text-sm">
                 Move or tap the board to point. Keyboard: focus the board and
@@ -1156,16 +1264,13 @@ export default function LearnTogether() {
                 Add text to board
               </button>
             )}
-            <p className="text-sm">
-              Parent: purple · Child: blue. Scroll outside the board to move the
-              page. Rotate your device for more writing space.
-            </p>
             <div
-              className="overflow-auto rounded-xl border bg-white"
+              ref={viewport}
+              className="overflow-auto rounded-2xl border border-slate-200 bg-white shadow-sm"
               tabIndex={0}
               role="region"
               aria-label="Whiteboard viewport"
-              style={{ maxHeight: "75vh" }}
+              style={{ height: "min(74vh, 780px)", minHeight: "430px" }}
               onPointerDown={(event) => {
                 if (tool !== "pan" || event.pointerType !== "mouse") return;
                 event.preventDefault();
@@ -1502,6 +1607,73 @@ export default function LearnTogether() {
                 />
               </svg>
             </div>
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+              <div className="flex items-center gap-2" role="navigation" aria-label="Page position">
+                <button
+                  type="button"
+                  className={button}
+                  aria-label="Previous page"
+                  disabled={pageIndex <= 0 || !ready || pending.length > 0}
+                  onClick={() => stepPage(-1)}
+                >
+                  <ChevronLeft size={16} aria-hidden="true" />
+                </button>
+                <span aria-live="polite" className="min-w-24 text-center text-sm">
+                  Page {pageIndex + 1} of {pages.length + 1}
+                </span>
+                <button
+                  type="button"
+                  className={button}
+                  aria-label="Next page"
+                  disabled={pageIndex >= pages.length || !ready || pending.length > 0}
+                  onClick={() => stepPage(1)}
+                >
+                  <ChevronRight size={16} aria-hidden="true" />
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  className={button}
+                  aria-label="Zoom out"
+                  disabled={zoom <= 1}
+                  onClick={() => setZoom((value) => Math.max(1, value - 0.5))}
+                >
+                  −
+                </button>
+                <span aria-live="polite" className="min-w-12 text-center text-sm">
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  className={button}
+                  aria-label="Zoom in"
+                  disabled={zoom >= 3}
+                  onClick={() => setZoom((value) => Math.min(3, value + 0.5))}
+                >
+                  +
+                </button>
+                <button className={button} onClick={() => setZoom(1)}>
+                  Fit page
+                </button>
+                <button
+                  type="button"
+                  className={button}
+                  aria-label={fullscreen ? "Exit full screen" : "Full screen"}
+                  onClick={toggleFullscreen}
+                >
+                  {fullscreen
+                    ? <Minimize size={16} aria-hidden="true" />
+                    : <Maximize size={16} aria-hidden="true" />}
+                </button>
+              </div>
+            </div>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Supported worksheet files and privacy</summary>
+              Photos are private to this board. JPEG/PNG up to 5 MB; PDF imports one page at a time.
+            </details>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer">Board controls and participant colors</summary>
+              Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
+            </details>
             <details>
               <summary>Written work (accessible text)</summary>
               <ul>
@@ -1532,10 +1704,11 @@ export default function LearnTogether() {
                 ))}
               </ul>
             </details>
-            <p className="text-sm">
-              Before leaving, wait until all marks are saved. For conversation,
-              use your usual voice calling app.
+            <p className="text-xs text-slate-600">
+              Before leaving, confirm that all marks have saved. Use your usual calling app for conversation.
             </p>
+              </section>
+            </div>
           </>
         )}
       </main>

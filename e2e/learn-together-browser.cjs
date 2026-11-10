@@ -43,12 +43,29 @@ const assert = require("node:assert/strict");
       .getByText("Connected · work saves automatically", { exact: true })
       .waitFor(),
   ]);
+  // Visual composition: desktop keeps the page navigator beside the editor,
+  // and the writing viewport appears in the first screen rather than below
+  // full-width stacked cards.
+  const pagesPanel = p.getByRole("navigation", { name: "Board pages" });
+  const editorPanel = p.getByRole("region", { name: "Whiteboard editor" });
+  const pagesBox = await pagesPanel.boundingBox();
+  const editorBox = await editorPanel.boundingBox();
+  const drawingBox = await p.getByRole("region", { name: "Whiteboard viewport" }).boundingBox();
+  assert.ok(pagesBox && editorBox && drawingBox);
+  assert.ok(pagesBox.x + pagesBox.width <= editorBox.x + 8,
+    "desktop page sidebar should be left of the editor");
+  assert.ok(drawingBox.y < 780, "whiteboard must be visible above the fold");
+  // Canvas chrome: bottom pager, zoom readout and autosave timestamp sit
+  // around the viewport like the approved mockup.
+  await p.getByRole("navigation", { name: "Page position" }).waitFor();
+  await p.getByText(/^Page 1 of \d+$/).waitFor();
   await p.getByRole("button", { name: "Type", exact: true }).click();
   await p
     .getByPlaceholder("Type, then tap the board to place")
     .fill("2x + 3 = 11");
   await p.getByRole("button", { name: "Add text to board" }).click();
   await c.locator("svg text").filter({ hasText: "2x + 3 = 11" }).waitFor();
+  await p.getByText(/^Autosaved (just now|\d+[sm] ago)$/).waitFor();
   await c.getByRole("button", { name: "Type", exact: true }).click();
   await c.getByPlaceholder("Type, then tap the board to place").fill("2x = 8");
   await c.getByRole("button", { name: "Add text to board" }).click();
@@ -339,6 +356,10 @@ const assert = require("node:assert/strict");
     await c.getByRole("button", { name: "Type", exact: true }).isVisible(),
     true,
   );
+  const phonePages = await c.getByRole("navigation", { name: "Board pages" }).boundingBox();
+  const phoneCanvas = await c.getByRole("region", { name: "Whiteboard viewport" }).boundingBox();
+  assert.ok(phonePages && phoneCanvas && phonePages.y < phoneCanvas.y,
+    "mobile page picker should stack above the board");
   assert.equal(
     await c.evaluate(() => document.documentElement.scrollWidth > innerWidth),
     false,
