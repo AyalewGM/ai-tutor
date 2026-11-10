@@ -240,6 +240,11 @@ def test_migration_round_trip_and_learner_erasure_cascade():
     )
     migration = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(migration)
+    new_spec = importlib.util.spec_from_file_location(
+        "board_management_migration", "alembic/versions/0040_board_management.py"
+    )
+    new_migration = importlib.util.module_from_spec(new_spec)
+    new_spec.loader.exec_module(new_migration)
     engine = create_engine("sqlite://")
     with engine.begin() as connection:
         connection.exec_driver_sql("PRAGMA foreign_keys=ON")
@@ -250,6 +255,13 @@ def test_migration_round_trip_and_learner_erasure_cascade():
         connection.exec_driver_sql("INSERT INTO students VALUES (?)", (child_id.hex,))
         with Operations.context(MigrationContext.configure(connection)):
             migration.upgrade()
+            # Exercise the historical table before upgrading to the current ORM.
+            # The old 0036 table does not have name/deleted_at columns.
+            old_columns = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert "name" not in old_columns
+            new_migration.upgrade()
+            new_columns = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert {"name", "deleted_at"} <= new_columns
             connection.execute(
                 sa.insert(CollaborationBoard),
                 {"id": board_id, "student_id": child_id, "owner_id": user_id},
@@ -269,9 +281,13 @@ def test_migration_round_trip_and_learner_erasure_cascade():
                 connection.scalar(sa.select(sa.func.count()).select_from(CollaborationBoard)) == 0
             )
             assert connection.scalar(sa.select(sa.func.count()).select_from(BoardOperation)) == 0
+            new_migration.downgrade()
+            downgraded = {c["name"] for c in sa.inspect(connection).get_columns("collaboration_boards")}
+            assert "name" not in downgraded and "deleted_at" not in downgraded
             migration.downgrade()
             assert "collaboration_boards" not in sa.inspect(connection).get_table_names()
             migration.upgrade()
+            new_migration.upgrade()
     engine.dispose()
 
 
@@ -736,3 +752,128 @@ def test_clear_my_writing_does_not_reerase_prior_erased_marks(family):
     assert reply.json()["result_revision"] == 2
     replay = client.post(path + "/clear-my-writing", json=request)
     assert replay.json()["idempotent_replay"] is True
+
+
+def test_board_management_parent_rename_trash_restore_and_private_visibility(family):
+    client, factory, child, _sibling, other_token, _ = family
+    path = create_board(client, child)
+    board_id = path.rsplit("/", 1)[-1]
+    renamed = client.post(path + "/rename", json={"name": "  Algebra evening  "})
+    assert renamed.status_code == 200
+    assert renamed.json()["name"] == "Algebra evening"
+    assert any(row["id"] == board_id and row["name"] == "Algebra evening"
+               for row in client.get("/api/v1/together/boards").json())
+    assert client.post(path + "/rename", json={"name": "   "}).status_code == 422
+
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    assert client.post(path + "/rename", json={"name": "No"}).status_code == 404
+    assert client.post(path + "/trash").status_code == 404
+    assert client.get("/api/v1/together/boards/trash").status_code == 403
+    client.cookies.delete("ai_tutor_learner")
+
+    client.cookies.set(SESSION_COOKIE, other_token)
+    assert client.post(path + "/trash").status_code == 404
+    assert client.post(path + "/restore").status_code == 404
+    client.cookies.delete(SESSION_COOKIE)
+    with factory() as db:
+        parent = db.scalar(select(User).where(User.email == "parent@example.test"))
+        token, _ = create_session(db, parent.id)
+        db.commit()
+    client.cookies.set(SESSION_COOKIE, token)
+
+    assert client.post(path + "/trash").status_code == 200
+    assert client.get(path).status_code == 404
+    assert client.post(path + "/operations", json=mark()).status_code == 404
+    assert all(row["id"] != board_id
+               for row in client.get("/api/v1/together/boards").json())
+    assert any(row["id"] == board_id
+               for row in client.get("/api/v1/together/boards/trash").json())
+    assert client.post(path + "/restore").status_code == 200
+    assert client.get(path).status_code == 200
+    assert client.post(path + "/restore").status_code == 409
+    assert client.get("/api/v1/together/boards/trash").json() == []
+
+
+def test_parent_clear_entire_board_is_durable_idempotent_and_revision_locked(family):
+    client, factory, child, sibling, _other_token, _ = family
+    path = create_board(client, child)
+    sibling_path = create_board(client, sibling)
+    parent_mark = mark()
+    assert client.post(path + "/operations", json=parent_mark).status_code == 200
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    child_mark = mark(kind="text", points=[], text="child working")
+    assert client.post(path + "/operations", json=child_mark).status_code == 200
+    assert client.post(path + "/clear-board", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 2,
+    }).status_code == 404
+    client.cookies.delete("ai_tutor_learner")
+    operation_id = str(uuid.uuid4())
+    payload = {"operation_id": operation_id, "expected_revision": 2}
+    assert client.post(path + "/clear-board", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 1,
+    }).status_code == 409
+    result = client.post(path + "/clear-board", json=payload)
+    assert result.status_code == 200, result.text
+    assert result.json()["cleared_count"] == 2
+    assert result.json()["result_revision"] == 4
+    duplicate = client.post(path + "/clear-board", json=payload)
+    assert duplicate.status_code == 200
+    assert duplicate.json()["idempotent_replay"] is True
+    assert client.post(path + "/clear-board", json={
+        **payload, "expected_revision": 3,
+    }).status_code == 409
+    rows = client.get(path + "/operations?after=2").json()
+    assert len(rows) == 2
+    assert {row["kind"] for row in rows} == {"erase"}
+    assert {row["target"] for row in rows} == {
+        parent_mark["operation_id"], child_mark["operation_id"],
+    }
+    assert client.get(sibling_path + "/operations").json() == []
+    with factory() as db:
+        assert len(db.scalars(select(BoardClearReceipt)).all()) == 1
+        assert len(db.scalars(select(BoardOperation)).all()) == 4
+    # Both family authors' old ink stays in durable history, but is hidden
+    # through ordered erase operations; no assessment/mastery data is touched.
+
+
+def test_board_management_denies_deactivated_or_reassigned_child(family):
+    client, factory, child, _sibling, other_token, _ = family
+    path = create_board(client, child)
+    assert client.post(path + "/trash").status_code == 200
+    with factory() as db:
+        student = db.get(Student, child)
+        student.active = False
+        db.commit()
+    assert client.get("/api/v1/together/boards/trash").json() == []
+    assert client.post(path + "/restore").status_code == 404
+    assert client.post(path + "/rename", json={"name": "Denied"}).status_code == 404
+    assert client.post(path + "/clear-board", json={
+        "operation_id": str(uuid.uuid4()), "expected_revision": 0,
+    }).status_code == 404
+    with factory() as db:
+        student = db.get(Student, child)
+        student.active = True
+        other = db.scalar(select(User).where(User.email == "other@example.test"))
+        student.parent_id = other.id
+        db.commit()
+    # The former owner's cookie must not expose the child's board or Trash.
+    assert client.get("/api/v1/together/boards/trash").json() == []
+    assert client.post(path + "/restore").status_code == 404
+    client.cookies.set(SESSION_COOKIE, other_token)
+    # Reassignment does not transfer ownership of historical board content.
+    assert client.post(path + "/restore").status_code == 404
+
+
+def test_existing_live_socket_closes_after_board_trashed(family):
+    client, _factory, child, *_ = family
+    path = create_board(client, child)
+    with client.websocket_connect(
+        path + "/live", headers={"origin": "http://testserver"}
+    ) as socket:
+        assert "operations" in socket.receive_json()
+        assert client.post(path + "/trash").status_code == 200
+        socket.send_json({"kind": "pointer", "point": {"x": 15, "y": 20}})
+        with pytest.raises(WebSocketDisconnect) as error:
+            while True:
+                socket.receive_json()
+        assert error.value.code == 1008

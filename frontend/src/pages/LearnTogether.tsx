@@ -35,6 +35,8 @@ type Board = {
   student_id: string;
   author: string;
   closed: boolean;
+  name: string;
+  deleted?: boolean;
 };
 const color = (author?: string) =>
   author?.startsWith("parent:") ? "#6d28d9" : "#0369a1";
@@ -45,6 +47,13 @@ export default function LearnTogether() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const [boards, setBoards] = useState<Board[]>([]);
+  const [trashedBoards, setTrashedBoards] = useState<Board[]>([]);
+  const [boardMenu, setBoardMenu] = useState(false);
+  const [newBoardOpen, setNewBoardOpen] = useState(false);
+  const [newBoardChild, setNewBoardChild] = useState("");
+  const [boardAction, setBoardAction] = useState<"clear" | "delete" | "rename" | null>(null);
+  const [boardTitle, setBoardTitle] = useState("");
+  const [managingBoard, setManagingBoard] = useState(false);
   const [children, setChildren] = useState<
     { id: string; first_name: string }[]
   >([]);
@@ -97,6 +106,109 @@ export default function LearnTogether() {
   const revision = useRef(0);
   const ingest = useRef<(batch: Mark[]) => void>(() => {});
   const author = useRef("");
+
+  async function newBlankPage() {
+    if (!board || board.closed || !ready || uploading || pending.length ||
+        managingBoard || clearing) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = 1600;
+    canvas.height = 1000;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      setError("This browser cannot create a new page.");
+      return;
+    }
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.85),
+    );
+    if (!blob) {
+      setError("Unable to create a blank page.");
+      return;
+    }
+    await uploadPhoto(new File([blob], "blank-worksheet.jpg", { type: "image/jpeg" }),
+      crypto.randomUUID());
+  }
+
+  // Board management uses parent-authorized server endpoints only; never
+  // erase another participant's marks through client-side filtering.
+  async function refreshBoardList() {
+    const active = await api<Board[]>("/together/boards");
+    setBoards(active);
+    if (active.some((item) => item.author.startsWith("parent:"))) {
+      const trash = await api<Board[]>("/together/boards/trash");
+      setTrashedBoards(trash);
+    } else {
+      setTrashedBoards([]);
+    }
+  }
+
+  async function createNewBoard(studentId: string) {
+    if (!studentId || managingBoard) return;
+    setManagingBoard(true);
+    setError("");
+    try {
+      const created = await post<Board>("/together/boards", { student_id: studentId });
+      setNewBoardOpen(false);
+      navigate("/together/" + created.id);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to create board.");
+    } finally {
+      setManagingBoard(false);
+    }
+  }
+
+  async function manageCurrentBoard() {
+    if (!boardId || !board || !board.author.startsWith("parent:") ||
+        !boardAction || managingBoard) return;
+    if (boardAction === "clear" && !canClear) return;
+    if (boardAction === "delete" && (!canClear || !ready)) return;
+    setManagingBoard(true);
+    setError("");
+    try {
+      if (boardAction === "rename") {
+        const next = await post<Board>("/together/boards/" + boardId + "/rename", {
+          name: boardTitle.trim(),
+        });
+        setBoard(next);
+      } else if (boardAction === "delete") {
+        await post("/together/boards/" + boardId + "/trash", {});
+        setBoardAction(null);
+        navigate("/together");
+        return;
+      } else {
+        const pageRevision = revision.current;
+        const result = await post<{ result_revision: number; cleared_count: number }>(
+          "/together/boards/" + boardId + "/clear-board", {
+            operation_id: crypto.randomUUID(),
+            expected_revision: pageRevision,
+          },
+        );
+        let cursor = revision.current;
+        while (cursor < result.result_revision) {
+          const batch = await api<Mark[]>(
+            "/together/boards/" + boardId + "/operations?after=" + cursor,
+          );
+          if (!batch.length) throw new Error("Board is still synchronizing. Refresh.");
+          ingest.current(batch);
+          const next = Math.max(cursor, ...batch.map((mark) => mark.revision || 0));
+          if (next === cursor) throw new Error("Board update stalled. Refresh.");
+          cursor = next;
+        }
+        setStatus("Cleared " + result.cleared_count + " saved marks across all pages.");
+      }
+      setBoardAction(null);
+      setBoardMenu(false);
+      await refreshBoardList();
+    } catch (err) {
+      setError(err instanceof ApiError && err.status === 409
+        ? "The board changed or the operation was already handled. Refresh and review it before retrying."
+        : err instanceof Error ? err.message : "Board action failed.");
+    } finally {
+      setManagingBoard(false);
+    }
+  }
 
   function sendLive(frame: LiveFrame, force = false) {
     if (force) {
@@ -185,6 +297,15 @@ export default function LearnTogether() {
       /* The server remains authoritative if browser storage is unavailable. */
     }
   }
+
+  useEffect(() => {
+    if (!boardId) return;
+    // The active-board route previously never loaded the board switcher or
+    // parent child list; do so without changing existing WebSocket state.
+    void refreshBoardList().catch(() => {});
+    void api<{ id: string; first_name: string }[]>("/parents/children")
+      .then(setChildren).catch(() => setChildren([]));
+  }, [boardId]);
 
   useEffect(() => {
     let disposed = false;
@@ -353,6 +474,11 @@ export default function LearnTogether() {
         .then(async (values) => {
           if (disposed) return;
           setBoards(values);
+          // A parent must still be able to recover a board after deleting
+          // their LAST active board. Learners cannot browse family Trash.
+          void api<Board[]>("/together/boards/trash")
+            .then((trash) => { if (!disposed) setTrashedBoards(trash); })
+            .catch(() => { if (!disposed) setTrashedBoards([]); });
           if (!values.length || values[0].author.startsWith("parent:")) {
             try {
               const values =
@@ -574,8 +700,8 @@ export default function LearnTogether() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-6xl p-4 space-y-4">
-        <h1 className="text-2xl font-bold">Learn Together</h1>
+      <main className="mx-auto max-w-[1600px] p-4 space-y-4">
+        <h1 className="text-3xl font-bold text-violet-950">Learn Together</h1>
         <p className="text-sm text-muted-foreground">
           A private family whiteboard. Work here is guided practice and does not
           earn independent mastery credit.
@@ -608,6 +734,10 @@ export default function LearnTogether() {
                 </button>
               ))}
             </div>
+            <button type="button" className={button}
+              onClick={() => void refreshBoardList().catch(() => {})}>
+              Refresh boards
+            </button>
             <h2 className="font-semibold">Saved family boards</h2>
             {!boards.length && (
               <p>
@@ -619,16 +749,128 @@ export default function LearnTogether() {
               {boards.map((b, i) => (
                 <li key={b.id}>
                   <Link className="underline" to={`/together/${b.id}`}>
-                    Board {boards.length - i}
+                    {b.name || `Board ${boards.length - i}`}
                     {b.closed ? " · closed" : " · open"}
                   </Link>
                 </li>
               ))}
             </ul>
+            {trashedBoards.length > 0 && (
+              <section aria-label="Board trash" className="rounded-xl border p-4 space-y-2">
+                <h3 className="font-semibold">Trash — recoverable boards</h3>
+                {trashedBoards.map((item) => <div key={item.id}
+                  className="flex items-center justify-between gap-3">
+                  <span>{item.name}</span>
+                  <button type="button" className={button}
+                    onClick={async () => {
+                      try {
+                        await post("/together/boards/" + item.id + "/restore", {});
+                        await refreshBoardList();
+                      } catch (err) {
+                        setError(err instanceof Error ? err.message : "Restore failed.");
+                      }
+                    }}>Restore board</button>
+                </div>)}
+              </section>
+            )}
           </>
         ) : (
           <>
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-white p-3 shadow-sm">
+              <div className="flex flex-wrap items-center gap-2">
+                <label className="font-semibold" htmlFor="board-picker">Open board</label>
+                <select id="board-picker" className={button} value={boardId}
+                  disabled={managingBoard || pending.length > 0}
+                  onChange={(event) => navigate("/together/" + event.target.value)}>
+                  {!boards.some((item) => item.id === boardId) &&
+                    <option value={boardId}>{board?.name || "Current board"}</option>}
+                  {boards.map((item) =>
+                    <option key={item.id} value={item.id}>{item.name}</option>)}
+                </select>
+                {board?.author.startsWith("parent:") && (
+                  <button type="button" className="rounded-lg bg-violet-700 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                    disabled={managingBoard || pending.length > 0}
+                    onClick={() => { setNewBoardOpen(true); setNewBoardChild(board.student_id); }}>
+                    + New board
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link to="/together" className={button}>All boards</Link>
+                {board?.author.startsWith("parent:") && (
+                  <button type="button" className={button} aria-expanded={boardMenu}
+                    onClick={() => setBoardMenu((value) => !value)}>
+                    Board actions
+                  </button>
+                )}
+              </div>
+            </div>
+            {boardMenu && board?.author.startsWith("parent:") && (
+              <div className="ml-auto max-w-md space-y-2 rounded-xl border bg-white p-4 shadow-md" role="group" aria-label="Board actions">
+                <button type="button" className={button}
+                  onClick={() => { setBoardTitle(board.name); setBoardAction("rename"); setBoardMenu(false); }}>
+                  Rename board
+                </button>
+                <button type="button" className={button}
+                  disabled={!canClear} onClick={() => { setBoardAction("clear"); setBoardMenu(false); }}>
+                  Clear entire board
+                </button>
+                <button type="button" className="rounded-lg border border-red-600 px-3 py-2 text-red-700 disabled:opacity-40"
+                  disabled={!canClear || !ready}
+                  onClick={() => { setBoardAction("delete"); setBoardMenu(false); }}>
+                  Delete board
+                </button>
+                <p className="text-xs text-muted-foreground">
+                  Clearing removes all saved pen and text marks, including other participants' marks.
+                  Imported worksheet pages stay. Deleted boards move to Trash for recovery.
+                </p>
+              </div>
+            )}
+            {newBoardOpen && <section className="rounded-xl border bg-violet-50 p-4 space-y-3"
+              aria-label="Create new family board">
+              <h2 className="font-semibold">New board</h2>
+              <label className="block">Choose learner
+                <select className={button + " ml-2"} value={newBoardChild}
+                  onChange={(event) => setNewBoardChild(event.target.value)}>
+                  {children.map((child) => <option key={child.id} value={child.id}>{child.first_name}</option>)}
+                </select>
+              </label>
+              <div className="flex gap-2">
+                <button type="button" className={button} onClick={() => setNewBoardOpen(false)}>Cancel</button>
+                <button type="button" className="rounded-lg bg-violet-700 px-4 py-2 text-white"
+                  disabled={!newBoardChild || managingBoard}
+                  onClick={() => void createNewBoard(newBoardChild)}>Create board</button>
+              </div>
+            </section>}
+            {boardAction && <section className="rounded-xl border border-red-300 bg-red-50 p-4 space-y-3"
+              role="group" aria-label="Confirm board action">
+              <h2 className="font-semibold">
+                {boardAction === "clear" ? "Clear every page?" :
+                 boardAction === "delete" ? "Move this board to Trash?" : "Rename this board"}
+              </h2>
+              {boardAction === "clear" && <p className="text-sm">
+                All pen and text marks by every participant will be cleared across this board.
+                Imported homework pages will remain. This bulk action cannot be undone.
+              </p>}
+              {boardAction === "delete" && <p className="text-sm">
+                This board will disappear from family access but remain in the parent's Trash for restoration.
+              </p>}
+              {boardAction === "rename" && <label className="block">
+                Board name <input className="ml-2 rounded border p-2" maxLength={100}
+                  value={boardTitle} onChange={(event) => setBoardTitle(event.target.value)} />
+              </label>}
+              <div className="flex gap-2">
+                <button type="button" className={button}
+                  onClick={() => setBoardAction(null)}>Cancel</button>
+                <button type="button" className="rounded-lg bg-red-700 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                  disabled={managingBoard || (boardAction === "rename" && !boardTitle.trim())}
+                  onClick={() => void manageCurrentBoard()}>
+                  {boardAction === "clear" ? "Clear all saved marks" :
+                   boardAction === "delete" ? "Move board to Trash" : "Save name"}
+                </button>
+              </div>
+            </section>}
+            <div className="flex flex-wrap gap-2 items-center rounded-xl border bg-white p-3 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
               <button
                 className={button}
                 aria-pressed={tool === "pen"}
@@ -697,7 +939,34 @@ export default function LearnTogether() {
                 </button>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <nav aria-label="Board pages" className="rounded-xl border bg-white p-3 shadow-sm space-y-2">
+              <div className="flex flex-wrap justify-between items-center gap-2">
+                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
+                <button className={button} type="button" disabled={disabled || uploading || pages.length >= 10}
+                  onClick={() => void newBlankPage()}>+ New blank page</button>
+              </div>
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                <button type="button" aria-current={selectedPage === null ? "page" : undefined}
+                  className={"min-w-32 rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
+                  disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
+                  <span className="block text-xs text-muted-foreground">Base page</span>
+                  <span className="font-medium">Blank page</span>
+                </button>
+                {pages.map((page, index) => (
+                  <button key={page.operation_id} type="button"
+                    aria-current={selectedPage === page.operation_id ? "page" : undefined}
+                    className={"min-w-32 rounded-xl border p-2 text-left " +
+                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
+                    disabled={!ready || pending.length > 0}
+                    onClick={() => changePage(page.operation_id)}>
+                    <img className="mb-1 h-16 w-24 rounded border object-contain"
+                      alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
+                    <span className="font-medium">Page {index + 1}</span>
+                  </button>
+                ))}
+              </div>
+            </nav>
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-white p-3">
               <label>
                 Worksheet page{" "}
                 <select
