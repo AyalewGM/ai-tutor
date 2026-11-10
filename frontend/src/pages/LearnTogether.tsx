@@ -93,6 +93,7 @@ export default function LearnTogether() {
   const [share, setShare] = useState("");
   const [clearConfirm, setClearConfirm] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const photoInput = useRef<HTMLInputElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const pointer = useRef<number | null>(null);
   const panStart = useRef<{
@@ -1025,20 +1026,18 @@ export default function LearnTogether() {
               >
                 Clear My Writing
               </button>
-              <label className={`${button} max-w-full`}>
+              <button type="button" className={button}
+                disabled={disabled || uploading} onClick={() => photoInput.current?.click()}>
                 Add homework photo
-                <input
-                  className="block max-w-full text-sm"
-                  type="file"
-                  accept="image/jpeg,image/png"
-                  disabled={disabled || uploading}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    if (file) void uploadPhoto(file, crypto.randomUUID());
-                    event.target.value = "";
-                  }}
-                />
-              </label>
+              </button>
+              <input ref={photoInput} aria-label="Choose homework photo"
+                className="sr-only" type="file" accept="image/jpeg,image/png"
+                disabled={disabled || uploading}
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  if (file) void uploadPhoto(file, crypto.randomUUID());
+                  event.target.value = "";
+                }} />
 
               <button
                 className={button}
