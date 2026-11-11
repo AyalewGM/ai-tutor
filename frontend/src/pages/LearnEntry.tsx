@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, ChevronDown, ClipboardCheck, CreditCard, Play, UserPlus, Compass } from "lucide-react";
+import { BookOpen, ChevronDown, ClipboardCheck, CreditCard, Play, UserPlus, Users, Compass } from "lucide-react";
 import { ApiError, api, post } from "../api";
 import NavBar from "../components/NavBar";
 import Avatar from "../components/Avatar";
@@ -27,6 +27,7 @@ export default function LearnEntry() {
   const [curriculumId, setCurriculumId] = useState("");
   const [newAvatarId, setNewAvatarId] = useState("avatar-1");
   const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
+  const [addLearnerOpen, setAddLearnerOpen] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [skillsLoading, setSkillsLoading] = useState(false);
@@ -157,6 +158,14 @@ export default function LearnEntry() {
     if (/pattern|equation|algebra|expression|distribut|linear|variable/.test(text)) return "Patterns & algebra";
     return "Numbers & operations";
   };
+  const TOPIC_COLOR: Record<string, string> = {
+    "Numbers & operations": "bg-violet-500",
+    "Fractions & decimals": "bg-amber-500",
+    "Geometry": "bg-emerald-500",
+    "Measurement & time": "bg-sky-500",
+    "Data & graphs": "bg-rose-500",
+    "Patterns & algebra": "bg-indigo-500",
+  };
   const topics = useMemo(
     () => ["All topics", ...Array.from(new Set(skills.map(topicFor)))],
     [skills],
@@ -255,7 +264,7 @@ export default function LearnEntry() {
           </CardContent>
         </Card>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
+        <div className={cn("grid gap-6", !learnerOnly && "lg:grid-cols-[1fr_340px]")}>
           {/* Explore Topics */}
           <Card>
             <CardHeader>
@@ -301,6 +310,9 @@ export default function LearnEntry() {
                             : "border-border bg-card text-muted-foreground hover:bg-secondary",
                         )}
                       >
+                        {topic !== "All topics" && (
+                          <span className={cn("mr-1.5 inline-block h-2 w-2 rounded-full align-middle", TOPIC_COLOR[topic])} />
+                        )}
                         {topic}
                       </button>
                     ))}
@@ -323,9 +335,20 @@ export default function LearnEntry() {
                           !skill.content_ready && "opacity-50",
                         )}
                       >
-                        <span className="text-xs font-mono text-muted-foreground">{skill.code}</span>
-                        <p className="mt-0.5 font-medium leading-snug">{skill.name}</p>
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-2">
+                          <span className={cn("h-2.5 w-2.5 shrink-0 rounded-full", TOPIC_COLOR[topicFor(skill)])} />
+                          <span className="text-xs font-mono text-muted-foreground">{skill.code}</span>
+                          <span className="ml-auto truncate text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                            {topicFor(skill)}
+                          </span>
+                        </span>
+                        <p className="mt-1.5 font-medium leading-snug">{skill.name}</p>
+                        <p className={cn(
+                          "mt-1.5 inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium",
+                          skill.content_ready
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "bg-slate-100 text-slate-500",
+                        )}>
                           {skill.content_ready ? "Ready to practice" : "Content in progress"}
                         </p>
                       </button>
@@ -402,14 +425,57 @@ export default function LearnEntry() {
           {!learnerOnly && <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <UserPlus className="h-5 w-5 text-primary" />
-                <CardTitle>Add a learner</CardTitle>
+                <Users className="h-5 w-5 text-primary" />
+                <CardTitle>Your learners</CardTitle>
               </div>
               <CardDescription>
-                Use a short nickname or alias, not a full legal name. Then choose the exact curriculum.
+                Choose who is learning, or add a new profile.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2">
+                {learners.map((learner) => (
+                  <li key={learner.id}>
+                    <button
+                      type="button"
+                      onClick={() => setLearnerId(learner.id)}
+                      aria-pressed={learner.id === learnerId}
+                      className={cn(
+                        "flex w-full items-center gap-3 rounded-xl border p-2.5 text-left transition-colors",
+                        learner.id === learnerId
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/40",
+                      )}
+                    >
+                      <Avatar avatarId={learner.avatar_id ?? "avatar-1"} size={32} />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-medium">
+                          {learner.first_name}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {learner.curriculum_code}
+                        </span>
+                      </span>
+                      {learner.id === learnerId && <Badge>Selected</Badge>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {!addLearnerOpen && (
+                <button
+                  type="button"
+                  onClick={() => setAddLearnerOpen(true)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-primary/40 bg-primary/5 px-4 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+                >
+                  <UserPlus className="h-4 w-4" />
+                  Add a learner
+                </button>
+              )}
+              {addLearnerOpen && (
+              <div className="space-y-4 rounded-xl border border-border p-3">
+                <p className="text-xs text-muted-foreground">
+                  Use a short nickname or alias, not a full legal name. Then choose the exact curriculum.
+                </p>
               <form onSubmit={addLearner} className="space-y-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="firstName">Learner nickname</Label>
@@ -518,7 +584,16 @@ export default function LearnEntry() {
                   <AvatarPicker value={newAvatarId} onChange={setNewAvatarId} />
                 </div>
                 <Button type="submit" variant="secondary" className="w-full">Add learner</Button>
+                <button
+                  type="button"
+                  onClick={() => setAddLearnerOpen(false)}
+                  className="w-full text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Cancel
+                </button>
               </form>
+              </div>
+              )}
               {notice && (
                 <p className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700" role="status">
                   {notice}
