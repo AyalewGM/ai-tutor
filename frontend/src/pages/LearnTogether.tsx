@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Eraser,
   FileDown,
   Hand,
@@ -116,6 +118,7 @@ export default function LearnTogether() {
   const [share, setShare] = useState("");
   const [clearConfirm, setClearConfirm] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [pagesOpen, setPagesOpen] = useState(true);
   const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
   const [now, setNow] = useState(Date.now());
   const [fullscreen, setFullscreen] = useState(false);
@@ -1028,11 +1031,28 @@ export default function LearnTogether() {
             <div className="grid min-h-[65vh] items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
               <aside className="min-w-0" aria-label="Page navigation">
             <nav aria-label="Board pages" className="space-y-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-              <div className="flex flex-wrap justify-between items-center gap-2">
-                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
-                <button className={`${button} w-full`} type="button" disabled={disabled || uploading || pages.length >= 10}
-                  onClick={() => void newBlankPage()}>+ New page</button>
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="flex items-center gap-2 font-semibold">
+                  Pages
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                    {pages.length + 1}
+                  </span>
+                </h2>
+                <button type="button" aria-expanded={pagesOpen}
+                  aria-label={pagesOpen ? "Collapse page list" : "Expand page list"}
+                  onClick={() => setPagesOpen((value) => !value)}
+                  className="rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100">
+                  {pagesOpen
+                    ? <ChevronUp size={16} aria-hidden="true" />
+                    : <ChevronDown size={16} aria-hidden="true" />}
+                </button>
               </div>
+              {pagesOpen && (<>
+              <button type="button" disabled={disabled || uploading || pages.length >= 10}
+                onClick={() => void newBlankPage()}
+                className="w-full rounded-xl border border-dashed border-violet-300 bg-violet-50/60 px-3 py-2 text-sm font-medium text-violet-800 transition-colors hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40">
+                + New page
+              </button>
               <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
                 <button type="button" aria-current={selectedPage === null ? "page" : undefined}
                   className={"min-w-32 w-full rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
@@ -1069,6 +1089,7 @@ export default function LearnTogether() {
                   </p>
                 </div>
               </details>
+              </>)}
             </nav>
               </aside>
               <section className="min-w-0 space-y-3" aria-label="Whiteboard editor">
