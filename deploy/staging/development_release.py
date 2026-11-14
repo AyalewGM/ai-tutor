@@ -48,7 +48,7 @@ DOCKER = ["/usr/bin/docker", "--host", "unix:///var/run/docker.sock"]
 IMAGE_NAMES = {key: "STAGING_" + key.upper() + "_IMAGE"
                for key in ("api", "gateway", "frontend", "db", "redis", "proxy")}
 CHECKS = {"test": 15368, "containers": 15368, "Semgrep SAST": 15368,
-          "Trivy dependencies and secrets": 15368, "CodeQL": 57789}
+          "Trivy dependencies and secrets": 15368}
 CHECK_WORKFLOWS = {
     "test": (356891953, ".github/workflows/ci.yml"),
     "containers": (356891953, ".github/workflows/ci.yml"),
@@ -215,7 +215,9 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 def github(suffix):
     """Fixed public repository API, system CA, no proxy, no credentials or redirects."""
     require(re.fullmatch(r"(?:commits/[a-f0-9]{40}(?:/check-runs\?per_page=100&page=[1-9][0-9]?|/pulls\?per_page=100)?|"
-                         r"pulls/[1-9][0-9]*|git/ref/heads/[A-Za-z0-9%._/-]+|actions/runs/[1-9][0-9]*)?",
+                         r"pulls/[1-9][0-9]*|git/ref/heads/[A-Za-z0-9%._/-]+|actions/runs/[1-9][0-9]*|"
+                         r"actions/workflows/371754568/runs\?head_sha=[a-f0-9]{40}&per_page=100&page=[1-9][0-9]?|"
+                         r"actions/runs/[1-9][0-9]*/attempts/[1-9][0-9]*/jobs\?filter=all&per_page=100&page=[1-9][0-9]?)?",
                          suffix) is not None, "github_path")
     url = PUBLIC_API + ("/" + suffix if suffix else "")
     opener = urllib.request.build_opener(
@@ -232,6 +234,75 @@ def github(suffix):
             return json.loads(data)
     except (OSError, ValueError, urllib.error.HTTPError):
         raise Rejected("github_evidence_unavailable") from None
+
+
+
+CODEQL_WORKFLOW = 371754568
+CODEQL_PATH = "dynamic/github-code-scanning/codeql"
+CODEQL_NAMES = {"Analyze (actions)", "Analyze (javascript-typescript)", "Analyze (python)"}
+
+
+def github_inventory(path, key):
+    rows = []
+    total = None
+    for page in range(1, 11):
+        value = github(path + f"&per_page=100&page={page}")
+        count = value.get("total_count")
+        require(type(count) is int and 0 <= count <= 1000
+                and (total is None or total == count), "codeql_inventory_changed_or_over_budget")
+        total = count
+        batch = value.get(key)
+        require(isinstance(batch, list), "codeql_inventory_invalid")
+        rows.extend(batch)
+        require(len(rows) <= total, "codeql_inventory_invalid")
+        if len(rows) == total:
+            require(len({row["id"] for row in rows}) == len(rows), "codeql_inventory_duplicate")
+            return rows
+        require(bool(batch), "codeql_inventory_incomplete")
+    raise Rejected("codeql_inventory_incomplete")
+
+
+def verify_codeql(source_sha, branch, checks):
+    def latest_run():
+        runs = github_inventory(
+            f"actions/workflows/{CODEQL_WORKFLOW}/runs?head_sha={source_sha}", "workflow_runs")
+        require(bool(runs), "codeql_run_missing")
+        # Do not fall back to an older success when a newer run is pending or failed.
+        selected = max(runs, key=lambda row: row["id"])
+        run = github("actions/runs/" + str(selected["id"]))
+        require(run.get("id") == selected["id"] and run.get("workflow_id") == CODEQL_WORKFLOW
+                and run.get("path") == CODEQL_PATH and run.get("event") == "dynamic"
+                and run.get("head_sha") == source_sha and run.get("head_branch") == branch
+                and run.get("repository", {}).get("id") == 1367979340
+                and run.get("head_repository", {}).get("id") == 1367979340
+                and run.get("status") == "completed" and run.get("conclusion") == "success"
+                and type(run.get("run_attempt")) is int and run["run_attempt"] > 0,
+                "codeql_run_not_approved")
+        return run
+
+    run = latest_run()
+    run_id, attempt = run["id"], run["run_attempt"]
+    jobs = github_inventory(f"actions/runs/{run_id}/attempts/{attempt}/jobs?filter=all", "jobs")
+    for name in CODEQL_NAMES:
+        matches = [job for job in jobs if job.get("name") == name]
+        require(len(matches) == 1, "codeql_language_missing_or_ambiguous")
+        job = matches[0]
+        require(job.get("run_id") == run_id and job.get("run_attempt") == attempt
+                and job.get("head_sha") == source_sha and job.get("head_branch") == branch
+                and job.get("status") == "completed" and job.get("conclusion") == "success",
+                "codeql_job_not_approved")
+        expected = f"https://github.com/AyalewGM/ai-tutor/actions/runs/{run_id}/job/{job['id']}"
+        matches = [row for row in checks if row.get("name") == name
+                   and row.get("head_sha") == source_sha and row.get("app", {}).get("id") == 15368]
+        require(bool(matches), "codeql_check_missing")
+        check = max(matches, key=lambda row: row["id"])
+        require(check.get("details_url") == expected and job.get("html_url") == expected
+                and job.get("check_run_url") ==
+                f"https://api.github.com/repos/AyalewGM/ai-tutor/check-runs/{check['id']}"
+                and check.get("status") == "completed" and check.get("conclusion") == "success",
+                "codeql_check_not_bound_to_job")
+    fresh = latest_run()
+    require((fresh["id"], fresh["run_attempt"]) == (run_id, attempt), "codeql_run_changed")
 
 
 def verify_checks(source_sha, source_tree, root):
@@ -306,6 +377,7 @@ def verify_checks(source_sha, source_tree, root):
         if not is_main and name in {"test", "containers"}:
             require(any(item.get("number") == pr["number"] for item in latest.get("pull_requests", [])),
                     "ci_check_not_bound_to_selected_pull_request")
+    verify_codeql(source_sha, "main" if is_main else pr["head"]["ref"], rows)
     if is_main:
         require(github(reference)["object"]["sha"] == source_sha, "main_changed_during_check")
         return {"head_sha": source_sha, "tested_tree": source_tree, "branch": "main", "event": "push"}
