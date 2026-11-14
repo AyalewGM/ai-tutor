@@ -123,6 +123,14 @@ GitHub test-merge tree equals the release head tree. They do not mistake
 historical normalized `base.sha` metadata for the current base. Record head and
 test-merge SHAs separately. Required exact-head `test`, `containers`, Semgrep,
 Trivy and CodeQL checks must actually succeed from their pinned GitHub App IDs.
+CodeQL uses GitHub Actions app `15368`, default-setup workflow `371754568`
+(`dynamic/github-code-scanning/codeql`, event `dynamic`). All three required
+Analyze jobs (actions, javascript-typescript, python) must belong to the latest
+run and its current attempt, with exact repository, branch, SHA and check/job
+URL bindings. A newer pending or failed run, missing language, mixed attempt or
+legacy `CodeQL` check cannot satisfy this gate. The run is read again before
+acceptance to detect a concurrent rerun.
+
 Missing CodeQL on an unprotected stacked base is a hold, not a waiver. The owner
 can arrange default CodeQL execution for the development base without changing
 production rules; a claimed success or skipped job is insufficient.

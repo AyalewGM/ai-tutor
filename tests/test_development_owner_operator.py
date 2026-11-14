@@ -208,7 +208,25 @@ def ci_fixture():
                         "status": "completed", "conclusion": "success", "pull_requests": [{"number": 516}]}
         next(row for row in rows if row["name"] == name)["details_url"] = (
             f"https://github.com/AyalewGM/ai-tutor/actions/runs/{run_id}/job/123")
+    runs[300] = {"id": 300, "workflow_id": gate.CODEQL_WORKFLOW, "path": gate.CODEQL_PATH,
+                 "event": "dynamic", "head_sha": source, "head_branch": pr["head"]["ref"],
+                 "head_repository": {"id": 1367979340}, "repository": {"id": 1367979340},
+                 "status": "completed", "conclusion": "success", "run_attempt": 1}
+    jobs = []
+    for index, name in enumerate(sorted(gate.CODEQL_NAMES), 1000):
+        url = f"https://github.com/AyalewGM/ai-tutor/actions/runs/300/job/{index}"
+        rows.append({"id": index, "name": name, "head_sha": source, "app": {"id": 15368},
+                     "status": "completed", "conclusion": "success", "details_url": url})
+        jobs.append({"id": index, "name": name, "run_id": 300, "run_attempt": 1,
+                     "head_sha": source, "head_branch": pr["head"]["ref"],
+                     "status": "completed", "conclusion": "success", "html_url": url,
+                     "check_run_url": f"https://api.github.com/repos/AyalewGM/ai-tutor/check-runs/{index}"})
     def api(path):
+        if path.startswith("actions/workflows/"):
+            inventory = [run for run in runs.values() if run["id"] >= 300]
+            return {"total_count": len(inventory), "workflow_runs": inventory}
+        if "/attempts/" in path:
+            return {"total_count": len(jobs), "jobs": jobs}
         if path == "":
             return {"id": 1367979340, "owner": {"id": 22088298}}
         if "/check-runs?" in path:
@@ -226,6 +244,7 @@ def ci_fixture():
             return runs[int(path.removeprefix("actions/runs/"))]
         raise AssertionError("unexpected fixture API path")
     api.runs = runs
+    api.jobs = jobs
     return source, tree, base, pr, rows, api
 
 
@@ -302,9 +321,9 @@ def test_source_or_current_ref_drift_during_evidence_collection_rejects(changed)
 def test_ci_mandatory_provenance_and_tree_rejections(failure):
     source, tree, _base, _pr, rows, api = ci_fixture()
     if failure == "missing_codeql":
-        rows[:] = [row for row in rows if row["name"] != "CodeQL"]
+        rows[:] = [row for row in rows if row["name"] not in gate.CODEQL_NAMES]
     elif failure == "wrong_producer":
-        next(row for row in rows if row["name"] == "CodeQL")["app"]["id"] = 1
+        next(row for row in rows if row["name"] == "Analyze (python)")["app"]["id"] = 1
     elif failure == "failed_latest":
         rows.append({**rows[0], "id": 100, "conclusion": "failure"})
     else:
@@ -531,7 +550,9 @@ def test_console_stdout_discards_opaque_native_result(setup, monkeypatch, capsys
 def main_ci_fixture():
     source, tree, _base, _pr, rows, original = ci_fixture()
     for run in original.runs.values():
-        run.update(event="push", head_branch="main", pull_requests=[])
+        run.update(event="dynamic" if run["id"] >= 300 else "push", head_branch="main", pull_requests=[])
+    for job in original.jobs:
+        job["head_branch"] = "main"
     for row in rows:
         row["pull_requests"] = []
     def api(path):
@@ -540,6 +561,7 @@ def main_ci_fixture():
         if path == "commits/" + source:
             return {"sha": source, "commit": {"tree": {"sha": tree}}}
         return original(path)
+    api.jobs = original.jobs
     return source, tree, rows, original.runs, api
 
 
@@ -583,3 +605,119 @@ def test_main_rejects_drift_and_invalid_checks(change):
         return original(path)
     with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
         gate.verify_checks(source, "f" * 40 if change == "tree" else tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("field,value", [
+    ("workflow_id", 123), ("path", ".github/workflows/codeql.yml"), ("event", "push"),
+    ("head_sha", "f" * 40), ("head_branch", "other"), ("repository", {"id": 1}),
+    ("head_repository", {"id": 1}), ("status", "in_progress"), ("conclusion", "failure"),
+    ("run_attempt", 0), ("run_attempt", True),
+])
+def test_codeql_run_provenance_is_required(field, value):
+    source, tree, _rows, runs, api = main_ci_fixture()
+    runs[300][field] = value
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("status,conclusion", [("completed", "failure"), ("in_progress", None)])
+def test_codeql_newer_failed_or_pending_run_blocks_older_success(status, conclusion):
+    source, tree, _rows, runs, api = main_ci_fixture()
+    runs[301] = {**runs[300], "id": 301, "status": status, "conclusion": conclusion}
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("field,value", [
+    ("run_id", 299), ("run_attempt", 2), ("head_sha", "f" * 40),
+    ("head_branch", "other"), ("status", "queued"), ("conclusion", "failure"),
+    ("html_url", "https://github.com.attacker.invalid/AyalewGM/ai-tutor/actions/runs/300/job/1000"),
+    ("check_run_url", "https://api.github.com/repos/other/repo/check-runs/1000"),
+])
+def test_codeql_jobs_cannot_mix_run_attempt_subject_or_urls(field, value):
+    source, tree, _rows, _runs, api = main_ci_fixture()
+    api.jobs[0][field] = value
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("change", ["missing_language", "duplicate_language", "wrong_producer", "wrong_sha",
+                                     "spoof_url", "newer_failed_check", "mixed_run_check"])
+def test_codeql_requires_all_languages_and_exact_check_job_binding(change):
+    source, tree, rows, _runs, api = main_ci_fixture()
+    row = next(row for row in rows if row["name"] == api.jobs[0]["name"])
+    if change == "missing_language": api.jobs.pop()
+    if change == "duplicate_language": api.jobs.append({**api.jobs[0], "id": 8888})
+    if change == "wrong_producer": row["app"] = {"id": 57789}
+    if change == "wrong_sha": row["head_sha"] = "f" * 40
+    if change == "spoof_url": row["details_url"] += "?trusted=true"
+    if change == "mixed_run_check": row["details_url"] = row["details_url"].replace("/300/", "/299/")
+    if change == "newer_failed_check": rows.append({**row, "id": 9999, "conclusion": "failure"})
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("change", ["new_run", "attempt", "pending"])
+def test_codeql_rerun_drift_during_evidence_collection_rejects(change):
+    source, tree, _rows, runs, original = main_ci_fixture()
+    reads = 0
+    def api(path):
+        nonlocal reads
+        if path.startswith("actions/workflows/"):
+            reads += 1
+            if reads == 2:
+                if change == "new_run": runs[301] = {**runs[300], "id": 301}
+                if change == "attempt": runs[300] = {**runs[300], "run_attempt": 2}
+                if change == "pending": runs[300] = {**runs[300], "status": "queued", "conclusion": None}
+        return original(path)
+    with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
+        gate.verify_checks(source, tree, Path("/fixture"))
+
+
+@pytest.mark.parametrize("kind", ["workflow_runs", "jobs"])
+@pytest.mark.parametrize("change", ["changed_total", "duplicate", "empty", "over_budget"])
+def test_codeql_inventory_rejects_pagination_inconsistency(kind, change):
+    pages = [{"total_count": 2, kind: [{"id": 1}]}, {"total_count": 2, kind: [{"id": 2}]}]
+    if change == "changed_total": pages[1]["total_count"] = 3
+    if change == "duplicate": pages[1][kind][0]["id"] = 1
+    if change == "empty": pages[1][kind] = []
+    if change == "over_budget": pages[0]["total_count"] = 1001
+    with patch.object(gate, "github", side_effect=pages), pytest.raises(gate.Rejected):
+        gate.github_inventory("fixture?key=value", kind)
+
+
+def test_codeql_inventory_collects_multiple_pages():
+    pages = [{"total_count": 2, "jobs": [{"id": 1}]}, {"total_count": 2, "jobs": [{"id": 2}]}]
+    with patch.object(gate, "github", side_effect=pages) as request:
+        assert gate.github_inventory("fixture?key=value", "jobs") == [{"id": 1}, {"id": 2}]
+    assert [call.args[0] for call in request.call_args_list] == [
+        "fixture?key=value&per_page=100&page=1", "fixture?key=value&per_page=100&page=2"]
+
+
+@pytest.mark.parametrize("suffix", [
+    "actions/workflows/371754568/runs?head_sha=" + "a" * 40 + "&per_page=100&page=1",
+    "actions/runs/300/attempts/2/jobs?filter=all&per_page=100&page=2",
+])
+def test_real_github_accepts_fixed_codeql_routes(suffix):
+    response = Mock()
+    response.url = gate.PUBLIC_API + "/" + suffix
+    response.read.return_value = b'{"total_count": 0}'
+    context = Mock()
+    context.__enter__ = Mock(return_value=response)
+    context.__exit__ = Mock(return_value=False)
+    opener = Mock()
+    opener.open.return_value = context
+    with patch.object(gate.urllib.request, "build_opener", return_value=opener):
+        assert gate.github(suffix) == {"total_count": 0}
+    assert opener.open.call_args.args[0].full_url == response.url
+
+
+@pytest.mark.parametrize("suffix", [
+    "actions/workflows/123/runs?head_sha=" + "a" * 40 + "&per_page=100&page=1",
+    "actions/runs/300/attempts/0/jobs?filter=all&per_page=100&page=1",
+    "actions/runs/300/attempts/1/jobs?filter=all&per_page=100&page=1&redirect=evil",
+])
+def test_real_github_rejects_untrusted_codeql_routes_before_network(suffix):
+    with patch.object(gate.urllib.request, "build_opener") as opener, pytest.raises(gate.Rejected):
+        gate.github(suffix)
+    opener.assert_not_called()
