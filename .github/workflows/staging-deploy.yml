@@ -1,0 +1,80 @@
+name: Deploy staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Plan is read-only; deploy requires a prepared owner-signed request
+        type: choice
+        options: [plan, deploy]
+        default: plan
+        required: true
+      current_release_sha:
+        description: Full SHA currently running on staging (never assume latest main)
+        type: string
+        required: true
+      image_build_run_id:
+        description: Successful Build staging images run ID for this main commit
+        type: string
+        required: true
+      signed_request:
+        description: Canonical public execute-plan JSON; no private key or credentials
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+# Serialize both planning and deployment; never cancel an in-flight signed operation.
+concurrency:
+  group: mihur-staging-deployment
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    if: github.repository == 'AyalewGM/ai-tutor' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Classify changes and verify exact image-build artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_SHA: ${{ inputs.current_release_sha }}
+          BUILD_RUN: ${{ inputs.image_build_run_id }}
+        run: >-
+          python -I -B deploy/staging/release_workflow.py plan
+          --current "$CURRENT_SHA" --release "$GITHUB_SHA" --build-run "$BUILD_RUN"
+  deploy:
+    if: inputs.action == 'deploy'
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment: staging-deployment
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check owner authorization, execute once, verify release and HTTPS
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_SHA: ${{ inputs.current_release_sha }}
+          BUILD_RUN: ${{ inputs.image_build_run_id }}
+          SIGNED_REQUEST: ${{ inputs.signed_request }}
+          STAGING_DEPLOY_ENABLED: ${{ vars.STAGING_DEPLOY_ENABLED }}
+          STAGING_INSPECTION_KEY: ${{ secrets.STAGING_INSPECTION_KEY }}
+          STAGING_KNOWN_HOSTS: ${{ secrets.STAGING_KNOWN_HOSTS }}
+        run: >-
+          python -I -B deploy/staging/release_workflow.py deploy
+          --current "$CURRENT_SHA" --release "$GITHUB_SHA" --build-run "$BUILD_RUN"
+      - name: Recovery guidance
+        if: failure()
+        run: |
+          echo 'Deployment not accepted. Do not rerun a potentially consumed authorization.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Inspect the current release through the owner console. No database restore, downgrade, volume deletion or automatic rollback was attempted.' >> "$GITHUB_STEP_SUMMARY"

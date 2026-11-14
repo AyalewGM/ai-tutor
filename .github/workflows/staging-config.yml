@@ -1,10 +1,10 @@
 name: Staging configuration
 on:
   pull_request:
-    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml']
+    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml', '.github/workflows/staging-deploy.yml']
   push:
     branches: [main]
-    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml']
+    paths: ['deploy/staging/**', '.github/workflows/staging-config.yml', '.github/workflows/staging-deploy.yml']
 permissions:
   contents: read
 jobs:
