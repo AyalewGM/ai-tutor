@@ -646,13 +646,20 @@ def test_codeql_jobs_cannot_mix_run_attempt_subject_or_urls(field, value):
 def test_codeql_requires_all_languages_and_exact_check_job_binding(change):
     source, tree, rows, _runs, api = main_ci_fixture()
     row = next(row for row in rows if row["name"] == api.jobs[0]["name"])
-    if change == "missing_language": api.jobs.pop()
-    if change == "duplicate_language": api.jobs.append({**api.jobs[0], "id": 8888})
-    if change == "wrong_producer": row["app"] = {"id": 57789}
-    if change == "wrong_sha": row["head_sha"] = "f" * 40
-    if change == "spoof_url": row["details_url"] += "?trusted=true"
-    if change == "mixed_run_check": row["details_url"] = row["details_url"].replace("/300/", "/299/")
-    if change == "newer_failed_check": rows.append({**row, "id": 9999, "conclusion": "failure"})
+    if change == "missing_language":
+        api.jobs.pop()
+    if change == "duplicate_language":
+        api.jobs.append({**api.jobs[0], "id": 8888})
+    if change == "wrong_producer":
+        row["app"] = {"id": 57789}
+    if change == "wrong_sha":
+        row["head_sha"] = "f" * 40
+    if change == "spoof_url":
+        row["details_url"] += "?trusted=true"
+    if change == "mixed_run_check":
+        row["details_url"] = row["details_url"].replace("/300/", "/299/")
+    if change == "newer_failed_check":
+        rows.append({**row, "id": 9999, "conclusion": "failure"})
     with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
         gate.verify_checks(source, tree, Path("/fixture"))
 
@@ -666,9 +673,12 @@ def test_codeql_rerun_drift_during_evidence_collection_rejects(change):
         if path.startswith("actions/workflows/"):
             reads += 1
             if reads == 2:
-                if change == "new_run": runs[301] = {**runs[300], "id": 301}
-                if change == "attempt": runs[300] = {**runs[300], "run_attempt": 2}
-                if change == "pending": runs[300] = {**runs[300], "status": "queued", "conclusion": None}
+                if change == "new_run":
+                    runs[301] = {**runs[300], "id": 301}
+                if change == "attempt":
+                    runs[300] = {**runs[300], "run_attempt": 2}
+                if change == "pending":
+                    runs[300] = {**runs[300], "status": "queued", "conclusion": None}
         return original(path)
     with patch.object(gate, "github", side_effect=api), pytest.raises(gate.Rejected):
         gate.verify_checks(source, tree, Path("/fixture"))
@@ -678,10 +688,14 @@ def test_codeql_rerun_drift_during_evidence_collection_rejects(change):
 @pytest.mark.parametrize("change", ["changed_total", "duplicate", "empty", "over_budget"])
 def test_codeql_inventory_rejects_pagination_inconsistency(kind, change):
     pages = [{"total_count": 2, kind: [{"id": 1}]}, {"total_count": 2, kind: [{"id": 2}]}]
-    if change == "changed_total": pages[1]["total_count"] = 3
-    if change == "duplicate": pages[1][kind][0]["id"] = 1
-    if change == "empty": pages[1][kind] = []
-    if change == "over_budget": pages[0]["total_count"] = 1001
+    if change == "changed_total":
+        pages[1]["total_count"] = 3
+    if change == "duplicate":
+        pages[1][kind][0]["id"] = 1
+    if change == "empty":
+        pages[1][kind] = []
+    if change == "over_budget":
+        pages[0]["total_count"] = 1001
     with patch.object(gate, "github", side_effect=pages), pytest.raises(gate.Rejected):
         gate.github_inventory("fixture?key=value", kind)
 
