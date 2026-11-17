@@ -952,9 +952,11 @@ def test_permanent_delete_requires_trashed_owned_board_and_explicit_confirmation
     payload = {"board_name": title, "confirmation": "DELETE FOREVER"}
     mark_payload = mark()
     assert client.post(path + "/operations", json=mark_payload).status_code == 200
+    assert upload(client, path, operation_id=str(uuid.uuid4())).status_code == 200
     with factory() as db:
         board_id = uuid.UUID(path.rsplit("/", 1)[-1])
         assert db.get(CollaborationBoard, board_id) is not None
+        assert len(db.scalars(select(BoardImage).where(BoardImage.board_id == board_id)).all()) == 1
     assert client.post(path + "/delete-permanently", json=payload).status_code == 409
     assert client.post(path + "/trash").status_code == 200
     client.cookies.set("ai_tutor_learner", "child-cookie")
