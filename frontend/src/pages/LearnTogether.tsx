@@ -169,11 +169,19 @@ export default function LearnTogether() {
   async function refreshBoardList() {
     const active = await api<Board[]>("/together/boards");
     setBoards(active);
-    if (active.some((item) => item.author.startsWith("parent:"))) {
+    // An owner can have zero active boards and still need to restore from
+    // Trash. Derive Trash access from the server's cookie authorization,
+    // never from an active board's author field.
+    try {
       const trash = await api<Board[]>("/together/boards/trash");
       setTrashedBoards(trash);
-    } else {
-      setTrashedBoards([]);
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 403) {
+        // Learners cannot browse parent Trash.
+        setTrashedBoards([]);
+      } else {
+        throw err;
+      }
     }
   }
 
