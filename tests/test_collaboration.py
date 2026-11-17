@@ -941,3 +941,51 @@ def test_existing_live_socket_closes_after_board_trashed(family):
             while True:
                 socket.receive_json()
         assert error.value.code == 1008
+
+
+def test_permanent_delete_requires_trashed_owned_board_and_explicit_confirmation(family):
+    """Destructive deletion cannot be reached by child, non-owner, or a soft-delete alone."""
+    client, factory, child, sibling, other_token, _ = family
+    path = create_board(client, child)
+    other_path = create_board(client, sibling)
+    title = "Family whiteboard"
+    payload = {"board_name": title, "confirmation": "DELETE FOREVER"}
+    mark_payload = mark()
+    assert client.post(path + "/operations", json=mark_payload).status_code == 200
+    with factory() as db:
+        board_id = uuid.UUID(path.rsplit("/", 1)[-1])
+        assert db.get(CollaborationBoard, board_id) is not None
+    assert client.post(path + "/delete-permanently", json=payload).status_code == 409
+    assert client.post(path + "/trash").status_code == 200
+    client.cookies.set("ai_tutor_learner", "child-cookie")
+    assert client.post(path + "/delete-permanently", json=payload).status_code == 404
+    client.cookies.delete("ai_tutor_learner")
+    client.cookies.set(SESSION_COOKIE, other_token)
+    assert client.post(path + "/delete-permanently", json=payload).status_code == 404
+    client.cookies.delete(SESSION_COOKIE)
+    with factory() as db:
+        owner = db.scalar(select(User).where(User.email == "parent@example.test"))
+        token, _ = create_session(db, owner.id)
+        db.commit()
+    client.cookies.set(SESSION_COOKIE, token)
+    assert client.post(path + "/delete-permanently", json={
+        **payload, "board_name": "Other board",
+    }).status_code == 409
+    assert client.post(path + "/delete-permanently", json={
+        **payload, "confirmation": "DELETE",
+    }).status_code == 422
+    assert client.post(path + "/delete-permanently", json={
+        **payload, "unexpected": True,
+    }).status_code == 422
+    assert client.get("/api/v1/together/boards/trash").json()
+    response = client.post(path + "/delete-permanently", json=payload)
+    assert response.status_code == 200, response.text
+    assert response.json()["deleted"] is True
+    assert client.post(path + "/restore").status_code == 404
+    assert client.post(path + "/delete-permanently", json=payload).status_code == 404
+    with factory() as db:
+        assert db.get(CollaborationBoard, board_id) is None
+        assert db.scalars(select(BoardOperation).where(BoardOperation.board_id == board_id)).all() == []
+        assert db.scalars(select(BoardImage).where(BoardImage.board_id == board_id)).all() == []
+        assert db.scalars(select(BoardClearReceipt).where(BoardClearReceipt.board_id == board_id)).all() == []
+    assert client.get(other_path).status_code == 200
