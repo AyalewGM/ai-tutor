@@ -71,6 +71,10 @@ export default function LearnTogether() {
   const navigate = useNavigate();
   const [boards, setBoards] = useState<Board[]>([]);
   const [trashedBoards, setTrashedBoards] = useState<Board[]>([]);
+  const [purgeTarget, setPurgeTarget] = useState<Board | null>(null);
+  const [purgeName, setPurgeName] = useState("");
+  const [purgePhrase, setPurgePhrase] = useState("");
+  const [purging, setPurging] = useState(false);
   const [boardMenu, setBoardMenu] = useState(false);
   const [newBoardOpen, setNewBoardOpen] = useState(false);
   const [newBoardChild, setNewBoardChild] = useState("");
@@ -814,39 +818,153 @@ export default function LearnTogether() {
               onClick={() => void refreshBoardList().catch(() => {})}>
               Refresh boards
             </button>
-            <h2 className="font-semibold">Saved family boards</h2>
-            {!boards.length && (
-              <p>
-                Your parent can start a board here. Sign in through your usual
-                Mihur access to join.
-              </p>
-            )}
-            <ul className="space-y-2">
-              {boards.map((b, i) => (
-                <li key={b.id}>
-                  <Link className="underline" to={`/together/${b.id}`}>
-                    {b.name || `Board ${boards.length - i}`}
-                    {b.closed ? " · closed" : " · open"}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <section aria-label="Manage family boards" className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-xl font-semibold text-slate-900">Your boards</h2>
+                  <p className="text-sm text-slate-600">
+                    Open a board to rename it or manage its drawings. Move older boards
+                    to Trash to remove them from family access.
+                  </p>
+                </div>
+                <span className="rounded-full border px-3 py-1 text-sm text-slate-600">
+                  {boards.length} saved boards
+                </span>
+              </div>
+              {!boards.length && (
+                <p className="rounded-xl border bg-white p-4 text-slate-600">
+                  No active boards. A parent can create a new one above or restore
+                  an older board from Trash.
+                </p>
+              )}
+              <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {boards.map((item, index) => (
+                  <li key={item.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <h3 className="truncate font-semibold text-slate-900">
+                      {item.name || `Board ${boards.length - index}`}
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-500">
+                      {item.closed ? "Closed · read only" : "Open · private family board"}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <Link className={button} to={`/together/${item.id}`}>
+                        {item.closed ? "View board" : "Open and manage"}
+                      </Link>
+                      {item.author.startsWith("parent:") && (
+                        <button type="button" className={button} disabled={managingBoard}
+                          onClick={async () => {
+                            if (!window.confirm(`Move “${item.name}” to Trash? You can restore it later.`)) return;
+                            setManagingBoard(true);
+                            setError("");
+                            try {
+                              await post(`/together/boards/${item.id}/trash`, {});
+                              await refreshBoardList();
+                            } catch (err) {
+                              setError(err instanceof Error ? err.message : "Unable to move board to Trash.");
+                            } finally {
+                              setManagingBoard(false);
+                            }
+                          }}>
+                          Move to Trash
+                        </button>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
             {trashedBoards.length > 0 && (
-              <section aria-label="Board trash" className="rounded-xl border p-4 space-y-2">
-                <h3 className="font-semibold">Trash — recoverable boards</h3>
-                {trashedBoards.map((item) => <div key={item.id}
-                  className="flex items-center justify-between gap-3">
-                  <span>{item.name}</span>
-                  <button type="button" className={button}
-                    onClick={async () => {
-                      try {
-                        await post("/together/boards/" + item.id + "/restore", {});
-                        await refreshBoardList();
-                      } catch (err) {
-                        setError(err instanceof Error ? err.message : "Restore failed.");
-                      }
-                    }}>Restore board</button>
-                </div>)}
+              <section aria-label="Board trash" className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+                <div>
+                  <h2 className="text-lg font-semibold">Trash</h2>
+                  <p className="text-sm text-slate-600">
+                    Restore an old board with all of its worksheets and drawings.
+                    Permanent deletion removes the board and its saved content forever.
+                  </p>
+                </div>
+                <ul className="space-y-2">
+                  {trashedBoards.map((item) => (
+                    <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border p-3">
+                      <span className="min-w-0 break-words font-medium">{item.name}</span>
+                      <div className="flex flex-wrap gap-2">
+                        <button type="button" className={button} disabled={purging || managingBoard}
+                          onClick={async () => {
+                            setManagingBoard(true);
+                            setError("");
+                            try {
+                              await post(`/together/boards/${item.id}/restore`, {});
+                              await refreshBoardList();
+                              if (purgeTarget?.id === item.id) setPurgeTarget(null);
+                            } catch (err) {
+                              setError(err instanceof Error ? err.message : "Restore failed.");
+                            } finally {
+                              setManagingBoard(false);
+                            }
+                          }}>Restore board</button>
+                        <button type="button"
+                          className={`${button} border-red-200 text-red-800 hover:bg-red-50`}
+                          disabled={purging || managingBoard}
+                          onClick={() => {
+                            setPurgeTarget(item);
+                            setPurgeName("");
+                            setPurgePhrase("");
+                          }}>Permanently delete…</button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                {purgeTarget && trashedBoards.some((item) => item.id === purgeTarget.id) && (
+                  <section role="group" aria-labelledby="permanent-delete-title"
+                    className="space-y-3 rounded-xl border border-red-300 bg-red-50 p-4">
+                    <h3 id="permanent-delete-title" className="font-semibold text-red-900">
+                      Permanently delete “{purgeTarget.name}”?
+                    </h3>
+                    <p className="text-sm text-red-900">
+                      This permanently removes the board, all pages, imported homework photos,
+                      PDF page images and drawing history. It cannot be restored from Trash.
+                      Other family boards and learner progress remain unchanged.
+                    </p>
+                    <label className="block space-y-1 text-sm font-medium">
+                      Enter the exact board name
+                      <input className="block w-full rounded-lg border p-2" value={purgeName}
+                        onChange={(event) => setPurgeName(event.target.value)}
+                        autoComplete="off" maxLength={100} disabled={purging} />
+                    </label>
+                    <label className="block space-y-1 text-sm font-medium">
+                      Type DELETE FOREVER to confirm
+                      <input className="block w-full rounded-lg border p-2" value={purgePhrase}
+                        onChange={(event) => setPurgePhrase(event.target.value)}
+                        autoComplete="off" disabled={purging} />
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      <button type="button" className={button} disabled={purging}
+                        onClick={() => { setPurgeTarget(null); setPurgeName(""); setPurgePhrase(""); }}>
+                        Cancel
+                      </button>
+                      <button type="button"
+                        className="rounded-lg bg-red-800 px-4 py-2 font-semibold text-white disabled:opacity-40"
+                        disabled={purging || purgeName !== purgeTarget.name || purgePhrase !== "DELETE FOREVER"}
+                        onClick={async () => {
+                          setPurging(true);
+                          setError("");
+                          try {
+                            await post(`/together/boards/${purgeTarget.id}/delete-permanently`, {
+                              board_name: purgeName, confirmation: purgePhrase,
+                            });
+                            setPurgeTarget(null);
+                            setPurgeName("");
+                            setPurgePhrase("");
+                            await refreshBoardList();
+                            setStatus("Board permanently deleted.");
+                          } catch (err) {
+                            setError(err instanceof Error ? err.message : "Permanent deletion failed.");
+                          } finally {
+                            setPurging(false);
+                          }
+                        }}>Delete permanently</button>
+                    </div>
+                  </section>
+                )}
               </section>
             )}
           </>

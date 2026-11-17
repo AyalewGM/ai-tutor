@@ -29,7 +29,7 @@ from fastapi import (
 )
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from redis.exceptions import RedisError
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from app.auth import SESSION_COOKIE, _digest, resolve_user_id
@@ -198,6 +198,39 @@ def restore_board(board_id: uuid.UUID, request: Request, db: Db):
     board.deleted_at = None
     db.commit()
     return metadata(board, author)
+
+
+class PermanentlyDeleteBoard(BaseModel):
+    """An intentional, explicit parent decision; never a soft-delete retry."""
+
+    model_config = ConfigDict(extra="forbid")
+    board_name: str = Field(min_length=1, max_length=100)
+    confirmation: Literal["DELETE FOREVER"]
+
+
+@router.post("/boards/{board_id}/delete-permanently")
+def delete_board_permanently(
+    board_id: uuid.UUID, payload: PermanentlyDeleteBoard, request: Request, db: Db,
+):
+    """Permanently purge a TRASHED owned board and its collaboration content.
+
+    The parent must confirm both the current exact board name and a destructive
+    action phrase. All authorization is derived from the cookie, never the UI.
+    This action cannot be undone and does not touch learner/tutor evidence.
+    """
+    board, _author = parent_board(db, request.cookies, board_id, allow_deleted=True)
+    if board.deleted_at is None:
+        raise HTTPException(409, "Move the board to Trash before permanently deleting it")
+    if payload.board_name != board.name:
+        raise HTTPException(409, "Board name has changed; review before deleting")
+    # The board row is locked by parent_board; relational content is removed
+    # in one transaction, avoiding FK-dependent partial deletion and leaving
+    # all unrelated family boards, student records and mastery history alone.
+    for model in (BoardClearReceipt, BoardOperation, BoardImage):
+        db.execute(delete(model).where(model.board_id == board_id))
+    db.delete(board)
+    db.commit()
+    return {"deleted": True, "board_id": str(board_id)}
 
 
 @router.get("/boards/{board_id}")
