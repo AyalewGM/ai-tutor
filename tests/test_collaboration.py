@@ -516,6 +516,16 @@ def test_historical_blank_page_payload_remains_retry_compatible(family):
     }
 
 
+def test_stroke_color_round_trips_and_replays(family):
+    client, _, child, *_ = family
+    path = create_board(client, child)
+    stroke = mark(color="#dc2626")
+    assert client.post(path + "/operations", json=stroke).status_code == 200
+    assert client.get(path + "/operations").json()[0]["color"] == "#dc2626"
+    assert client.post(path + "/operations", json=stroke).json() == {"revision": 1}
+    assert client.post(path + "/operations", json=mark(color="red")).status_code == 422
+
+
 def test_closed_board_replays_every_batch_before_disconnect(family):
     client, factory, child, *_ = family
     path = create_board(client, child)
@@ -579,14 +589,14 @@ def test_live_pointer_and_unfinished_ink_never_create_saved_operations(family):
                     "kind": "stroke",
                     "operation_id": operation_id,
                     "points": [{"x": 10, "y": 10}, {"x": 60, "y": 80}],
+                    "color": "#16a34a",
                 }
             )
-            assert (
-                live_message(parent, lambda m: m.get("ephemeral", {}).get("kind") == "stroke")[
-                    "ephemeral"
-                ]["operation_id"]
-                == operation_id
-            )
+            event = live_message(
+                parent, lambda m: m.get("ephemeral", {}).get("kind") == "stroke"
+            )["ephemeral"]
+            assert event["operation_id"] == operation_id
+            assert event["color"] == "#16a34a"
             with factory() as db:
                 assert db.scalars(select(BoardOperation)).all() == []
             learner.send_json({"kind": "clear"})
@@ -607,6 +617,9 @@ def test_live_pointer_and_unfinished_ink_never_create_saved_operations(family):
         {"kind": "pointer", "point": {"x": 1, "y": 0}, "author": "parent:forged"},
         {"kind": "stroke", "operation_id": str(uuid.uuid4()), "points": [{"x": 1, "y": 1}] * 129},
         {"kind": "pointer", "point": {"x": 1, "y": 1}, "page_id": str(uuid.uuid4())},
+        {"kind": "pointer", "point": {"x": 1, "y": 1}, "color": "#0369a1"},
+        {"kind": "stroke", "operation_id": str(uuid.uuid4()),
+         "points": [{"x": 1, "y": 1}], "color": "red"},
         {"kind": "stroke", "points": []},
     ],
 )

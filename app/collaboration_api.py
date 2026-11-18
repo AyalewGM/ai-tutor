@@ -255,12 +255,15 @@ class Operation(BaseModel):
     y: float = Field(default=60, ge=0, le=1000, allow_inf_nan=False)
     target: uuid.UUID | None = None
     page_id: uuid.UUID | None = None
+    color: str = Field(default="", max_length=7, pattern=r"^(#[0-9a-fA-F]{6})?$")
 
     def stored_payload(self):
         # Preserve exact historical payloads and idempotent retries from older tabs.
         excluded = {"operation_id"}
         if self.page_id is None:
             excluded.add("page_id")
+        if not self.color:
+            excluded.add("color")
         return self.model_dump(mode="json", exclude=excluded)
 
 

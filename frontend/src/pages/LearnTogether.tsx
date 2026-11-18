@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  Check,
   ChevronLeft,
   ChevronRight,
+  Copy,
   Eraser,
   FileDown,
   Hand,
@@ -11,7 +13,9 @@ import {
   Minimize,
   MousePointer2,
   Pen,
+  Plus,
   Redo2,
+  Trash2,
   Type,
   Undo2,
 } from "lucide-react";
@@ -34,6 +38,7 @@ type Mark = {
   target?: string;
   author?: string;
   revision?: number;
+  color?: string;
 };
 type LiveFrame = {
   kind: "pointer" | "stroke" | "clear";
@@ -41,6 +46,7 @@ type LiveFrame = {
   operation_id?: string;
   points?: Point[];
   point?: Point;
+  color?: string;
   source?: string;
   author?: string;
   seen?: number;
@@ -58,6 +64,12 @@ const color = (author?: string) =>
 const button =
   "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 shadow-sm transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40";
 const activeTool = "border-violet-400 bg-violet-100 text-violet-950";
+const PEN_PALETTE = [
+  ["#94a3b8", "#fca5a5", "#fdba74", "#fcd34d", "#86efac", "#5eead4", "#93c5fd", "#d8b4fe"],
+  ["#64748b", "#ef4444", "#f97316", "#eab308", "#22c55e", "#14b8a6", "#3b82f6", "#a855f7"],
+  ["#334155", "#dc2626", "#ea580c", "#ca8a04", "#16a34a", "#0d9488", "#1d4ed8", "#7e22ce"],
+  ["#0f172a", "#991b1b", "#9a3412", "#a16207", "#166534", "#115e59", "#1e3a8a", "#581c87"],
+];
 
 function savedAgo(timestamp: number, now: number) {
   const seconds = Math.max(0, Math.floor((now - timestamp) / 1000));
@@ -109,6 +121,12 @@ export default function LearnTogether() {
   const [tool, setTool] = useState<
     "pen" | "text" | "erase" | "pan" | "pointer"
   >("pen");
+  const [penColor, setPenColor] = useState(() => {
+    const saved = localStorage.getItem("mihur-pen-color");
+    return saved && /^#[0-9a-fA-F]{6}$/.test(saved) ? saved : "";
+  });
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const penPalette = useRef<HTMLSpanElement>(null);
   const [zoom, setZoom] = useState(1);
   const [uploading, setUploading] = useState(false);
   const uploadBusy = useRef(false);
@@ -328,6 +346,7 @@ export default function LearnTogether() {
         kind: "stroke",
         page_id: inkPage.current,
         points: [...stroke.current],
+        ...(penColor ? { color: penColor } : {}),
       });
     sendLive({ kind: "clear" }, true);
     pointerVisible.current = false;
@@ -338,6 +357,22 @@ export default function LearnTogether() {
     setDraft([]);
     setPeers({});
   }, [selectedPage, tool]);
+  useEffect(() => {
+    if (tool !== "pen") setPaletteOpen(false);
+  }, [tool]);
+  useEffect(() => {
+    if (penColor) localStorage.setItem("mihur-pen-color", penColor);
+    else localStorage.removeItem("mihur-pen-color");
+  }, [penColor]);
+  useEffect(() => {
+    if (!paletteOpen) return;
+    const close = (event: PointerEvent) => {
+      if (!penPalette.current?.contains(event.target as Node))
+        setPaletteOpen(false);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [paletteOpen]);
 
   function persistQueue() {
     if (!boardId || !author.current) return;
@@ -1153,44 +1188,63 @@ export default function LearnTogether() {
             </section>}
             <div className="grid min-h-[65vh] items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
               <aside className="min-w-0" aria-label="Page navigation">
-            <nav aria-label="Board pages" className="space-y-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-              <div className="flex flex-wrap justify-between items-center gap-2">
-                <h2 className="font-semibold">Pages ({pages.length + 1})</h2>
-                <button className={`${button} w-full`} type="button" disabled={disabled || uploading || pages.length >= 10}
-                  onClick={() => void newBlankPage()}>+ New page</button>
+            <nav aria-label="Board pages" className="rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+              <div className="flex items-center justify-between px-1.5 py-1">
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Pages
+                  <span className="ml-1.5 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600">
+                    {pages.length + 1}
+                  </span>
+                </h2>
+                <button type="button"
+                  className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-violet-700 transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-600 disabled:cursor-not-allowed disabled:opacity-40"
+                  disabled={disabled || uploading || pages.length >= 10}
+                  title="Add a blank page"
+                  onClick={() => void newBlankPage()}>
+                  <Plus size={14} aria-hidden="true" /> New
+                </button>
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+              <div className="flex gap-1.5 overflow-x-auto p-1 lg:flex-col lg:overflow-visible">
                 <button type="button" aria-current={selectedPage === null ? "page" : undefined}
-                  className={"min-w-32 w-full rounded-xl border p-3 text-left " + (selectedPage === null ? "border-violet-700 bg-violet-50" : "bg-white")}
+                  className={"flex min-w-32 w-full items-center gap-2.5 rounded-lg border p-1.5 text-left transition-colors " +
+                    (selectedPage === null ? "border-violet-600 bg-violet-50" : "border-transparent hover:bg-slate-50")}
                   disabled={!ready || pending.length > 0} onClick={() => changePage("")}>
-                  <span className="block text-xs text-muted-foreground">Base page</span>
-                  <span className="font-medium">Blank page</span>
+                  <span aria-hidden="true"
+                    className="h-11 w-9 shrink-0 rounded-md border border-slate-200 bg-white shadow-sm" />
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-medium">Blank page</span>
+                    <span className="block text-[11px] text-slate-400">Base page</span>
+                  </span>
                 </button>
                 {pages.map((page, index) => (
                   <button key={page.operation_id} type="button"
                     aria-current={selectedPage === page.operation_id ? "page" : undefined}
-                    className={"min-w-32 w-full rounded-xl border p-2 text-left lg:flex lg:items-center lg:gap-2 " +
-                      (selectedPage === page.operation_id ? "border-violet-700 bg-violet-50" : "bg-white")}
+                    className={"flex min-w-32 w-full items-center gap-2.5 rounded-lg border p-1.5 text-left transition-colors " +
+                      (selectedPage === page.operation_id ? "border-violet-600 bg-violet-50" : "border-transparent hover:bg-slate-50")}
                     disabled={!ready || pending.length > 0}
                     onClick={() => changePage(page.operation_id)}>
-                    <img className="mb-1 h-14 w-20 shrink-0 rounded border object-contain lg:mb-0"
+                    <img className="h-11 w-9 shrink-0 rounded-md border border-slate-200 bg-white object-cover"
                       alt="" src={`/api/v1/together/boards/${boardId}/photos/${page.image_id}`} />
-                    <span className="font-medium">Page {index + 1}</span>
+                    <span className="truncate text-sm font-medium">Page {index + 1}</span>
                   </button>
                 ))}
               </div>
-              <details className="border-t border-slate-200 pt-2">
-                <summary className="cursor-pointer text-sm font-medium">Page actions</summary>
-                <div className="mt-2 space-y-2">
-                  <button type="button" className={`${button} w-full justify-start`} disabled
-                    title="Page duplication is coming soon">
-                    Duplicate page
+              <details className="mt-1 border-t border-slate-100 px-1.5 pt-1">
+                <summary className="cursor-pointer rounded py-1 text-xs font-medium text-slate-500 transition-colors hover:text-slate-700">
+                  Page actions
+                </summary>
+                <div className="mt-1 space-y-1 pb-1">
+                  <button type="button"
+                    className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs text-slate-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    disabled title="Page duplication is coming soon">
+                    <Copy size={13} aria-hidden="true" /> Duplicate page
                   </button>
-                  <button type="button" className={`${button} w-full justify-start`} disabled
-                    title="Page deletion is coming soon">
-                    Delete page
+                  <button type="button"
+                    className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs text-slate-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    disabled title="Page deletion is coming soon">
+                    <Trash2 size={13} aria-hidden="true" /> Delete page
                   </button>
-                  <p className="text-xs text-slate-500">
+                  <p className="px-2 text-[11px] leading-snug text-slate-400">
                     Page duplication and deletion are coming soon.
                   </p>
                 </div>
@@ -1199,13 +1253,78 @@ export default function LearnTogether() {
               </aside>
               <section className="min-w-0 space-y-3" aria-label="Whiteboard editor">
             <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm" role="toolbar" aria-label="Whiteboard drawing tools">
-              <button
-                className={`${button} ${tool === "pen" ? activeTool : ""}`}
-                aria-pressed={tool === "pen"}
-                onClick={() => setTool("pen")}
-              >
-                <Pen size={16} aria-hidden="true" /> Pen
-              </button>
+              <span className="relative" ref={penPalette}>
+                <button
+                  className={`${button} ${tool === "pen" ? activeTool : ""}`}
+                  aria-pressed={tool === "pen"}
+                  aria-expanded={tool === "pen" ? paletteOpen : undefined}
+                  onClick={() => {
+                    setPaletteOpen(tool === "pen" ? !paletteOpen : true);
+                    setTool("pen");
+                  }}
+                >
+                  <Pen size={16} aria-hidden="true" /> Pen
+                  <span
+                    aria-hidden="true"
+                    className="h-3 w-3 rounded-full ring-1 ring-slate-300"
+                    style={{ backgroundColor: penColor || color(board?.author) }}
+                  />
+                </button>
+                {tool === "pen" && paletteOpen && (
+                  <span
+                    className="absolute left-0 top-full z-20 mt-1 w-max rounded-xl border border-slate-200 bg-white p-2 shadow-lg"
+                    role="radiogroup"
+                    aria-label="Pen color"
+                  >
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={penColor === ""}
+                      className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm hover:bg-slate-50"
+                      onClick={() => {
+                        setPenColor("");
+                        setPaletteOpen(false);
+                      }}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-5 w-5 rounded border border-slate-200"
+                        style={{ backgroundColor: color(board?.author) }}
+                      />
+                      <span className="flex-1">My color</span>
+                      {penColor === "" && (
+                        <Check size={14} aria-hidden="true" className="text-violet-700" />
+                      )}
+                    </button>
+                    <span aria-hidden="true" className="my-1.5 block h-px bg-slate-100" />
+                    <span className="grid grid-cols-8 gap-1">
+                      {PEN_PALETTE.flat()
+                        .filter((hex) => hex !== color(board?.author))
+                        .map((hex) => (
+                          <button
+                            key={hex}
+                            type="button"
+                            role="radio"
+                            aria-checked={penColor === hex}
+                            aria-label={`Pen color ${hex}`}
+                            title={hex}
+                            className={
+                              "h-6 w-6 rounded border transition-transform " +
+                              (penColor === hex
+                                ? "border-slate-900 ring-2 ring-violet-600 ring-offset-1"
+                                : "border-slate-200 hover:scale-110")
+                            }
+                            style={{ backgroundColor: hex }}
+                            onClick={() => {
+                              setPenColor(hex);
+                              setPaletteOpen(false);
+                            }}
+                          />
+                        ))}
+                    </span>
+                  </span>
+                )}
+              </span>
               <button type="button" className={`${button} ${tool === "erase" ? activeTool : ""}`}
                 disabled={disabled} aria-label="Eraser (my marks)" aria-pressed={tool === "erase"}
                 onClick={() => setTool("erase")}><Eraser size={16} aria-hidden="true" /> Eraser</button>
@@ -1528,6 +1647,7 @@ export default function LearnTogether() {
                       page_id: selectedPage,
                       operation_id: inkID.current,
                       points: previewPoints(stroke.current),
+                      ...(penColor ? { color: penColor } : {}),
                     },
                     true,
                   );
@@ -1566,6 +1686,7 @@ export default function LearnTogether() {
                       page_id: selectedPage,
                       operation_id: inkID.current,
                       points: previewPoints(stroke.current),
+                      ...(penColor ? { color: penColor } : {}),
                     });
                 }}
                 onPointerUp={(e) => {
@@ -1574,6 +1695,7 @@ export default function LearnTogether() {
                     operation_id: inkID.current || crypto.randomUUID(),
                     kind: "stroke",
                     points: stroke.current,
+                    ...(penColor ? { color: penColor } : {}),
                   });
                   if (inkID.current)
                     sendLive(
@@ -1582,6 +1704,7 @@ export default function LearnTogether() {
                         page_id: selectedPage,
                         operation_id: inkID.current,
                         points: previewPoints(stroke.current),
+                        ...(penColor ? { color: penColor } : {}),
                       },
                       true,
                     );
@@ -1642,7 +1765,7 @@ export default function LearnTogether() {
                             cx={m.points[0].x}
                             cy={m.points[0].y}
                             r="2"
-                            fill={color(m.author)}
+                            fill={m.color || color(m.author)}
                           />
                         ) : (
                           <path
@@ -1650,7 +1773,7 @@ export default function LearnTogether() {
                             data-operation-id={m.operation_id}
                             d={inkPath(m.points || [])}
                             fill="none"
-                            stroke={color(m.author)}
+                            stroke={m.color || color(m.author)}
                             strokeWidth="4"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -1691,7 +1814,7 @@ export default function LearnTogether() {
                         data-operation-id={frame.operation_id}
                         d={inkPath(frame.points || [])}
                         fill="none"
-                        stroke={color(frame.author)}
+                        stroke={frame.color || color(frame.author)}
                         strokeWidth="4"
                         strokeLinecap="round"
                         pointerEvents="none"
@@ -1727,7 +1850,7 @@ export default function LearnTogether() {
                 <path
                   d={inkPath(draft)}
                   fill="none"
-                  stroke={color(board?.author)}
+                  stroke={penColor || color(board?.author)}
                   strokeWidth="4"
                   strokeLinecap="round"
                 />
@@ -1798,7 +1921,7 @@ export default function LearnTogether() {
             </details>
             <details className="text-xs text-slate-600">
               <summary className="cursor-pointer">Board controls and participant colors</summary>
-              Parent marks are purple; child marks are blue. Scroll outside the board to move the page. Rotate your device for more writing space.
+              Parent marks start purple and child marks blue; pick a swatch beside the Pen tool to choose a different color. Scroll outside the board to move the page. Rotate your device for more writing space.
             </details>
             <details>
               <summary>Written work (accessible text)</summary>
