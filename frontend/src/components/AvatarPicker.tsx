@@ -7,11 +7,12 @@ interface AvatarPickerProps {
   value: string;
   onChange: (avatarId: string) => void;
   disabled?: boolean;
+  columns?: 4 | 8;
 }
 
-export default function AvatarPicker({ value, onChange, disabled }: AvatarPickerProps) {
+export default function AvatarPicker({ value, onChange, disabled, columns = 8 }: AvatarPickerProps) {
   return (
-    <div className="grid grid-cols-8 gap-1.5" role="radiogroup" aria-label="Choose an avatar">
+    <div className={cn("grid gap-1.5", columns === 4 ? "grid-cols-4" : "grid-cols-8")} role="radiogroup" aria-label="Choose an avatar">
       {AVATAR_IDS.map((id) => (
         <button
           key={id}

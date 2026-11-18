@@ -23,6 +23,7 @@ class LiveFrame(BaseModel):
     operation_id: str | None = Field(default=None, max_length=36)
     points: list[LivePoint] = Field(default_factory=list, max_length=128)
     point: LivePoint | None = None
+    color: str | None = Field(default=None, pattern=r"^#[0-9a-fA-F]{6}$")
 
     @model_validator(mode="after")
     def shape(self):
@@ -38,6 +39,8 @@ class LiveFrame(BaseModel):
             raise ValueError("Stroke requires an ID and points")
         if self.kind == "clear" and (self.points or self.point or self.operation_id):
             raise ValueError("Clear cannot carry drawing data")
+        if self.color is not None and self.kind != "stroke":
+            raise ValueError("Color applies to live strokes only")
         return self
 
 
