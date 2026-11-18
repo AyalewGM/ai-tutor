@@ -37,6 +37,7 @@ from app.parent_schemas import (
     RegionsOut,
 )
 from app.plan_models import Plan
+from app.services.awards import practice_streak_days
 from app.services.curriculum_defaults import resolve_default_curriculum
 from app.services.placement import recommend_next_skill
 from app.services.plans import currency_for, effective_seats, localized_price, upgrade_target
@@ -139,6 +140,7 @@ class LearnerLaunchpad(BaseModel):
     learning_count: int
     ready_skill_count: int
     award_count: int
+    streak_days: int
 
 
 def regions_catalog(db: Session) -> list[CountryOption]:
@@ -417,6 +419,7 @@ def get_learner_launchpad(
         learning_count=learning_count,
         ready_skill_count=ready_skill_count,
         award_count=award_count,
+        streak_days=practice_streak_days(db, student.id),
     )
 
 

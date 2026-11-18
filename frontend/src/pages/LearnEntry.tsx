@@ -9,6 +9,7 @@ import {
   ClipboardCheck,
   Compass,
   CreditCard,
+  Flame,
   FunctionSquare,
   Hash,
   PieChart,
@@ -460,6 +461,12 @@ export default function LearnEntry() {
                     </Button>
                   )}
                   <div className="flex flex-wrap gap-1.5">
+                    {launchpad.streak_days > 0 && (
+                      <Badge variant="secondary" className="gap-1">
+                        <Flame className="h-3 w-3" />
+                        {launchpad.streak_days}-day streak
+                      </Badge>
+                    )}
                     <Badge variant="secondary" className="gap-1">
                       <CheckCircle2 className="h-3 w-3" />
                       {launchpad.mastered_count} mastered

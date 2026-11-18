@@ -60,6 +60,7 @@ export interface LearnerLaunchpad {
   learning_count: number;
   ready_skill_count: number;
   award_count: number;
+  streak_days: number;
 }
 
 export interface SessionOut {
