@@ -178,7 +178,9 @@ export default function LearnEntry() {
   const [learnerOnly, setLearnerOnly] = useState(true); // Hide parent-only UI until server confirms adult role.
   const [curricula, setCurricula] = useState<CurriculumChoice[]>([]);
   const [skills, setSkills] = useState<SkillChoice[]>([]);
-  const [learnerId, setLearnerId] = useState("");
+  const [learnerId, setSelectedLearnerId] = useState("");
+  const selection = useRef({ id: "", version: 0 });
+  const [selectionVersion, setSelectionVersion] = useState(0);
   const [skillId, setSkillId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [curriculumId, setCurriculumId] = useState("");
@@ -194,6 +196,21 @@ export default function LearnEntry() {
   const [pendingCountry, setPendingCountry] = useState("");
   const [launchpad, setLaunchpad] = useState<LearnerLaunchpad | null>(null);
   const navigate = useNavigate();
+
+  function setLearnerId(id: string) {
+    if (selection.current.id === id) return;
+    // Invalidate pending requests immediately, including A -> B -> A switches.
+    selection.current = { id, version: selection.current.version + 1 };
+    setSelectedLearnerId(id);
+    setSelectionVersion(selection.current.version);
+    setSkills([]); setSkillId(""); setLaunchpad(null);
+    setSkillsLoading(!!id); setError("");
+  }
+
+  function currentSelection(version: number) {
+    return selection.current.id === learnerId && selection.current.version === version;
+  }
+
 
   useEffect(() => {
     // Learner sessions expose exactly one student server-side. Parent-only
@@ -246,15 +263,19 @@ export default function LearnEntry() {
   useEffect(() => {
     setSkills([]); setSkillId(""); setLaunchpad(null);
     if (!learnerId) return;
+    let cancelled = false;
+    const version = selection.current.version;
+    const active = () => !cancelled && currentSelection(version);
     setSkillsLoading(true);
     api<SkillChoice[]>(`/onboarding/learners/${learnerId}/skills`)
-      .then(setSkills)
-      .catch(() => setError("Could not load skills"))
-      .finally(() => setSkillsLoading(false));
+      .then((rows) => { if (active()) setSkills(rows); })
+      .catch(() => { if (active()) setError("Could not load skills"); })
+      .finally(() => { if (active()) setSkillsLoading(false); });
     api<LearnerLaunchpad>(`/onboarding/learners/${learnerId}/launchpad`)
-      .then(setLaunchpad)
-      .catch(() => setLaunchpad(null));
-  }, [learnerId]);
+      .then((data) => { if (active()) setLaunchpad(data); })
+      .catch(() => { if (active()) setLaunchpad(null); });
+    return () => { cancelled = true; };
+  }, [learnerId, selectionVersion]);
 
   async function addLearner(event: FormEvent) {
     event.preventDefault(); setError(""); setNotice("");
@@ -267,24 +288,25 @@ export default function LearnEntry() {
   }
 
   async function startSession(event: FormEvent) {
-    event.preventDefault(); setError("");
-    try {
-      const session = await post<SessionOut>("/adaptive-tutor/sessions", { student_id: learnerId, skill_id: skillId });
-      navigate(`/learn/${session.session_id}`);
-    } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start session"); }
+    event.preventDefault();
+    await startSkillSession(skillId);
   }
 
   async function startSkillSession(targetSkillId: string) {
+    const version = selection.current.version;
+    if (!learnerId || !targetSkillId || !currentSelection(version)) return;
     setError("");
     try {
       const session = await post<SessionOut>("/adaptive-tutor/sessions", { student_id: learnerId, skill_id: targetSkillId });
-      navigate(`/learn/${session.session_id}`);
-    } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start session"); }
+      if (currentSelection(version)) navigate(`/learn/${session.session_id}`);
+    } catch (err) {
+      if (currentSelection(version)) setError(err instanceof ApiError ? err.message : "Could not start session");
+    }
   }
 
   async function startRecommended() {
     const recommended = launchpad?.recommended;
-    if (!recommended) return;
+    if (!recommended || !currentSelection(selection.current.version)) return;
     if (recommended.session_id) {
       navigate(`/learn/${recommended.session_id}`);
       return;
@@ -293,6 +315,8 @@ export default function LearnEntry() {
   }
 
   async function startPlacement() {
+    const version = selection.current.version;
+    if (!learnerId || !currentSelection(version)) return;
     setError("");
     // Anchor on the selected topic, or the most advanced ready skill — the
     // diagnostic descends the prerequisite graph until the learner is solid.
@@ -303,10 +327,13 @@ export default function LearnEntry() {
         student_id: learnerId,
         target_skill_id: anchor.id,
       });
+      if (!currentSelection(version)) return;
       navigate(`/diagnostic/${diagnostic.session_id}?learner=${learnerId}`, {
         state: { diagnostic },
       });
-    } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start placement check"); }
+    } catch (err) {
+      if (currentSelection(version)) setError(err instanceof ApiError ? err.message : "Could not start placement check");
+    }
   }
 
   async function changeAvatar(avatarId: string) {
