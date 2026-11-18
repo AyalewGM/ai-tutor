@@ -3,10 +3,34 @@ from datetime import UTC, datetime
 from decimal import Decimal
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, Numeric, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
+
+
+class DiagnosticCampaign(Base):
+    """A curriculum-wide knowledge check: many per-skill diagnostic probes
+    orchestrated as one resumable session with a shared question budget."""
+
+    __tablename__ = "diagnostic_campaigns"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), index=True)
+    curriculum_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("curricula.id"), index=True)
+    curriculum_enrollment_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("student_curriculum_enrollments.id"), index=True
+    )
+    status: Mapped[str] = mapped_column(String(30), default="ACTIVE")
+    # Planned anchor skills, stored as string UUIDs in probe-priority order.
+    target_skill_ids: Mapped[list[str]] = mapped_column(JSONB, default=list)
+    # Anchors already launched, so a completed probe is never restarted.
+    probed_target_ids: Mapped[list[str]] = mapped_column(JSONB, default=list)
+    recommended_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))
+    question_count: Mapped[int] = mapped_column(Integer, default=0)
+    max_questions: Mapped[int] = mapped_column(Integer, default=24)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class DiagnosticSession(Base):
@@ -14,6 +38,9 @@ class DiagnosticSession(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     student_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("students.id"), index=True)
+    campaign_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("diagnostic_campaigns.id"), index=True
+    )
     target_skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"))
     current_skill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("skills.id"))
     blocked_skill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("skills.id"))

@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Annotated
@@ -191,21 +192,29 @@ def get_diagnostic(session_id: uuid.UUID, access: CurrentLearningAccess, db: DbS
     )
 
 
-@router.post("/sessions/{session_id}/respond", response_model=DiagnosticOut)
-def respond_to_diagnostic(
-    session_id: uuid.UUID,
-    payload: DiagnosticRespondIn,
-    access: CurrentLearningAccess,
-    db: DbSession,
-) -> DiagnosticOut:
-    session = db.get(DiagnosticSession, session_id)
-    if session is None or session.status != "ACTIVE":
-        raise HTTPException(404, "Active diagnostic session not found")
-    require_learning_owns_student(access, db.get(Student, session.student_id))
+@dataclass(frozen=True)
+class DiagnosticTurn:
+    correct: bool
+    completed: bool
+    next_problem: Problem | None
+    message: str
 
+
+def run_diagnostic_response(
+    db: Session,
+    *,
+    session: DiagnosticSession,
+    problem_id: uuid.UUID,
+    answer: str,
+) -> DiagnosticTurn:
+    """Record one unassisted diagnostic response and advance the probe.
+
+    Caller commits; completion telemetry is the caller's responsibility via
+    ``_publish_diagnostic_event`` after commit.
+    """
     scope = _diagnostic_scope(db, session)
     _require_session_skill_scope(db, session=session, skill_id=session.current_skill_id)
-    problem = db.get(Problem, payload.problem_id)
+    problem = db.get(Problem, problem_id)
     if problem is None or problem.primary_skill_id != session.current_skill_id:
         raise HTTPException(400, "Problem does not belong to the current diagnostic skill")
 
@@ -217,7 +226,7 @@ def respond_to_diagnostic(
         db,
         progress=progress,
         prompt=problem.prompt,
-        answer=payload.answer,
+        answer=answer,
         canonical_answer=problem.canonical_answer or "",
         assistance_level=0,
         problem_difficulty=problem.difficulty,
@@ -232,7 +241,7 @@ def respond_to_diagnostic(
         diagnostic_session_id=session.id,
         skill_id=session.current_skill_id,
         problem_id=problem.id,
-        student_answer=payload.answer,
+        student_answer=answer,
         normalized_answer=evidence.evaluation.normalized_answer,
         is_correct=evidence.evaluation.correct,
         misconception_id=evidence.misconception.id if evidence.misconception else None,
@@ -292,11 +301,46 @@ def respond_to_diagnostic(
             current_problem_id=exclude_problem_id,
         )
         if next_problem is None:
-            raise HTTPException(404, "No diagnostic problem configured for next probe skill")
+            # The graph pointed at a skill with no diagnostic-servable content.
+            # Close the probe on the last evidenced skill rather than
+            # stranding the learner mid-flow.
+            session.status = "COMPLETED"
+            session.recommended_skill_id = previous_skill_id
+            session.placement_reason = "content_boundary"
+            session.completed_at = datetime.now(UTC)
+            return DiagnosticTurn(
+                correct=evidence.evaluation.correct,
+                completed=True,
+                next_problem=None,
+                message="Diagnostic complete. A recommended starting skill is now available.",
+            )
         message = "Response recorded. Continue with the next diagnostic question."
 
+    return DiagnosticTurn(
+        correct=evidence.evaluation.correct,
+        completed=decision.complete,
+        next_problem=next_problem,
+        message=message,
+    )
+
+
+@router.post("/sessions/{session_id}/respond", response_model=DiagnosticOut)
+def respond_to_diagnostic(
+    session_id: uuid.UUID,
+    payload: DiagnosticRespondIn,
+    access: CurrentLearningAccess,
+    db: DbSession,
+) -> DiagnosticOut:
+    session = db.get(DiagnosticSession, session_id)
+    if session is None or session.status != "ACTIVE":
+        raise HTTPException(404, "Active diagnostic session not found")
+    require_learning_owns_student(access, db.get(Student, session.student_id))
+
+    turn = run_diagnostic_response(
+        db, session=session, problem_id=payload.problem_id, answer=payload.answer
+    )
     db.commit()
-    if decision.complete:
+    if turn.completed:
         _publish_diagnostic_event(
             event_type="diagnostic.completed",
             session=session,
@@ -310,11 +354,11 @@ def respond_to_diagnostic(
         current_skill_id=session.current_skill_id,
         question_count=session.question_count,
         max_questions=session.max_questions,
-        problem=_problem_out(next_problem),
-        last_answer_correct=evidence.evaluation.correct,
+        problem=_problem_out(turn.next_problem),
+        last_answer_correct=turn.correct,
         recommended_skill_id=session.recommended_skill_id,
         placement_reason=session.placement_reason,
-        message=message,
+        message=turn.message,
     )
 
 

@@ -161,6 +161,51 @@ export interface DiagnosticOut {
   message: string;
 }
 
+export interface CampaignSkillRef {
+  id: string;
+  code: string;
+  name: string;
+}
+
+export interface CampaignOut {
+  campaign_id: string;
+  status: string;
+  question_count: number;
+  max_questions: number;
+  targets_planned: number;
+  targets_probed: number;
+  problem?: WorkspaceProblem | null;
+  current_skill?: CampaignSkillRef | null;
+  last_answer_correct?: boolean | null;
+  message: string;
+}
+
+export interface CampaignStrand {
+  name: string;
+  readiness: "STRONG" | "DEVELOPING" | "EMERGING" | "NOT_PROBED";
+  skills_probed: number;
+  skills_ready: number;
+  skills_total: number;
+  deepest_gap: CampaignSkillRef | null;
+}
+
+export interface CampaignSkillResult {
+  skill: CampaignSkillRef;
+  strand: string;
+  verdict: "READY" | "PARTIAL" | "NOT_READY";
+  correct_count: number;
+  incorrect_count: number;
+}
+
+export interface CampaignReport {
+  campaign_id: string;
+  status: string;
+  question_count: number;
+  recommended: CampaignSkillRef | null;
+  strands: CampaignStrand[];
+  skills: CampaignSkillResult[];
+}
+
 export interface LearnerGrowth {
   xp: number;
   level: number;

@@ -4,6 +4,7 @@ import Badges from "./pages/Badges";
 import Billing from "./pages/Billing";
 import Catalog from "./pages/Catalog";
 import Diagnostic from "./pages/Diagnostic";
+import DiagnosticCampaign from "./pages/DiagnosticCampaign";
 import LearnTogether from "./pages/LearnTogether";
 import Landing from "./pages/Landing";
 import HelpCenter from "./pages/HelpCenter";
@@ -36,6 +37,7 @@ export default function App() {
       <Route path="/parent/settings" element={<ParentSettings />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/diagnostic/:sessionId" element={<Diagnostic />} />
+      <Route path="/diagnostic/campaign/:campaignId" element={<DiagnosticCampaign />} />
       <Route path="/learn/:sessionId" element={<Workspace />} />
       <Route path="/learn/:sessionId/badges" element={<Badges />} />
       <Route path="/learn/:sessionId/map" element={<SkillMap />} />

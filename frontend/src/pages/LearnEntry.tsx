@@ -35,7 +35,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { CurriculumChoice, DiagnosticOut, LearnerChoice, LearnerLaunchpad, RegionsOut, SessionOut, SkillChoice, SessionUser } from "../types";
+import type { CampaignOut, CurriculumChoice, DiagnosticOut, LearnerChoice, LearnerLaunchpad, RegionsOut, SessionOut, SkillChoice, SessionUser } from "../types";
 
 const REASON_LABEL: Record<string, string> = {
   CONTINUE_SESSION: "Continue your session",
@@ -307,6 +307,19 @@ export default function LearnEntry() {
         state: { diagnostic },
       });
     } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start placement check"); }
+  }
+
+  async function startKnowledgeCheck() {
+    setError("");
+    if (!learnerId) return;
+    try {
+      const campaign = await post<CampaignOut>("/diagnostics/campaigns", {
+        student_id: learnerId,
+      });
+      navigate(`/diagnostic/campaign/${campaign.campaign_id}?learner=${learnerId}`, {
+        state: { campaign },
+      });
+    } catch (err) { setError(err instanceof ApiError ? err.message : "Could not start knowledge check"); }
   }
 
   async function changeAvatar(avatarId: string) {
@@ -657,6 +670,16 @@ export default function LearnEntry() {
                 {selectedSkill
                   ? `Not sure you're ready for ${selectedSkill.name}? Take a quick check`
                   : "Not sure where to start? Take a quick placement check"}
+              </button>
+
+              <button
+                type="button"
+                onClick={startKnowledgeCheck}
+                disabled={!learnerId || !skills.some((skill) => skill.content_ready)}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-primary/40 px-4 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/10 disabled:opacity-50"
+              >
+                <Compass className="h-4 w-4" />
+                Map {selectedLearner?.first_name ?? "their"} knowledge across the whole course
               </button>
             </CardContent>
           </Card>

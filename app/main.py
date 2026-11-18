@@ -13,6 +13,7 @@ from app.core.database import SessionLocal
 from app.core.observability import configure_logging, request_logging_middleware
 from app.core.settings import settings
 from app.diagnostic_api import router as diagnostic_router
+from app.diagnostic_campaign_api import router as diagnostic_campaign_router
 from app.effectiveness_api import router as effectiveness_router
 from app.hint_api import router as hint_router
 from app.middleware.board_upload_limit import BoardUploadLimitMiddleware
@@ -45,6 +46,7 @@ app.include_router(tutor_router, prefix=settings.api_prefix)
 app.include_router(adaptive_tutor_router, prefix=settings.api_prefix)
 app.include_router(adaptive_response_router, prefix=settings.api_prefix)
 app.include_router(diagnostic_router, prefix=settings.api_prefix)
+app.include_router(diagnostic_campaign_router, prefix=settings.api_prefix)
 app.include_router(hint_router, prefix=settings.api_prefix)
 app.include_router(parent_router, prefix=settings.api_prefix)
 app.include_router(practice_pass_router, prefix=settings.api_prefix)

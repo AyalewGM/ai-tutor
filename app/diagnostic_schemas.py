@@ -45,3 +45,52 @@ class DiagnosticResultOut(BaseModel):
     placement_reason: str | None
     question_count: int
     evidence: list[DiagnosticSkillEvidenceOut]
+
+
+class CampaignStartIn(BaseModel):
+    student_id: uuid.UUID
+
+
+class CampaignSkillRef(BaseModel):
+    id: uuid.UUID
+    code: str
+    name: str
+
+
+class CampaignOut(BaseModel):
+    campaign_id: uuid.UUID
+    status: str
+    question_count: int
+    max_questions: int
+    targets_planned: int
+    targets_probed: int
+    problem: ProblemOut | None = None
+    current_skill: CampaignSkillRef | None = None
+    last_answer_correct: bool | None = None
+    message: str
+
+
+class CampaignStrandOut(BaseModel):
+    name: str
+    readiness: str  # STRONG | DEVELOPING | EMERGING | NOT_PROBED
+    skills_probed: int
+    skills_ready: int
+    skills_total: int
+    deepest_gap: CampaignSkillRef | None = None
+
+
+class CampaignSkillResultOut(BaseModel):
+    skill: CampaignSkillRef
+    strand: str
+    verdict: str  # READY | PARTIAL | NOT_READY
+    correct_count: int
+    incorrect_count: int
+
+
+class CampaignReportOut(BaseModel):
+    campaign_id: uuid.UUID
+    status: str
+    question_count: int
+    recommended: CampaignSkillRef | None
+    strands: list[CampaignStrandOut]
+    skills: list[CampaignSkillResultOut]
