@@ -101,10 +101,16 @@ function deriveSyllabus(dashboard: ChildDashboard | null): SyllabusStatus[] {
   ];
 }
 
+function parentPatternName(code: string, name: string): string {
+  return code === "NUM_001"
+    ? "Difficulty adding positive and negative numbers"
+    : name;
+}
+
 function deriveMisconceptions(dashboard: ChildDashboard | null): MisconceptionItem[] {
   return (dashboard?.support_areas ?? []).map((area, index) => ({
     id: `${area.code}-${index}`,
-    topicName: area.name,
+    topicName: parentPatternName(area.code, area.name),
     misconception: `This learning pattern was observed ${area.occurrence_count} ${
       area.occurrence_count === 1 ? "time" : "times"
     } and may need another independent check.`,
@@ -444,7 +450,7 @@ export default function ParentProgressDashboard({
                           key={pattern.code}
                           className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-800"
                         >
-                          {pattern.name} · {pattern.count}×
+                          {parentPatternName(pattern.code, pattern.name)} · {pattern.count}×
                         </li>
                       ))}
                     </ul>
