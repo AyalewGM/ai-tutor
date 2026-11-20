@@ -136,6 +136,7 @@ export default function Workspace() {
   const [status, setStatus] = useState("");
   const [statusOk, setStatusOk] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [feedback, setFeedback] = useState<"" | "correct" | "wrong">("");
   const [celebrate, setCelebrate] = useState(0);
   const [badgeToast, setBadgeToast] = useState<Award[]>([]);
@@ -383,6 +384,7 @@ export default function Workspace() {
     const submittedProblemId = currentProblem.id;
     const submittedExtension = Boolean(activeExtensionProblem);
     setError("");
+    setNotice("");
     setStatus("Checking your work…");
     try {
       const result = await post<RespondOut>(
@@ -481,6 +483,7 @@ export default function Workspace() {
     const requestedSessionId = sessionId;
     const requestId = ++extensionRequestRef.current;
     setError("");
+    setNotice("");
     setStatus("Loading a challenge…");
     try {
       const problem = await post<WorkspaceProblem>(
@@ -504,13 +507,15 @@ export default function Workspace() {
         return;
       }
       setStatus("");
-      setError(
-        err instanceof ApiError && err.status === 404
-          ? "No challenge problems for this skill yet."
-          : err instanceof ApiError
+      if (err instanceof ApiError && err.status === 404) {
+        setNotice("No challenge problems for this skill yet.");
+      } else {
+        setError(
+          err instanceof ApiError
             ? err.message
             : "Could not load a challenge",
-      );
+        );
+      }
     }
   }
 
@@ -603,81 +608,88 @@ export default function Workspace() {
                   .join(" · ")}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              {workspace.growth && (
-                <span
-                  className="inline-flex items-center gap-2 rounded-full bg-white/15 py-1 pl-1 pr-3.5 text-sm font-semibold backdrop-blur"
-                  title={`${workspace.growth.xp_in_level}/${workspace.growth.xp_for_next} XP to next level`}
+            <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {workspace.growth && (
+                  <span
+                    className="inline-flex items-center gap-2 rounded-full bg-white/15 py-1 pl-1 pr-3.5 text-sm font-semibold backdrop-blur"
+                    title={`${workspace.growth.xp_in_level}/${workspace.growth.xp_for_next} XP to next level`}
+                  >
+                    <LevelCrest level={workspace.growth.level} title={workspace.growth.level_title} size="sm" />
+                    Lv {workspace.growth.level} · {workspace.growth.level_title}
+                  </span>
+                )}
+                {(workspace.growth?.xp_today ?? 0) > 0 && (
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
+                    title="XP earned today"
+                  >
+                    Today +{workspace.growth?.xp_today} XP
+                  </span>
+                )}
+                <SmartScoreBadge
+                  score={workspace.evidence.smartscore}
+                  streak={workspace.evidence.streak_count}
+                  daysStreak={workspace.streak_days}
+                  level={workspace.evidence.mastery_level}
+                  skillName={workspace.focus.skill_name}
+                />
+              </div>
+              <div className="flex flex-wrap items-center justify-end gap-1.5">
+                <Link
+                  to={`/learn/${sessionId}/map`}
+                  className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
                 >
-                  <LevelCrest level={workspace.growth.level} title={workspace.growth.level_title} size="sm" />
-                  Lv {workspace.growth.level} · {workspace.growth.level_title}
-                </span>
-              )}
-              {(workspace.growth?.xp_today ?? 0) > 0 && (
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold backdrop-blur"
-                  title="XP earned today"
+                  <MapIcon className="h-3.5 w-3.5" /> Skill map
+                </Link>
+                <Link
+                  to={`/learn/${sessionId}/catalog`}
+                  className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
                 >
-                  Today +{workspace.growth?.xp_today} XP
-                </span>
-              )}
-              <Link
-                to={`/learn/${sessionId}/map`}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
-              >
-                <MapIcon className="h-4 w-4" /> Skill map
-              </Link>
-              <Link
-                to={`/learn/${sessionId}/catalog`}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
-              >
-                <BookOpen className="h-4 w-4" /> Catalog
-              </Link>
-              <Link to="/help/progress-and-mastery" className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25">
-                <HelpCircle className="h-4 w-4" /> Help
-              </Link>
-              {workspace.daily_goal ? (
+                  <BookOpen className="h-3.5 w-3.5" /> Catalog
+                </Link>
+                <Link
+                  to="/help/progress-and-mastery"
+                  className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
+                >
+                  <HelpCircle className="h-3.5 w-3.5" /> Help
+                </Link>
+                {workspace.daily_goal ? (
+                  <button
+                    type="button"
+                    onClick={() => setGoalOpen((o) => !o)}
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur transition-colors",
+                      workspace.daily_goal.reached
+                        ? "bg-emerald-300 text-emerald-950"
+                        : "bg-white/10 text-white/85 hover:bg-white/20 hover:text-white",
+                    )}
+                    title="Daily goal — tap to change"
+                    aria-label={`Daily goal: ${workspace.daily_goal.done} of ${workspace.daily_goal.target} questions`}
+                  >
+                    <Target className="h-3.5 w-3.5" />
+                    {workspace.daily_goal.reached
+                      ? "Goal met!"
+                      : `Goal ${workspace.daily_goal.done}/${workspace.daily_goal.target}`}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setGoalOpen((o) => !o)}
+                    className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
+                    title="Set a daily goal"
+                  >
+                    <Target className="h-3.5 w-3.5" /> Set a goal
+                  </button>
+                )}
                 <button
                   type="button"
-                  onClick={() => setGoalOpen((o) => !o)}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold backdrop-blur transition-colors",
-                    workspace.daily_goal.reached
-                      ? "bg-emerald-300 text-emerald-950"
-                      : "bg-white/15 hover:bg-white/25",
-                  )}
-                  title="Daily goal — tap to change"
-                  aria-label={`Daily goal: ${workspace.daily_goal.done} of ${workspace.daily_goal.target} questions`}
+                  onClick={() => void openRecap()}
+                  className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
                 >
-                  <Target className="h-4 w-4" />
-                  {workspace.daily_goal.reached
-                    ? "Goal met!"
-                    : `Goal ${workspace.daily_goal.done}/${workspace.daily_goal.target}`}
+                  <Flag className="h-3.5 w-3.5" /> Wrap up
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setGoalOpen((o) => !o)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
-                  title="Set a daily goal"
-                >
-                  <Target className="h-4 w-4" /> Set a goal
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => void openRecap()}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
-              >
-                <Flag className="h-4 w-4" /> Wrap up
-              </button>
-              <SmartScoreBadge
-                score={workspace.evidence.smartscore}
-                streak={workspace.evidence.streak_count}
-                daysStreak={workspace.streak_days}
-                level={workspace.evidence.mastery_level}
-                skillName={workspace.focus.skill_name}
-              />
+              </div>
             </div>
           </div>
           {goalOpen && (
@@ -917,6 +929,15 @@ export default function Workspace() {
           <p className="mb-4 rounded-md bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
             {error}
           </p>
+        )}
+        {notice && (
+          <div
+            className="mb-4 flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-medium text-amber-800"
+            role="status"
+          >
+            <HelpCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+            {notice}
+          </div>
         )}
 
         <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
@@ -1240,11 +1261,12 @@ export default function Workspace() {
                         disabled={!hasAction("SUBMIT_ANSWER") || !currentProblem}
                       />
                     )}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {!currentProblem?.supports_steps && (
                         <Button
                           type="submit"
                           size="lg"
+                          className="min-w-44"
                           disabled={
                             !hasAction("SUBMIT_ANSWER") ||
                             !currentProblem ||
@@ -1254,6 +1276,13 @@ export default function Workspace() {
                           Submit answer
                         </Button>
                       )}
+                      <div
+                        className="mx-1 hidden h-8 w-px bg-border sm:block"
+                        aria-hidden="true"
+                      />
+                      <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                        Stuck?
+                      </span>
                       <Button
                         type="button"
                         variant="outline"
@@ -1265,8 +1294,9 @@ export default function Workspace() {
                       </Button>
                       <Button
                         type="button"
-                        variant="outline"
+                        variant="ghost"
                         size="lg"
+                        className="text-muted-foreground"
                         onClick={() => requestHelp("I_DONT_UNDERSTAND")}
                         disabled={
                           !hasAction("I_DONT_UNDERSTAND") || !currentProblem
@@ -1292,15 +1322,15 @@ export default function Workspace() {
             )}
 
             {/* Coach */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle>Coach</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
-                    T
-                  </span>
+            <div className="flex gap-3" data-testid="coach-message">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-violet-700 text-sm font-bold text-primary-foreground shadow-sm">
+                T
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Coach
+                </p>
+                <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-3 shadow-sm">
                   <ChatMessage
                     content={
                       complete
@@ -1310,8 +1340,8 @@ export default function Workspace() {
                     }
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -1357,7 +1387,14 @@ export default function Workspace() {
                   </div>
                   <div className="rounded-lg bg-secondary/60 p-3">
                     <p className="text-xs font-medium text-muted-foreground">Assisted successes</p>
-                    <p className="mt-1 text-xl font-bold text-primary">
+                    <p
+                      className={cn(
+                        "mt-1 text-xl font-bold",
+                        workspace.evidence.hinted_correct_count > 0
+                          ? "text-primary"
+                          : "text-muted-foreground/60",
+                      )}
+                    >
                       {workspace.evidence.hinted_correct_count}
                     </p>
                   </div>
