@@ -666,30 +666,34 @@ def test_virginia_lettered_clauses_are_source_bounded_and_fail_closed():
         assert row["standard_id"] == "8.PFA.4"
         assert row["clause_locator"] == f"8.PFA.4({clause})"
         assert row["mapping_status"] == "VIRGINIA_PROVISIONAL_NOT_ACCEPTED"
-        assert row["page"] == "printed page 64"
-        assert row["url"].startswith(
-            "https://www.doe.virginia.gov/home/showpublisheddocument/"
+        assert row["page"] == "printed page 6"
+        assert row["url"] == (
+            "https://www.doe.virginia.gov/home/showpublisheddocument/48945/638741652670270000"
         )
         assert row["version_date"].startswith(
             "Virginia Board of Education approved August 31, 2023"
         )
-        verification = row["verification_sources"]
-        assert {source["url"] for source in verification} == {
-            "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000",
-            "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000",
-        }
-        assert {source["page"] for source in verification} == {
-            "printed page 1",
-            "printed page 101",
-        }
+        verification = {source["url"]: source for source in row["verification_sources"]}
+        assert len(row["verification_sources"]) == 2
+        quick_check = verification[
+            "https://www.doe.virginia.gov/home/showpublisheddocument/66322/638962990538500000"
+        ]
+        guide = verification[
+            "https://www.doe.virginia.gov/home/showpublisheddocument/54598/638847058546770000"
+        ]
         assert all(
             source["publisher"] == "Virginia Department of Education"
-            and source["access_date"] == "2026-10-25"
-            and "does not replace" in source["verification_role"]
-            for source in verification
+            for source in verification.values()
         )
-        assert "controlling 2023 Grade 8 SOL" in row["source_authentication_note"]
-        assert "VIRGINIA_PROVISIONAL_NOT_ACCEPTED" in row["source_authentication_note"]
+        assert quick_check["page"] == "printed page 1"
+        assert quick_check["access_date"] == "2026-10-25"
+        assert "not independently reverified" in quick_check["verification_role"]
+        assert guide["page"] == "printed page 101"
+        assert guide["access_date"] == "2026-11-23"
+        assert "exclusion of no-solution and infinite-solution" in guide["verification_role"]
+        assert "does not replace" in guide["verification_role"]
+        assert "remains the authority" in row["source_authentication_note"]
+        assert "Mapping and coverage remain provisional" in row["source_authentication_note"]
 
     assert {
         clause
